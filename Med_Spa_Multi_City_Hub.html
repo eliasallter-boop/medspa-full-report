@@ -431,12 +431,14 @@
   }
   nav#tabs.industry-jumpnav button:hover { color: var(--blue); }
   nav#tabs.industry-jumpnav button.active { color: var(--blue-dark); border-bottom-color: var(--blue); }
-  nav#tabs.industry-jumpnav { justify-content: center; }
-  /* on narrow screens the nav overflows, so left-align it instead of centering --
-     centering + overflow-x:auto can leave the first item unreachable when scrolled to the start */
-  @media (max-width: 780px) {
-    nav#tabs.industry-jumpnav { justify-content: flex-start; padding: 0 4vw; }
-  }
+  /* Always left-align, never center: this nav overflows on most screen widths (11 items), and
+     justify-content:center + overflow-x:auto is unreliable across browsers -- it can leave the
+     first item(s) permanently unreachable even when scrolled all the way to the start. safe center
+     (the CSS fix for this) isn't supported consistently enough on mobile Safari to rely on, so we
+     just keep it left-aligned everywhere, which guarantees every item -- including the first -- is
+     always reachable by scrolling. On wide screens where it happens to fit without overflowing,
+     flex-start and center render identically anyway. */
+  nav#tabs.industry-jumpnav { justify-content: flex-start; }
 
   .industry-header-block { padding: 34px 6vw 20px; background: linear-gradient(135deg,#2b241f,#4a3a2c); color: #fff; text-align: center; overflow: hidden; }
   .industry-header-block h1 { margin: 0 0 6px; font-size: 1.85rem; font-weight: 700; letter-spacing: -.01em; }
