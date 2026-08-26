@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Austin Med Spa Market Report</title>
+<style>
+  :root {
+    --blue: #2563eb;
+    --blue-dark: #1d4ed8;
+    --blue-light: #eff6ff;
+    --ink: #111827;
+    --gray: #6b7280;
+    --gray-light: #9ca3af;
+    --border: #e5e7eb;
+    --bg: #f9fafb;
+    --green: #059669;
+    --amber: #d97706;
+    --red: #dc2626;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.5;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  header.hero {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #3b82f6 100%);
+    color: white;
+    padding: 26px 24px;
+    border-radius: 0 0 20px 20px;
+  }
+  header.hero .inner { max-width: 980px; margin: 0 auto; }
+  header.hero .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: 11px;
+    font-weight: 700;
+    opacity: .85;
+    margin-bottom: 6px;
+  }
+  header.hero h1 { font-size: 24px; margin: 0 0 6px; font-weight: 800; letter-spacing: -0.02em; }
+  header.hero p.sub { font-size: 13px; opacity: .9; margin: 0; max-width: 640px; }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: -26px;
+  }
+  .stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
+    border: 1px solid var(--border);
+  }
+  .stat-card .num { font-size: 30px; font-weight: 800; color: var(--blue); letter-spacing: -0.02em; }
+  .stat-card .label { font-size: 12.5px; color: var(--gray); margin-top: 4px; font-weight: 600; }
+
+  .stat-card.has-tooltip { position: relative; cursor: help; }
+  .stat-card.has-tooltip .label { text-decoration: underline dotted var(--gray-light); text-underline-offset: 3px; }
+  .stat-card .tooltip {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 340px;
+    max-width: 80vw;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 14px 34px rgba(15,23,42,0.18);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity .15s ease, transform .15s ease;
+    z-index: 20;
+    text-align: left;
+    cursor: default;
+  }
+  .stat-card.has-tooltip:hover .tooltip,
+  .stat-card.has-tooltip.tooltip-open .tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .tooltip-title { font-size: 12.5px; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
+  .tooltip p { font-size: 12px; color: var(--gray); margin: 0 0 12px; font-weight: 400; line-height: 1.5; }
+  .tooltip .pill-row { margin-top: 0; gap: 6px; }
+  .tooltip .pill { font-size: 11px; padding: 4px 9px; }
+
+  section { margin-top: 56px; }
+  h2 {
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+  }
+  p.section-desc { color: var(--gray); font-size: 14px; margin: 0 0 24px; max-width: 680px; }
+
+  .card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.04);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Funnel / campaign */
+  .funnel { display: flex; gap: 14px; flex-wrap: wrap; }
+  .funnel-step {
+    flex: 1 1 150px;
+    text-align: center;
+    padding: 18px 12px;
+    border-radius: 12px;
+    background: var(--blue-light);
+  }
+  .funnel-step .n { font-size: 26px; font-weight: 800; color: var(--blue-dark); }
+  .funnel-step .l { font-size: 12px; color: var(--gray); margin-top: 4px; font-weight: 600; }
+  .funnel-arrow { align-self: center; color: var(--gray-light); font-size: 20px; }
+
+  .pill-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+  .pill {
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+  .pill.green { background: #ecfdf5; color: var(--green); }
+  .pill.amber { background: #fffbeb; color: var(--amber); }
+  .pill.red   { background: #fef2f2; color: var(--red); }
+  .pill.gray  { background: #f3f4f6; color: var(--gray); }
+
+  /* Procedure bars */
+  .proc-row { display: grid; grid-template-columns: 220px 1fr 90px; align-items: center; gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--border); animation: rowIn .5s ease backwards; }
+  .proc-row:last-child { border-bottom: none; }
+  .proc-name { font-size: 13.5px; font-weight: 700; }
+  .proc-price { font-size: 11.5px; color: var(--gray); margin-top: 2px; font-weight: 500; }
+  .proc-name-link { cursor: pointer; text-decoration: underline dotted var(--gray-light); text-underline-offset: 3px; }
+  .proc-name-link:hover { color: var(--blue); }
+  .table-note { font-size: 11px; color: var(--gray); margin-top: 4px; font-weight: 400; line-height: 1.45; max-width: 420px; }
+  .bar-track { background: #eef2f7; border-radius: 8px; height: 22px; overflow: hidden; }
+  .bar-fill { background: linear-gradient(90deg, #60a5fa, var(--blue)); height: 100%; border-radius: 8px 0 0 8px; width: 0%; transition: width 1.1s cubic-bezier(.16,.8,.3,1); }
+  .bar-fill.trend { background: linear-gradient(90deg, #c4b5fd, #7c3aed); }
+  .proc-count { text-align: right; font-weight: 800; color: var(--blue-dark); font-size: 14px; }
+  .proc-count.trend { color: #6d28d9; }
+
+  @keyframes rowIn {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .stat-card .num { transition: none; }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  /* animation-fill-mode: backwards (not forwards, and no standing opacity:0 rule) so the card
+     doesn't retain a fractional-opacity stacking context after the fade-in finishes — a standing
+     "opacity: 0" here would trap the tooltip's z-index inside this card, letting later sections
+     in the DOM paint over it. Once the animation ends the card just falls back to normal opacity:1. */
+  .stat-card { animation: cardIn .5s ease backwards; }
+  .stat-card:nth-child(1) { animation-delay: .05s; }
+  .stat-card:nth-child(2) { animation-delay: .15s; }
+  .stat-card:nth-child(3) { animation-delay: .25s; }
+  .stat-card.has-tooltip { z-index: 1; }
+
+  /* Table */
+  table { width: 100%; min-width: 480px; border-collapse: collapse; font-size: 13.5px; }
+  th { text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--gray); padding: 10px 12px; border-bottom: 2px solid var(--border); }
+  td { padding: 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td.num { font-weight: 700; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  /* Tablet */
+  @media (max-width: 720px) {
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  /* Phones */
+  @media (max-width: 600px) {
+    .wrap { padding: 32px 16px 60px; }
+    header.hero { padding: 20px 16px; }
+    header.hero h1 { font-size: 20px; }
+    header.hero p.sub { font-size: 12.5px; }
+    section { margin-top: 40px; }
+    h2 { font-size: 18px; }
+    p.section-desc { font-size: 13px; }
+    .card { padding: 18px; }
+
+    .stat-card .num { font-size: 24px; }
+    .stat-card { padding: 16px; }
+
+    /* Tooltip: full-bleed under its card instead of a fixed 340px box that can overhang the
+       screen edge on narrow phones. */
+    .stat-card .tooltip { width: calc(100vw - 32px); max-width: none; left: 50%; transform: translateX(-50%) translateY(-6px); }
+    .stat-card.has-tooltip:hover .tooltip,
+    .stat-card.has-tooltip.tooltip-open .tooltip { transform: translateX(-50%) translateY(0); }
+
+    /* Procedure / trends / overlay rows: stack name, bar, and count instead of squeezing a
+       fixed 220px label column onto a ~360px screen. */
+    .proc-row, .overlay-row {
+      grid-template-columns: 1fr;
+      grid-template-areas: "name" "bar" "count";
+      row-gap: 6px;
+      padding: 12px 0;
+    }
+    .proc-row > div:first-child, .overlay-row > .proc-name { grid-area: name; }
+    .proc-row > .bar-track, .overlay-row > .overlay-track { grid-area: bar; }
+    .proc-row > .proc-count, .overlay-row > .overlay-pct { grid-area: count; text-align: left; }
+
+    .funnel-step { flex: 1 1 45%; }
+
+    .pill { font-size: 11.5px; padding: 5px 10px; }
+
+    #breakdown-modal-overlay { padding: 0; align-items: stretch; }
+    .breakdown-modal { max-height: 100vh; height: 100vh; border-radius: 0; max-width: 100%; }
+    .breakdown-modal-header, .breakdown-modal-controls, .breakdown-modal-body { padding-left: 16px; padding-right: 16px; }
+    .breakdown-row { flex-direction: column; gap: 2px; }
+    .breakdown-price-col { text-align: left; }
+    .table-note { max-width: none; }
+  }
+
+  ul.notes { margin: 0; padding-left: 18px; font-size: 13.5px; color: #374151; }
+  ul.notes li { margin-bottom: 10px; }
+
+  /* Overlay comparison chart */
+  .overlay-legend { display: flex; gap: 14px 22px; flex-wrap: wrap; margin-bottom: 20px; }
+  .overlay-legend-item { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 700; color: #374151; }
+  .sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; }
+  .sw-clinics { background: linear-gradient(90deg, #bfdbfe, #60a5fa); }
+  .sw-trends { background: linear-gradient(90deg, #c4b5fd, #7c3aed); }
+  .overlay-row { display: grid; grid-template-columns: 220px 1fr 96px; align-items: center; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--border); animation: rowIn .5s ease backwards; }
+  .overlay-row:last-child { border-bottom: none; }
+  .overlay-track { position: relative; height: 26px; background: #eef2f7; border-radius: 7px; overflow: visible; }
+  .overlay-bar-clinics {
+    position: absolute; left: 0; top: 0; height: 100%; width: 0%;
+    background: linear-gradient(90deg, #bfdbfe, #60a5fa);
+    border-radius: 7px;
+    transition: width 1.1s cubic-bezier(.16,.8,.3,1);
+  }
+  .overlay-bar-trends {
+    position: absolute; left: 0; top: 50%; height: 10px; width: 0%;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, #c4b5fd, #7c3aed);
+    border-radius: 6px;
+    box-shadow: 0 0 0 2px #fff;
+    transition: width 1.1s cubic-bezier(.16,.8,.3,1) .1s;
+  }
+  .overlay-pct { text-align: right; font-size: 11.5px; line-height: 1.5; }
+  .overlay-pct .c { color: var(--blue-dark); font-weight: 800; }
+  .overlay-pct .t { color: #6d28d9; font-weight: 800; }
+
+  footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 12px; color: var(--gray-light); text-align: center; }
+
+  /* Per-clinic breakdown modal */
+  #breakdown-modal-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(15,23,42,0.5);
+    display: none; align-items: flex-start; justify-content: center;
+    padding: 40px 16px; overflow-y: auto;
+  }
+  #breakdown-modal-overlay.open { display: flex; }
+  .breakdown-modal {
+    background: white; border-radius: 16px; max-width: 720px; width: 100%;
+    box-shadow: 0 20px 60px rgba(15,23,42,0.3);
+    max-height: calc(100vh - 80px);
+    display: flex; flex-direction: column;
+  }
+  .breakdown-modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .breakdown-modal-title { font-size: 17px; font-weight: 800; }
+  .breakdown-modal-sub { font-size: 12.5px; color: var(--gray); margin-top: 4px; }
+  .breakdown-modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--gray); line-height: 1; padding: 2px 6px; border-radius: 6px; }
+  .breakdown-modal-close:hover { color: var(--ink); background: var(--bg); }
+  .breakdown-modal-controls { padding: 12px 24px; border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .breakdown-sort-label { font-size: 11.5px; color: var(--gray); font-weight: 700; text-transform: uppercase; letter-spacing: .03em; margin-right: 2px; }
+  .sort-btn { font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border); background: white; cursor: pointer; color: var(--gray); }
+  .sort-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .sort-btn.active { background: var(--blue); border-color: var(--blue); color: white; }
+  .breakdown-modal-body { overflow-y: auto; padding: 6px 24px 20px; }
+  .breakdown-row { padding: 11px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; }
+  .breakdown-row:last-child { border-bottom: none; }
+  .breakdown-clinic a { color: var(--blue-dark); font-weight: 700; font-size: 13.5px; text-decoration: none; }
+  .breakdown-clinic a:hover { text-decoration: underline; }
+  .breakdown-clinic .no-link { color: var(--ink); font-weight: 700; font-size: 13.5px; }
+  .breakdown-proc { font-size: 12px; color: var(--gray); margin-top: 2px; }
+  .breakdown-price-col { text-align: right; flex-shrink: 0; }
+  .breakdown-price { font-weight: 800; color: var(--ink); font-size: 13.5px; white-space: nowrap; }
+  .breakdown-duration { font-size: 11px; color: var(--gray-light); margin-top: 2px; }
+  .breakdown-empty { padding: 24px 0; text-align: center; color: var(--gray); font-size: 13px; }
+
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="inner">
+    <div class="eyebrow">Market Research &middot; Updated Aug 24, 2026</div>
+    <h1>Austin Med Spa Market Report</h1>
+    <p class="sub">Pricing transparency across Austin-metro med spas, built from live website research. Outreach campaign has not started yet.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="stat-grid">
+    <div class="stat-card has-tooltip">
+      <div class="num">98</div><div class="label">Clinics tracked</div>
+      <div class="tooltip">
+        <div class="tooltip-title">Coverage at a glance</div>
+        <p>Since a single citywide Google Maps search consistently capped at 6 visible results, coverage was built from 15 neighborhood/suburb-scoped searches instead across the Austin metro (Downtown, South Congress, Westlake, The Domain, Round Rock, Cedar Park, Georgetown, Pflugerville, Lakeway, Bee Cave, Circle C, East Austin, Mueller, Hyde Park, and Buda), turning up 107 raw results (103 logged as trackable candidates after de-duplication and 4 pre-exclusions). 3 more were dropped as non-medical spas during research (IV/wellness-only businesses with no injectables or lasers) and 2 were unverifiable (no matching independent business found) &mdash; leaving 98 confirmed medical spas.</p>
+        <div class="pill-row">
+          <span class="pill green">22 &mdash; full pricing</span>
+          <span class="pill amber">10 &mdash; partial pricing</span>
+          <span class="pill gray">66 &mdash; no public pricing</span>
+        </div>
+      </div>
+    </div>
+    <div class="stat-card"><div class="num">33%</div><div class="label">Clinics with pricing on file (full or partial)</div></div>
+    <div class="stat-card"><div class="num">0</div><div class="label">Pricing-request emails sent (outreach not yet started)</div></div>
+  </div>
+
+  <section>
+    <h2>Most popular procedures</h2>
+    <p class="section-desc">Ranked by number of distinct clinics offering each treatment, across all 98 tracked clinics. <strong>Click a procedure name</strong> to see the clinic-by-clinic breakdown and prices.</p>
+    <div class="card">
+      <div id="procedures"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Search interest in Austin <span style="font-weight:600;color:var(--gray);font-size:13px;">(Google Trends)</span></h2>
+    <p class="section-desc">Relative search interest for each treatment among Austin&ndash;area searchers over the past 12 months, indexed 0&ndash;100 against the single highest-volume term (Botox) across all comparisons. One representative search term was used per category &mdash; see note below.</p>
+    <div class="card">
+      <div id="trends"></div>
+      <p style="font-size:11.5px;color:var(--gray-light);margin:16px 0 0;line-height:1.5;">Source: trends.google.com, geo = Austin, TX (Nielsen DMA US-TX-635), Aug 2025&ndash;Aug 2026, weekly values averaged and read directly from the Trends API response rather than estimated visually, using a single Chrome tab with spaced-out requests (no parallel tabs). Google Trends indexes relative search volume for the exact term entered, not category-wide demand &mdash; e.g. "Dermal Fillers" doesn't capture searches for "Juv&eacute;derm" or "Restylane," and "IPL Photofacial" doesn't capture "BBL" or "Lumecca." Treat this as a directional signal, not an absolute demand figure.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Clinics vs. search demand</h2>
+    <p class="section-desc">Reading clinic supply against consumer search interest side by side.</p>
+    <div class="card">
+      <ul class="notes">
+        <li><strong>Botox's supply lead is the widest seen in this project.</strong> 87 of 98 clinics (89%, easily the highest percentage of any city researched) offer it, and it's also the runaway search leader (index 75). Dermal / Lip Fillers is a very close second in supply (76 clinics, 78%) but searches at essentially zero (index 0) &mdash; the most extreme fillers-search-understatement found anywhere in this project.</li>
+        <li><strong>Laser Hair Removal shows a real demand-ahead-of-supply gap.</strong> It's tied for 7th-8th most-offered (28 clinics, 29%) yet posts the second-highest search index in the city (39). Microneedling is better matched on both sides (3rd supply at 40 clinics/41%, and the highest non-Botox demand at 33).</li>
+        <li><strong>Medical Weight Loss / GLP-1 is again a sharp demand-ahead-of-supply mismatch.</strong> Only 17 of 98 clinics offer it (17%, tied 9th-10th) yet it posts a search index of 47, the second-highest non-Botox demand figure in the city.</li>
+        <li><strong>Chemical Peels is a notable supply-ahead-of-demand mismatch.</strong> It's the 4th most-offered category (38 clinics, 39%) yet its search index is just 3.</li>
+        <li><strong>Body Contouring / CoolSculpting, Kybella, PRP / PRF, and Skin Tightening all post a search index of essentially 0</strong> despite real clinic supply (26, 17, 16, and 13 clinics respectively) &mdash; Austin searchers appear to lean heavily on Botox, fillers, laser hair removal, microneedling, and GLP-1 terms, with almost no generic search volume for the rest of the category list.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Popularity overlay: clinic supply vs. search demand</h2>
+    <p class="section-desc">Clinic supply is scaled to % of the top clinic category (Botox / Neuromodulators). Search demand uses the actual Google Trends index (0&ndash;100) from the Search Interest chart above &mdash; unscaled, so the numbers match exactly. Where the purple bar reaches further than the blue, search demand is outrunning clinic supply &mdash; and vice versa.</p>
+    <div class="card">
+      <div class="overlay-legend">
+        <span class="overlay-legend-item"><i class="sw sw-clinics"></i>Clinic supply (% of top category)</span>
+        <span class="overlay-legend-item"><i class="sw sw-trends"></i>Search demand (Google Trends index, 0&ndash;100)</span>
+      </div>
+      <div id="overlay"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Typical pricing by procedure</h2>
+    <p class="section-desc">Ranges and medians below are computed from actual parsed listing prices, not estimates. <strong>Click a procedure name</strong> to see exactly which clinic and listing each price came from &mdash; important, since a wide range often means the listings aren't really comparable (see "Are we comparing the same thing?" below).</p>
+    <div class="card" style="padding:0;">
+      <table>
+        <thead>
+          <tr><th>Procedure</th><th># clinics</th><th>Typical range</th><th>Median</th></tr>
+        </thead>
+        <tbody id="price-table"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Are we comparing the same thing?</h2>
+    <p class="section-desc">Short answer: not always &mdash; and that's worth knowing before reading too much into any single price range above.</p>
+    <div class="card">
+      <ul class="notes">
+        <li><strong>Botox's published per-unit pricing comes from 16 of 87 clinics</strong> &mdash; a wider genuine sample than most prior cities, ranging from Results Weight Loss &amp; Med Spa's $4.17/unit up to SkinSpirit Austin's $20/unit ceiling. 7 unrelated clinics (Face to Face Spa at Downtown Austin, Austin Aesthetics Club, Alchemy Wellness Med Spa, ULALA Med Spa) show the exact same '$12-$15/unit' phrasing seen repeated verbatim in every prior city of this project &mdash; treated as generic boilerplate estimate text and excluded from this report's range. A second aggregator pattern ('$200-$900/session,' matching the Dallas/Houston figures) appeared at 3 more clinics and was also excluded.</li>
+        <li><strong>Dermal / Lip Fillers ($250&ndash;$1,200/syringe) comes from 8 of 76 clinics</strong> spanning very different products (a $250 lip flip vs. a $1,200 Juvederm Voluma syringe are not the same treatment). One outlier, Ginger Allure MedSpa, prices filler 'from $5/unit' &mdash; a per-unit structure that isn't directly comparable to the per-syringe figures above and was excluded from the range. The same boilerplate ('$600-$1,200/syringe') and aggregator ('$600-$2,000/syringe') contamination patterns appear here too, at 6 clinics, and were excluded.</li>
+        <li><strong>Laser Hair Removal ($40/session&ndash;$3,750) spans three incompatible billing models</strong> &mdash; a single-session rate, a 30-minute unlimited-area promo, and multi-month unlimited packages priced from $325/mo up to $3,750 for 18 months. These are not the same purchase and shouldn't be read as one market rate.</li>
+        <li><strong>What we did about it:</strong> every "# clinics" figure in this report counts <em>distinct clinics</em>, not raw price listings. We can't fully normalize prices to a common unit automatically, since clinics describe quantities and package sizes in inconsistent free text, so every procedure name is clickable and opens the full list of underlying listings &mdash; exact wording, exact price, per clinic &mdash; so you can check whether two prices are actually for the same thing before comparing them.</li>
+        <li><strong>32% of Austin clinics show any pricing at all, full or partial</strong> &mdash; on the lower end of the range seen in this project so far, tied with Atlanta and Miami (both 32%) and just above West Palm Beach (31%), well below Charlotte (70%), Orlando (65%), and Houston (56%). Austin's genuine pricing that does exist skews toward flat-fee and membership models rather than simple per-unit rates.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Outreach campaign</h2>
+    <p class="section-desc">For every clinic without published pricing, a short personalized email asking for rates is planned &mdash; following the same process used for Manhattan, Charlotte, Atlanta, Miami, West Palm Beach, Orlando, Dallas, and Houston. That campaign has not started yet for Austin.</p>
+    <div class="card">
+      <div class="funnel">
+        <div class="funnel-step"><div class="n">67</div><div class="l">Clinics with no published pricing (outreach targets)</div></div>
+        <div class="funnel-arrow">&rarr;</div>
+        <div class="funnel-step"><div class="n">0</div><div class="l">Emails sent</div></div>
+        <div class="funnel-arrow">&rarr;</div>
+        <div class="funnel-step"><div class="n">&mdash;</div><div class="l">Campaign not yet started</div></div>
+      </div>
+      <p style="font-size:12px;color:var(--gray);margin:18px 0 0;">A further 10 clinics have <em>partial</em> pricing (a promo rate, one or two line items, or a package price only) and are also reasonable outreach candidates for their standard rates. As in prior cities, most clinics in this dataset have no discoverable email address (contact form or phone only) &mdash; only a small handful publish a direct email &mdash; so this campaign will need a different outreach channel more often than Charlotte's did.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Geographic coverage</h2>
+    <div class="card">
+      <ul class="notes">
+        <li><strong>South Congress</strong> (9) &mdash; The Injection Room, Luminous, It's A Secret Med Spa - Austin South Lamar, Victory Rejuvenate & MedSpa, Skin Envy Austin - South, Spa 7, Figura Medspa, Innate Beauty Medical Spa, Texas Laser and Aesthetics Medspa.</li>
+        <li><strong>Westlake</strong> (9) &mdash; Westlake Aesthetics & Wellness, Formula Wellness, Body Tonic RX Westlake, Muse Medspa, Fresh Aesthetics, Beauty Elite Med Spa, Auveau, Spa Sway Day + Med Spa | Westlake, Austin Luxury Medspa.</li>
+        <li><strong>The Domain</strong> (9) &mdash; Viva Day Spa + Med Spa | Domain Northside, It's A Secret Med Spa - Austin, Spa Sway Day + Med Spa | Domain, Personique On The Spot, Spa Luxe Austin, Medspa of Austin, SkinSpirit North Austin, LaserAway Austin The Domain, Maui MedSpa.</li>
+        <li><strong>Lakeway</strong> (9) &mdash; AUSTEX Wellness and Medical Spa, MiraBelle Aesthetics & Wellness, THAT Med Spa, Radiant Complexions Skin Lounge, Jacquelyn's Spa, Wink Medical Aesthetics, RM Aesthetics, Lake Travis Laser Skincare & Aesthetics, Skinology by Sophie Champmartin.</li>
+        <li><strong>Downtown</strong> (8) &mdash; SkinSpirit Austin, Austin Med Spa, Rejuvenate Austin, Elevate SKN, Face to Face Spa at Downtown Austin, LVS La Vie Med Spas + Day Spa, Austin Aesthetics Club, Saving Face.</li>
+        <li><strong>Round Rock</strong> (8) &mdash; Viva Day Spa + Med Spa | Round Rock, Vibrant Med Spa, Ginger Allure MedSpa, Allure Laser & Day Spa, ABL Medical Spa & Wellness Clinic MD, Bliss Salon & Med Spa, Chan Ramos MedSpa, Organica Aesthetics.</li>
+        <li><strong>Cedar Park</strong> (8) &mdash; NeoSkin Spa, Skin by Deep Roots, Perfect Aesthetics & Spa, L-Aesthetics & Longevity, Luxe Laser and Wellness Spa, Youthful Solutions, Self Aesthetics & Wellness, Beautiful Solutions.</li>
+        <li><strong>Georgetown</strong> (8) &mdash; Aurora Medical Spa, Renew Med Spa, Laser Lounge Med Spa Georgetown, Joslin Medical Spa By Thompson Plastic Surgery, Spa Luxe (Georgetown), Truly Lifted MedSpa, M Aesthetics Of Georgetown, Contour & Sculpt Aesthetics.</li>
+        <li><strong>Bee Cave</strong> (7) &mdash; Face to Face Spa at Bee Cave, Beverly Hills Rejuvenation Ctr Medspa, L-Aesthetics & Longevity, Beautiful Day Med Spa, Beaute Paris Medical Spa and Integrative Wellness, Body Tonic RX Bee Cave, Beaux MedSpa.</li>
+        <li><strong>Buda</strong> (6) &mdash; Results Weight Loss & Med Spa, SIREN Beauty + Wellness Aesthetic Boutique, Nativa Medical Aesthetics, Glow Laser and Beauty, Fresh Face Aesthetics, Sunrise Wellness and Aesthetics.</li>
+        <li><strong>Circle C</strong> (5) &mdash; Face to Face Spa at Circle C Ranch, Cabana Medical Spa, Glo Med Spa Austin, Simple Radiance Medspa, NakedMD Med Spa Austin.</li>
+        <li><strong>Mueller</strong> (4) &mdash; VIO Med Spa | Mueller, RejuvaWell, Alchemy Wellness Med Spa, ULALA Med Spa.</li>
+        <li><strong>Pflugerville</strong> (3) &mdash; Elite Med Spa, B. Sweet Lash Wax & Medspa, Instant Beauty Skin Studio.</li>
+        <li><strong>East Austin</strong> (3) &mdash; Curate Medspa, Coco Aesthetics Medspa, Peachy East Austin.</li>
+        <li><strong>Hyde Park</strong> (2) &mdash; Wild and Beautiful Natural Aesthetics, Aesthetica Med Spa.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    Source: Austin_Med_Spa_Procedures.xlsx &middot; Compiled from direct website research and a Google Maps sweep &middot; Report generated 8/24/26
+  </footer>
+
+</div>
+
+<div id="breakdown-modal-overlay">
+  <div class="breakdown-modal">
+    <div class="breakdown-modal-header">
+      <div>
+        <div class="breakdown-modal-title" id="breakdown-title">Procedure</div>
+        <div class="breakdown-modal-sub" id="breakdown-sub">Every tracked listing for this category, clinic by clinic.</div>
+      </div>
+      <button class="breakdown-modal-close" id="breakdown-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="breakdown-modal-controls">
+      <span class="breakdown-sort-label">Sort:</span>
+      <button class="sort-btn active" data-sort="clinic">Clinic A&ndash;Z</button>
+      <button class="sort-btn" data-sort="price-asc">Price: low to high</button>
+      <button class="sort-btn" data-sort="price-desc">Price: high to low</button>
+    </div>
+    <div class="breakdown-modal-body" id="breakdown-body"></div>
+  </div>
+</div>
+
+<script>
+
+  (function () {
+    const tooltipCard = document.querySelector('.stat-card.has-tooltip');
+    if (!tooltipCard) return;
+    tooltipCard.addEventListener('click', function (e) {
+      e.stopPropagation();
+      tooltipCard.classList.toggle('tooltip-open');
+    });
+    document.addEventListener('click', function () {
+      tooltipCard.classList.remove('tooltip-open');
+    });
+  })();
+
+  const procedures = [{"name": "Botox / Neuromodulators", "count": 88, "price": "~$12/unit"}, {"name": "Dermal / Lip Fillers", "count": 77, "price": "~$650/syringe"}, {"name": "Microneedling", "count": 40, "price": "\u2014"}, {"name": "Chemical Peels", "count": 38, "price": "\u2014"}, {"name": "HydraFacial", "count": 32, "price": "~$200"}, {"name": "IPL / Photofacial", "count": 30, "price": "\u2014"}, {"name": "Sculptra / Biostimulators", "count": 29, "price": "~$1,500"}, {"name": "Laser Hair Removal", "count": 28, "price": "\u2014"}, {"name": "Body Contouring / CoolSculpting", "count": 26, "price": "\u2014"}, {"name": "Kybella", "count": 17, "price": "\u2014"}, {"name": "Medical Weight Loss / GLP-1", "count": 17, "price": "\u2014"}, {"name": "PRP / PRF", "count": 16, "price": "\u2014"}, {"name": "Skin Tightening (Morpheus8/RF)", "count": 13, "price": "\u2014"}, {"name": "IV Therapy", "count": 10, "price": "\u2014"}, {"name": "Hormone Therapy", "count": 10, "price": "\u2014"}];
+  const max = Math.max(...procedures.map(p => p.count));
+  const container = document.getElementById('procedures');
+  const barsToAnimate = [];
+  procedures.forEach((p, i) => {
+    const row = document.createElement('div');
+    row.className = 'proc-row';
+    row.style.animationDelay = `${i * 0.04}s`;
+    const pct = (p.count / max * 100).toFixed(0);
+    row.innerHTML = `
+      <div>
+        <div class="proc-name proc-name-link" data-category="${p.name}">${p.name}</div>
+        <div class="proc-price">${p.price}</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" data-pct="${pct}"></div></div>
+      <div class="proc-count">${p.count} clinics</div>
+    `;
+    container.appendChild(row);
+    barsToAnimate.push(row.querySelector('.bar-fill'));
+  });
+
+  const trends = [{"name": "Botox / Neuromodulators", "term": "\"Botox\"", "index": 75}, {"name": "Dermal / Lip Fillers", "term": "\"Dermal Fillers\"", "index": 0}, {"name": "Sculptra / Biostimulators", "term": "\"Sculptra\"", "index": 6}, {"name": "Kybella", "term": "\"Kybella\"", "index": 0}, {"name": "HydraFacial", "term": "\"HydraFacial\"", "index": 3}, {"name": "Chemical Peels", "term": "\"Chemical Peel\"", "index": 3}, {"name": "Microneedling", "term": "\"Microneedling\"", "index": 33}, {"name": "Laser Hair Removal", "term": "\"Laser Hair Removal\"", "index": 39}, {"name": "Body Contouring / CoolSculpting", "term": "\"CoolSculpting\"", "index": 0}, {"name": "Skin Tightening (Morpheus8/RF)", "term": "\"Morpheus8\"", "index": 0}, {"name": "IV Therapy", "term": "\"IV Therapy\"", "index": 10}, {"name": "PRP / PRF", "term": "\"PRP Therapy\"", "index": 0}, {"name": "Medical Weight Loss / GLP-1", "term": "\"Semaglutide\"", "index": 47}, {"name": "Hormone Therapy", "term": "\"Hormone Replacement Therapy\"", "index": 3}, {"name": "IPL / Photofacial", "term": "\"IPL Photofacial\"", "index": 0}];
+  const trendsContainer = document.getElementById('trends');
+  trends.forEach((t, i) => {
+    const row = document.createElement('div');
+    row.className = 'proc-row';
+    row.style.animationDelay = `${i * 0.04}s`;
+    row.innerHTML = `
+      <div>
+        <div class="proc-name">${t.name}</div>
+        <div class="proc-price">Search term: ${t.term}</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill trend" data-pct="${t.index}"></div></div>
+      <div class="proc-count trend">${t.index} / 100</div>
+    `;
+    trendsContainer.appendChild(row);
+    barsToAnimate.push(row.querySelector('.bar-fill'));
+  });
+
+  const overlayContainer = document.getElementById('overlay');
+  const clinicMax = Math.max(...procedures.map(p => p.count));
+  procedures.forEach((p, i) => {
+    const t = trends.find(x => x.name === p.name) || { index: 0 };
+    const clinicPct = Math.round(p.count / clinicMax * 100);
+    const trendPct = t.index;
+    const row = document.createElement('div');
+    row.className = 'overlay-row';
+    row.style.animationDelay = `${i * 0.04}s`;
+    row.innerHTML = `
+      <div class="proc-name">${p.name}</div>
+      <div class="overlay-track">
+        <div class="overlay-bar-clinics" data-pct="${clinicPct}"></div>
+        <div class="overlay-bar-trends" data-pct="${trendPct}"></div>
+      </div>
+      <div class="overlay-pct"><span class="c">${clinicPct}%</span> clinics<br><span class="t">${trendPct}</span> search idx</div>
+    `;
+    overlayContainer.appendChild(row);
+    barsToAnimate.push(row.querySelector('.overlay-bar-clinics'));
+    barsToAnimate.push(row.querySelector('.overlay-bar-trends'));
+  });
+
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      barsToAnimate.forEach((el, i) => {
+        setTimeout(() => { el.style.width = el.dataset.pct + '%'; }, i * 25);
+      });
+    }, 150);
+  });
+
+  function animateCount(el, target, opts = {}) {
+    const { suffix = '', duration = 1200, decimals = 0, prefix = '' } = opts;
+    const start = performance.now();
+    function tick(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const val = target * eased;
+      el.textContent = prefix + val.toLocaleString('en-US', { maximumFractionDigits: decimals, minimumFractionDigits: decimals }) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = prefix + target.toLocaleString('en-US') + suffix;
+    }
+    requestAnimationFrame(tick);
+  }
+  document.querySelectorAll('.stat-card .num').forEach(el => {
+    const raw = el.textContent.trim();
+    const suffix = raw.match(/%$/) ? '%' : '';
+    const target = parseFloat(raw.replace(/[^0-9.]/g, ''));
+    if (!isNaN(target)) {
+      el.textContent = suffix ? '0%' : '0';
+      setTimeout(() => animateCount(el, target, { suffix }), 200);
+    }
+  });
+
+  const priceRows = [["Botox / Neuromodulators", "$4\u2013$20/unit", "~$12/unit", "17 of 88 clinics publish a genuine per-unit or itemized Botox/Dysport rate: Spa Sway Day + Med Spa | Westlake (Botox $13/unit, Dysport $4/unit, Daxxify $6.5/unit \u2014 confirmed via pricing-request email, 2026-08-24), SkinSpirit Austin ($10-$20/unit), The Injection Room ($9-$16/unit), Skin Envy Austin - South ($9.99/unit), Body Tonic RX (both Westlake and Bee Cave locations, $13-$16/unit), Maui MedSpa ($11/unit, $10 for members), Renew Med Spa ($13/unit Botox, $6/unit Dysport, member discounts to $11/$4.50), Beaux MedSpa (~$11/unit Botox/Daxxify, ~$9.50/unit Dysport via 100-unit packages), Cabana Medical Spa (from $12/unit), Perfect Aesthetics & Spa (from $9/unit), Chan Ramos MedSpa (from $12/unit, $480 package), Results Weight Loss & Med Spa ($12.50 per 3 units, ~$4.17/unit), Medspa of Austin (itemized by area, $10-$25), Figura Medspa ($300-$600, likely per treatment area rather than per-unit), Peachy East Austin ($425 flat fee for unlimited units in 3 areas), and L-Aesthetics & Longevity ($260 regular/$179 promo, Groupon-sourced). 7 clinics (Face to Face Spa at Downtown Austin, Austin Aesthetics Club, Alchemy Wellness Med Spa, ULALA Med Spa) show the identical '$12-$15/unit' phrase seen repeated verbatim in every prior city of this project -- excluded as generic boilerplate. 3 more (LVS La Vie Med Spas + Day Spa, Spa Sway Day + Med Spa | Domain, Glo Med Spa Austin) show a '$200-$900/session' aggregator figure matching the Dallas/Houston pattern -- also excluded."], ["Dermal / Lip Fillers", "$250\u2013$1,200/syringe", "~$650/syringe", "9 of 77 clinics publish genuine filler pricing: Spa Sway Day + Med Spa | Westlake (Kysse/Defyne, $800/syringe \u2014 confirmed via pricing-request email, 2026-08-24), SkinSpirit Austin (Lip $500-$700, Cheek $600-$800/syringe), The Injection Room ($550/syringe HA filler, $575-$800/syringe Versa/Kysse/RHA), Figura Medspa (Juvederm Voluma and jawline filler, $600-$1,200/syringe), Spa Luxe Austin ($450/1.2ml Versa Filler), Medspa of Austin (Lip Augmentation $300-$500, Lip Flip $250-$400), and Beaux MedSpa ($650 first syringe, $500 second syringe same visit). One outlier, Ginger Allure MedSpa, lists filler 'from $5/unit' -- a per-unit rather than per-syringe structure not directly comparable to the range above. 6 clinics (LVS La Vie Med Spas + Day Spa, Austin Aesthetics Club, Spa Sway Day + Med Spa | Domain, Glo Med Spa Austin, Alchemy Wellness Med Spa, ULALA Med Spa) repeat the '$600-$1,200/syringe' or '$600-$2,000/syringe' boilerplate/aggregator phrasing -- excluded."], ["Sculptra / Biostimulators", "$800\u2013$2,250", "~$1,500", "1 of 29 clinics publishes specific pricing: Spa Sway Day + Med Spa | Westlake (1 vial $800, 2 vials $1,500, 3 vials $2,250 \u2014 confirmed via pricing-request email, 2026-08-24). The rest of the 28 other clinics offering Sculptra or other biostimulators in this dataset do not publish pricing."], ["HydraFacial", "$150\u2013$350", "~$250", "3 of 32 clinics publish a genuine standalone HydraFacial-type price: Spa Sway Day + Med Spa | Domain (50-min $275 / 80-min $350; boosters $50 each \u2014 confirmed via pricing-request email, 2026-08-24), Figura Medspa's DiamondGlow Facial ($150-$250), and Face to Face Spa at Circle C Ranch's HydraFacial MD ($235). Skin Envy Austin - South's $139.99/mo VIP membership includes HydraFacial as one of several rotating monthly options, not a standalone price -- excluded."], ["Chemical Peels", "$149\u2013$300", "\u2014", "3 of 38 clinics publish peel pricing on different treatments: Face to Face Spa at Downtown Austin's new-client Premium Medi-Facial promo ($149, includes a peel or microdermabrasion), Face to Face Spa at Circle C Ranch's standard Chemical Peel ($165) and VI Peel ($300). Glo Med Spa Austin's $149 promo bundles chemical peel as one of five possible treatment choices, not a peel-specific price. 3 clinics (LVS La Vie Med Spas + Day Spa, Spa Sway Day + Med Spa | Domain, Glo Med Spa Austin) show the '$100-$800/treatment' aggregator figure -- excluded."], ["Microneedling", "$275\u2013$299", "\u2014", "2 of 40 clinics publish a standalone microneedling price: Face to Face Spa at Circle C Ranch's SkinPen Microneedling ($299) and Cabana Medical Spa (from $275). Skin Envy's $139.99/mo VIP membership and Glo Med Spa's $149 multi-treatment promo both bundle microneedling with other services, not a standalone price. 3 clinics (LVS La Vie Med Spas + Day Spa, Spa Sway Day + Med Spa | Domain, Glo Med Spa Austin) show the '$200-$700/session' aggregator figure -- excluded."], ["Laser Hair Removal", "$40/session\u2013$3,750 (18-mo unlimited package)", "\u2014", "3 of 28 clinics publish genuine pricing across very different billing structures -- ABL Medical Spa & Wellness Clinic MD's single-session rate (from $40/session), Victory Rejuvenate & MedSpa's unlimited-area 30-minute session promo ($149), and Texas Laser and Aesthetics Medspa's unlimited-package tiers ($325/mo month-to-month up to $3,750 for an 18-month unlimited package). The spread reflects these incompatible pricing models rather than a single comparable rate."], ["Body Contouring / CoolSculpting", "$250\u2013$3,500", "\u2014", "4 of 26 clinics publish pricing on different treatments and session lengths: Spa Sway Day + Med Spa | Domain (SoftWave/Pure Impact, $250/area per session; full plans $1,000-$3,500 depending on areas treated \u2014 confirmed via pricing-request email, 2026-08-24), The Injection Room's Emsculpt/skin tightening ($1,500/session), Figura Medspa's CoolSculpting and EmSculpt sessions ($750-$1,500), and VIO Med Spa | Mueller's promo pricing (CoolSculpting Elite $850/60 min, EmSculpt NEO $425/45 min) -- not a single comparable rate."], ["Skin Tightening (Morpheus8/RF)", "Limited data", "\u2014", "Only 2 of 13 clinics show any pricing signal, and neither is a clean skin-tightening-specific rate: The Injection Room's $1,500 Emsculpt/skin-tightening session (already counted under Body Contouring) and Glo Med Spa Austin's $149 multi-treatment promo bundle (skin tightening is one of five options). Not enough clean data to establish a range."], ["IV Therapy", "from $22", "\u2014", "Only 1 of 10 clinics (Cabana Medical Spa, vitamin/B12 shots from $22) publishes a genuine IV/injection therapy price."], ["PRP / PRF", "Not widely published", "\u2014", "None of the 16 clinics offering PRP/PRF/vampire facial treatments in this dataset publish a price."], ["Medical Weight Loss / GLP-1", "from $99/mo", "\u2014", "Only 1 of 17 clinics (Body Tonic RX Westlake, Semaglutide/Tirzepatide from $99/mo) publishes a genuine weight-loss program price."], ["Hormone Therapy", "Not widely published", "\u2014", "None of the 10 clinics offering hormone therapy in this dataset publish a price -- consistent with this category skewing toward consult-first, membership-style pricing in every city of this project so far."], ["IPL / Photofacial", "$600\u2013$1,700", "\u2014", "Only 1 of 30 clinics (Austin Med Spa, PicoSure Laser $600/session or 3 for $1,700 including an Epionce Recovery Kit) publishes a genuine IPL/photofacial-adjacent laser price. Glo Med Spa Austin's $149 promo bundles IPL as one of five treatment options, not an IPL-specific price."], ["Kybella", "Not widely published", "\u2014", "None of the 17 clinics offering Kybella in this dataset publish a price."]];
+  const tbody = document.getElementById('price-table');
+  priceRows.forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><div class="proc-name proc-name-link" data-category="${r[0]}">${r[0]}</div><div class="table-note">${r[4]}</div></td><td class="num">${r[1]}</td><td>${r[2]}</td><td class="num">${r[3]}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  const breakdownData = {"Botox / Neuromodulators": [["SkinSpirit Austin", "skinspirit.com", "Botox", "$10-$20/unit", ""], ["Austin Med Spa", "austinmedspa.com", "Botox", "not published", ""], ["Rejuvenate Austin", "rejuvenateaustin.com", "Botox", "not published", ""], ["Rejuvenate Austin", "rejuvenateaustin.com", "Dysport", "not published", ""], ["Elevate SKN", "elevateskn.com", "Neuromodulators (Botox/Dysport)", "not published", ""], ["Face to Face Spa at Downtown Austin", "facetofacespa.com", "Botox", "$12-$15/unit (generic rate shown across multiple unrelated clinics; excluded from genuine pricing analysis)", ""], ["LVS La Vie Med Spas + Day Spa", "lvmedspas.com", "Botox / Neurotoxins", "$200-$900/session (aggregator figure; excluded from genuine pricing analysis)", ""], ["Austin Aesthetics Club", "austinaestheticsclub.com", "Botox", "$12-$15/unit (generic rate shown across multiple unrelated clinics; excluded from genuine pricing analysis)", ""], ["Saving Face", "savingfaceaustin.com", "Botox", "not published", ""], ["The Injection Room", "theinjectionroom.com", "Botox", "$9-$16/unit", ""], ["Luminous", "luminousfaceskinmind.com", "Botox / Dysport", "not published", ""], ["It's A Secret Med Spa - Austin South Lamar", "secretmedspa.com", "Botox", "not published (market avg cited $12-$16/unit, not clinic-specific)", ""], ["Victory Rejuvenate & MedSpa", "victoryrejuvenate.com", "Botox", "not published", ""], ["Skin Envy Austin - South", "skinenvyaustin.com", "Botox", "$9.99/unit", ""], ["Spa 7", "spa7austin.com", "Botox", "not published", ""], ["Figura Medspa", "figuramedspa.com", "Botox", "$300-$600", ""], ["Innate Beauty Medical Spa", "innatebeauty.com", "Botox", "not published", ""], ["Texas Laser and Aesthetics Medspa", "texaslasermedspa.com", "Botox", "not published", ""], ["Texas Laser and Aesthetics Medspa", "texaslasermedspa.com", "Dysport", "not published", ""], ["Formula Wellness", "formulawellness.com", "Wrinkle Relaxers (Botox/Dysport)", "not published", ""], ["Body Tonic RX Westlake", "mybodytonic.com", "Botox / Neuromodulators (Dysport/Xeomin/Daxxify)", "$13-$16/unit", ""], ["Muse Medspa", "musemedspaaustin.com", "Botox", "not published", ""], ["Fresh Aesthetics", "westlakefreshaesthetics.com", "Botox", "not published", ""], ["Beauty Elite Med Spa", "beautyelitemedspa.com", "Neuromodulators", "not published", ""], ["Auveau", "auveau.com", "Botox", "not published", ""], ["Austin Luxury Medspa", "austinluxurymedspa.com", "Botox", "not published", ""], ["Viva Day Spa + Med Spa | Domain Northside", "vivadayspa.com", "Botox", "not published", ""], ["It's A Secret Med Spa - Austin", "secretmedspa.com", "Botox / Wrinkle Relaxers", "not published", ""], ["Spa Sway Day + Med Spa | Domain", "spasway.com", "Botox / Neurotoxins", "$200-$900/session (aggregator figure; excluded from genuine pricing analysis)", ""], ["Personique On The Spot", "personiqueonthespot.com", "Botox", "not published", ""], ["Medspa of Austin", "themedspaaustin.com", "Botox - Forehead Lines", "$10-$20", ""], ["Medspa of Austin", "themedspaaustin.com", "Botox - Crow's Feet", "$10-$20", ""], ["Medspa of Austin", "themedspaaustin.com", "Botox - Masseter Injections", "$15-$25", ""], ["Medspa of Austin", "themedspaaustin.com", "Xeomin", "not published", ""], ["SkinSpirit North Austin", "skinspirit.com", "Botox", "not published (location-specific)", ""], ["LaserAway Austin The Domain", "laseraway.com", "Botox", "not published", ""], ["Maui MedSpa", "mauimedspa.com", "Botox", "$11/unit ($10/unit for members)", ""], ["Maui MedSpa", "mauimedspa.com", "Dysport", "not published", ""], ["Viva Day Spa + Med Spa | Round Rock", "vivadayspa.com", "Botox / Dysport", "not published", ""], ["Vibrant Med Spa", "vibrantmedspa.com", "Botox", "not published (market avg cited $11-$14/unit, not clinic-specific)", ""], ["Ginger Allure MedSpa", "gingerallure.com", "Neurotoxins (Botox/Dysport)", "not published", ""], ["Allure Laser & Day Spa", "allurelaserdayspa.com", "Botox", "not published", ""], ["ABL Medical Spa & Wellness Clinic MD", "ablmedspa.com", "Botox", "not published", ""], ["Bliss Salon & Med Spa", "blisssalonmedspa.com", "Botox", "not published", ""], ["Chan Ramos MedSpa", "chanramos.com", "Botox", "starting at $12/unit; $480 package special", ""], ["Organica Aesthetics", "organicaaesthetics.com", "Botox", "not published", ""], ["NeoSkin Spa", "neoskinaustin.com", "Botox", "not published", ""], ["Skin by Deep Roots", "skinbydeeproots.com", "Neurotoxins (Botox)", "not published", ""], ["Perfect Aesthetics & Spa", "perfectaestheticsspa.com", "Botox (medical/therapeutic)", "starting at $9/unit ($25 new-client consult fee)", ""], ["Perfect Aesthetics & Spa", "perfectaestheticsspa.com", "Dysport", "not published", ""], ["L-Aesthetics & Longevity", "lalongevity.com", "Botox", "$260 regular / $179 promo (Groupon-sourced pricing)", ""], ["Youthful Solutions", "ysmedispa.com", "Botox", "not published", ""], ["Self Aesthetics & Wellness", "selfatx.com", "Botox / Dysport", "not published", ""], ["Beautiful Solutions", "beautifulsolutionstx.com", "Botox", "not published (Groupon deals from $206.99, procedure unclear)", ""], ["Beautiful Solutions", "beautifulsolutionstx.com", "Xeomin", "not published", ""], ["Aurora Medical Spa", "auroramedicalspa.com", "Botox / Daxxify / Dysport", "not published", ""], ["Renew Med Spa", "renewmedspatx.com", "Botox", "$13/unit ($11/unit for members)", ""], ["Renew Med Spa", "renewmedspatx.com", "Dysport", "$6/unit ($4.50/unit for members)", ""], ["Laser Lounge Med Spa Georgetown", "laserloungemedspa.com", "Botox", "not published", ""], ["Joslin Medical Spa By Thompson Plastic Surgery", "thompsonplasticsurgery.com", "Botox / Neuromodulators", "not published", ""], ["Truly Lifted MedSpa", "trulyliftedmedspa.com", "Botox / Dysport / Jeuveau", "not published", ""], ["M Aesthetics Of Georgetown", "", "Botox", "not published", ""], ["Contour & Sculpt Aesthetics", "contourandsculptaesthetics.com", "Botox", "not published", ""], ["Elite Med Spa", "elitemedspaoftexas.com", "Botox", "not published (area market rate cited $10.75/unit, not confirmed clinic-specific)", ""], ["Elite Med Spa", "elitemedspaoftexas.com", "Dysport", "not published", ""], ["B. Sweet Lash Wax & Medspa", "bsweet.shop", "Botox", "not published", ""], ["Instant Beauty Skin Studio", "", "Botox", "not published", ""], ["AUSTEX Wellness and Medical Spa", "austexwellness.com", "Botox", "not published", ""], ["MiraBelle Aesthetics & Wellness", "mirabellespa.com", "Botox / Dysport", "not published", ""], ["THAT Med Spa", "thatmedspa.com", "Botox", "not published (market avg cited $10-$18/unit, not clinic-specific)", ""], ["Jacquelyn's Spa", "jacquelynsspa.com", "Botox / Dysport / Jeuveau / Fillers (via Contoured Beauty, in-suite)", "not published", ""], ["Wink Medical Aesthetics", "winkmed.com", "Botox / Dysport / Juvederm Fillers", "not published", ""], ["RM Aesthetics", "", "Botox / Dysport", "not published", ""], ["Lake Travis Laser Skincare & Aesthetics", "austinlaserskincare.com", "Botox", "not published", ""], ["Face to Face Spa at Bee Cave", "facetofacespa.com", "Botox", "not published (members save $2/unit, base price not published)", ""], ["Beverly Hills Rejuvenation Ctr Medspa", "bhrcenter.com", "Botox", "not published", ""], ["L-Aesthetics & Longevity", "lalongevity.com", "Botox", "not published", ""], ["Beautiful Day Med Spa", "beautifuldaymedspa.com", "Botox / Jeuveau / Dysport", "not published", ""], ["Beaute Paris Medical Spa and Integrative Wellness", "beauteparismedspa.com", "Botox", "not published", ""], ["Body Tonic RX Bee Cave", "mybodytonic.com", "Botox", "$13-$16/unit", ""], ["Beaux MedSpa", "beauxmedspa.com", "Botox / Daxxify (100 units)", "$1,100 (~$11/unit)", ""], ["Beaux MedSpa", "beauxmedspa.com", "Dysport (100 units)", "$950 (~$9.50/unit)", ""], ["Face to Face Spa at Circle C Ranch", "facetofacespa.com", "Botox", "not published", ""], ["Cabana Medical Spa", "cabanamedspa.com", "Anti-Wrinkle Injections (Botox)", "starting at $12/unit", ""], ["Glo Med Spa Austin", "glomedspaaustin.com", "Botox / Neurotoxins", "$200-$900/session (aggregator figure; excluded from genuine pricing analysis)", ""], ["NakedMD Med Spa Austin", "nakedmd.com", "Botox / Dysport / Xeomin", "not published (location-specific)", ""], ["Curate Medspa", "curatemedspaatx.com", "Botox", "not published", ""], ["Peachy East Austin", "peachystudio.com", "Botox (flat fee, unlimited units, 3 areas, Xeomin/Jeuveau)", "$425", ""], ["Peachy East Austin", "peachystudio.com", "Masseter Botox", "not published", ""], ["VIO Med Spa | Mueller", "viomedspa.com", "Botox", "not published", ""], ["RejuvaWell", "rejuvawell.com", "Botox", "not published", ""], ["Alchemy Wellness Med Spa", "alchemywellnessatx.com", "Botox", "$12-$15/unit (generic rate shown across multiple unrelated clinics; excluded from genuine pricing analysis)", ""], ["ULALA Med Spa", "ulalamedspa.com", "Botox", "$12-$15/unit (generic rate shown across multiple unrelated clinics; excluded from genuine pricing analysis)", ""], ["Wild and Beautiful Natural Aesthetics", "wildandbeautifulaustin.com", "Botox", "not published", ""], ["Aesthetica Med Spa", "amedspa.com", "Botox", "not published", ""], ["Results Weight Loss & Med Spa", "resultsweightlossandmedspa.com", "Botox / Dysport", "$12.50 per 3 units (~$4.17/unit)", ""], ["SIREN Beauty + Wellness Aesthetic Boutique", "sirenbeautyandwellness.com", "Botox", "not published", ""], ["Nativa Medical Aesthetics", "nativamedaesthetics.com", "Botox / Dysport / Jeuveau", "not published", ""], ["Glow Laser and Beauty", "glowlaserandbeauty.com", "Botox", "not published", ""], ["Fresh Face Aesthetics", "freshfacebuda.com", "Botox", "not published", ""], ["Spa Sway Day + Med Spa | Westlake", "spasway.com", "Toxins (Botox/Dysport/Daxxify)", "Dysport $4/unit, Botox $13/unit, Daxxify $6.5/unit \u2014 confirmed via pricing-request email, 2026-08-24", ""]], "Dermal / Lip Fillers": [["SkinSpirit Austin", "skinspirit.com", "Lip Filler", "$500-$700/syringe", ""], ["SkinSpirit Austin", "skinspirit.com", "Cheek Filler", "$600-$800/syringe", ""], ["Austin Med Spa", "austinmedspa.com", "Bellafill", "not published", ""], ["Austin Med Spa", "austinmedspa.com", "Restylane", "not published", ""], ["Austin Med Spa", "austinmedspa.com", "Radiesse", "not published", ""], ["Rejuvenate Austin", "rejuvenateaustin.com", "Juvederm Family Fillers", "not published", ""], ["Rejuvenate Austin", "rejuvenateaustin.com", "Restylane Family Fillers", "not published", ""], ["Rejuvenate Austin", "rejuvenateaustin.com", "Radiesse", "not published", ""], ["Elevate SKN", "elevateskn.com", "Dermal Fillers", "not published", ""], ["LVS La Vie Med Spas + Day Spa", "lvmedspas.com", "Dermal Fillers", "$600-$2,000/syringe (aggregator figure; excluded from genuine pricing analysis)", ""], ["Austin Aesthetics Club", "austinaestheticsclub.com", "Fillers", "$600-$1,200/syringe (generic rate shown across multiple unrelated clinics; excluded from genuine pricing analysis)", ""], ["Saving Face", "savingfaceaustin.com", "Dermal Fillers", "not published", ""], ["The Injection Room", "theinjectionroom.com", "Hyaluronic Acid Filler (2 syringes)", "$1,100 ($550/syringe)", ""], ["The Injection Room", "theinjectionroom.com", "Versa/Kysse/RHA Lip Fillers", "$575-$800/syringe", ""], ["The Injection Room", "theinjectionroom.com", "Radiesse", "not published", ""], ["Luminous", "luminousfaceskinmind.com", "Injectable Filler", "not published", ""], ["It's A Secret Med Spa - Austin South Lamar", "secretmedspa.com", "Filler", "not published", ""], ["Victory Rejuvenate & MedSpa", "victoryrejuvenate.com", "Dermal Fillers", "not published", ""], ["Spa 7", "spa7austin.com", "Filler", "not published", ""], ["Figura Medspa", "figuramedspa.com", "Juvederm Voluma", "$600-$1,200", ""], ["Figura Medspa", "figuramedspa.com", "Filler for Jawline", "$600-$1,200/syringe", ""], ["Innate Beauty Medical Spa", "innatebeauty.com", "Dermal Fillers (Juvederm/Voluma/Sculptra/Radiesse/Restylane/Belotero/RHA/Skinvive)", "not published", ""], ["Texas Laser and Aesthetics Medspa", "texaslasermedspa.com", "Juvederm", "not published", ""], ["Formula Wellness", "formulawellness.com", "Dermal Fillers", "not published", ""], ["Body Tonic RX Westlake", "mybodytonic.com", "Dermal Filler / Sculptra", "not published", ""], ["Muse Medspa", "musemedspaaustin.com", "Hyaluronic Acid Lip Filler", "not published", ""], ["Muse Medspa", "musemedspaaustin.com", "Cheek Filler", "not published", ""], ["Fresh Aesthetics", "westlakefreshaesthetics.com", "Dermal Fillers", "not published", ""], ["Beauty Elite Med Spa", "beautyelitemedspa.com", "RHA Collection Fillers", "not published", ""], ["Auveau", "auveau.com", "Dermal Fillers (Restylane/Juvederm)", "not published", ""], ["Austin Luxury Medspa", "austinluxurymedspa.com", "Filler", "not published", ""], ["Viva Day Spa + Med Spa | Domain Northside", "vivadayspa.com", "Dermal Filler", "not published", ""], ["It's A Secret Med Spa - Austin", "secretmedspa.com", "Dermal Filler", "not published", ""], ["Spa Sway Day + Med Spa | Domain", "spasway.com", "Dermal Fillers", "$600-$2,000/syringe (aggregator figure; excluded from genuine pricing analysis)", ""], ["Personique On The Spot", "personiqueonthespot.com", "Lip Fillers", "not published", ""], ["Spa Luxe Austin", "spaluxe.com", "Versa Filler", "$450/1.2ml", ""], ["Spa Luxe Austin", "spaluxe.com", "Fillers + Injectables", "not published", ""], ["Medspa of Austin", "themedspaaustin.com", "Lip Augmentation Filler", "$300-$500", ""], ["Medspa of Austin", "themedspaaustin.com", "Lip Flip", "$250-$400", ""], ["Medspa of Austin", "themedspaaustin.com", "Revanesse Versa Filler", "not published", ""], ["SkinSpirit North Austin", "skinspirit.com", "Dermal Fillers", "not published (location-specific)", ""], ["SkinSpirit North Austin", "skinspirit.com", "Lip Fillers", "not published (location-specific)", ""], ["Maui MedSpa", "mauimedspa.com", "Lip and Facial Fillers", "not published", ""], ["Maui MedSpa", "mauimedspa.com", "Dermal Fillers", "not published", ""], ["Viva Day Spa + Med Spa | Round Rock", "vivadayspa.com", "Dermal Fillers", "not published", ""], ["Viva Day Spa + Med Spa | Round Rock", "vivadayspa.com", "Lip Filler", "not published", ""], ["Vibrant Med Spa", "vibrantmedspa.com", "Dermal Fillers (Restylane/Revance)", "not published", ""], ["Ginger Allure MedSpa", "gingerallure.com", "Dermal Filler", "from $5/unit", ""], ["Allure Laser & Day Spa", "allurelaserdayspa.com", "Filler/Injectable", "not published", ""], ["Bliss Salon & Med Spa", "blisssalonmedspa.com", "Juvederm Voluma", "not published", ""], ["Chan Ramos MedSpa", "chanramos.com", "Dermal Fillers", "not published", ""], ["Organica Aesthetics", "organicaaesthetics.com", "Fillers", "not published", ""], ["Skin by Deep Roots", "skinbydeeproots.com", "Dermal Fillers", "not published", ""], ["Perfect Aesthetics & Spa", "perfectaestheticsspa.com", "Dermal Fillers", "not published", ""], ["L-Aesthetics & Longevity", "lalongevity.com", "Juvederm Collection Fillers", "not published", ""], ["L-Aesthetics & Longevity", "lalongevity.com", "Skinvive", "not published", ""], ["Youthful Solutions", "ysmedispa.com", "Lip Filler", "not published", ""], ["Self Aesthetics & Wellness", "selfatx.com", "Dermal Fillers / Radiesse", "not published", ""], ["Beautiful Solutions", "beautifulsolutionstx.com", "Dermal Fillers (Juvederm/Radiesse/Voluma/Vollure)", "not published", ""], ["Aurora Medical Spa", "auroramedicalspa.com", "Lip Filler / Dermal Fillers / Skinvive", "not published", ""], ["Joslin Medical Spa By Thompson Plastic Surgery", "thompsonplasticsurgery.com", "Dermal Fillers", "not published", ""], ["Spa Luxe (Georgetown)", "spaluxe.com", "Fillers + Injectables", "not published", ""], ["Contour & Sculpt Aesthetics", "contourandsculptaesthetics.com", "Lip Flip", "not published", ""], ["Contour & Sculpt Aesthetics", "contourandsculptaesthetics.com", "Fillers", "not published", ""], ["B. Sweet Lash Wax & Medspa", "bsweet.shop", "Fillers", "not published", ""], ["Instant Beauty Skin Studio", "", "Dermal Fillers", "not published", ""], ["AUSTEX Wellness and Medical Spa", "austexwellness.com", "Dermal Fillers / Sculptra / Lip Fillers", "not published", ""], ["MiraBelle Aesthetics & Wellness", "mirabellespa.com", "Dermal Fillers", "not published", ""], ["THAT Med Spa", "thatmedspa.com", "Fillers", "not published", ""], ["Jacquelyn's Spa", "jacquelynsspa.com", "Botox / Dysport / Jeuveau / Fillers (via Contoured Beauty, in-suite)", "not published", ""], ["Wink Medical Aesthetics", "winkmed.com", "Botox / Dysport / Juvederm Fillers", "not published", ""], ["RM Aesthetics", "", "Juvederm / Restylane Fillers", "not published", ""], ["Face to Face Spa at Bee Cave", "facetofacespa.com", "Skinvive", "not published", ""], ["Face to Face Spa at Bee Cave", "facetofacespa.com", "Juvederm Fillers", "not published", ""], ["Beverly Hills Rejuvenation Ctr Medspa", "bhrcenter.com", "Dermal Filler", "not published", ""], ["L-Aesthetics & Longevity", "lalongevity.com", "Dermal Fillers", "not published", ""], ["Beautiful Day Med Spa", "beautifuldaymedspa.com", "Dermal Fillers (Revanesse/Restylane/Juvederm)", "not published", ""], ["Beaute Paris Medical Spa and Integrative Wellness", "beauteparismedspa.com", "Dermal Fillers", "not published", ""], ["Body Tonic RX Bee Cave", "mybodytonic.com", "Dermal Filler / Sculptra", "not published", ""], ["Beaux MedSpa", "beauxmedspa.com", "Dermal Filler (1st syringe)", "$650/syringe", ""], ["Beaux MedSpa", "beauxmedspa.com", "Dermal Filler (2nd syringe, same visit)", "$500/syringe", ""], ["Glo Med Spa Austin", "glomedspaaustin.com", "Dermal Fillers", "$600-$2,000/syringe (aggregator figure; excluded from genuine pricing analysis)", ""], ["Simple Radiance Medspa", "simpleradianceaustin.com", "Injectables / Dermal Fillers", "not published", ""], ["NakedMD Med Spa Austin", "nakedmd.com", "Juvederm / Restylane / Prollenium Fillers", "not published (location-specific)", ""], ["Curate Medspa", "curatemedspaatx.com", "Dermal Fillers", "not published", ""], ["VIO Med Spa | Mueller", "viomedspa.com", "Juvederm", "not published", ""], ["RejuvaWell", "rejuvawell.com", "Fillers", "not published", ""], ["Alchemy Wellness Med Spa", "alchemywellnessatx.com", "Dermal Fillers / Lip Fillers", "$600-$1,200/syringe (generic rate shown across multiple unrelated clinics; excluded from genuine pricing analysis)", ""], ["ULALA Med Spa", "ulalamedspa.com", "Dermal Fillers", "$600-$1,200/syringe (generic rate shown across multiple unrelated clinics; excluded from genuine pricing analysis)", ""], ["Wild and Beautiful Natural Aesthetics", "wildandbeautifulaustin.com", "Dermal Fillers", "not published", ""], ["Aesthetica Med Spa", "amedspa.com", "Juvederm Collection Fillers", "not published", ""], ["Aesthetica Med Spa", "amedspa.com", "Skinvive", "not published", ""], ["Results Weight Loss & Med Spa", "resultsweightlossandmedspa.com", "Fillers", "not published", ""], ["SIREN Beauty + Wellness Aesthetic Boutique", "sirenbeautyandwellness.com", "Lip Filler", "not published", ""], ["Nativa Medical Aesthetics", "nativamedaesthetics.com", "Cheek Filler", "not published", ""], ["Glow Laser and Beauty", "glowlaserandbeauty.com", "Fillers / Radiesse", "not published", ""], ["Fresh Face Aesthetics", "freshfacebuda.com", "Dermal Fillers", "not published", ""], ["Spa Sway Day + Med Spa | Westlake", "spasway.com", "Fillers (Kysse/Defyne)", "$800/syringe \u2014 confirmed via pricing-request email, 2026-08-24", ""]], "Sculptra / Biostimulators": [["Rejuvenate Austin", "rejuvenateaustin.com", "Sculptra", "not published", ""], ["Elevate SKN", "elevateskn.com", "Biostimulators", "not published", ""], ["Austin Aesthetics Club", "austinaestheticsclub.com", "Sculptra", "not published", ""], ["The Injection Room", "theinjectionroom.com", "Sculptra", "not published", ""], ["The Injection Room", "theinjectionroom.com", "PDO Threads", "not published", ""], ["Victory Rejuvenate & MedSpa", "victoryrejuvenate.com", "PDO Threads", "not published", ""], ["Innate Beauty Medical Spa", "innatebeauty.com", "Dermal Fillers (Juvederm/Voluma/Sculptra/Radiesse/Restylane/Belotero/RHA/Skinvive)", "not published", ""], ["Texas Laser and Aesthetics Medspa", "texaslasermedspa.com", "Sculptra", "not published", ""], ["Formula Wellness", "formulawellness.com", "PDO Thread Lifts", "not published", ""], ["Formula Wellness", "formulawellness.com", "Sculptra", "not published", ""], ["Body Tonic RX Westlake", "mybodytonic.com", "Dermal Filler / Sculptra", "not published", ""], ["Fresh Aesthetics", "westlakefreshaesthetics.com", "Bio-stimulators (Sculptra)", "not published", ""], ["Maui MedSpa", "mauimedspa.com", "Sculptra", "not published", ""], ["Maui MedSpa", "mauimedspa.com", "PDO Threads", "not published", ""], ["Viva Day Spa + Med Spa | Round Rock", "vivadayspa.com", "Sculptra", "not published", ""], ["Vibrant Med Spa", "vibrantmedspa.com", "Sculptra", "not published", ""], ["Ginger Allure MedSpa", "gingerallure.com", "PDO Threads", "not published", ""], ["Ginger Allure MedSpa", "gingerallure.com", "Sculptra", "not published", ""], ["Allure Laser & Day Spa", "allurelaserdayspa.com", "Sculptra", "not published", ""], ["Organica Aesthetics", "organicaaesthetics.com", "Thread Lifts", "not published", ""], ["Self Aesthetics & Wellness", "selfatx.com", "Sculptra", "not published", ""], ["Self Aesthetics & Wellness", "selfatx.com", "EZGel", "not published", ""], ["Joslin Medical Spa By Thompson Plastic Surgery", "thompsonplasticsurgery.com", "Sculptra", "not published", ""], ["AUSTEX Wellness and Medical Spa", "austexwellness.com", "Dermal Fillers / Sculptra / Lip Fillers", "not published", ""], ["RM Aesthetics", "", "Sculptra", "not published", ""], ["Beautiful Day Med Spa", "beautifuldaymedspa.com", "PDO Threads", "not published", ""], ["Beaute Paris Medical Spa and Integrative Wellness", "beauteparismedspa.com", "Biostimulators", "not published", ""], ["Body Tonic RX Bee Cave", "mybodytonic.com", "Dermal Filler / Sculptra", "not published", ""], ["Glo Med Spa Austin", "glomedspaaustin.com", "Thread Lifts", "not published", ""], ["NakedMD Med Spa Austin", "nakedmd.com", "Biostimulators", "not published", ""], ["VIO Med Spa | Mueller", "viomedspa.com", "PDO Threads", "not published", ""], ["Alchemy Wellness Med Spa", "alchemywellnessatx.com", "Sculptra", "not published", ""], ["ULALA Med Spa", "ulalamedspa.com", "Sculptra", "not published", ""], ["Spa Sway Day + Med Spa | Westlake", "spasway.com", "Sculptra", "1 vial $800, 2 vials $1,500, 3 vials $2,250 \u2014 confirmed via pricing-request email, 2026-08-24", ""]], "Kybella": [["Rejuvenate Austin", "rejuvenateaustin.com", "Kybella", "not published", ""], ["Saving Face", "savingfaceaustin.com", "Kybella", "not published", ""], ["Innate Beauty Medical Spa", "innatebeauty.com", "Kybella", "not published", ""], ["Formula Wellness", "formulawellness.com", "Kybella", "not published", ""], ["Muse Medspa", "musemedspaaustin.com", "Kybella", "not published", ""], ["Fresh Aesthetics", "westlakefreshaesthetics.com", "Kybella", "not published", ""], ["Viva Day Spa + Med Spa | Domain Northside", "vivadayspa.com", "Kybella", "not published", ""], ["Maui MedSpa", "mauimedspa.com", "Kybella", "not published", ""], ["Ginger Allure MedSpa", "gingerallure.com", "Kybella", "not published", ""], ["Allure Laser & Day Spa", "allurelaserdayspa.com", "Kybella", "not published", ""], ["Bliss Salon & Med Spa", "blisssalonmedspa.com", "Kybella", "not published", ""], ["L-Aesthetics & Longevity", "lalongevity.com", "Kybella", "not published", ""], ["Beautiful Solutions", "beautifulsolutionstx.com", "Kybella", "not published", ""], ["Aurora Medical Spa", "auroramedicalspa.com", "Kybella", "not published", ""], ["ULALA Med Spa", "ulalamedspa.com", "Kybella", "not published", ""], ["Aesthetica Med Spa", "amedspa.com", "Kybella", "not published", ""], ["Fresh Face Aesthetics", "freshfacebuda.com", "Kybella", "not published", ""]], "HydraFacial": [["Austin Med Spa", "austinmedspa.com", "HydraFacial", "not published", ""], ["Austin Aesthetics Club", "austinaestheticsclub.com", "DiamondGlow", "not published", ""], ["The Injection Room", "theinjectionroom.com", "HydraFacial", "not published", ""], ["Skin Envy Austin - South", "skinenvyaustin.com", "VIP Membership (1 treatment/mo: microneedling w/ HA, HydraFacial, or DiamondGlow)", "$139.99/mo", ""], ["Figura Medspa", "figuramedspa.com", "DiamondGlow Facial", "$150-$250", ""], ["Formula Wellness", "formulawellness.com", "HydraFacial", "not published", ""], ["Body Tonic RX Westlake", "mybodytonic.com", "HydraFacial", "not published", ""], ["Muse Medspa", "musemedspaaustin.com", "HydraFacial MD", "not published", ""], ["Fresh Aesthetics", "westlakefreshaesthetics.com", "HydraFacial", "not published", ""], ["Auveau", "auveau.com", "HydraFacial", "not published", ""], ["Viva Day Spa + Med Spa | Domain Northside", "vivadayspa.com", "HydraFacial", "not published", ""], ["Spa Sway Day + Med Spa | Domain", "spasway.com", "HydraFacial", "50-min $275 / 80-min $350; boosters $50 each \u2014 confirmed via pricing-request email, 2026-08-24", ""], ["Spa Luxe Austin", "spaluxe.com", "HydraFacial", "not published", ""], ["Viva Day Spa + Med Spa | Round Rock", "vivadayspa.com", "HydraFacial", "not published", ""], ["Chan Ramos MedSpa", "chanramos.com", "HydraFacial", "not published", ""], ["L-Aesthetics & Longevity", "lalongevity.com", "DiamondGlow", "not published", ""], ["Self Aesthetics & Wellness", "selfatx.com", "HydraFacial", "not published", ""], ["Beautiful Solutions", "beautifulsolutionstx.com", "HydraFacial", "not published", ""], ["Laser Lounge Med Spa Georgetown", "laserloungemedspa.com", "HydraFacial", "not published", ""], ["AUSTEX Wellness and Medical Spa", "austexwellness.com", "HydraFacial", "not published", ""], ["MiraBelle Aesthetics & Wellness", "mirabellespa.com", "HydraFacial", "not published", ""], ["THAT Med Spa", "thatmedspa.com", "HydraFacial", "not published", ""], ["Radiant Complexions Skin Lounge", "radiantskinlounge.com", "HydraFacial MD", "not published", ""], ["Jacquelyn's Spa", "jacquelynsspa.com", "HydraFacial", "not published", ""], ["Wink Medical Aesthetics", "winkmed.com", "HydraFacial", "not published", ""], ["L-Aesthetics & Longevity", "lalongevity.com", "DiamondGlow", "not published", ""], ["Face to Face Spa at Circle C Ranch", "facetofacespa.com", "HydraFacial MD", "$235", ""], ["Coco Aesthetics Medspa", "", "HydraFacial", "not published", ""], ["Peachy East Austin", "peachystudio.com", "HydraFacial", "not published", ""], ["ULALA Med Spa", "ulalamedspa.com", "HydraFacial / Microneedling", "not published", ""], ["Aesthetica Med Spa", "amedspa.com", "DiamondGlow", "not published", ""], ["Results Weight Loss & Med Spa", "resultsweightlossandmedspa.com", "HydraFacial", "not published", ""], ["Glow Laser and Beauty", "glowlaserandbeauty.com", "HydraFacial", "not published", ""]], "Chemical Peels": [["Austin Med Spa", "austinmedspa.com", "Chemical Peels", "not published", ""], ["Elevate SKN", "elevateskn.com", "Chemical Peels", "not published", ""], ["Face to Face Spa at Downtown Austin", "facetofacespa.com", "Facials / Chemical Peels / Microdermabrasion", "not published", ""], ["Face to Face Spa at Downtown Austin", "facetofacespa.com", "New Client Premium Medi-Facial (60 min, w/ peel or microdermabrasion)", "$149 (50% off new-client special)", "60 min"], ["LVS La Vie Med Spas + Day Spa", "lvmedspas.com", "Chemical Peels", "$100-$800/treatment (aggregator figure; excluded from genuine pricing analysis)", ""], ["Austin Aesthetics Club", "austinaestheticsclub.com", "Chemical Peels", "not published", ""], ["Luminous", "luminousfaceskinmind.com", "VI Peel", "not published", ""], ["Luminous", "luminousfaceskinmind.com", "Tetra CO2 Laser / Cool Peel", "not published", ""], ["Innate Beauty Medical Spa", "innatebeauty.com", "Chemical Peels", "not published", ""], ["Formula Wellness", "formulawellness.com", "Chemical Peels", "not published", ""], ["Fresh Aesthetics", "westlakefreshaesthetics.com", "Chemical Peels", "not published", ""], ["Spa Sway Day + Med Spa | Westlake", "spasway.com", "Ablative Treatments / Peels", "not published", ""], ["Spa Sway Day + Med Spa | Domain", "spasway.com", "Chemical Peels", "$100-$800/treatment (aggregator figure; excluded from genuine pricing analysis)", ""], ["Personique On The Spot", "personiqueonthespot.com", "Chemical Peels", "not published", ""], ["Vibrant Med Spa", "vibrantmedspa.com", "Chemical Peels", "not published", ""], ["Allure Laser & Day Spa", "allurelaserdayspa.com", "Chemical Peels", "not published", ""], ["Bliss Salon & Med Spa", "blisssalonmedspa.com", "Chemical Peels", "not published", ""], ["Chan Ramos MedSpa", "chanramos.com", "Chemical Peels", "not published", ""], ["Organica Aesthetics", "organicaaesthetics.com", "Facials/Peels", "not published", ""], ["Skin by Deep Roots", "skinbydeeproots.com", "Chemical Peels", "not published", ""], ["Beautiful Solutions", "beautifulsolutionstx.com", "Chemical Peels", "not published", ""], ["Aurora Medical Spa", "auroramedicalspa.com", "Dermaplaning / Facials / Peels", "not published", ""], ["Joslin Medical Spa By Thompson Plastic Surgery", "thompsonplasticsurgery.com", "Chemical Peels", "not published", ""], ["M Aesthetics Of Georgetown", "", "Chemical Peels", "not published", ""], ["AUSTEX Wellness and Medical Spa", "austexwellness.com", "Chemical Peels", "not published", ""], ["THAT Med Spa", "thatmedspa.com", "Chemical Peels", "not published", ""], ["Radiant Complexions Skin Lounge", "radiantskinlounge.com", "Chemical Peels", "not published", ""], ["Wink Medical Aesthetics", "winkmed.com", "Chemical Peels", "not published", ""], ["Lake Travis Laser Skincare & Aesthetics", "austinlaserskincare.com", "Medical-Grade Chemical Peels", "not published", ""], ["Face to Face Spa at Bee Cave", "facetofacespa.com", "Chemical Peels", "not published", ""], ["L-Aesthetics & Longevity", "lalongevity.com", "Chemical Peels", "not published", ""], ["Beaute Paris Medical Spa and Integrative Wellness", "beauteparismedspa.com", "Chemical Peels", "not published", ""], ["Body Tonic RX Bee Cave", "mybodytonic.com", "HALO / MOXI / Helix CoolPeel", "not published", ""], ["Beaux MedSpa", "beauxmedspa.com", "Chemical Peels", "not published", ""], ["Face to Face Spa at Circle C Ranch", "facetofacespa.com", "Chemical Peel", "$165", ""], ["Face to Face Spa at Circle C Ranch", "facetofacespa.com", "VI Peel", "$300", ""], ["Glo Med Spa Austin", "glomedspaaustin.com", "Chemical Peels", "$100-$800/treatment (aggregator figure; excluded from genuine pricing analysis)", ""], ["Glo Med Spa Austin", "glomedspaaustin.com", "IPL / Microneedling / PicoLaser / Skin Tightening / Chemical Peel promo (1 treatment)", "$149", ""], ["Simple Radiance Medspa", "simpleradianceaustin.com", "Chemical Peels", "not published", ""], ["Coco Aesthetics Medspa", "", "Chemical Peel", "not published", ""], ["Aesthetica Med Spa", "amedspa.com", "Facial Peels / IPL / Microdermabrasion", "not published", ""], ["Results Weight Loss & Med Spa", "resultsweightlossandmedspa.com", "Chemical Peels", "not published", ""]], "Microneedling": [["Austin Med Spa", "austinmedspa.com", "Microneedling", "not published", ""], ["Rejuvenate Austin", "rejuvenateaustin.com", "SkinPen Microneedling", "not published", ""], ["Rejuvenate Austin", "rejuvenateaustin.com", "RF Microneedling / Secret RF", "not published", ""], ["Elevate SKN", "elevateskn.com", "Microneedling", "not published", ""], ["Face to Face Spa at Downtown Austin", "facetofacespa.com", "Microneedling", "not published", ""], ["LVS La Vie Med Spas + Day Spa", "lvmedspas.com", "Microneedling", "$200-$700/session (aggregator figure; excluded from genuine pricing analysis)", ""], ["Austin Aesthetics Club", "austinaestheticsclub.com", "Microneedling", "not published", ""], ["The Injection Room", "theinjectionroom.com", "Microneedling", "not published", ""], ["Luminous", "luminousfaceskinmind.com", "SkinPen Microneedling", "not published", ""], ["Skin Envy Austin - South", "skinenvyaustin.com", "VIP Membership (1 treatment/mo: microneedling w/ HA, HydraFacial, or DiamondGlow)", "$139.99/mo", ""], ["Innate Beauty Medical Spa", "innatebeauty.com", "Microneedling", "not published", ""], ["Body Tonic RX Westlake", "mybodytonic.com", "SkinPen Microneedling", "not published", ""], ["Muse Medspa", "musemedspaaustin.com", "SkinPen Microneedling", "not published", ""], ["Fresh Aesthetics", "westlakefreshaesthetics.com", "Microneedling", "not published", ""], ["Viva Day Spa + Med Spa | Domain Northside", "vivadayspa.com", "Morpheus8 Microneedling", "not published", ""], ["Spa Sway Day + Med Spa | Domain", "spasway.com", "Microneedling", "$200-$700/session (aggregator figure; excluded from genuine pricing analysis)", ""], ["Maui MedSpa", "mauimedspa.com", "Microneedling", "not published", ""], ["Vibrant Med Spa", "vibrantmedspa.com", "SkinPen Microneedling", "not published", ""], ["Ginger Allure MedSpa", "gingerallure.com", "RF Microneedling", "not published", ""], ["Chan Ramos MedSpa", "chanramos.com", "Microneedling", "not published", ""], ["Organica Aesthetics", "organicaaesthetics.com", "Microneedling", "not published", ""], ["Aurora Medical Spa", "auroramedicalspa.com", "Microneedling / RF Microneedling", "not published", ""], ["Joslin Medical Spa By Thompson Plastic Surgery", "thompsonplasticsurgery.com", "RF Microneedling", "not published", ""], ["Joslin Medical Spa By Thompson Plastic Surgery", "thompsonplasticsurgery.com", "SkinPen Microneedling", "not published", ""], ["M Aesthetics Of Georgetown", "", "Microneedling", "not published", ""], ["AUSTEX Wellness and Medical Spa", "austexwellness.com", "Microneedling", "not published", ""], ["THAT Med Spa", "thatmedspa.com", "Microneedling", "not published", ""], ["Radiant Complexions Skin Lounge", "radiantskinlounge.com", "SkinPen PRP Microneedling", "not published", ""], ["L-Aesthetics & Longevity", "lalongevity.com", "SkinPen", "not published", ""], ["Beautiful Day Med Spa", "beautifuldaymedspa.com", "Microneedling", "not published", ""], ["Beaute Paris Medical Spa and Integrative Wellness", "beauteparismedspa.com", "Microneedling", "not published", ""], ["Beaux MedSpa", "beauxmedspa.com", "Microneedling", "not published", ""], ["Face to Face Spa at Circle C Ranch", "facetofacespa.com", "SkinPen Microneedling", "$299", ""], ["Cabana Medical Spa", "cabanamedspa.com", "Microneedling", "starting at $275", ""], ["Glo Med Spa Austin", "glomedspaaustin.com", "Microneedling", "$200-$700/session (aggregator figure; excluded from genuine pricing analysis)", ""], ["Glo Med Spa Austin", "glomedspaaustin.com", "IPL / Microneedling / PicoLaser / Skin Tightening / Chemical Peel promo (1 treatment)", "$149", ""], ["Simple Radiance Medspa", "simpleradianceaustin.com", "Microneedling", "not published", ""], ["Curate Medspa", "curatemedspaatx.com", "Microneedling", "not published", ""], ["Coco Aesthetics Medspa", "", "Microneedling", "not published", ""], ["ULALA Med Spa", "ulalamedspa.com", "HydraFacial / Microneedling", "not published", ""], ["Wild and Beautiful Natural Aesthetics", "wildandbeautifulaustin.com", "Microneedling", "not published", ""], ["Results Weight Loss & Med Spa", "resultsweightlossandmedspa.com", "Microneedling", "not published", ""], ["Fresh Face Aesthetics", "freshfacebuda.com", "Microneedling", "not published", ""]], "Laser Hair Removal": [["Austin Med Spa", "austinmedspa.com", "Laser Hair Removal", "not published", ""], ["Rejuvenate Austin", "rejuvenateaustin.com", "Laser Hair Removal", "not published", ""], ["Saving Face", "savingfaceaustin.com", "Laser Hair Removal", "not published", ""], ["Victory Rejuvenate & MedSpa", "victoryrejuvenate.com", "Laser Hair Removal (unlimited areas, 30 min session promo)", "$149", "30 min"], ["Skin Envy Austin - South", "skinenvyaustin.com", "Laser Hair Removal", "not published", ""], ["Texas Laser and Aesthetics Medspa", "texaslasermedspa.com", "Unlimited Laser Hair Removal (18-month package)", "$3,750", ""], ["Texas Laser and Aesthetics Medspa", "texaslasermedspa.com", "Unlimited Laser Hair Removal (12-month package)", "$2,999", ""], ["Texas Laser and Aesthetics Medspa", "texaslasermedspa.com", "Unlimited Laser Hair Removal (6-month package)", "$1,750", ""], ["Texas Laser and Aesthetics Medspa", "texaslasermedspa.com", "Unlimited Laser Hair Removal (month-to-month, 3-mo min)", "$325/mo", ""], ["Auveau", "auveau.com", "Laser Hair Removal", "not published", ""], ["Viva Day Spa + Med Spa | Domain Northside", "vivadayspa.com", "Laser Hair Removal", "not published", ""], ["It's A Secret Med Spa - Austin", "secretmedspa.com", "Laser Hair Removal", "not published", ""], ["LaserAway Austin The Domain", "laseraway.com", "Laser Hair Removal", "not published", ""], ["Vibrant Med Spa", "vibrantmedspa.com", "Laser Hair Removal", "not published", ""], ["Ginger Allure MedSpa", "gingerallure.com", "Laser Hair Removal", "not published", ""], ["Allure Laser & Day Spa", "allurelaserdayspa.com", "Laser Hair Removal", "not published", ""], ["ABL Medical Spa & Wellness Clinic MD", "ablmedspa.com", "Laser Hair Removal", "from $40/session", ""], ["Bliss Salon & Med Spa", "blisssalonmedspa.com", "Laser Hair Removal", "not published", ""], ["Chan Ramos MedSpa", "chanramos.com", "Laser Hair Removal", "not published", ""], ["Beautiful Solutions", "beautifulsolutionstx.com", "Laser Hair Removal", "not published", ""], ["Aurora Medical Spa", "auroramedicalspa.com", "LaseMD / IPL Laser Hair Removal", "not published", ""], ["Renew Med Spa", "renewmedspatx.com", "Laser Hair Removal", "not published", ""], ["Laser Lounge Med Spa Georgetown", "laserloungemedspa.com", "Laser Hair Removal", "not published", ""], ["Joslin Medical Spa By Thompson Plastic Surgery", "thompsonplasticsurgery.com", "MotusAZ Laser Hair Removal", "not published", ""], ["B. Sweet Lash Wax & Medspa", "bsweet.shop", "Laser Hair Removal", "not published", ""], ["AUSTEX Wellness and Medical Spa", "austexwellness.com", "Laser Hair Removal", "not published", ""], ["Glo Med Spa Austin", "glomedspaaustin.com", "Laser Hair Removal", "not published", ""], ["Coco Aesthetics Medspa", "", "Laser Hair Removal", "not published", ""], ["ULALA Med Spa", "ulalamedspa.com", "Laser Hair Removal", "not published", ""], ["Results Weight Loss & Med Spa", "resultsweightlossandmedspa.com", "Laser Hair Removal", "not published", ""], ["Glow Laser and Beauty", "glowlaserandbeauty.com", "Laser Hair Removal", "not published", ""]], "Body Contouring / CoolSculpting": [["Rejuvenate Austin", "rejuvenateaustin.com", "CoolSculpting", "not published", ""], ["Face to Face Spa at Downtown Austin", "facetofacespa.com", "Body Contouring", "not published", ""], ["LVS La Vie Med Spas + Day Spa", "lvmedspas.com", "Body Contouring", "not published", ""], ["The Injection Room", "theinjectionroom.com", "Emsculpt / Skin Tightening", "$1,500/session", ""], ["Victory Rejuvenate & MedSpa", "victoryrejuvenate.com", "CoolSculpting", "not published", ""], ["Skin Envy Austin - South", "skinenvyaustin.com", "CoolSculpting", "not published", ""], ["Figura Medspa", "figuramedspa.com", "CoolSculpting Session", "$750-$1,500", ""], ["Figura Medspa", "figuramedspa.com", "EmSculpt Session", "$750-$1,500", ""], ["Innate Beauty Medical Spa", "innatebeauty.com", "Body Contouring (TruSculpt/TruFlex/Contourlight)", "not published", ""], ["Texas Laser and Aesthetics Medspa", "texaslasermedspa.com", "Body Contouring", "not published", ""], ["Westlake Aesthetics & Wellness", "westlakeaestheticswellness.com", "Body Contouring", "not published", ""], ["Viva Day Spa + Med Spa | Domain Northside", "vivadayspa.com", "Evolve Body Contouring", "not published", ""], ["Spa Sway Day + Med Spa | Domain", "spasway.com", "Body Sculpting", "$250/area (SoftWave/Pure Impact); plans $1,000\u2013$3,500 depending on areas \u2014 confirmed via pricing-request email, 2026-08-24", ""], ["Personique On The Spot", "personiqueonthespot.com", "Body Contouring", "not published", ""], ["SkinSpirit North Austin", "skinspirit.com", "CoolSculpting", "not published", ""], ["LaserAway Austin The Domain", "laseraway.com", "Body Contouring / Skin Tightening", "not published", ""], ["Allure Laser & Day Spa", "allurelaserdayspa.com", "Emsculpt", "not published", ""], ["Chan Ramos MedSpa", "chanramos.com", "Emsculpt", "not published", ""], ["L-Aesthetics & Longevity", "lalongevity.com", "CoolSculpting / CoolTone", "not published", ""], ["Beautiful Solutions", "beautifulsolutionstx.com", "CoolSculpting", "not published", ""], ["Laser Lounge Med Spa Georgetown", "laserloungemedspa.com", "CoolSculpting", "not published", ""], ["B. Sweet Lash Wax & Medspa", "bsweet.shop", "Body Contouring", "not published", ""], ["Wink Medical Aesthetics", "winkmed.com", "CoolSculpting / CoolTone", "not published", ""], ["Lake Travis Laser Skincare & Aesthetics", "austinlaserskincare.com", "Body Sculpting", "not published", ""], ["L-Aesthetics & Longevity", "lalongevity.com", "CoolSculpting Elite", "not published", ""], ["VIO Med Spa | Mueller", "viomedspa.com", "CoolSculpting Elite (60 min, promo)", "$850", "60 min"], ["VIO Med Spa | Mueller", "viomedspa.com", "EmSculpt NEO (45 min, promo)", "$425", "45 min"], ["Alchemy Wellness Med Spa", "alchemywellnessatx.com", "Body Contouring", "not published", ""], ["Aesthetica Med Spa", "amedspa.com", "CoolSculpting / CoolTone", "not published", ""]], "Skin Tightening (Morpheus8/RF)": [["Austin Med Spa", "austinmedspa.com", "Ultherapy / Skin Tightening", "not published", ""], ["Rejuvenate Austin", "rejuvenateaustin.com", "RF Microneedling / Secret RF", "not published", ""], ["Saving Face", "savingfaceaustin.com", "Ultherapy", "not published", ""], ["The Injection Room", "theinjectionroom.com", "Emsculpt / Skin Tightening", "$1,500/session", ""], ["Innate Beauty Medical Spa", "innatebeauty.com", "Secret RF / CO2 Fractional Laser", "not published", ""], ["Innate Beauty Medical Spa", "innatebeauty.com", "IPL Photofacial / Skin Tightening", "not published", ""], ["Viva Day Spa + Med Spa | Domain Northside", "vivadayspa.com", "Morpheus8 Microneedling", "not published", ""], ["LaserAway Austin The Domain", "laseraway.com", "Body Contouring / Skin Tightening", "not published", ""], ["Vibrant Med Spa", "vibrantmedspa.com", "Morpheus8", "not published", ""], ["Ginger Allure MedSpa", "gingerallure.com", "FaceTite/AccuTite (Skin Tightening)", "not published", ""], ["Luxe Laser and Wellness Spa", "luxelaserwellness.com", "RF Skin Rejuvenation", "not published", ""], ["Instant Beauty Skin Studio", "", "Skin Tightening", "not published", ""], ["L-Aesthetics & Longevity", "lalongevity.com", "Morpheus8", "not published", ""], ["L-Aesthetics & Longevity", "lalongevity.com", "HALO / BBL / IPL / Sofwave Laser", "not published", ""], ["Glo Med Spa Austin", "glomedspaaustin.com", "IPL / Microneedling / PicoLaser / Skin Tightening / Chemical Peel promo (1 treatment)", "$149", ""]], "IV Therapy": [["Elevate SKN", "elevateskn.com", "IV Therapy", "not published", ""], ["LVS La Vie Med Spas + Day Spa", "lvmedspas.com", "IV Therapy", "not published", ""], ["Austin Aesthetics Club", "austinaestheticsclub.com", "IV Therapy", "not published", ""], ["Austin Aesthetics Club", "austinaestheticsclub.com", "Vitamin Injections", "not published", ""], ["Chan Ramos MedSpa", "chanramos.com", "IV Therapy", "not published", ""], ["Self Aesthetics & Wellness", "selfatx.com", "IV Therapy", "not published", ""], ["Beaute Paris Medical Spa and Integrative Wellness", "beauteparismedspa.com", "IV Therapy", "not published", ""], ["Body Tonic RX Bee Cave", "mybodytonic.com", "IV Therapy", "not published", ""], ["Cabana Medical Spa", "cabanamedspa.com", "Vitamin/B12 Shots", "starting at $22", ""], ["Results Weight Loss & Med Spa", "resultsweightlossandmedspa.com", "IV Hydration Therapy", "not published", ""], ["Results Weight Loss & Med Spa", "resultsweightlossandmedspa.com", "MIC B-12 Injections", "not published", ""], ["Sunrise Wellness and Aesthetics", "sunrisewellnessclinic.com", "Vitamin Injections / IV Hydration", "not published", ""]], "PRP / PRF": [["Rejuvenate Austin", "rejuvenateaustin.com", "Vampire Facial / Facelift (PRP)", "not published", ""], ["Elevate SKN", "elevateskn.com", "PRP/PRF", "not published", ""], ["Luminous", "luminousfaceskinmind.com", "Rejuran / AnteAGE Exosome Growth Factors", "not published", ""], ["Innate Beauty Medical Spa", "innatebeauty.com", "PRP", "not published", ""], ["Body Tonic RX Westlake", "mybodytonic.com", "PRF", "not published", ""], ["Fresh Aesthetics", "westlakefreshaesthetics.com", "PRP", "not published", ""], ["Beauty Elite Med Spa", "beautyelitemedspa.com", "PRP/PRF", "not published", ""], ["Ginger Allure MedSpa", "gingerallure.com", "PRP", "not published", ""], ["Allure Laser & Day Spa", "allurelaserdayspa.com", "PRP", "not published", ""], ["Organica Aesthetics", "organicaaesthetics.com", "PRP", "not published", ""], ["Radiant Complexions Skin Lounge", "radiantskinlounge.com", "SkinPen PRP Microneedling", "not published", ""], ["RM Aesthetics", "", "Hair Restoration (Exosomes)", "not published", ""], ["Beautiful Day Med Spa", "beautifuldaymedspa.com", "PRP", "not published", ""], ["Body Tonic RX Bee Cave", "mybodytonic.com", "PRF", "not published", ""], ["Wild and Beautiful Natural Aesthetics", "wildandbeautifulaustin.com", "PRP Therapy", "not published", ""], ["Sunrise Wellness and Aesthetics", "sunrisewellnessclinic.com", "PRP Joint Injections", "not published", ""]], "Medical Weight Loss / GLP-1": [["LVS La Vie Med Spas + Day Spa", "lvmedspas.com", "Semaglutide Weight Loss Treatment", "not published", ""], ["Austin Aesthetics Club", "austinaestheticsclub.com", "Medical Weight Loss", "not published", ""], ["Figura Medspa", "figuramedspa.com", "GLP-1 Weight Loss Programs", "not published", ""], ["Formula Wellness", "formulawellness.com", "GLP-1 Weight Loss Peptides", "not published", ""], ["Body Tonic RX Westlake", "mybodytonic.com", "GLP-1 Weight Loss (Semaglutide/Tirzepatide)", "from $99/mo", ""], ["ABL Medical Spa & Wellness Clinic MD", "ablmedspa.com", "Medical Weight Loss", "not published", ""], ["Chan Ramos MedSpa", "chanramos.com", "Semaglutide/Tirzepatide Weight Loss", "not published", ""], ["Self Aesthetics & Wellness", "selfatx.com", "GLP-1 Weight Loss", "not published", ""], ["Aurora Medical Spa", "auroramedicalspa.com", "Weight Loss Injections / Peptides", "not published", ""], ["Truly Lifted MedSpa", "trulyliftedmedspa.com", "Weight Loss Treatments", "not published", ""], ["MiraBelle Aesthetics & Wellness", "mirabellespa.com", "GLP-1 Weight Loss", "not published", ""], ["Face to Face Spa at Bee Cave", "facetofacespa.com", "Semaglutide", "not published", ""], ["Beautiful Day Med Spa", "beautifuldaymedspa.com", "Medicated Weight Loss", "not published", ""], ["Beaute Paris Medical Spa and Integrative Wellness", "beauteparismedspa.com", "GLP-1 Weight Management", "not published", ""], ["Cabana Medical Spa", "cabanamedspa.com", "Semaglutide/GLP-1 Weight Loss", "not published", ""], ["Fresh Face Aesthetics", "freshfacebuda.com", "Weight Loss Services", "not published", ""], ["Sunrise Wellness and Aesthetics", "sunrisewellnessclinic.com", "Medical Weight Loss", "not published", ""]], "Hormone Therapy": [["Austin Aesthetics Club", "austinaestheticsclub.com", "Hormone Therapy", "not published", ""], ["Victory Rejuvenate & MedSpa", "victoryrejuvenate.com", "Hormone Replacement Therapy / Peptide Therapy", "not published", ""], ["Westlake Aesthetics & Wellness", "westlakeaestheticswellness.com", "Bioidentical Hormones", "not published", ""], ["Youthful Solutions", "ysmedispa.com", "Hormone Optimization (BHRT)", "not published", ""], ["Aurora Medical Spa", "auroramedicalspa.com", "Hormone Replacement Therapy", "not published", ""], ["MiraBelle Aesthetics & Wellness", "mirabellespa.com", "Hormone Optimization", "not published", ""], ["Beverly Hills Rejuvenation Ctr Medspa", "bhrcenter.com", "Bio-identical Hormone Therapy", "not published", ""], ["Beaute Paris Medical Spa and Integrative Wellness", "beauteparismedspa.com", "Peptide Therapy / BHRT", "not published", ""], ["Body Tonic RX Bee Cave", "mybodytonic.com", "Hormone Optimization", "not published", ""], ["Sunrise Wellness and Aesthetics", "sunrisewellnessclinic.com", "Bio-identical Hormone Replacement Therapy / TRT", "not published", ""]], "IPL / Photofacial": [["Austin Med Spa", "austinmedspa.com", "Photo Rejuvenation / IPL", "not published", ""], ["Austin Med Spa", "austinmedspa.com", "PicoSure Laser", "$600/session or 3 for $1,700 (incl. Epionce Recovery Kit)", ""], ["Rejuvenate Austin", "rejuvenateaustin.com", "Laser Skin Rejuvenation", "not published", ""], ["Rejuvenate Austin", "rejuvenateaustin.com", "IPL Photofacial", "not published", ""], ["Rejuvenate Austin", "rejuvenateaustin.com", "Laser Resurfacing", "not published", ""], ["Saving Face", "savingfaceaustin.com", "IPL", "not published", ""], ["Luminous", "luminousfaceskinmind.com", "Tetra CO2 Laser / Cool Peel", "not published", ""], ["Victory Rejuvenate & MedSpa", "victoryrejuvenate.com", "Scarlet RF / Fractional Laser / BBL", "not published", ""], ["Skin Envy Austin - South", "skinenvyaustin.com", "Fraxel Laser Treatment", "not published", ""], ["Innate Beauty Medical Spa", "innatebeauty.com", "Picogenesis Laser (pigmentation/melasma)", "not published", ""], ["Innate Beauty Medical Spa", "innatebeauty.com", "Enlighten Laser Tattoo Removal", "not published", ""], ["Innate Beauty Medical Spa", "innatebeauty.com", "IPL Photofacial / Skin Tightening", "not published", ""], ["Innate Beauty Medical Spa", "innatebeauty.com", "Excel HR / LaserGenesis", "not published", ""], ["Body Tonic RX Westlake", "mybodytonic.com", "HALO / MOXI / BBL HERO / CO2 Laser Resurfacing", "not published", ""], ["Muse Medspa", "musemedspaaustin.com", "IPL Photofacial / Acne / Vascular Treatment", "not published", ""], ["Viva Day Spa + Med Spa | Domain Northside", "vivadayspa.com", "Fraxel", "not published", ""], ["Personique On The Spot", "personiqueonthespot.com", "Laser Resurfacing", "not published", ""], ["LaserAway Austin The Domain", "laseraway.com", "Laser Skin Rejuvenation", "not published", ""], ["Vibrant Med Spa", "vibrantmedspa.com", "IPL Photofacial", "not published", ""], ["Ginger Allure MedSpa", "gingerallure.com", "IPL", "not published", ""], ["Ginger Allure MedSpa", "gingerallure.com", "Laser Skin Resurfacing", "not published", ""], ["Skin by Deep Roots", "skinbydeeproots.com", "Fraxel Laser", "not published", ""], ["Beautiful Solutions", "beautifulsolutionstx.com", "IPL Photofacial", "not published", ""], ["Aurora Medical Spa", "auroramedicalspa.com", "LaseMD / IPL Laser Hair Removal", "not published", ""], ["Joslin Medical Spa By Thompson Plastic Surgery", "thompsonplasticsurgery.com", "Laser Skin Resurfacing", "not published", ""], ["Joslin Medical Spa By Thompson Plastic Surgery", "thompsonplasticsurgery.com", "Photofacials", "not published", ""], ["Instant Beauty Skin Studio", "", "IPL Laser", "not published", ""], ["Wink Medical Aesthetics", "winkmed.com", "Halo Laser Resurfacing", "not published", ""], ["RM Aesthetics", "", "PiQo4 Laser Tattoo Removal", "not published", ""], ["Skinology by Sophie Champmartin", "skinology-by-sophie-champmartin.com", "Laser Skin Resurfacing", "not published", ""], ["L-Aesthetics & Longevity", "lalongevity.com", "HALO / BBL / IPL / Sofwave Laser", "not published", ""], ["Beaute Paris Medical Spa and Integrative Wellness", "beauteparismedspa.com", "Sciton BBL Hero / Moxi / UltraClear Laser", "not published", ""], ["Body Tonic RX Bee Cave", "mybodytonic.com", "HALO / MOXI / Helix CoolPeel", "not published", ""], ["Glo Med Spa Austin", "glomedspaaustin.com", "IPL / Microneedling / PicoLaser / Skin Tightening / Chemical Peel promo (1 treatment)", "$149", ""], ["Simple Radiance Medspa", "simpleradianceaustin.com", "Photofacial", "not published", ""], ["Wild and Beautiful Natural Aesthetics", "wildandbeautifulaustin.com", "IPL Photofacial", "not published", ""], ["Aesthetica Med Spa", "amedspa.com", "Facial Peels / IPL / Microdermabrasion", "not published", ""], ["Glow Laser and Beauty", "glowlaserandbeauty.com", "IPL", "not published", ""]]};
+
+  const breakdownModalOverlay = document.getElementById('breakdown-modal-overlay');
+  const breakdownTitle = document.getElementById('breakdown-title');
+  const breakdownSub = document.getElementById('breakdown-sub');
+  const breakdownBody = document.getElementById('breakdown-body');
+  const sortButtons = Array.from(document.querySelectorAll('.sort-btn'));
+  let currentCategory = null;
+  let currentSort = 'clinic';
+
+  function parsePriceForSort(priceStr) {
+    const m = String(priceStr).match(/\$([\d,]+(?:\.\d+)?)/);
+    return m ? parseFloat(m[1].replace(/,/g, '')) : null;
+  }
+
+  function renderBreakdown() {
+    const rows = (breakdownData[currentCategory] || []).slice();
+    if (currentSort === 'clinic') {
+      rows.sort((a, b) => a[0].localeCompare(b[0]));
+    } else if (currentSort === 'price-asc' || currentSort === 'price-desc') {
+      rows.sort((a, b) => {
+        const pa = parsePriceForSort(a[3]);
+        const pb = parsePriceForSort(b[3]);
+        if (pa === null && pb === null) return 0;
+        if (pa === null) return 1;
+        if (pb === null) return -1;
+        return currentSort === 'price-asc' ? pa - pb : pb - pa;
+      });
+    }
+
+    if (!rows.length) {
+      breakdownBody.innerHTML = '<div class="breakdown-empty">No listings found for this category.</div>';
+      return;
+    }
+
+    breakdownBody.innerHTML = rows.map(([clinic, website, proc, price, duration]) => {
+      const durationHtml = duration && duration !== 'Not published'
+        ? `<div class="breakdown-duration">${duration}</div>` : '';
+      const clinicHtml = website
+        ? `<a href="${website.startsWith('http') ? website : 'https://' + website}" target="_blank" rel="noopener noreferrer">${clinic}</a>`
+        : `<span class="no-link">${clinic}</span>`;
+      return `
+        <div class="breakdown-row">
+          <div>
+            <div class="breakdown-clinic">${clinicHtml}</div>
+            <div class="breakdown-proc">${proc}</div>
+          </div>
+          <div class="breakdown-price-col">
+            <div class="breakdown-price">${price}</div>
+            ${durationHtml}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function openBreakdown(category) {
+    if (!breakdownData[category]) return;
+    currentCategory = category;
+    currentSort = 'clinic';
+    sortButtons.forEach(b => b.classList.toggle('active', b.dataset.sort === 'clinic'));
+    const rows = breakdownData[category] || [];
+    const distinctClinics = new Set(rows.map(r => r[0])).size;
+    breakdownTitle.textContent = category;
+    breakdownSub.textContent = `${distinctClinics} clinics · ${rows.length} tracked listing${rows.length === 1 ? '' : 's'}`;
+    renderBreakdown();
+    breakdownModalOverlay.classList.add('open');
+  }
+
+  function closeBreakdown() {
+    breakdownModalOverlay.classList.remove('open');
+  }
+
+  document.querySelectorAll('.proc-name-link').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openBreakdown(el.dataset.category);
+    });
+  });
+
+  document.getElementById('breakdown-close').addEventListener('click', closeBreakdown);
+  breakdownModalOverlay.addEventListener('click', (e) => {
+    if (e.target === breakdownModalOverlay) closeBreakdown();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeBreakdown();
+  });
+  sortButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentSort = btn.dataset.sort;
+      sortButtons.forEach(b => b.classList.toggle('active', b === btn));
+      renderBreakdown();
+    });
+  });
+
+</script>
+
+</body>
+</html>

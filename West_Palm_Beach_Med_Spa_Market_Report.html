@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>West Palm Beach Med Spa Market Report</title>
+<style>
+  :root {
+    --blue: #2563eb;
+    --blue-dark: #1d4ed8;
+    --blue-light: #eff6ff;
+    --ink: #111827;
+    --gray: #6b7280;
+    --gray-light: #9ca3af;
+    --border: #e5e7eb;
+    --bg: #f9fafb;
+    --green: #059669;
+    --amber: #d97706;
+    --red: #dc2626;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.5;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  header.hero {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #3b82f6 100%);
+    color: white;
+    padding: 26px 24px;
+    border-radius: 0 0 20px 20px;
+  }
+  header.hero .inner { max-width: 980px; margin: 0 auto; }
+  header.hero .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: 11px;
+    font-weight: 700;
+    opacity: .85;
+    margin-bottom: 6px;
+  }
+  header.hero h1 { font-size: 24px; margin: 0 0 6px; font-weight: 800; letter-spacing: -0.02em; }
+  header.hero p.sub { font-size: 13px; opacity: .9; margin: 0; max-width: 640px; }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: -26px;
+  }
+  .stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
+    border: 1px solid var(--border);
+  }
+  .stat-card .num { font-size: 30px; font-weight: 800; color: var(--blue); letter-spacing: -0.02em; }
+  .stat-card .label { font-size: 12.5px; color: var(--gray); margin-top: 4px; font-weight: 600; }
+
+  .stat-card.has-tooltip { position: relative; cursor: help; }
+  .stat-card.has-tooltip .label { text-decoration: underline dotted var(--gray-light); text-underline-offset: 3px; }
+  .stat-card .tooltip {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 340px;
+    max-width: 80vw;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 14px 34px rgba(15,23,42,0.18);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity .15s ease, transform .15s ease;
+    z-index: 20;
+    text-align: left;
+    cursor: default;
+  }
+  .stat-card.has-tooltip:hover .tooltip,
+  .stat-card.has-tooltip.tooltip-open .tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .tooltip-title { font-size: 12.5px; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
+  .tooltip p { font-size: 12px; color: var(--gray); margin: 0 0 12px; font-weight: 400; line-height: 1.5; }
+  .tooltip .pill-row { margin-top: 0; gap: 6px; }
+  .tooltip .pill { font-size: 11px; padding: 4px 9px; }
+
+  section { margin-top: 56px; }
+  h2 {
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+  }
+  p.section-desc { color: var(--gray); font-size: 14px; margin: 0 0 24px; max-width: 680px; }
+
+  .card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.04);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Funnel / campaign */
+  .funnel { display: flex; gap: 14px; flex-wrap: wrap; }
+  .funnel-step {
+    flex: 1 1 150px;
+    text-align: center;
+    padding: 18px 12px;
+    border-radius: 12px;
+    background: var(--blue-light);
+  }
+  .funnel-step .n { font-size: 26px; font-weight: 800; color: var(--blue-dark); }
+  .funnel-step .l { font-size: 12px; color: var(--gray); margin-top: 4px; font-weight: 600; }
+  .funnel-arrow { align-self: center; color: var(--gray-light); font-size: 20px; }
+
+  .pill-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+  .pill {
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+  .pill.green { background: #ecfdf5; color: var(--green); }
+  .pill.amber { background: #fffbeb; color: var(--amber); }
+  .pill.red   { background: #fef2f2; color: var(--red); }
+  .pill.gray  { background: #f3f4f6; color: var(--gray); }
+
+  /* Procedure bars */
+  .proc-row { display: grid; grid-template-columns: 220px 1fr 90px; align-items: center; gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--border); animation: rowIn .5s ease backwards; }
+  .proc-row:last-child { border-bottom: none; }
+  .proc-name { font-size: 13.5px; font-weight: 700; }
+  .proc-price { font-size: 11.5px; color: var(--gray); margin-top: 2px; font-weight: 500; }
+  .proc-name-link { cursor: pointer; text-decoration: underline dotted var(--gray-light); text-underline-offset: 3px; }
+  .proc-name-link:hover { color: var(--blue); }
+  .table-note { font-size: 11px; color: var(--gray); margin-top: 4px; font-weight: 400; line-height: 1.45; max-width: 420px; }
+  .bar-track { background: #eef2f7; border-radius: 8px; height: 22px; overflow: hidden; }
+  .bar-fill { background: linear-gradient(90deg, #60a5fa, var(--blue)); height: 100%; border-radius: 8px 0 0 8px; width: 0%; transition: width 1.1s cubic-bezier(.16,.8,.3,1); }
+  .bar-fill.trend { background: linear-gradient(90deg, #c4b5fd, #7c3aed); }
+  .proc-count { text-align: right; font-weight: 800; color: var(--blue-dark); font-size: 14px; }
+  .proc-count.trend { color: #6d28d9; }
+
+  @keyframes rowIn {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .stat-card .num { transition: none; }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  /* animation-fill-mode: backwards (not forwards, and no standing opacity:0 rule) so the card
+     doesn't retain a fractional-opacity stacking context after the fade-in finishes — a standing
+     "opacity: 0" here would trap the tooltip's z-index inside this card, letting later sections
+     in the DOM paint over it. Once the animation ends the card just falls back to normal opacity:1. */
+  .stat-card { animation: cardIn .5s ease backwards; }
+  .stat-card:nth-child(1) { animation-delay: .05s; }
+  .stat-card:nth-child(2) { animation-delay: .15s; }
+  .stat-card:nth-child(3) { animation-delay: .25s; }
+  .stat-card.has-tooltip { z-index: 1; }
+
+  /* Table */
+  table { width: 100%; min-width: 480px; border-collapse: collapse; font-size: 13.5px; }
+  th { text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--gray); padding: 10px 12px; border-bottom: 2px solid var(--border); }
+  td { padding: 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td.num { font-weight: 700; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  /* Tablet */
+  @media (max-width: 720px) {
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  /* Phones */
+  @media (max-width: 600px) {
+    .wrap { padding: 32px 16px 60px; }
+    header.hero { padding: 20px 16px; }
+    header.hero h1 { font-size: 20px; }
+    header.hero p.sub { font-size: 12.5px; }
+    section { margin-top: 40px; }
+    h2 { font-size: 18px; }
+    p.section-desc { font-size: 13px; }
+    .card { padding: 18px; }
+
+    .stat-card .num { font-size: 24px; }
+    .stat-card { padding: 16px; }
+
+    /* Tooltip: full-bleed under its card instead of a fixed 340px box that can overhang the
+       screen edge on narrow phones. */
+    .stat-card .tooltip { width: calc(100vw - 32px); max-width: none; left: 50%; transform: translateX(-50%) translateY(-6px); }
+    .stat-card.has-tooltip:hover .tooltip,
+    .stat-card.has-tooltip.tooltip-open .tooltip { transform: translateX(-50%) translateY(0); }
+
+    /* Procedure / trends / overlay rows: stack name, bar, and count instead of squeezing a
+       fixed 220px label column onto a ~360px screen. */
+    .proc-row, .overlay-row {
+      grid-template-columns: 1fr;
+      grid-template-areas: "name" "bar" "count";
+      row-gap: 6px;
+      padding: 12px 0;
+    }
+    .proc-row > div:first-child, .overlay-row > .proc-name { grid-area: name; }
+    .proc-row > .bar-track, .overlay-row > .overlay-track { grid-area: bar; }
+    .proc-row > .proc-count, .overlay-row > .overlay-pct { grid-area: count; text-align: left; }
+
+    .funnel-step { flex: 1 1 45%; }
+
+    .pill { font-size: 11.5px; padding: 5px 10px; }
+
+    #breakdown-modal-overlay { padding: 0; align-items: stretch; }
+    .breakdown-modal { max-height: 100vh; height: 100vh; border-radius: 0; max-width: 100%; }
+    .breakdown-modal-header, .breakdown-modal-controls, .breakdown-modal-body { padding-left: 16px; padding-right: 16px; }
+    .breakdown-row { flex-direction: column; gap: 2px; }
+    .breakdown-price-col { text-align: left; }
+    .table-note { max-width: none; }
+  }
+
+  ul.notes { margin: 0; padding-left: 18px; font-size: 13.5px; color: #374151; }
+  ul.notes li { margin-bottom: 10px; }
+
+  /* Overlay comparison chart */
+  .overlay-legend { display: flex; gap: 14px 22px; flex-wrap: wrap; margin-bottom: 20px; }
+  .overlay-legend-item { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 700; color: #374151; }
+  .sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; }
+  .sw-clinics { background: linear-gradient(90deg, #bfdbfe, #60a5fa); }
+  .sw-trends { background: linear-gradient(90deg, #c4b5fd, #7c3aed); }
+  .overlay-row { display: grid; grid-template-columns: 220px 1fr 96px; align-items: center; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--border); animation: rowIn .5s ease backwards; }
+  .overlay-row:last-child { border-bottom: none; }
+  .overlay-track { position: relative; height: 26px; background: #eef2f7; border-radius: 7px; overflow: visible; }
+  .overlay-bar-clinics {
+    position: absolute; left: 0; top: 0; height: 100%; width: 0%;
+    background: linear-gradient(90deg, #bfdbfe, #60a5fa);
+    border-radius: 7px;
+    transition: width 1.1s cubic-bezier(.16,.8,.3,1);
+  }
+  .overlay-bar-trends {
+    position: absolute; left: 0; top: 50%; height: 10px; width: 0%;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, #c4b5fd, #7c3aed);
+    border-radius: 6px;
+    box-shadow: 0 0 0 2px #fff;
+    transition: width 1.1s cubic-bezier(.16,.8,.3,1) .1s;
+  }
+  .overlay-pct { text-align: right; font-size: 11.5px; line-height: 1.5; }
+  .overlay-pct .c { color: var(--blue-dark); font-weight: 800; }
+  .overlay-pct .t { color: #6d28d9; font-weight: 800; }
+
+  footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 12px; color: var(--gray-light); text-align: center; }
+
+  /* Per-clinic breakdown modal */
+  #breakdown-modal-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(15,23,42,0.5);
+    display: none; align-items: flex-start; justify-content: center;
+    padding: 40px 16px; overflow-y: auto;
+  }
+  #breakdown-modal-overlay.open { display: flex; }
+  .breakdown-modal {
+    background: white; border-radius: 16px; max-width: 720px; width: 100%;
+    box-shadow: 0 20px 60px rgba(15,23,42,0.3);
+    max-height: calc(100vh - 80px);
+    display: flex; flex-direction: column;
+  }
+  .breakdown-modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .breakdown-modal-title { font-size: 17px; font-weight: 800; }
+  .breakdown-modal-sub { font-size: 12.5px; color: var(--gray); margin-top: 4px; }
+  .breakdown-modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--gray); line-height: 1; padding: 2px 6px; border-radius: 6px; }
+  .breakdown-modal-close:hover { color: var(--ink); background: var(--bg); }
+  .breakdown-modal-controls { padding: 12px 24px; border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .breakdown-sort-label { font-size: 11.5px; color: var(--gray); font-weight: 700; text-transform: uppercase; letter-spacing: .03em; margin-right: 2px; }
+  .sort-btn { font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border); background: white; cursor: pointer; color: var(--gray); }
+  .sort-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .sort-btn.active { background: var(--blue); border-color: var(--blue); color: white; }
+  .breakdown-modal-body { overflow-y: auto; padding: 6px 24px 20px; }
+  .breakdown-row { padding: 11px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; }
+  .breakdown-row:last-child { border-bottom: none; }
+  .breakdown-clinic a { color: var(--blue-dark); font-weight: 700; font-size: 13.5px; text-decoration: none; }
+  .breakdown-clinic a:hover { text-decoration: underline; }
+  .breakdown-clinic .no-link { color: var(--ink); font-weight: 700; font-size: 13.5px; }
+  .breakdown-proc { font-size: 12px; color: var(--gray); margin-top: 2px; }
+  .breakdown-price-col { text-align: right; flex-shrink: 0; }
+  .breakdown-price { font-weight: 800; color: var(--ink); font-size: 13.5px; white-space: nowrap; }
+  .breakdown-duration { font-size: 11px; color: var(--gray-light); margin-top: 2px; }
+  .breakdown-empty { padding: 24px 0; text-align: center; color: var(--gray); font-size: 13px; }
+
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="inner">
+    <div class="eyebrow">Market Research &middot; Updated Aug 18, 2026</div>
+    <h1>West Palm Beach Med Spa Market Report</h1>
+    <p class="sub">Pricing transparency across Palm Beach County med spas, built from live website research. Outreach campaign has not started yet.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="stat-grid">
+    <div class="stat-card has-tooltip">
+      <div class="num">59</div><div class="label">Clinics tracked</div>
+      <div class="tooltip">
+        <div class="tooltip-title">Coverage at a glance</div>
+        <p>Since a single citywide Google Maps search consistently capped at 6 visible results, coverage was built from 15 neighborhood/suburb-scoped searches instead across Palm Beach County (West Palm Beach, Palm Beach, Palm Beach Gardens, Jupiter, North Palm Beach, Wellington, Boynton Beach, Delray Beach, Boca Raton, Lake Worth, Royal Palm Beach, Riviera Beach, Juno Beach, Lantana, and Greenacres), turning up 60 distinct candidates. 1 was dropped as unverifiable (no confirmable business at the listed area, and the only same-named business found online is a different clinic ~150 miles away in Naples) &mdash; leaving 59 confirmed medical spas.</p>
+        <div class="pill-row">
+          <span class="pill green">5 &mdash; full pricing</span>
+          <span class="pill amber">14 &mdash; partial pricing</span>
+          <span class="pill gray">40 &mdash; no public pricing</span>
+        </div>
+      </div>
+    </div>
+    <div class="stat-card"><div class="num">32%</div><div class="label">Clinics with pricing on file (full or partial)</div></div>
+    <div class="stat-card"><div class="num">0</div><div class="label">Pricing-request emails sent (outreach not yet started)</div></div>
+  </div>
+
+  <section>
+    <h2>Most popular procedures</h2>
+    <p class="section-desc">Ranked by number of distinct clinics offering each treatment, across all 59 tracked clinics. <strong>Click a procedure name</strong> to see the clinic-by-clinic breakdown and prices.</p>
+    <div class="card">
+      <div id="procedures"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Search interest in West Palm Beach <span style="font-weight:600;color:var(--gray);font-size:13px;">(Google Trends)</span></h2>
+    <p class="section-desc">Relative search interest for each treatment among West Palm Beach&ndash;area searchers over the past 12 months, indexed 0&ndash;100 against the single highest-volume term (Botox) across all comparisons. One representative search term was used per category &mdash; see note below.</p>
+    <div class="card">
+      <div id="trends"></div>
+      <p style="font-size:11.5px;color:var(--gray-light);margin:16px 0 0;line-height:1.5;">Source: trends.google.com, geo = West Palm Beach&ndash;Ft. Pierce, FL (Nielsen DMA US-FL-548), Aug 2025&ndash;Aug 2026, weekly values averaged and read directly from the Trends API response rather than estimated visually. This CAPTCHA gate had blocked earlier attempts for this city; a later single-tab, spaced-out retry got through. Google Trends indexes relative search volume for the exact term entered, not category-wide demand &mdash; e.g. "Lip Fillers" doesn't capture searches for "Juv&eacute;derm" or "Restylane," and "IPL" doesn't capture "BBL" or "Lumecca." Treat this as a directional signal, not an absolute demand figure.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Clinics vs. search demand</h2>
+    <p class="section-desc">Reading clinic supply against consumer search interest side by side.</p>
+    <div class="card">
+      <ul class="notes">
+        <li><strong>Botox leads on both supply and demand, the same pattern seen in Miami.</strong> Botox / Neuromodulators is both the most-offered category by distinct clinic count (45 of 59 clinics, 76%) and the runaway search leader (index 74). Dermal / Lip Fillers is the second most-offered category (39 clinics, 66%) but searches at essentially 0 &mdash; West Palm Beach searchers likely split filler searches across brand names (Juv&eacute;derm, Restylane, Sculptra) rather than the generic term, the same understatement pattern seen in Atlanta and Miami.</li>
+        <li><strong>Microneedling and IPL / Photofacial are the best-aligned categories on the demand side.</strong> Both post the highest non-Botox search indexes (35 and 34) even though their clinic supply is comparatively modest (20 clinics/34% and 16 clinics/27%, the 4th and 7th most-offered categories) &mdash; real consumer interest that clinic supply hasn't fully caught up to yet.</li>
+        <li><strong>Medical Weight Loss / GLP-1 is the starkest demand-ahead-of-supply mismatch in this dataset.</strong> Only 11 of 59 clinics offer it (19%, tied for 9th most-offered) yet it posts a search index of 33 &mdash; the third-highest demand in the whole set, reflecting the broader Semaglutide/GLP-1 wave outpacing local clinic listings.</li>
+        <li><strong>Body Contouring / CoolSculpting is the starkest supply-ahead-of-demand mismatch.</strong> It's the 3rd most-offered category by clinic count (25 of 59 clinics, 42%) yet its search index is just 6 &mdash; among the lowest in the whole set, and it also carries almost no published pricing (see below). Searchers may be using brand or device names ("CoolSculpting" itself scores low here too) rather than the generic category term.</li>
+        <li><strong>Kybella and Skin Tightening (Morpheus8/RF) are thin on both sides.</strong> Kybella sits at just 1 of 59 clinics (2%) and a search index of 1; Skin Tightening has more supply (12 clinics, 20%) but an equally low search index of 1 &mdash; both remain niche, low-visibility categories in this market.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Popularity overlay: clinic supply vs. search demand</h2>
+    <p class="section-desc">Clinic supply is scaled to % of the top clinic category (Botox / Neuromodulators, 45 clinics). Search demand uses the actual Google Trends index (0&ndash;100) from the Search Interest chart above &mdash; unscaled, so the numbers match exactly. Where the purple bar reaches further than the blue, search demand is outrunning clinic supply &mdash; and vice versa.</p>
+    <div class="card">
+      <div class="overlay-legend">
+        <span class="overlay-legend-item"><i class="sw sw-clinics"></i>Clinic supply (% of top category)</span>
+        <span class="overlay-legend-item"><i class="sw sw-trends"></i>Search demand (Google Trends index, 0&ndash;100)</span>
+      </div>
+      <div id="overlay"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Typical pricing by procedure</h2>
+    <p class="section-desc">Ranges and medians below are computed from actual parsed listing prices, not estimates. <strong>Click a procedure name</strong> to see exactly which clinic and listing each price came from &mdash; important, since a wide range often means the listings aren't really comparable (see "Are we comparing the same thing?" below).</p>
+    <div class="card" style="padding:0;">
+      <table>
+        <thead>
+          <tr><th>Procedure</th><th># clinics</th><th>Typical range</th><th>Median</th></tr>
+        </thead>
+        <tbody id="price-table"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Are we comparing the same thing?</h2>
+    <p class="section-desc">Short answer: not always &mdash; and that's worth knowing before reading too much into any single price range above.</p>
+    <div class="card">
+      <ul class="notes">
+        <li><strong>Botox's published per-unit pricing comes from just 4 of 45 clinics.</strong> AlluraMD Wellington ($8.95/unit VIP, $12/unit regular), Alluring Image Medspa Delray Beach (from $14/unit), and Facial Mania Delray Beach (from $8.99/unit) are the only genuinely comparable per-unit rates found. Unlike Atlanta and Miami, no repeated boilerplate pricing phrase turned up across unrelated West Palm Beach clinics &mdash; where pricing exists here, it reads as real.</li>
+        <li><strong>Dermal / Lip Fillers ($499&ndash;$840/syringe) is a thin sample from just 2 clinics</strong> out of 39 offering fillers &mdash; the other 37 publish no filler pricing at all.</li>
+        <li><strong>Body Contouring / CoolSculpting (25 clinics) has essentially no genuine pricing</strong> &mdash; the one price found (Rejuvenation Med Spa's vaginal-rejuvenation package) isn't really a body-contouring rate, so this category should be read as "supply without any visible pricing signal."</li>
+        <li><strong>IPL / Photofacial has a category-overlap flag:</strong> Rejuvenation Med Spa's "Scarlet RF Microneedling" package matched the IPL/Photofacial keyword list due to the shared "RF" term, but it's really a microneedling treatment &mdash; excluded from that category's price range for this reason.</li>
+        <li><strong>What we did about it:</strong> every "# clinics" figure in this report counts <em>distinct clinics</em>, not raw price listings. We can't fully normalize prices to a common unit automatically, since clinics describe quantities and package sizes in inconsistent free text, so every procedure name is clickable and opens the full list of underlying listings &mdash; exact wording, exact price, per clinic &mdash; so you can check whether two prices are actually for the same thing before comparing them.</li>
+        <li><strong>Only 31% of West Palm Beach clinics show any pricing at all, full or partial</strong> &mdash; similar to Atlanta (32%) and well below Charlotte (70%). Most West Palm Beach med spas lean on "book a free consultation" rather than a published rate card.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Outreach campaign</h2>
+    <p class="section-desc">For every clinic without published pricing, a short personalized email asking for rates is planned &mdash; following the same process used for Manhattan, Charlotte, Atlanta, and Miami. That campaign has not started yet for West Palm Beach.</p>
+    <div class="card">
+      <div class="funnel">
+        <div class="funnel-step"><div class="n">41</div><div class="l">Clinics with no published pricing (outreach targets)</div></div>
+        <div class="funnel-arrow">&rarr;</div>
+        <div class="funnel-step"><div class="n">0</div><div class="l">Emails sent</div></div>
+        <div class="funnel-arrow">&rarr;</div>
+        <div class="funnel-step"><div class="n">&mdash;</div><div class="l">Campaign not yet started</div></div>
+      </div>
+      <p style="font-size:12px;color:var(--gray);margin:18px 0 0;">A further 14 clinics have <em>partial</em> pricing (a promo rate, one or two line items, or a package price only) and are also reasonable outreach candidates for their standard rates. As in Miami, most clinics in this dataset have no discoverable email address (contact form or phone only) &mdash; only a small handful publish a direct email &mdash; so this campaign will need a different outreach channel more often than Charlotte's did.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Geographic coverage</h2>
+    <div class="card">
+      <ul class="notes">
+        <li><strong>West Palm Beach</strong> (6) &mdash; Beverly Hills Wellness Center & Med Spa, Med-Glow Medical Health Spa, Elevatione Med Spa & Beauty, Body+Beauty Lab (Dr. Hamadiya), Flawless Palm Beach, MD Beauty Labs.</li>
+        <li><strong>Palm Beach Gardens</strong> (4) &mdash; VIO Med Spa | Palm Beach Gardens, The Aesthetics Lounge and Spa Palm Beach Gardens, New Radiance Cosmetic Centers - Palm Beach Gardens, La Vie Spa Gardens.</li>
+        <li><strong>North Palm Beach</strong> (4) &mdash; Earth Scientific Med Spa, The Garden Medical Spa, Wellness & Massage, Prime Body Wellness, Aurelia Med Palm Beach.</li>
+        <li><strong>Jupiter</strong> (6) &mdash; 4Ever Young Med Spa & Wellness Center - Jupiter, Begin Anew - Aesthetics & Wellness, Refresh - Aesthetics & Wellness, AlluraMD Aesthetics + Wellness | Jupiter, BeautyFi Medical Spa - Jupiter, Medicus Aesthetics.</li>
+        <li><strong>Wellington</strong> (6) &mdash; SmizePro Med Spa, New Radiance Cosmetic Centers - Wellington, AlluraMD Aesthetics + Wellness | Wellington, Wellington Rejuvenation Center, Biolift Med Spa Wellington, ProMD Health Wellington.</li>
+        <li><strong>Boynton Beach</strong> (6) &mdash; Rejuvenation Med Spa, AlluraMD Aesthetics + Wellness | Boynton Beach, BioLift Med Spa, remedie, Life Extender Clinic & Medspa, Auravie Med Spa.</li>
+        <li><strong>Delray Beach</strong> (6) &mdash; VIO Med Spa | Delray Beach, STAR MED SPA, Alluring Image Medspa and Wellness, Delray Med Spa, Delray Laser and Medical Spa, Facial Mania Med Spa Delray Beach.</li>
+        <li><strong>Boca Raton</strong> (6) &mdash; Cosmetica, Dolce Medical Spa, Peace Love Med Aesthetic Rejuvenation, Boca Med Spa, Dermagen spa, Jiva Med Spa Boca Raton.</li>
+        <li><strong>Lake Worth</strong> (3) &mdash; Body Care Med Spa, Body Care Med Spa & Timeless Beauty by Norma, Laser Skin & Wellness - Lake Worth.</li>
+        <li><strong>Lantana/Lake Worth</strong> (1) &mdash; VBoutique Aesthetics & Wellness.</li>
+        <li><strong>Royal Palm Beach</strong> (5) &mdash; Bella MedSpa & Wellness Clinique, Flawless Med Spa in Royal Palm Beach, GaliDerm Aesthetics, JuvAllure MedSpa & Wellness, Soigne Aesthetics Wellness & Medical Spa.</li>
+        <li><strong>Lantana</strong> (2) &mdash; Flawless Med Spa in Lantana, The Chrysalis Excursion LLC.</li>
+        <li><strong>Greenacres</strong> (4) &mdash; Newest Beginnings Wellness Center, C&C Wellness Med Spa, Sublime Essence Spa, MANIM Health & BioWellness.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    Source: West_Palm_Beach_Med_Spa_Procedures.xlsx &middot; Compiled from direct website research and a Google Maps sweep &middot; Report generated 8/18/26
+  </footer>
+
+</div>
+
+<div id="breakdown-modal-overlay">
+  <div class="breakdown-modal">
+    <div class="breakdown-modal-header">
+      <div>
+        <div class="breakdown-modal-title" id="breakdown-title">Procedure</div>
+        <div class="breakdown-modal-sub" id="breakdown-sub">Every tracked listing for this category, clinic by clinic.</div>
+      </div>
+      <button class="breakdown-modal-close" id="breakdown-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="breakdown-modal-controls">
+      <span class="breakdown-sort-label">Sort:</span>
+      <button class="sort-btn active" data-sort="clinic">Clinic A&ndash;Z</button>
+      <button class="sort-btn" data-sort="price-asc">Price: low to high</button>
+      <button class="sort-btn" data-sort="price-desc">Price: high to low</button>
+    </div>
+    <div class="breakdown-modal-body" id="breakdown-body"></div>
+  </div>
+</div>
+
+<script>
+
+  (function () {
+    const tooltipCard = document.querySelector('.stat-card.has-tooltip');
+    if (!tooltipCard) return;
+    tooltipCard.addEventListener('click', function (e) {
+      e.stopPropagation();
+      tooltipCard.classList.toggle('tooltip-open');
+    });
+    document.addEventListener('click', function () {
+      tooltipCard.classList.remove('tooltip-open');
+    });
+  })();
+
+  const procedures = [{"name": "Botox / Neuromodulators", "count": 45, "price": "$8.95\u2013$14/unit"}, {"name": "Dermal / Lip Fillers", "count": 39, "price": "$499\u2013$840/syringe"}, {"name": "Body Contouring / CoolSculpting", "count": 25, "price": "Not widely published"}, {"name": "Microneedling", "count": 20, "price": "$200\u2013$700/session"}, {"name": "IV Therapy", "count": 18, "price": "$660\u2013$1,860 (multi-session packages)"}, {"name": "PRP / PRF", "count": 17, "price": "Not widely published"}, {"name": "IPL / Photofacial", "count": 16, "price": "Not widely published"}, {"name": "HydraFacial", "count": 14, "price": "$150\u2013$350/session"}, {"name": "Skin Tightening (Morpheus8/RF)", "count": 12, "price": "Not widely published"}, {"name": "Chemical Peels", "count": 11, "price": "$75\u2013$250"}, {"name": "Medical Weight Loss / GLP-1", "count": 11, "price": "from $99/mo"}, {"name": "Laser Hair Removal", "count": 10, "price": "$150\u2013$500/session"}, {"name": "Hormone Therapy", "count": 8, "price": "Not widely published"}, {"name": "Sculptra / Biostimulators", "count": 7, "price": "Not widely published"}, {"name": "Kybella", "count": 1, "price": "Not widely published"}];
+  const max = Math.max(...procedures.map(p => p.count));
+  const container = document.getElementById('procedures');
+  const barsToAnimate = [];
+  procedures.forEach((p, i) => {
+    const row = document.createElement('div');
+    row.className = 'proc-row';
+    row.style.animationDelay = `${i * 0.04}s`;
+    const pct = (p.count / max * 100).toFixed(0);
+    row.innerHTML = `
+      <div>
+        <div class="proc-name proc-name-link" data-category="${p.name}">${p.name}</div>
+        <div class="proc-price">${p.price}</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" data-pct="${pct}"></div></div>
+      <div class="proc-count">${p.count} clinics</div>
+    `;
+    container.appendChild(row);
+    barsToAnimate.push(row.querySelector('.bar-fill'));
+  });
+
+  const trends = [{"name": "Botox / Neuromodulators", "term": "\"Botox\"", "index": 74}, {"name": "Dermal / Lip Fillers", "term": "\"Lip Fillers\"", "index": 0}, {"name": "Sculptra / Biostimulators", "term": "\"Sculptra\"", "index": 6}, {"name": "Kybella", "term": "\"Kybella\"", "index": 1}, {"name": "HydraFacial", "term": "\"HydraFacial\"", "index": 6}, {"name": "Chemical Peels", "term": "\"Chemical Peel\"", "index": 4}, {"name": "Microneedling", "term": "\"Microneedling\"", "index": 35}, {"name": "Laser Hair Removal", "term": "\"Laser Hair Removal\"", "index": 25}, {"name": "Body Contouring / CoolSculpting", "term": "\"CoolSculpting\"", "index": 6}, {"name": "Skin Tightening (Morpheus8/RF)", "term": "\"Morpheus8\"", "index": 1}, {"name": "IV Therapy", "term": "\"IV Therapy\"", "index": 15}, {"name": "PRP / PRF", "term": "\"PRP Injection\"", "index": 22}, {"name": "Medical Weight Loss / GLP-1", "term": "\"Semaglutide\"", "index": 33}, {"name": "Hormone Therapy", "term": "\"Hormone Therapy\"", "index": 15}, {"name": "IPL / Photofacial", "term": "\"IPL Photofacial\"", "index": 34}];
+  const trendsContainer = document.getElementById('trends');
+  trends.forEach((t, i) => {
+    const row = document.createElement('div');
+    row.className = 'proc-row';
+    row.style.animationDelay = `${i * 0.04}s`;
+    row.innerHTML = `
+      <div>
+        <div class="proc-name">${t.name}</div>
+        <div class="proc-price">Search term: ${t.term}</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill trend" data-pct="${t.index}"></div></div>
+      <div class="proc-count trend">${t.index} / 100</div>
+    `;
+    trendsContainer.appendChild(row);
+    barsToAnimate.push(row.querySelector('.bar-fill'));
+  });
+
+  const overlayContainer = document.getElementById('overlay');
+  const clinicMax = Math.max(...procedures.map(p => p.count));
+  procedures.forEach((p, i) => {
+    const t = trends.find(x => x.name === p.name) || { index: 0 };
+    const clinicPct = Math.round(p.count / clinicMax * 100);
+    const trendPct = t.index;
+    const row = document.createElement('div');
+    row.className = 'overlay-row';
+    row.style.animationDelay = `${i * 0.04}s`;
+    row.innerHTML = `
+      <div class="proc-name">${p.name}</div>
+      <div class="overlay-track">
+        <div class="overlay-bar-clinics" data-pct="${clinicPct}"></div>
+        <div class="overlay-bar-trends" data-pct="${trendPct}"></div>
+      </div>
+      <div class="overlay-pct"><span class="c">${clinicPct}%</span> clinics<br><span class="t">${trendPct}</span> search idx</div>
+    `;
+    overlayContainer.appendChild(row);
+    barsToAnimate.push(row.querySelector('.overlay-bar-clinics'));
+    barsToAnimate.push(row.querySelector('.overlay-bar-trends'));
+  });
+
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      barsToAnimate.forEach((el, i) => {
+        setTimeout(() => { el.style.width = el.dataset.pct + '%'; }, i * 25);
+      });
+    }, 150);
+  });
+
+  function animateCount(el, target, opts = {}) {
+    const { suffix = '', duration = 1200, decimals = 0, prefix = '' } = opts;
+    const start = performance.now();
+    function tick(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const val = target * eased;
+      el.textContent = prefix + val.toLocaleString('en-US', { maximumFractionDigits: decimals, minimumFractionDigits: decimals }) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = prefix + target.toLocaleString('en-US') + suffix;
+    }
+    requestAnimationFrame(tick);
+  }
+  document.querySelectorAll('.stat-card .num').forEach(el => {
+    const raw = el.textContent.trim();
+    const suffix = raw.match(/%$/) ? '%' : '';
+    const target = parseFloat(raw.replace(/[^0-9.]/g, ''));
+    if (!isNaN(target)) {
+      el.textContent = suffix ? '0%' : '0';
+      setTimeout(() => animateCount(el, target, { suffix }), 200);
+    }
+  });
+
+  const priceRows = [["Botox / Neuromodulators", "45", "$8.95\u2013$14/unit", "~$10.50/unit", "Only 5 of 45 clinics publish a true per-unit rate (Rejuvenation Med Spa $12, promo $10 \u2014 confirmed via pricing-request email, 2026-08-25; AlluraMD Wellington $8.95 VIP/$12 regular, Alluring Image Medspa $14, Facial Mania Delray $8.99). A few more list promo package prices (BioLift $159 promo, Boca Med Spa $300-$400/treatment) that aren't directly comparable per-unit figures, so they're excluded from this range."], ["Dermal / Lip Fillers", "39", "$499\u2013$840/syringe", "~$789/syringe", "Only 2 of 39 clinics publish a genuine per-syringe rate (Alluring Image Medspa $789-$840, Facial Mania Delray from $499). The rest of this category has no published filler pricing at all &mdash; no repeated-boilerplate contamination pattern was found here, unlike Atlanta and Miami, but the sample is thin either way."], ["HydraFacial", "14", "$150\u2013$350/session", "\u2014", "Only 3 of 14 clinics publish HydraFacial pricing (La Vie Spa Gardens $200 Classic / $269 Deluxe \u2014 confirmed via pricing-request email, 2026-08-25; AlluraMD Wellington's $159 first-visit rate, Facial Mania Delray's $150-$350 session range). Too thin a sample for a reliable median."], ["Chemical Peels", "11", "$75\u2013$250", "~$150", "6 listings across 2 clinics (Beverly Hills Wellness Center's $85-$250 menu of peel types, Laser Skin & Wellness's $75-$250 range) &mdash; note these mix very different peel strengths under one label."], ["Microneedling", "20", "$200\u2013$700/session", "\u2014", "Only Facial Mania Delray publishes a genuine per-session range ($200-$700); Rejuvenation Med Spa's $499-$1,800 figures are promo package prices, excluded here as not comparable to a standard rate."], ["Laser Hair Removal", "10", "$150\u2013$500/session", "\u2014", "Only 1 of 10 clinics (Facial Mania Delray) publishes a price range at all; too thin a sample to call a market range."], ["IV Therapy", "18", "$660\u2013$1,860 (multi-session packages)", "\u2014", "Only C&C Wellness Med Spa publishes IV pricing, and only as bundled packages (4/8/12 session tiers) rather than a single-session rate, so this isn't directly comparable to a per-visit price."], ["Medical Weight Loss / GLP-1", "11", "from $99/mo", "\u2014", "Only Prime Body Wellness publishes a starting monthly program rate; the other 10 clinics offering weight-loss services show no pricing."], ["Sculptra / Biostimulators", "7", "Not widely published", "\u2014", "Only 1 of 7 listings shows a price, and it's a promo package (Rejuvenation Med Spa, $1,250 for 2 syringes) rather than a standard per-syringe rate."], ["Body Contouring / CoolSculpting", "25", "Not widely published", "\u2014", "Only 1 of 25 clinics shows any price, and it's a promo vaginal-rejuvenation package, not a body-contouring rate &mdash; effectively no genuine body-contouring pricing was found in this dataset."], ["Skin Tightening (Morpheus8/RF)", "12", "Not widely published", "\u2014", "None of the 12 clinics offering Morpheus8/RF skin tightening in this dataset publish a price."], ["PRP / PRF", "17", "Not widely published", "\u2014", "None of the 17 clinics offering PRP/PRF/vampire facial treatments in this dataset publish a price."], ["Hormone Therapy", "8", "Not widely published", "\u2014", "None of the 8 clinics offering hormone therapy in this dataset publish a price &mdash; consistent with this category skewing toward consult-first, membership-style pricing everywhere in this project so far."], ["IPL / Photofacial", "16", "Not widely published", "\u2014", "Only 1 of 16 clinics (The Garden Medical Spa's SmoothGlo, starting at $1,250) publishes a price; a second apparent match (Rejuvenation Med Spa's Scarlet RF package) is a microneedling/RF treatment miscategorized by keyword overlap and was excluded &mdash; see the note below."], ["Kybella", "1", "Not widely published", "\u2014", "Only 1 clinic (Wellington Rejuvenation Center, via a generic services page) lists Kybella at all in this dataset, and it publishes no price."]];
+  const tbody = document.getElementById('price-table');
+  priceRows.forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><div class="proc-name proc-name-link" data-category="${r[0]}">${r[0]}</div><div class="table-note">${r[4]}</div></td><td class="num">${r[1]}</td><td>${r[2]}</td><td class="num">${r[3]}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  const breakdownData = {"Botox / Neuromodulators": [["Beverly Hills Wellness Center & Med Spa", "beverlyhillsmedispa.com", "Botox", "price on request", ""], ["Beverly Hills Wellness Center & Med Spa", "beverlyhillsmedispa.com", "Dysport", "price on request", ""], ["Beverly Hills Wellness Center & Med Spa", "beverlyhillsmedispa.com", "Xeomin", "price on request", ""], ["Beverly Hills Wellness Center & Med Spa", "beverlyhillsmedispa.com", "Newtox (Jeuveau)", "price on request", ""], ["Flawless Palm Beach", "flawlesspalmbeach.com", "Botox", "not published", ""], ["MD Beauty Labs", "mdbeautylabs.com", "Botox", "not published", ""], ["VIO Med Spa | Palm Beach Gardens", "viomedspa.com/palm-beach-gardens", "Botox", "not published (Access membership discounts referenced)", ""], ["The Garden Medical Spa, Wellness & Massage", "thegardenmedspa.com", "Botox", "not published", ""], ["The Aesthetics Lounge and Spa Palm Beach Gardens", "palmbeachgardens.theaestheticsloungeandspa.com", "Botox", "not published", ""], ["New Radiance Cosmetic Centers - Palm Beach Gardens", "newradiancenow.com/locations/palm-beach-gardens", "Botox / Dysport / Xeomin / Daxxify", "not published (transparent pricing via online portal, not extracted)", ""], ["4Ever Young Med Spa & Wellness Center - Jupiter", "4everyoungantiaging.com/jupiter", "Botox", "not published (Groupon promo 65-75% off seen, not base price)", ""], ["Begin Anew - Aesthetics & Wellness", "beginanewmed.com", "Botox & Fillers", "not published", ""], ["Refresh - Aesthetics & Wellness", "", "Botox", "not published", ""], ["AlluraMD Aesthetics + Wellness | Jupiter", "alluraaesthetics.com/jupiter", "Botox", "not published", ""], ["BeautyFi Medical Spa - Jupiter", "beautyfi.net", "Botox", "not published", ""], ["BeautyFi Medical Spa - Jupiter", "beautyfi.net", "Dysport", "$600", ""], ["Medicus Aesthetics", "medicusaesthetics.com", "Botox", "not published", ""], ["Prime Body Wellness", "primebodywellness.com", "Botox", "not published", ""], ["SmizePro Med Spa", "smizespa.com", "Botox", "not published", ""], ["New Radiance Cosmetic Centers - Wellington", "newradiancenow.com/locations/wellington", "Botox", "not published", ""], ["AlluraMD Aesthetics + Wellness | Wellington", "alluraaesthetics.com/wellington", "Botox (VIP membership rate)", "$8.95/unit", ""], ["AlluraMD Aesthetics + Wellness | Wellington", "alluraaesthetics.com/wellington", "Botox (regular rate)", "$12/unit", ""], ["Wellington Rejuvenation Center", "wellingtonrejuvenationcenter.com", "Botox", "not published", ""], ["Wellington Rejuvenation Center", "wellingtonrejuvenationcenter.com", "Dysport", "not published", ""], ["Wellington Rejuvenation Center", "wellingtonrejuvenationcenter.com", "Xeomin", "not published", ""], ["ProMD Health Wellington", "promdhealth.com/location/wellington-office", "Botox", "not published", ""], ["ProMD Health Wellington", "promdhealth.com/location/wellington-office", "Dysport", "not published", ""], ["ProMD Health Wellington", "promdhealth.com/location/wellington-office", "Daxxify", "not published", ""], ["Rejuvenation Med Spa", "rejuvenationfl.com", "Botox", "$12/unit ($10/unit promo pricing runs periodically) \u2014 confirmed via pricing-request email, 2026-08-25", ""], ["AlluraMD Aesthetics + Wellness | Boynton Beach", "alluraaesthetics.com/boynton-beach", "Botox", "not published", ""], ["BioLift Med Spa", "bioliftmedspa.com", "Botox", "not published", ""], ["BioLift Med Spa", "bioliftmedspa.com", "Botox Package (promo)", "$159 (reg. $350)", ""], ["remedie", "remediemed.com", "Wrinkle Relaxers (Botox/Dysport)", "not published (TLC Reserve membership pricing referenced)", ""], ["Auravie Med Spa", "auraviemedspa.com", "Botox", "not published", ""], ["Auravie Med Spa", "auraviemedspa.com", "Xeomin", "not published", ""], ["VIO Med Spa | Delray Beach", "viomedspa.com/locations/delray", "Botox", "not published", ""], ["Alluring Image Medspa and Wellness", "alluringimagemedspa.com", "Botox / Dysport / Xeomin", "starting at $14/unit", ""], ["Delray Laser and Medical Spa", "delraylaserandmedicalspa.com", "Wrinkle Relaxers", "not published", ""], ["Facial Mania Med Spa Delray Beach", "facialmaniamedspa.com", "Botox / Dysport / Xeomin", "starting at $8.99/unit", ""], ["Cosmetica", "cosmeticamedspa.com", "Botox / Xeomin / Dysport", "not published", ""], ["Dolce Medical Spa", "dolcemedicalspas.com", "Botox", "not published", ""], ["Peace Love Med Aesthetic Rejuvenation", "peacelovemed.com", "Botox / Dysport / Xeomin / Jeuveau", "not published", ""], ["Boca Med Spa", "", "Botox", "$300-$400/treatment", ""], ["Dermagen spa", "dermagenspa.com", "Botox", "not published", ""], ["Jiva Med Spa Boca Raton", "jivamedspa.com/location-services-boca-raton", "Botox", "not published", ""], ["VBoutique Aesthetics & Wellness", "vboutiqueflorida.com", "Botox / Dysport / Xeomin", "not published", ""], ["Bella MedSpa & Wellness Clinique", "bellamedspawellnessclinique.com", "Botox", "not published", ""], ["Flawless Med Spa in Royal Palm Beach", "flawlesspalmbeach.com", "Botox", "not published", ""], ["GaliDerm Aesthetics", "galiderm.com", "Botox / Jeuveau", "not published", ""], ["JuvAllure MedSpa & Wellness", "juvallure.com", "Botox", "not published", ""], ["Soigne Aesthetics Wellness & Medical Spa", "soigneaestheticswellness.com", "Botox/Neuromodulators", "not published", ""], ["Flawless Med Spa in Lantana", "flawlesspalmbeach.com", "Botox", "not published", ""], ["The Chrysalis Excursion LLC", "thechrysalisexcursionllc.com", "Botox", "not published", ""], ["Newest Beginnings Wellness Center", "newestbeginnings.com/medical-spa-greenacres-fl", "Botox", "not published", ""], ["C&C Wellness Med Spa", "cncwellnessmedspa.com", "Botox", "not published", ""], ["MANIM Health & BioWellness", "mhealthbiowellness.com", "Botox", "not published", ""]], "Dermal / Lip Fillers": [["Beverly Hills Wellness Center & Med Spa", "beverlyhillsmedispa.com", "Fillers", "price on request", ""], ["Body+Beauty Lab (Dr. Hamadiya)", "drhamadiya.com", "Regenerative/Filler Correction", "not published", ""], ["Flawless Palm Beach", "flawlesspalmbeach.com", "Fillers", "not published", ""], ["MD Beauty Labs", "mdbeautylabs.com", "Fillers", "not published", ""], ["The Garden Medical Spa, Wellness & Massage", "thegardenmedspa.com", "Dermal Fillers", "not published", ""], ["New Radiance Cosmetic Centers - Palm Beach Gardens", "newradiancenow.com/locations/palm-beach-gardens", "Dermal Fillers", "not published", ""], ["4Ever Young Med Spa & Wellness Center - Jupiter", "4everyoungantiaging.com/jupiter", "Lip Enhancement", "not published", ""], ["Begin Anew - Aesthetics & Wellness", "beginanewmed.com", "Botox & Fillers", "not published", ""], ["Refresh - Aesthetics & Wellness", "", "Dermal Fillers", "not published", ""], ["AlluraMD Aesthetics + Wellness | Jupiter", "alluraaesthetics.com/jupiter", "Dermal Fillers", "not published", ""], ["BeautyFi Medical Spa - Jupiter", "beautyfi.net", "Fillers", "not published", ""], ["Medicus Aesthetics", "medicusaesthetics.com", "Dermal Fillers", "not published", ""], ["SmizePro Med Spa", "smizespa.com", "Fillers", "not published", ""], ["New Radiance Cosmetic Centers - Wellington", "newradiancenow.com/locations/wellington", "Juvederm", "not published", ""], ["New Radiance Cosmetic Centers - Wellington", "newradiancenow.com/locations/wellington", "Restylane", "not published", ""], ["ProMD Health Wellington", "promdhealth.com/location/wellington-office", "Dermal Fillers", "not published", ""], ["AlluraMD Aesthetics + Wellness | Boynton Beach", "alluraaesthetics.com/boynton-beach", "Dermal Fillers", "not published", ""], ["remedie", "remediemed.com", "Filler", "not published", ""], ["Auravie Med Spa", "auraviemedspa.com", "Dermal Fillers", "not published", ""], ["VIO Med Spa | Delray Beach", "viomedspa.com/locations/delray", "Fillers", "not published", ""], ["Alluring Image Medspa and Wellness", "alluringimagemedspa.com", "Lip Filler", "$789/syringe", ""], ["Alluring Image Medspa and Wellness", "alluringimagemedspa.com", "Under-Eye Filler", "$840/syringe", ""], ["Alluring Image Medspa and Wellness", "alluringimagemedspa.com", "Chin Filler", "$789/syringe", ""], ["Alluring Image Medspa and Wellness", "alluringimagemedspa.com", "Cheek Filler", "$789/syringe", ""], ["Delray Med Spa", "delraymedspas.com", "Dermal Fillers", "not published", ""], ["Delray Laser and Medical Spa", "delraylaserandmedicalspa.com", "Fillers", "not published", ""], ["Facial Mania Med Spa Delray Beach", "facialmaniamedspa.com", "Fillers", "starting at $499/syringe", ""], ["Cosmetica", "cosmeticamedspa.com", "Lip Injections", "not published", ""], ["Cosmetica", "cosmeticamedspa.com", "Dermal Filler", "not published", ""], ["Dolce Medical Spa", "dolcemedicalspas.com", "Lip Injections", "not published", ""], ["Peace Love Med Aesthetic Rejuvenation", "peacelovemed.com", "Lip Injections", "not published", ""], ["Peace Love Med Aesthetic Rejuvenation", "peacelovemed.com", "Under-Eye Filler", "not published", ""], ["Boca Med Spa", "", "Dermal Fillers", "not published", ""], ["Boca Med Spa", "", "Radiesse", "not published", ""], ["Jiva Med Spa Boca Raton", "jivamedspa.com/location-services-boca-raton", "Fillers", "not published", ""], ["Body Care Med Spa", "vitestetica.com", "Radiesse Hand Filler", "not published", ""], ["VBoutique Aesthetics & Wellness", "vboutiqueflorida.com", "HA Fillers", "not published", ""], ["VBoutique Aesthetics & Wellness", "vboutiqueflorida.com", "Radiesse", "not published", ""], ["VBoutique Aesthetics & Wellness", "vboutiqueflorida.com", "Juvederm", "not published", ""], ["Laser Skin & Wellness - Lake Worth", "laserskinsolutions.com/location/lake-worth", "Dermal Fillers", "not published", ""], ["Bella MedSpa & Wellness Clinique", "bellamedspawellnessclinique.com", "Filler", "not published", ""], ["Flawless Med Spa in Royal Palm Beach", "flawlesspalmbeach.com", "Fillers", "not published", ""], ["GaliDerm Aesthetics", "galiderm.com", "Fillers", "not published", ""], ["JuvAllure MedSpa & Wellness", "juvallure.com", "Dermal Fillers", "not published", ""], ["Soigne Aesthetics Wellness & Medical Spa", "soigneaestheticswellness.com", "Dermal Fillers", "not published", ""], ["Flawless Med Spa in Lantana", "flawlesspalmbeach.com", "Fillers", "not published", ""], ["Newest Beginnings Wellness Center", "newestbeginnings.com/medical-spa-greenacres-fl", "Dermal Fillers", "not published", ""], ["MANIM Health & BioWellness", "mhealthbiowellness.com", "Dermal Fillers", "not published", ""]], "Sculptra / Biostimulators": [["Prime Body Wellness", "primebodywellness.com", "Sculptra", "not published", ""], ["ProMD Health Wellington", "promdhealth.com/location/wellington-office", "Sculptra", "not published", ""], ["Rejuvenation Med Spa", "rejuvenationfl.com", "Sculptra (2 syringes)", "$1,250 (promo)", ""], ["remedie", "remediemed.com", "Biostimulators", "not published", ""], ["Cosmetica", "cosmeticamedspa.com", "Sculptra", "not published", ""], ["Dolce Medical Spa", "dolcemedicalspas.com", "Sculptra", "not published", ""], ["VBoutique Aesthetics & Wellness", "vboutiqueflorida.com", "Sculptra", "not published", ""]], "Kybella": [["Cosmetica", "cosmeticamedspa.com", "Kybella", "not published", ""]], "HydraFacial": [["The Garden Medical Spa, Wellness & Massage", "thegardenmedspa.com", "HydraFacial", "not published", ""], ["La Vie Spa Gardens", "laviespagardens.com", "HydraFacial", "Classic $200, Deluxe $269 \u2014 confirmed via pricing-request email, 2026-08-25", ""], ["4Ever Young Med Spa & Wellness Center - Jupiter", "4everyoungantiaging.com/jupiter", "HydraFacial", "not published", ""], ["AlluraMD Aesthetics + Wellness | Jupiter", "alluraaesthetics.com/jupiter", "HydraFacial", "not published", ""], ["AlluraMD Aesthetics + Wellness | Wellington", "alluraaesthetics.com/wellington", "HydraFacial (first visit)", "$159", ""], ["Life Extender Clinic & Medspa", "lifeextenderclinic.com", "HydraFacial", "not published", ""], ["Auravie Med Spa", "auraviemedspa.com", "HydroDiamond Facial", "not published", ""], ["Delray Laser and Medical Spa", "delraylaserandmedicalspa.com", "HydraFacial", "not published", ""], ["Facial Mania Med Spa Delray Beach", "facialmaniamedspa.com", "HydraFacial", "$150-$350/session", ""], ["Cosmetica", "cosmeticamedspa.com", "HydraFacial", "not published", ""], ["Dolce Medical Spa", "dolcemedicalspas.com", "HydraFacial", "not published (Yelp review cites a $59 intro upsold to $2,400 package)", ""], ["Peace Love Med Aesthetic Rejuvenation", "peacelovemed.com", "HydraFacial", "not published", ""], ["Flawless Med Spa in Royal Palm Beach", "flawlesspalmbeach.com", "HydraFacial", "not published", ""], ["Flawless Med Spa in Lantana", "flawlesspalmbeach.com", "HydraFacial", "not published", ""]], "Chemical Peels": [["Beverly Hills Wellness Center & Med Spa", "beverlyhillsmedispa.com", "Glycolic Peel", "$85", ""], ["Beverly Hills Wellness Center & Med Spa", "beverlyhillsmedispa.com", "Clarifying Peel", "$85", ""], ["Beverly Hills Wellness Center & Med Spa", "beverlyhillsmedispa.com", "Revepeel", "$250", ""], ["Beverly Hills Wellness Center & Med Spa", "beverlyhillsmedispa.com", "Intimate Peel", "$150", ""], ["Beverly Hills Wellness Center & Med Spa", "beverlyhillsmedispa.com", "Acne Facial with Chemical Peel", "$89", ""], ["Flawless Palm Beach", "flawlesspalmbeach.com", "Chemical Peel", "not published", ""], ["Earth Scientific Med Spa", "earthscientificspa.com", "JetPeel", "not published", ""], ["The Garden Medical Spa, Wellness & Massage", "thegardenmedspa.com", "Chemical Peels", "not published", ""], ["La Vie Spa Gardens", "laviespagardens.com", "Chemical Peels", "not published", ""], ["Alluring Image Medspa and Wellness", "alluringimagemedspa.com", "Chemical Peels", "not published", ""], ["Laser Skin & Wellness - Lake Worth", "laserskinsolutions.com/location/lake-worth", "Chemical Peel", "$75-$250", ""], ["Bella MedSpa & Wellness Clinique", "bellamedspawellnessclinique.com", "Chemical Peels", "not published", ""], ["Flawless Med Spa in Royal Palm Beach", "flawlesspalmbeach.com", "Chemical Peel", "not published", ""], ["Flawless Med Spa in Lantana", "flawlesspalmbeach.com", "Chemical Peel", "not published", ""], ["Sublime Essence Spa", "sublimeessencespa.com", "Chemical Peels", "not published", ""]], "Microneedling": [["Beverly Hills Wellness Center & Med Spa", "beverlyhillsmedispa.com", "Cosmo-Pen Microneedling", "Not published", ""], ["Body+Beauty Lab (Dr. Hamadiya)", "drhamadiya.com", "Microneedling", "not published", ""], ["Earth Scientific Med Spa", "earthscientificspa.com", "RF Microneedling", "not published", ""], ["The Garden Medical Spa, Wellness & Massage", "thegardenmedspa.com", "Microneedling", "not published", ""], ["La Vie Spa Gardens", "laviespagardens.com", "Microneedling", "not published", ""], ["4Ever Young Med Spa & Wellness Center - Jupiter", "4everyoungantiaging.com/jupiter", "Microneedling", "not published", ""], ["Refresh - Aesthetics & Wellness", "", "Microneedling", "not published", ""], ["Rejuvenation Med Spa", "rejuvenationfl.com", "Scarlet RF Microneedling Package (3)", "$1,800 (promo)", ""], ["Rejuvenation Med Spa", "rejuvenationfl.com", "Microneedling + Salmon PDRN", "$499 (promo)", ""], ["Alluring Image Medspa and Wellness", "alluringimagemedspa.com", "Exosome Stem Cell Microneedling Facial", "not published", ""], ["Facial Mania Med Spa Delray Beach", "facialmaniamedspa.com", "Microneedling", "$200-$700/session", ""], ["Boca Med Spa", "", "Microneedling", "not published", ""], ["Jiva Med Spa Boca Raton", "jivamedspa.com/location-services-boca-raton", "RF Microneedling", "not published", ""], ["Body Care Med Spa", "vitestetica.com", "Microneedling", "not published", ""], ["Body Care Med Spa & Timeless Beauty by Norma", "timelessbeautybynorma.com", "RF Microneedling", "not published", ""], ["Bella MedSpa & Wellness Clinique", "bellamedspawellnessclinique.com", "Microneedling/PRP", "not published", ""], ["Flawless Med Spa in Royal Palm Beach", "flawlesspalmbeach.com", "Vivace RF Microneedling", "not published", ""], ["Flawless Med Spa in Lantana", "flawlesspalmbeach.com", "Vivace RF Microneedling", "not published", ""], ["The Chrysalis Excursion LLC", "thechrysalisexcursionllc.com", "RF Microneedling", "not published", ""], ["Sublime Essence Spa", "sublimeessencespa.com", "Microneedling/SkinPen", "not published", ""], ["MANIM Health & BioWellness", "mhealthbiowellness.com", "Microneedling", "not published", ""]], "Laser Hair Removal": [["The Aesthetics Lounge and Spa Palm Beach Gardens", "palmbeachgardens.theaestheticsloungeandspa.com", "Laser Hair Removal", "not published", ""], ["New Radiance Cosmetic Centers - Palm Beach Gardens", "newradiancenow.com/locations/palm-beach-gardens", "Permanent Laser Hair Removal", "not published", ""], ["La Vie Spa Gardens", "laviespagardens.com", "Laser Hair Removal", "not published", ""], ["BioLift Med Spa", "bioliftmedspa.com", "Laser Hair Removal", "not published", ""], ["Facial Mania Med Spa Delray Beach", "facialmaniamedspa.com", "Laser Hair Removal", "$150-$500/session", ""], ["Jiva Med Spa Boca Raton", "jivamedspa.com/location-services-boca-raton", "Laser Hair Removal", "not published", ""], ["VBoutique Aesthetics & Wellness", "vboutiqueflorida.com", "Laser Hair Removal", "not published", ""], ["Laser Skin & Wellness - Lake Worth", "laserskinsolutions.com/location/lake-worth", "Laser Hair Removal", "not published", ""], ["Newest Beginnings Wellness Center", "newestbeginnings.com/medical-spa-greenacres-fl", "Laser Hair Removal", "not published", ""], ["Sublime Essence Spa", "sublimeessencespa.com", "Laser Hair Removal", "not published", ""]], "Body Contouring / CoolSculpting": [["Elevatione Med Spa & Beauty", "elevatione-medspa.com", "Body Contouring", "not published", ""], ["Body+Beauty Lab (Dr. Hamadiya)", "drhamadiya.com", "Body Contouring", "not published", ""], ["MD Beauty Labs", "mdbeautylabs.com", "Body Contouring", "not published", ""], ["VIO Med Spa | Palm Beach Gardens", "viomedspa.com/palm-beach-gardens", "CoolSculpting", "not published", ""], ["VIO Med Spa | Palm Beach Gardens", "viomedspa.com/palm-beach-gardens", "Body Contouring", "not published", ""], ["Earth Scientific Med Spa", "earthscientificspa.com", "Cryo Body Sculpting", "not published", ""], ["Earth Scientific Med Spa", "earthscientificspa.com", "EMS Body Contouring", "not published", ""], ["New Radiance Cosmetic Centers - Palm Beach Gardens", "newradiancenow.com/locations/palm-beach-gardens", "CoolSculpting Elite", "not published", ""], ["Begin Anew - Aesthetics & Wellness", "beginanewmed.com", "CoolSculpting Elite", "not published", ""], ["AlluraMD Aesthetics + Wellness | Jupiter", "alluraaesthetics.com/jupiter", "CoolSculpting", "not published", ""], ["BeautyFi Medical Spa - Jupiter", "beautyfi.net", "Body Sculpting", "not published", ""], ["Prime Body Wellness", "primebodywellness.com", "Body Contouring", "not published", ""], ["Aurelia Med Palm Beach", "aureliamed.com", "Body Contouring", "not published", ""], ["SmizePro Med Spa", "smizespa.com", "Emsculpt Neo", "not published", ""], ["New Radiance Cosmetic Centers - Wellington", "newradiancenow.com/locations/wellington", "CoolSculpting", "not published", ""], ["New Radiance Cosmetic Centers - Wellington", "newradiancenow.com/locations/wellington", "EMSCULPT", "not published", ""], ["New Radiance Cosmetic Centers - Wellington", "newradiancenow.com/locations/wellington", "Smart Liposuction", "not published", ""], ["Rejuvenation Med Spa", "rejuvenationfl.com", "Vaginal Rejuvenation Package (3)", "$1,200 (promo)", ""], ["AlluraMD Aesthetics + Wellness | Boynton Beach", "alluraaesthetics.com/boynton-beach", "CoolSculpting", "not published", ""], ["Life Extender Clinic & Medspa", "lifeextenderclinic.com", "Emsculpt NEO", "not published", ""], ["VIO Med Spa | Delray Beach", "viomedspa.com/locations/delray", "Body Sculpting", "not published", ""], ["Delray Med Spa", "delraymedspas.com", "Body Sculpting/BBL", "not published", ""], ["Delray Laser and Medical Spa", "delraylaserandmedicalspa.com", "VelaShape III Body Contouring", "not published", ""], ["Delray Laser and Medical Spa", "delraylaserandmedicalspa.com", "CoolSculpting", "not published", ""], ["Peace Love Med Aesthetic Rejuvenation", "peacelovemed.com", "CoolSculpting", "not published", ""], ["Peace Love Med Aesthetic Rejuvenation", "peacelovemed.com", "Emsculpt", "not published", ""], ["Jiva Med Spa Boca Raton", "jivamedspa.com/location-services-boca-raton", "CoolSculpting", "not published", ""], ["Bella MedSpa & Wellness Clinique", "bellamedspawellnessclinique.com", "MonaLisa Touch/Vaginal Rejuvenation", "not published", ""], ["Flawless Med Spa in Royal Palm Beach", "flawlesspalmbeach.com", "Body Sculpting", "not published", ""], ["Flawless Med Spa in Lantana", "flawlesspalmbeach.com", "Body Sculpting", "not published", ""], ["Sublime Essence Spa", "sublimeessencespa.com", "Body Sculpting", "not published", ""]], "Skin Tightening (Morpheus8/RF)": [["Beverly Hills Wellness Center & Med Spa", "beverlyhillsmedispa.com", "Venus Legacy RF Skin Tightening", "Not published", ""], ["New Radiance Cosmetic Centers - Palm Beach Gardens", "newradiancenow.com/locations/palm-beach-gardens", "Thermage Skin Tightening", "not published", ""], ["Begin Anew - Aesthetics & Wellness", "beginanewmed.com", "Morpheus8", "not published", ""], ["AlluraMD Aesthetics + Wellness | Jupiter", "alluraaesthetics.com/jupiter", "Morpheus8", "not published", ""], ["BeautyFi Medical Spa - Jupiter", "beautyfi.net", "Skin Tightening", "not published", ""], ["SmizePro Med Spa", "smizespa.com", "Morpheus8", "not published", ""], ["AlluraMD Aesthetics + Wellness | Boynton Beach", "alluraaesthetics.com/boynton-beach", "Morpheus8", "not published", ""], ["VIO Med Spa | Delray Beach", "viomedspa.com/locations/delray", "Skin Tightening", "not published", ""], ["VBoutique Aesthetics & Wellness", "vboutiqueflorida.com", "Secret RF Skin Tightening", "not published", ""], ["Flawless Med Spa in Royal Palm Beach", "flawlesspalmbeach.com", "Vivace RF Microneedling", "not published", ""], ["Flawless Med Spa in Lantana", "flawlesspalmbeach.com", "Vivace RF Microneedling", "not published", ""], ["Sublime Essence Spa", "sublimeessencespa.com", "Morpheus8", "not published", ""]], "IV Therapy": [["Beverly Hills Wellness Center & Med Spa", "beverlyhillsmedispa.com", "IV Therapy", "Not published", ""], ["Flawless Palm Beach", "flawlesspalmbeach.com", "IV Therapy", "not published", ""], ["MD Beauty Labs", "mdbeautylabs.com", "IV Therapy", "not published", ""], ["The Aesthetics Lounge and Spa Palm Beach Gardens", "palmbeachgardens.theaestheticsloungeandspa.com", "B-12 Skinny Shots", "not published", ""], ["4Ever Young Med Spa & Wellness Center - Jupiter", "4everyoungantiaging.com/jupiter", "IV Nutrition Therapy", "not published", ""], ["Begin Anew - Aesthetics & Wellness", "beginanewmed.com", "IV Therapy", "not published", ""], ["Refresh - Aesthetics & Wellness", "", "IV Therapy", "not published", ""], ["BeautyFi Medical Spa - Jupiter", "beautyfi.net", "IV Therapy", "not published", ""], ["Medicus Aesthetics", "medicusaesthetics.com", "IV Hydration", "not published", ""], ["Prime Body Wellness", "primebodywellness.com", "IV Therapy", "not published", ""], ["remedie", "remediemed.com", "IV Therapy", "not published", ""], ["Life Extender Clinic & Medspa", "lifeextenderclinic.com", "IV Therapy", "not published", ""], ["Delray Med Spa", "delraymedspas.com", "IV Hydration", "not published", ""], ["JuvAllure MedSpa & Wellness", "juvallure.com", "IV Therapy", "not published", ""], ["Soigne Aesthetics Wellness & Medical Spa", "soigneaestheticswellness.com", "IV Hydration", "not published", ""], ["The Chrysalis Excursion LLC", "thechrysalisexcursionllc.com", "IV Therapy", "not published", ""], ["Newest Beginnings Wellness Center", "newestbeginnings.com/medical-spa-greenacres-fl", "B12 Shots", "not published", ""], ["C&C Wellness Med Spa", "cncwellnessmedspa.com", "IV Therapy - Vitayou Deluxe (4 sessions)", "$660 (8% savings)", ""], ["C&C Wellness Med Spa", "cncwellnessmedspa.com", "IV Therapy - Vitayou Prime (8 sessions)", "$1,296 (10% savings)", ""], ["C&C Wellness Med Spa", "cncwellnessmedspa.com", "IV Therapy - Vitayou Diamond (12 sessions)", "$1,860 (14% savings)", ""]], "PRP / PRF": [["Beverly Hills Wellness Center & Med Spa", "beverlyhillsmedispa.com", "Vampire Facial (PRP)", "Not published", ""], ["Beverly Hills Wellness Center & Med Spa", "beverlyhillsmedispa.com", "PRF", "Not published", ""], ["Flawless Palm Beach", "flawlesspalmbeach.com", "PRP Hair Restoration", "not published", ""], ["Earth Scientific Med Spa", "earthscientificspa.com", "PRP", "not published", ""], ["The Garden Medical Spa, Wellness & Massage", "thegardenmedspa.com", "PRP", "not published", ""], ["4Ever Young Med Spa & Wellness Center - Jupiter", "4everyoungantiaging.com/jupiter", "PRP Facial", "not published", ""], ["Begin Anew - Aesthetics & Wellness", "beginanewmed.com", "PRP", "not published", ""], ["AlluraMD Aesthetics + Wellness | Jupiter", "alluraaesthetics.com/jupiter", "Exosome Injections", "not published", ""], ["Medicus Aesthetics", "medicusaesthetics.com", "PRP Skin/Hair Restoration", "not published", ""], ["BioLift Med Spa", "bioliftmedspa.com", "Vampire Facial", "not published", ""], ["Life Extender Clinic & Medspa", "lifeextenderclinic.com", "PRP Facial", "not published", ""], ["Auravie Med Spa", "auraviemedspa.com", "PRP Facial", "not published", ""], ["Alluring Image Medspa and Wellness", "alluringimagemedspa.com", "Exosome Stem Cell Microneedling Facial", "not published", ""], ["Bella MedSpa & Wellness Clinique", "bellamedspawellnessclinique.com", "Microneedling/PRP", "not published", ""], ["JuvAllure MedSpa & Wellness", "juvallure.com", "PRP", "not published", ""], ["The Chrysalis Excursion LLC", "thechrysalisexcursionllc.com", "Vampire Facial (PRP)", "not published", ""], ["Newest Beginnings Wellness Center", "newestbeginnings.com/medical-spa-greenacres-fl", "PRP Therapy", "not published", ""], ["MANIM Health & BioWellness", "mhealthbiowellness.com", "PRP Injections", "not published", ""]], "Medical Weight Loss / GLP-1": [["MD Beauty Labs", "mdbeautylabs.com", "Medical Weight Loss", "not published", ""], ["The Aesthetics Lounge and Spa Palm Beach Gardens", "palmbeachgardens.theaestheticsloungeandspa.com", "Peptide Therapy Weight Loss", "not published", ""], ["4Ever Young Med Spa & Wellness Center - Jupiter", "4everyoungantiaging.com/jupiter", "Medical Weight Loss", "not published", ""], ["Refresh - Aesthetics & Wellness", "", "Medical Weight Loss / GLP-1", "not published", ""], ["Medicus Aesthetics", "medicusaesthetics.com", "Medical Weight Loss", "not published", ""], ["Prime Body Wellness", "primebodywellness.com", "Weight Loss Program", "from $99/mo", ""], ["AlluraMD Aesthetics + Wellness | Boynton Beach", "alluraaesthetics.com/boynton-beach", "Medical Weight Loss", "not published", ""], ["Bella MedSpa & Wellness Clinique", "bellamedspawellnessclinique.com", "Weight Loss", "not published", ""], ["Soigne Aesthetics Wellness & Medical Spa", "soigneaestheticswellness.com", "Medical Weight Loss", "not published", ""], ["Newest Beginnings Wellness Center", "newestbeginnings.com/medical-spa-greenacres-fl", "Medical Weight Loss/GLP-1", "not published", ""], ["C&C Wellness Med Spa", "cncwellnessmedspa.com", "Medical Weight Loss", "not published", ""]], "Hormone Therapy": [["MD Beauty Labs", "mdbeautylabs.com", "Hormone Therapy", "not published", ""], ["4Ever Young Med Spa & Wellness Center - Jupiter", "4everyoungantiaging.com/jupiter", "Bioidentical Hormone Therapy", "not published", ""], ["4Ever Young Med Spa & Wellness Center - Jupiter", "4everyoungantiaging.com/jupiter", "Menopause Treatment", "not published", ""], ["4Ever Young Med Spa & Wellness Center - Jupiter", "4everyoungantiaging.com/jupiter", "Hormone Pellets", "not published", ""], ["Begin Anew - Aesthetics & Wellness", "beginanewmed.com", "HRT", "not published", ""], ["Refresh - Aesthetics & Wellness", "", "Hormone Optimization", "not published", ""], ["AlluraMD Aesthetics + Wellness | Boynton Beach", "alluraaesthetics.com/boynton-beach", "Hormone Therapy", "not published", ""], ["Life Extender Clinic & Medspa", "lifeextenderclinic.com", "Hormone Replacement Therapy", "not published", ""], ["Jiva Med Spa Boca Raton", "jivamedspa.com/location-services-boca-raton", "Hormone Therapy", "not published", ""], ["MANIM Health & BioWellness", "mhealthbiowellness.com", "Hormone Optimization", "not published", ""]], "IPL / Photofacial": [["Flawless Palm Beach", "flawlesspalmbeach.com", "CO2 Laser", "not published", ""], ["The Garden Medical Spa, Wellness & Massage", "thegardenmedspa.com", "SmoothGlo Laser Skin Treatment (face)", "starting at $1,250", ""], ["New Radiance Cosmetic Centers - Palm Beach Gardens", "newradiancenow.com/locations/palm-beach-gardens", "Forever Young BBL", "not published", ""], ["New Radiance Cosmetic Centers - Palm Beach Gardens", "newradiancenow.com/locations/palm-beach-gardens", "Halo Laser", "not published", ""], ["Begin Anew - Aesthetics & Wellness", "beginanewmed.com", "IPL Photofacials", "not published", ""], ["Begin Anew - Aesthetics & Wellness", "beginanewmed.com", "CO2 / Fraxel Laser", "not published", ""], ["Refresh - Aesthetics & Wellness", "", "CO2 Laser Resurfacing", "not published", ""], ["AlluraMD Aesthetics + Wellness | Jupiter", "alluraaesthetics.com/jupiter", "Laser Skin Rejuvenation", "not published", ""], ["Rejuvenation Med Spa", "rejuvenationfl.com", "CO2 Laser", "not published", ""], ["Rejuvenation Med Spa", "rejuvenationfl.com", "Scarlet RF Microneedling Package (3)", "$1,800 (promo)", ""], ["BioLift Med Spa", "bioliftmedspa.com", "Laser Skin Resurfacing", "not published", ""], ["Delray Med Spa", "delraymedspas.com", "Body Sculpting/BBL", "not published", ""], ["Delray Laser and Medical Spa", "delraylaserandmedicalspa.com", "IPL", "not published", ""], ["Delray Laser and Medical Spa", "delraylaserandmedicalspa.com", "Fraxel Laser", "not published", ""], ["Boca Med Spa", "", "Laser Rejuvenation", "not published", ""], ["Laser Skin & Wellness - Lake Worth", "laserskinsolutions.com/location/lake-worth", "Laser Skin Resurfacing", "not published", ""], ["Bella MedSpa & Wellness Clinique", "bellamedspawellnessclinique.com", "CO2 Laser", "not published", ""], ["Flawless Med Spa in Royal Palm Beach", "flawlesspalmbeach.com", "CO2 Laser", "not published", ""], ["Flawless Med Spa in Lantana", "flawlesspalmbeach.com", "CO2 Laser", "not published", ""], ["The Chrysalis Excursion LLC", "thechrysalisexcursionllc.com", "IPL Photofacial", "not published", ""]]};
+
+  const breakdownModalOverlay = document.getElementById('breakdown-modal-overlay');
+  const breakdownTitle = document.getElementById('breakdown-title');
+  const breakdownSub = document.getElementById('breakdown-sub');
+  const breakdownBody = document.getElementById('breakdown-body');
+  const sortButtons = Array.from(document.querySelectorAll('.sort-btn'));
+  let currentCategory = null;
+  let currentSort = 'clinic';
+
+  function parsePriceForSort(priceStr) {
+    const m = String(priceStr).match(/\$([\d,]+(?:\.\d+)?)/);
+    return m ? parseFloat(m[1].replace(/,/g, '')) : null;
+  }
+
+  function renderBreakdown() {
+    const rows = (breakdownData[currentCategory] || []).slice();
+    if (currentSort === 'clinic') {
+      rows.sort((a, b) => a[0].localeCompare(b[0]));
+    } else if (currentSort === 'price-asc' || currentSort === 'price-desc') {
+      rows.sort((a, b) => {
+        const pa = parsePriceForSort(a[3]);
+        const pb = parsePriceForSort(b[3]);
+        if (pa === null && pb === null) return 0;
+        if (pa === null) return 1;
+        if (pb === null) return -1;
+        return currentSort === 'price-asc' ? pa - pb : pb - pa;
+      });
+    }
+
+    if (!rows.length) {
+      breakdownBody.innerHTML = '<div class="breakdown-empty">No listings found for this category.</div>';
+      return;
+    }
+
+    breakdownBody.innerHTML = rows.map(([clinic, website, proc, price, duration]) => {
+      const durationHtml = duration && duration !== 'Not published'
+        ? `<div class="breakdown-duration">${duration}</div>` : '';
+      const clinicHtml = website
+        ? `<a href="${website.startsWith('http') ? website : 'https://' + website}" target="_blank" rel="noopener noreferrer">${clinic}</a>`
+        : `<span class="no-link">${clinic}</span>`;
+      return `
+        <div class="breakdown-row">
+          <div>
+            <div class="breakdown-clinic">${clinicHtml}</div>
+            <div class="breakdown-proc">${proc}</div>
+          </div>
+          <div class="breakdown-price-col">
+            <div class="breakdown-price">${price}</div>
+            ${durationHtml}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function openBreakdown(category) {
+    if (!breakdownData[category]) return;
+    currentCategory = category;
+    currentSort = 'clinic';
+    sortButtons.forEach(b => b.classList.toggle('active', b.dataset.sort === 'clinic'));
+    const rows = breakdownData[category] || [];
+    const distinctClinics = new Set(rows.map(r => r[0])).size;
+    breakdownTitle.textContent = category;
+    breakdownSub.textContent = `${distinctClinics} clinics · ${rows.length} tracked listing${rows.length === 1 ? '' : 's'}`;
+    renderBreakdown();
+    breakdownModalOverlay.classList.add('open');
+  }
+
+  function closeBreakdown() {
+    breakdownModalOverlay.classList.remove('open');
+  }
+
+  document.querySelectorAll('.proc-name-link').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openBreakdown(el.dataset.category);
+    });
+  });
+
+  document.getElementById('breakdown-close').addEventListener('click', closeBreakdown);
+  breakdownModalOverlay.addEventListener('click', (e) => {
+    if (e.target === breakdownModalOverlay) closeBreakdown();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeBreakdown();
+  });
+  sortButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentSort = btn.dataset.sort;
+      sortButtons.forEach(b => b.classList.toggle('active', b === btn));
+      renderBreakdown();
+    });
+  });
+
+</script>
+
+</body>
+</html>

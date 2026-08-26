@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Houston Med Spa Market Report</title>
+<style>
+  :root {
+    --blue: #2563eb;
+    --blue-dark: #1d4ed8;
+    --blue-light: #eff6ff;
+    --ink: #111827;
+    --gray: #6b7280;
+    --gray-light: #9ca3af;
+    --border: #e5e7eb;
+    --bg: #f9fafb;
+    --green: #059669;
+    --amber: #d97706;
+    --red: #dc2626;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.5;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  header.hero {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #3b82f6 100%);
+    color: white;
+    padding: 26px 24px;
+    border-radius: 0 0 20px 20px;
+  }
+  header.hero .inner { max-width: 980px; margin: 0 auto; }
+  header.hero .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: 11px;
+    font-weight: 700;
+    opacity: .85;
+    margin-bottom: 6px;
+  }
+  header.hero h1 { font-size: 24px; margin: 0 0 6px; font-weight: 800; letter-spacing: -0.02em; }
+  header.hero p.sub { font-size: 13px; opacity: .9; margin: 0; max-width: 640px; }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: -26px;
+  }
+  .stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
+    border: 1px solid var(--border);
+  }
+  .stat-card .num { font-size: 30px; font-weight: 800; color: var(--blue); letter-spacing: -0.02em; }
+  .stat-card .label { font-size: 12.5px; color: var(--gray); margin-top: 4px; font-weight: 600; }
+
+  .stat-card.has-tooltip { position: relative; cursor: help; }
+  .stat-card.has-tooltip .label { text-decoration: underline dotted var(--gray-light); text-underline-offset: 3px; }
+  .stat-card .tooltip {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 340px;
+    max-width: 80vw;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 14px 34px rgba(15,23,42,0.18);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity .15s ease, transform .15s ease;
+    z-index: 20;
+    text-align: left;
+    cursor: default;
+  }
+  .stat-card.has-tooltip:hover .tooltip,
+  .stat-card.has-tooltip.tooltip-open .tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .tooltip-title { font-size: 12.5px; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
+  .tooltip p { font-size: 12px; color: var(--gray); margin: 0 0 12px; font-weight: 400; line-height: 1.5; }
+  .tooltip .pill-row { margin-top: 0; gap: 6px; }
+  .tooltip .pill { font-size: 11px; padding: 4px 9px; }
+
+  section { margin-top: 56px; }
+  h2 {
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+  }
+  p.section-desc { color: var(--gray); font-size: 14px; margin: 0 0 24px; max-width: 680px; }
+
+  .card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.04);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Funnel / campaign */
+  .funnel { display: flex; gap: 14px; flex-wrap: wrap; }
+  .funnel-step {
+    flex: 1 1 150px;
+    text-align: center;
+    padding: 18px 12px;
+    border-radius: 12px;
+    background: var(--blue-light);
+  }
+  .funnel-step .n { font-size: 26px; font-weight: 800; color: var(--blue-dark); }
+  .funnel-step .l { font-size: 12px; color: var(--gray); margin-top: 4px; font-weight: 600; }
+  .funnel-arrow { align-self: center; color: var(--gray-light); font-size: 20px; }
+
+  .pill-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+  .pill {
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+  .pill.green { background: #ecfdf5; color: var(--green); }
+  .pill.amber { background: #fffbeb; color: var(--amber); }
+  .pill.red   { background: #fef2f2; color: var(--red); }
+  .pill.gray  { background: #f3f4f6; color: var(--gray); }
+
+  /* Procedure bars */
+  .proc-row { display: grid; grid-template-columns: 220px 1fr 90px; align-items: center; gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--border); animation: rowIn .5s ease backwards; }
+  .proc-row:last-child { border-bottom: none; }
+  .proc-name { font-size: 13.5px; font-weight: 700; }
+  .proc-price { font-size: 11.5px; color: var(--gray); margin-top: 2px; font-weight: 500; }
+  .proc-name-link { cursor: pointer; text-decoration: underline dotted var(--gray-light); text-underline-offset: 3px; }
+  .proc-name-link:hover { color: var(--blue); }
+  .table-note { font-size: 11px; color: var(--gray); margin-top: 4px; font-weight: 400; line-height: 1.45; max-width: 420px; }
+  .bar-track { background: #eef2f7; border-radius: 8px; height: 22px; overflow: hidden; }
+  .bar-fill { background: linear-gradient(90deg, #60a5fa, var(--blue)); height: 100%; border-radius: 8px 0 0 8px; width: 0%; transition: width 1.1s cubic-bezier(.16,.8,.3,1); }
+  .bar-fill.trend { background: linear-gradient(90deg, #c4b5fd, #7c3aed); }
+  .proc-count { text-align: right; font-weight: 800; color: var(--blue-dark); font-size: 14px; }
+  .proc-count.trend { color: #6d28d9; }
+
+  @keyframes rowIn {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .stat-card .num { transition: none; }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  /* animation-fill-mode: backwards (not forwards, and no standing opacity:0 rule) so the card
+     doesn't retain a fractional-opacity stacking context after the fade-in finishes — a standing
+     "opacity: 0" here would trap the tooltip's z-index inside this card, letting later sections
+     in the DOM paint over it. Once the animation ends the card just falls back to normal opacity:1. */
+  .stat-card { animation: cardIn .5s ease backwards; }
+  .stat-card:nth-child(1) { animation-delay: .05s; }
+  .stat-card:nth-child(2) { animation-delay: .15s; }
+  .stat-card:nth-child(3) { animation-delay: .25s; }
+  .stat-card.has-tooltip { z-index: 1; }
+
+  /* Table */
+  table { width: 100%; min-width: 480px; border-collapse: collapse; font-size: 13.5px; }
+  th { text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--gray); padding: 10px 12px; border-bottom: 2px solid var(--border); }
+  td { padding: 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td.num { font-weight: 700; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  /* Tablet */
+  @media (max-width: 720px) {
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  /* Phones */
+  @media (max-width: 600px) {
+    .wrap { padding: 32px 16px 60px; }
+    header.hero { padding: 20px 16px; }
+    header.hero h1 { font-size: 20px; }
+    header.hero p.sub { font-size: 12.5px; }
+    section { margin-top: 40px; }
+    h2 { font-size: 18px; }
+    p.section-desc { font-size: 13px; }
+    .card { padding: 18px; }
+
+    .stat-card .num { font-size: 24px; }
+    .stat-card { padding: 16px; }
+
+    /* Tooltip: full-bleed under its card instead of a fixed 340px box that can overhang the
+       screen edge on narrow phones. */
+    .stat-card .tooltip { width: calc(100vw - 32px); max-width: none; left: 50%; transform: translateX(-50%) translateY(-6px); }
+    .stat-card.has-tooltip:hover .tooltip,
+    .stat-card.has-tooltip.tooltip-open .tooltip { transform: translateX(-50%) translateY(0); }
+
+    /* Procedure / trends / overlay rows: stack name, bar, and count instead of squeezing a
+       fixed 220px label column onto a ~360px screen. */
+    .proc-row, .overlay-row {
+      grid-template-columns: 1fr;
+      grid-template-areas: "name" "bar" "count";
+      row-gap: 6px;
+      padding: 12px 0;
+    }
+    .proc-row > div:first-child, .overlay-row > .proc-name { grid-area: name; }
+    .proc-row > .bar-track, .overlay-row > .overlay-track { grid-area: bar; }
+    .proc-row > .proc-count, .overlay-row > .overlay-pct { grid-area: count; text-align: left; }
+
+    .funnel-step { flex: 1 1 45%; }
+
+    .pill { font-size: 11.5px; padding: 5px 10px; }
+
+    #breakdown-modal-overlay { padding: 0; align-items: stretch; }
+    .breakdown-modal { max-height: 100vh; height: 100vh; border-radius: 0; max-width: 100%; }
+    .breakdown-modal-header, .breakdown-modal-controls, .breakdown-modal-body { padding-left: 16px; padding-right: 16px; }
+    .breakdown-row { flex-direction: column; gap: 2px; }
+    .breakdown-price-col { text-align: left; }
+    .table-note { max-width: none; }
+  }
+
+  ul.notes { margin: 0; padding-left: 18px; font-size: 13.5px; color: #374151; }
+  ul.notes li { margin-bottom: 10px; }
+
+  /* Overlay comparison chart */
+  .overlay-legend { display: flex; gap: 14px 22px; flex-wrap: wrap; margin-bottom: 20px; }
+  .overlay-legend-item { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 700; color: #374151; }
+  .sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; }
+  .sw-clinics { background: linear-gradient(90deg, #bfdbfe, #60a5fa); }
+  .sw-trends { background: linear-gradient(90deg, #c4b5fd, #7c3aed); }
+  .overlay-row { display: grid; grid-template-columns: 220px 1fr 96px; align-items: center; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--border); animation: rowIn .5s ease backwards; }
+  .overlay-row:last-child { border-bottom: none; }
+  .overlay-track { position: relative; height: 26px; background: #eef2f7; border-radius: 7px; overflow: visible; }
+  .overlay-bar-clinics {
+    position: absolute; left: 0; top: 0; height: 100%; width: 0%;
+    background: linear-gradient(90deg, #bfdbfe, #60a5fa);
+    border-radius: 7px;
+    transition: width 1.1s cubic-bezier(.16,.8,.3,1);
+  }
+  .overlay-bar-trends {
+    position: absolute; left: 0; top: 50%; height: 10px; width: 0%;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, #c4b5fd, #7c3aed);
+    border-radius: 6px;
+    box-shadow: 0 0 0 2px #fff;
+    transition: width 1.1s cubic-bezier(.16,.8,.3,1) .1s;
+  }
+  .overlay-pct { text-align: right; font-size: 11.5px; line-height: 1.5; }
+  .overlay-pct .c { color: var(--blue-dark); font-weight: 800; }
+  .overlay-pct .t { color: #6d28d9; font-weight: 800; }
+
+  footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 12px; color: var(--gray-light); text-align: center; }
+
+  /* Per-clinic breakdown modal */
+  #breakdown-modal-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(15,23,42,0.5);
+    display: none; align-items: flex-start; justify-content: center;
+    padding: 40px 16px; overflow-y: auto;
+  }
+  #breakdown-modal-overlay.open { display: flex; }
+  .breakdown-modal {
+    background: white; border-radius: 16px; max-width: 720px; width: 100%;
+    box-shadow: 0 20px 60px rgba(15,23,42,0.3);
+    max-height: calc(100vh - 80px);
+    display: flex; flex-direction: column;
+  }
+  .breakdown-modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .breakdown-modal-title { font-size: 17px; font-weight: 800; }
+  .breakdown-modal-sub { font-size: 12.5px; color: var(--gray); margin-top: 4px; }
+  .breakdown-modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--gray); line-height: 1; padding: 2px 6px; border-radius: 6px; }
+  .breakdown-modal-close:hover { color: var(--ink); background: var(--bg); }
+  .breakdown-modal-controls { padding: 12px 24px; border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .breakdown-sort-label { font-size: 11.5px; color: var(--gray); font-weight: 700; text-transform: uppercase; letter-spacing: .03em; margin-right: 2px; }
+  .sort-btn { font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border); background: white; cursor: pointer; color: var(--gray); }
+  .sort-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .sort-btn.active { background: var(--blue); border-color: var(--blue); color: white; }
+  .breakdown-modal-body { overflow-y: auto; padding: 6px 24px 20px; }
+  .breakdown-row { padding: 11px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; }
+  .breakdown-row:last-child { border-bottom: none; }
+  .breakdown-clinic a { color: var(--blue-dark); font-weight: 700; font-size: 13.5px; text-decoration: none; }
+  .breakdown-clinic a:hover { text-decoration: underline; }
+  .breakdown-clinic .no-link { color: var(--ink); font-weight: 700; font-size: 13.5px; }
+  .breakdown-proc { font-size: 12px; color: var(--gray); margin-top: 2px; }
+  .breakdown-price-col { text-align: right; flex-shrink: 0; }
+  .breakdown-price { font-weight: 800; color: var(--ink); font-size: 13.5px; white-space: nowrap; }
+  .breakdown-duration { font-size: 11px; color: var(--gray-light); margin-top: 2px; }
+  .breakdown-empty { padding: 24px 0; text-align: center; color: var(--gray); font-size: 13px; }
+
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="inner">
+    <div class="eyebrow">Market Research &middot; Updated Aug 24, 2026</div>
+    <h1>Houston Med Spa Market Report</h1>
+    <p class="sub">Pricing transparency across Houston-metro med spas, built from live website research. Outreach campaign has not started yet.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="stat-grid">
+    <div class="stat-card has-tooltip">
+      <div class="num">95</div><div class="label">Clinics tracked</div>
+      <div class="tooltip">
+        <div class="tooltip-title">Coverage at a glance</div>
+        <p>Since a single citywide Google Maps search consistently capped at 6 visible results, coverage was built from 15 neighborhood/suburb-scoped searches instead across the Houston metro (Downtown, Midtown, Montrose, River Oaks, Heights, West University, Memorial, Galleria, Katy, Sugar Land, The Woodlands, Cypress, Pearland, Clear Lake, and Spring), turning up 108 distinct candidates (101 logged as trackable). 4 were dropped as non-medical spas during research (IV-hydration-only businesses and a non-medical beauty studio), 3 were unverifiable (no matching business found), and 1 bonus second location of an existing chain was discovered along the way &mdash; leaving 95 confirmed medical spas.</p>
+        <div class="pill-row">
+          <span class="pill green">18 &mdash; full pricing</span>
+          <span class="pill amber">35 &mdash; partial pricing</span>
+          <span class="pill gray">42 &mdash; no public pricing</span>
+        </div>
+      </div>
+    </div>
+    <div class="stat-card"><div class="num">56%</div><div class="label">Clinics with pricing on file (full or partial)</div></div>
+    <div class="stat-card"><div class="num">0</div><div class="label">Pricing-request emails sent (outreach not yet started)</div></div>
+  </div>
+
+  <section>
+    <h2>Most popular procedures</h2>
+    <p class="section-desc">Ranked by number of distinct clinics offering each treatment, across all 95 tracked clinics. <strong>Click a procedure name</strong> to see the clinic-by-clinic breakdown and prices.</p>
+    <div class="card">
+      <div id="procedures"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Search interest in Houston <span style="font-weight:600;color:var(--gray);font-size:13px;">(Google Trends)</span></h2>
+    <p class="section-desc">Relative search interest for each treatment among Houston&ndash;area searchers over the past 12 months, indexed 0&ndash;100 against the single highest-volume term (Botox) across all comparisons. One representative search term was used per category &mdash; see note below.</p>
+    <div class="card">
+      <div id="trends"></div>
+      <p style="font-size:11.5px;color:var(--gray-light);margin:16px 0 0;line-height:1.5;">Source: trends.google.com, geo = Houston, TX (Nielsen DMA US-TX-618), Aug 2025&ndash;Aug 2026, weekly values averaged and read directly from the Trends API response rather than estimated visually, using a single Chrome tab with spaced-out requests (no parallel tabs). Google Trends indexes relative search volume for the exact term entered, not category-wide demand &mdash; e.g. "Dermal Fillers" doesn't capture searches for "Juv&eacute;derm" or "Restylane," and "IPL Photofacial" doesn't capture "BBL" or "Lumecca." Treat this as a directional signal, not an absolute demand figure.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Clinics vs. search demand</h2>
+    <p class="section-desc">Reading clinic supply against consumer search interest side by side.</p>
+    <div class="card">
+      <ul class="notes">
+        <li><strong>Botox leads both supply and demand.</strong> Botox / Neuromodulators is the most-offered category (62 of 95 clinics, 65%) and posts the highest search index of any city researched so far (82). Dermal / Lip Fillers is the second most-offered category (53 clinics, 56%) but searches at just index 1.</li>
+        <li><strong>Laser Hair Removal shows the strongest demand-outpacing-supply signal of any mid-tier category in this project.</strong> It's only 6th most-offered (26 clinics, 27%) yet posts the highest Laser Hair Removal search index of any city (41), well ahead of its supply rank. Microneedling is better matched on both sides (3rd supply at 31 clinics/33%, 2nd demand at 34).</li>
+        <li><strong>Medical Weight Loss / GLP-1 is again the starkest raw demand-ahead-of-supply mismatch.</strong> Just 12 of 95 clinics offer it (13%, tied 10th) yet it posts a search index of 59, the third-highest GLP-1 figure across all cities researched.</li>
+        <li><strong>Body Contouring / CoolSculpting is the clearest supply-ahead-of-demand mismatch.</strong> It's the 4th most-offered category (29 clinics, 31%) yet its search index is just 3.</li>
+        <li><strong>Kybella and PRP / PRF are thin or invisible on the demand side.</strong> Kybella sits at 6 of 95 clinics (6%) with an index of 1; PRP / PRF has real supply (11 clinics, 12%) but essentially zero search interest (index 0).</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Popularity overlay: clinic supply vs. search demand</h2>
+    <p class="section-desc">Clinic supply is scaled to % of the top clinic category (Botox / Neuromodulators). Search demand uses the actual Google Trends index (0&ndash;100) from the Search Interest chart above &mdash; unscaled, so the numbers match exactly. Where the purple bar reaches further than the blue, search demand is outrunning clinic supply &mdash; and vice versa.</p>
+    <div class="card">
+      <div class="overlay-legend">
+        <span class="overlay-legend-item"><i class="sw sw-clinics"></i>Clinic supply (% of top category)</span>
+        <span class="overlay-legend-item"><i class="sw sw-trends"></i>Search demand (Google Trends index, 0&ndash;100)</span>
+      </div>
+      <div id="overlay"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Typical pricing by procedure</h2>
+    <p class="section-desc">Ranges and medians below are computed from actual parsed listing prices, not estimates. <strong>Click a procedure name</strong> to see exactly which clinic and listing each price came from &mdash; important, since a wide range often means the listings aren't really comparable (see "Are we comparing the same thing?" below).</p>
+    <div class="card" style="padding:0;">
+      <table>
+        <thead>
+          <tr><th>Procedure</th><th># clinics</th><th>Typical range</th><th>Median</th></tr>
+        </thead>
+        <tbody id="price-table"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Are we comparing the same thing?</h2>
+    <p class="section-desc">Short answer: not always &mdash; and that's worth knowing before reading too much into any single price range above.</p>
+    <div class="card">
+      <ul class="notes">
+        <li><strong>Botox's published per-unit pricing comes from just 4 of 62 clinics</strong>, and two of those four (River Oaks Galleria Medspa and River Oaks MedSpa) may be the same ownership group publishing identical rates under two names. 6 unrelated clinics (Tulum Wellness Spa, TLC MedSpa Houston, Amora Med Spa, Persona Medical Spa, PurA Medical Aesthetics, SkinSpirit Houston - Rice Village) show the exact same '$12-$15/unit' phrasing seen repeated verbatim in every prior city of this project &mdash; treated as generic boilerplate estimate text and excluded from this report's range. A second aggregator pattern ('$200-$900/session,' matching Dallas's Elite Med Spa of Texas figures) appeared at 2 more clinics and was also excluded.</li>
+        <li><strong>Dermal / Lip Fillers ($550&ndash;$750/syringe) comes from just 3 of 53 clinics</strong>, two of which may share ownership. The same boilerplate ('$600-$1,200/syringe,' 7 clinics) and aggregator ('$600-$2,000/syringe,' 2 clinics) contamination patterns appear here too and were excluded.</li>
+        <li><strong>Microneedling (31 clinics) mixes a $525 standard SkinPen promo with an $800-$2,288 RF Microneedling package</strong> &mdash; two different technologies at very different price points, not a single comparable rate.</li>
+        <li><strong>Skin Tightening ($488&ndash;$2,588) is a single clinic's Ultherapy price list across five treatment areas</strong> &mdash; not a market range at all; treat this figure with caution.</li>
+        <li><strong>What we did about it:</strong> every "# clinics" figure in this report counts <em>distinct clinics</em>, not raw price listings. We can't fully normalize prices to a common unit automatically, since clinics describe quantities and package sizes in inconsistent free text, so every procedure name is clickable and opens the full list of underlying listings &mdash; exact wording, exact price, per clinic &mdash; so you can check whether two prices are actually for the same thing before comparing them.</li>
+        <li><strong>56% of Houston clinics show any pricing at all, full or partial</strong> &mdash; in the middle of the range seen in this project so far, below Charlotte (70%) and Orlando (65%), but above Atlanta and Miami (32%) and West Palm Beach (31%). A cluster of independent clinics in Katy and Cypress running visible promo and Groupon pricing drives most of this.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Outreach campaign</h2>
+    <p class="section-desc">For every clinic without published pricing, a short personalized email asking for rates is planned &mdash; following the same process used for Manhattan, Charlotte, Atlanta, Miami, West Palm Beach, Orlando, and Dallas. That campaign has not started yet for Houston.</p>
+    <div class="card">
+      <div class="funnel">
+        <div class="funnel-step"><div class="n">42</div><div class="l">Clinics with no published pricing (outreach targets)</div></div>
+        <div class="funnel-arrow">&rarr;</div>
+        <div class="funnel-step"><div class="n">0</div><div class="l">Emails sent</div></div>
+        <div class="funnel-arrow">&rarr;</div>
+        <div class="funnel-step"><div class="n">&mdash;</div><div class="l">Campaign not yet started</div></div>
+      </div>
+      <p style="font-size:12px;color:var(--gray);margin:18px 0 0;">A further 35 clinics have <em>partial</em> pricing (a promo rate, one or two line items, or a package price only) and are also reasonable outreach candidates for their standard rates. As in prior cities, most clinics in this dataset have no discoverable email address (contact form or phone only) &mdash; only a small handful publish a direct email &mdash; so this campaign will need a different outreach channel more often than Charlotte's did.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Geographic coverage</h2>
+    <div class="card">
+      <ul class="notes">
+        <li><strong>Downtown</strong> (9) &mdash; Tru Essence Cosmetic and Medical Spa, Houston Medical Spa, Elevate Wellness & Med Spa, Artavi Med Spa - Dr. Tarina Desai, MD, NakedMD Med Spa Houston, Montrose Med Spa, River Oaks Galleria Medspa, Alabama Med Spa By Voupre, Tulum Wellness Spa.</li>
+        <li><strong>Katy</strong> (9) &mdash; NakedMD Med Spa Katy, Katy Med Tech Spa, Katy Medi Spa, Zero Age MedSpa Katy, Oasis Laser MedSpa, MedSpa at Villagio, MedSPA Katy Sapphira Prive, Luminous MediSpa, Lab De Skin KATY.</li>
+        <li><strong>Sugar Land</strong> (9) &mdash; Sugar Land Medical Spa, Elase Medical Spa - Sugar Land, VIO Med Spa | Sugar Land, Vira Medspa, Premier Health Spa, Forever Young Medi Spa, Revitalize Medi-Spa, Skin 105 Medical Spa & Apothecary, Ruaa MedSpa.</li>
+        <li><strong>Cypress</strong> (9) &mdash; MINTbody Med Spa & Wellness Fairfield, Art of Beauty Wellness and Spa, Balle Bliss Luxury Medical Spa, Le Blanc Wellness & Beauty, LIT & Aesthetics Spa, Degree Wellness, Vital Clinic and Spa, UR Royalty Med Spa, Aesthetica MD Med Spa - Cypress.</li>
+        <li><strong>The Woodlands</strong> (8) &mdash; It's A Secret Med Spa - The Woodlands, Seychelles Med & Laser Spa, Elase Medical Spa - The Woodlands, Avante Laser & MediSpa, Vedas Medical Spa, Radiance Medical Aesthetics & Wellness, Gen B Medspa, Rejuve' Wellness & Aesthetics - The Woodlands.</li>
+        <li><strong>Pearland</strong> (8) &mdash; Oasis Luxury Med Spa, Dermalogy Med Spa, Exclusively Radiant Aesthetics & Regenerative Medicine, pearl aesthetics&facials, Nefer Med Spa, Grace Full Aesthetics - Pearland, Pearland Med Spa, Azarella Med Spa.</li>
+        <li><strong>Spring</strong> (7) &mdash; Liv Med Spa & Facials, Art Of Wellness Medspa, SKIN 101 Medspa - Botox, Fillers & Lasers, HBR Medspa & Laser Center, Z Med Clinic and Med Spa - Weight Loss, Hormone Therapy and IV Clinic, Butterfly Medspa & Wellness, Harmony Aesthetics Spa - Spring, TX.</li>
+        <li><strong>Clear Lake</strong> (6) &mdash; Elase Medical Spas - Clear Lake, Clear Lake Medical Spa, PS Medical Spa, M Spa Face & Body, Houston Med Spa & Aesthetics, Tranquil Rejuvenation Med Spa LLC.</li>
+        <li><strong>Memorial</strong> (5) &mdash; The Total You Medical Spa - Memorial City, Aesthetica MD Med Spa - Memorial, MD Aesthetica MedSpa, myEvergreen MedSpa, Alchemy 43 Houston - Memorial at Lantern Lane.</li>
+        <li><strong>Montrose</strong> (5) &mdash; Miliv Med Spa & Facials, Alira Med-Spa, Amora Med Spa, Vida Aesthetics and Wellness, Persona Medical Spa.</li>
+        <li><strong>Heights</strong> (5) &mdash; 4Ever Young Med Spa & Wellness Center - Heights Houston, Rose Milk Aesthetics, New Heights Med Spa, PH Med, Dream Aesthetics Medspa.</li>
+        <li><strong>West University</strong> (5) &mdash; VIO Med Spa | West U, PurA Medical Aesthetics, SkinSpirit Houston - Rice Village, 15Aesthetics Medspa, Rejuve Wellness & Aesthetics Houston.</li>
+        <li><strong>River Oaks</strong> (4) &mdash; River Oaks MedSpa, milk + honey | River Oaks, Beverly Hills Rejuvenation Center Houston - River Oaks, INFINITY MED SPA.</li>
+        <li><strong>Midtown</strong> (3) &mdash; It's A Secret Med Spa - Houston, TLC MedSpa Houston, The Total You Medical Spa - Blossom Hotel.</li>
+        <li><strong>Galleria</strong> (3) &mdash; Galleria Aesthetics and Wellness, Amerejuve Medspa Galleria - Laser, Botox & CoolSculpting, The MedSpa at Galleria.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    Source: Houston_Med_Spa_Procedures.xlsx &middot; Compiled from direct website research and a Google Maps sweep &middot; Report generated 8/24/26
+  </footer>
+
+</div>
+
+<div id="breakdown-modal-overlay">
+  <div class="breakdown-modal">
+    <div class="breakdown-modal-header">
+      <div>
+        <div class="breakdown-modal-title" id="breakdown-title">Procedure</div>
+        <div class="breakdown-modal-sub" id="breakdown-sub">Every tracked listing for this category, clinic by clinic.</div>
+      </div>
+      <button class="breakdown-modal-close" id="breakdown-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="breakdown-modal-controls">
+      <span class="breakdown-sort-label">Sort:</span>
+      <button class="sort-btn active" data-sort="clinic">Clinic A&ndash;Z</button>
+      <button class="sort-btn" data-sort="price-asc">Price: low to high</button>
+      <button class="sort-btn" data-sort="price-desc">Price: high to low</button>
+    </div>
+    <div class="breakdown-modal-body" id="breakdown-body"></div>
+  </div>
+</div>
+
+<script>
+
+  (function () {
+    const tooltipCard = document.querySelector('.stat-card.has-tooltip');
+    if (!tooltipCard) return;
+    tooltipCard.addEventListener('click', function (e) {
+      e.stopPropagation();
+      tooltipCard.classList.toggle('tooltip-open');
+    });
+    document.addEventListener('click', function () {
+      tooltipCard.classList.remove('tooltip-open');
+    });
+  })();
+
+  const procedures = [{"name": "Botox / Neuromodulators", "count": 62, "price": "~$10/unit"}, {"name": "Dermal / Lip Fillers", "count": 53, "price": "~$650/syringe"}, {"name": "Microneedling", "count": 31, "price": "\u2014"}, {"name": "Body Contouring / CoolSculpting", "count": 29, "price": "\u2014"}, {"name": "Chemical Peels", "count": 28, "price": "\u2014"}, {"name": "Laser Hair Removal", "count": 26, "price": "~$150"}, {"name": "HydraFacial", "count": 21, "price": "~$190"}, {"name": "IPL / Photofacial", "count": 19, "price": "\u2014"}, {"name": "Skin Tightening (Morpheus8/RF)", "count": 14, "price": "\u2014"}, {"name": "Sculptra / Biostimulators", "count": 12, "price": "\u2014"}, {"name": "Medical Weight Loss / GLP-1", "count": 12, "price": "\u2014"}, {"name": "IV Therapy", "count": 11, "price": "\u2014"}, {"name": "PRP / PRF", "count": 11, "price": "\u2014"}, {"name": "Hormone Therapy", "count": 7, "price": "\u2014"}, {"name": "Kybella", "count": 6, "price": "\u2014"}];
+  const max = Math.max(...procedures.map(p => p.count));
+  const container = document.getElementById('procedures');
+  const barsToAnimate = [];
+  procedures.forEach((p, i) => {
+    const row = document.createElement('div');
+    row.className = 'proc-row';
+    row.style.animationDelay = `${i * 0.04}s`;
+    const pct = (p.count / max * 100).toFixed(0);
+    row.innerHTML = `
+      <div>
+        <div class="proc-name proc-name-link" data-category="${p.name}">${p.name}</div>
+        <div class="proc-price">${p.price}</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" data-pct="${pct}"></div></div>
+      <div class="proc-count">${p.count} clinics</div>
+    `;
+    container.appendChild(row);
+    barsToAnimate.push(row.querySelector('.bar-fill'));
+  });
+
+  const trends = [{"name": "Botox / Neuromodulators", "term": "\"Botox\"", "index": 82}, {"name": "Dermal / Lip Fillers", "term": "\"Dermal Fillers\"", "index": 1}, {"name": "Sculptra / Biostimulators", "term": "\"Sculptra\"", "index": 8}, {"name": "Kybella", "term": "\"Kybella\"", "index": 1}, {"name": "HydraFacial", "term": "\"HydraFacial\"", "index": 7}, {"name": "Chemical Peels", "term": "\"Chemical Peel\"", "index": 9}, {"name": "Microneedling", "term": "\"Microneedling\"", "index": 34}, {"name": "Laser Hair Removal", "term": "\"Laser Hair Removal\"", "index": 41}, {"name": "Body Contouring / CoolSculpting", "term": "\"CoolSculpting\"", "index": 3}, {"name": "Skin Tightening (Morpheus8/RF)", "term": "\"Morpheus8\"", "index": 1}, {"name": "IV Therapy", "term": "\"IV Therapy\"", "index": 16}, {"name": "PRP / PRF", "term": "\"PRP Therapy\"", "index": 0}, {"name": "Medical Weight Loss / GLP-1", "term": "\"Semaglutide\"", "index": 59}, {"name": "Hormone Therapy", "term": "\"Hormone Replacement Therapy\"", "index": 7}, {"name": "IPL / Photofacial", "term": "\"IPL Photofacial\"", "index": 0}];
+  const trendsContainer = document.getElementById('trends');
+  trends.forEach((t, i) => {
+    const row = document.createElement('div');
+    row.className = 'proc-row';
+    row.style.animationDelay = `${i * 0.04}s`;
+    row.innerHTML = `
+      <div>
+        <div class="proc-name">${t.name}</div>
+        <div class="proc-price">Search term: ${t.term}</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill trend" data-pct="${t.index}"></div></div>
+      <div class="proc-count trend">${t.index} / 100</div>
+    `;
+    trendsContainer.appendChild(row);
+    barsToAnimate.push(row.querySelector('.bar-fill'));
+  });
+
+  const overlayContainer = document.getElementById('overlay');
+  const clinicMax = Math.max(...procedures.map(p => p.count));
+  procedures.forEach((p, i) => {
+    const t = trends.find(x => x.name === p.name) || { index: 0 };
+    const clinicPct = Math.round(p.count / clinicMax * 100);
+    const trendPct = t.index;
+    const row = document.createElement('div');
+    row.className = 'overlay-row';
+    row.style.animationDelay = `${i * 0.04}s`;
+    row.innerHTML = `
+      <div class="proc-name">${p.name}</div>
+      <div class="overlay-track">
+        <div class="overlay-bar-clinics" data-pct="${clinicPct}"></div>
+        <div class="overlay-bar-trends" data-pct="${trendPct}"></div>
+      </div>
+      <div class="overlay-pct"><span class="c">${clinicPct}%</span> clinics<br><span class="t">${trendPct}</span> search idx</div>
+    `;
+    overlayContainer.appendChild(row);
+    barsToAnimate.push(row.querySelector('.overlay-bar-clinics'));
+    barsToAnimate.push(row.querySelector('.overlay-bar-trends'));
+  });
+
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      barsToAnimate.forEach((el, i) => {
+        setTimeout(() => { el.style.width = el.dataset.pct + '%'; }, i * 25);
+      });
+    }, 150);
+  });
+
+  function animateCount(el, target, opts = {}) {
+    const { suffix = '', duration = 1200, decimals = 0, prefix = '' } = opts;
+    const start = performance.now();
+    function tick(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const val = target * eased;
+      el.textContent = prefix + val.toLocaleString('en-US', { maximumFractionDigits: decimals, minimumFractionDigits: decimals }) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = prefix + target.toLocaleString('en-US') + suffix;
+    }
+    requestAnimationFrame(tick);
+  }
+  document.querySelectorAll('.stat-card .num').forEach(el => {
+    const raw = el.textContent.trim();
+    const suffix = raw.match(/%$/) ? '%' : '';
+    const target = parseFloat(raw.replace(/[^0-9.]/g, ''));
+    if (!isNaN(target)) {
+      el.textContent = suffix ? '0%' : '0';
+      setTimeout(() => animateCount(el, target, { suffix }), 200);
+    }
+  });
+
+  const priceRows = [["Botox / Neuromodulators", "$3.50\u2013$14.50/unit", "~$10/unit", "4 of 62 clinics publish a genuine per-unit Botox/Dysport rate (River Oaks Galleria Medspa and River Oaks MedSpa \u2014 likely the same ownership group \u2014 both at $5-$14.50/unit; Rose Milk Aesthetics' new-patient $3.50/unit Dysport / $11/unit Botox; LIT & Aesthetics Spa's $10/unit tox). 6 clinics (Tulum Wellness Spa, TLC MedSpa Houston, Amora Med Spa, Persona Medical Spa, PurA Medical Aesthetics, SkinSpirit Houston - Rice Village, The MedSpa at Galleria) show the identical '$12-$15/unit' phrase seen repeated verbatim in every prior city of this project \u2014 excluded as generic boilerplate. 2 more (Montrose Med Spa, Vida Aesthetics and Wellness) show a '$200-$900/session' aggregator figure matching Dallas's Elite Med Spa of Texas pattern \u2014 also excluded."], ["Dermal / Lip Fillers", "$550\u2013$750/syringe", "~$650/syringe", "3 of 53 clinics publish a genuine per-syringe filler price (River Oaks Galleria Medspa and River Oaks MedSpa both from $750/syringe, plus a $550 SKINVIVE promo; LIT & Aesthetics Spa at $600/syringe). 7 clinics repeat the '$600-$1,200/syringe' boilerplate phrase and 2 more show the '$600-$2,000/syringe' aggregator figure \u2014 both excluded."], ["Sculptra / Biostimulators", "from $1,050", "\u2014", "Only the River Oaks Galleria Medspa / River Oaks MedSpa pair (likely one ownership group, 2 of 12 clinics) publish genuine Sculptra pricing, both at the identical 'from $1,050' rate. LIT & Aesthetics Spa's PDO thread pricing ($15-$189/thread) is a different biostimulator product, not Sculptra, and is shown separately in its clinic listing."], ["HydraFacial", "$175\u2013$200", "~$190", "2 of 21 clinics publish a genuine standalone HydraFacial-type price (myEvergreen MedSpa's reviewer-reported $200; Avante Laser & MediSpa's DiamondGlow first-time promo at $175). Art of Beauty's $458 Glow-Up Trio is a 3-treatment bundle, not a standalone price, and Vida Aesthetics' '$150-$350/session' is the aggregator figure \u2014 both excluded from this range."], ["Chemical Peels", "$150\u2013$475", "\u2014", "3 of 28 clinics publish peel pricing across different treatments (HBR Medspa's Derma Plane & Brightening Glo Peel combo at $150; Tranquil Rejuvenation's Groupon hydrating-facial-plus-peel at $186; River Oaks MedSpa/Galleria's VI Body Peel promo at $375-$475) \u2014 not directly comparable. Montrose Med Spa's '$100-$800/treatment' aggregator figure was excluded."], ["Microneedling", "$525\u2013$2,288", "\u2014", "2 of 31 clinics publish genuine pricing on very different products \u2014 River Oaks Galleria/MedSpa's standard SkinPen at $525 (promo) versus Zero Age MedSpa Katy's RF Microneedling at $800/session or $2,288 for a 3-session package \u2014 not a single comparable rate. 2 clinics' '$200-$700/session' aggregator figure was excluded."], ["Laser Hair Removal", "$50\u2013$600", "~$150", "4 of 26 clinics publish genuine pricing across different structures \u2014 Grace Full Aesthetics' by-area single-session menu from $50; Luminous MediSpa's by-area session pricing $50-$600; Balle Bliss Luxury Medical Spa's 3-treatment promo packages $149-$499; Oasis Luxury Med Spa's 6-treatment full-legs package at $549 \u2014 the spread mostly reflects these different billing structures. Vida Aesthetics' '$150-$500/session' aggregator figure was excluded."], ["Body Contouring / CoolSculpting", "$999\u2013$5,000", "\u2014", "3 of 29 clinics publish pricing on incompatible treatments \u2014 Art Of Wellness Medspa's Viora Body Contouring 6-session package at $999; Avante Laser & MediSpa's SculpSure 4-treatment promo at $2,500; Butterfly Medspa & Wellness's general body-sculpting range at $1,500-$5,000 per package \u2014 not a single comparable rate."], ["IV Therapy", "$122", "\u2014", "Only 1 of 11 clinics (Pearland Med Spa, $122 Groupon IV Vitamin Drip) publishes a genuine IV therapy price."], ["Medical Weight Loss / GLP-1", "$400/mo\u2013$549 (30-day)", "\u2014", "2 of 12 clinics publish weight-loss pricing on incompatible structures \u2014 LIT & Aesthetics Spa's $400/mo Semaglutide for the first 3 months, versus Exclusively Radiant Aesthetics & Regenerative Medicine's $549 30-day injectable weight-loss program \u2014 not a single comparable rate."], ["Skin Tightening (Morpheus8/RF)", "$488\u2013$2,588", "\u2014", "Only 1 of 14 clinics (Zero Age MedSpa Katy) publishes pricing, and it spans very different Ultherapy treatment areas \u2014 from $488 for a targeted area up to $2,588 for a full face \u2014 not a single comparable rate."], ["IPL / Photofacial", "from $247.50", "\u2014", "Only 1 of 19 clinics (Amora Med Spa, Groupon IPL PhotoFacial deal from $247.50) publishes a genuine IPL/photofacial price."], ["Kybella", "Not widely published", "\u2014", "None of the 6 clinics offering Kybella in this dataset publish a price."], ["PRP / PRF", "Not widely published", "\u2014", "None of the 11 clinics offering PRP/PRF/vampire facial treatments in this dataset publish a price."], ["Hormone Therapy", "Not widely published", "\u2014", "None of the 7 clinics offering hormone therapy in this dataset publish a price \u2014 consistent with this category skewing toward consult-first, membership-style pricing in every city of this project so far."]];
+  const tbody = document.getElementById('price-table');
+  priceRows.forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><div class="proc-name proc-name-link" data-category="${r[0]}">${r[0]}</div><div class="table-note">${r[4]}</div></td><td class="num">${r[1]}</td><td>${r[2]}</td><td class="num">${r[3]}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  const breakdownData = {"Botox / Neuromodulators": [["Houston Medical Spa", "thehoustonmedspa.glossgenius.com", "Botox", "not published", ""], ["Elevate Wellness & Med Spa", "elevatewellmedspa.com", "Botox", "not published", ""], ["Artavi Med Spa - Dr. Tarina Desai, MD", "artavimedspa.com", "Botox / Fillers", "not published", ""], ["NakedMD Med Spa Houston", "nakedmd.com", "Botox / Dysport / Xeomin", "not published", ""], ["Montrose Med Spa", "montrosemedspa.com", "Membership Tox Rate", "$12/unit", ""], ["Montrose Med Spa", "montrosemedspa.com", "Botox & Neurotoxins (generic range - aggregator, see note)", "$200-$900/session", ""], ["River Oaks Galleria Medspa", "rogmedspa.com", "Neurotoxin (Botox/Dysport)", "$5-$14.50/unit", ""], ["Alabama Med Spa By Voupre", "fresha.com/alabama-med-spa-by-voupre", "Botox", "not published", ""], ["Tulum Wellness Spa", "tulumwellness.com", "Botox (generic range - boilerplate, see note)", "$12-$15/unit", ""], ["It's A Secret Med Spa - Houston", "secretmedspa.com", "Botox", "not published", ""], ["TLC MedSpa Houston", "tlcmedspahouston.com", "Botox (generic range - boilerplate, see note)", "$12-$15/unit", ""], ["Amora Med Spa", "amoramedspa.com", "Botox (generic range - boilerplate, see note)", "$12-$15/unit", ""], ["Vida Aesthetics and Wellness", "allmyvida.com", "Botox & Neurotoxins (generic range - aggregator, see note)", "$200-$900/session", ""], ["Persona Medical Spa", "personamedspa.live-website.com", "Botox (generic range - boilerplate, see note)", "$12-$15/unit", ""], ["River Oaks MedSpa", "riveroaksmedspa.com", "Neurotoxin (Botox/Dysport)", "$5-$14.50/unit", ""], ["milk + honey | River Oaks", "milkandhoney.com", "Botox / Dysport / Fillers", "not published", ""], ["Beverly Hills Rejuvenation Center Houston - River Oaks", "bhrchoustonriveroaks.com", "Botox & Neurotoxins / Fillers / Laser Treatments / CoolSculpting / Body Contouring", "not published", ""], ["4Ever Young Med Spa & Wellness Center - Heights Houston", "4everyoungantiaging.com", "Botox / Dysport", "not published", ""], ["Rose Milk Aesthetics", "rosemilkaesthetics.com", "Dysport (new patient)", "$3.50/unit", ""], ["Rose Milk Aesthetics", "rosemilkaesthetics.com", "Botox (new patient)", "$11/unit", ""], ["New Heights Med Spa", "newheightsmedspa.com", "Botox / Juvederm", "not published", ""], ["Dream Aesthetics Medspa", "dreamhoustonmedspa.com", "Botox / Dysport / Kybella (per-unit, amount not shown)", "not published", ""], ["VIO Med Spa | West U", "viomedspa.com", "Club VIO Membership (toxin)", "$3 off/unit + 15% off", ""], ["VIO Med Spa | West U", "viomedspa.com", "Botox / Facials / Body Sculpting", "not published", ""], ["PurA Medical Aesthetics", "thepuralife.com", "Botox (generic range - boilerplate, see note)", "$12-$15/unit", ""], ["SkinSpirit Houston - Rice Village", "skinspirit.com", "Botox (generic range - boilerplate, see note)", "$12-$15/unit", ""], ["SkinSpirit Houston - Rice Village", "skinspirit.com", "Dysport / Juvederm / Restylane / Sculptra / Kybella / PDO Threads / SkinVive", "not published", ""], ["Aesthetica MD Med Spa - Memorial", "aestheticamdmedspa.com", "Botox / Fillers", "not published", ""], ["MD Aesthetica MedSpa", "mdamedspa.com", "Botox / Fillers", "not published", ""], ["myEvergreen MedSpa", "myevergreenmedspa.com", "Botox / Dermal Fillers / Laser Treatments", "not published", ""], ["Alchemy 43 Houston - Memorial at Lantern Lane", "alchemy43.com", "Botox / Filler / Microneedling / PRP / Clear + Brilliant Laser / Peels", "not published", ""], ["Amerejuve Medspa Galleria - Laser, Botox & CoolSculpting", "amerejuve.com", "Botox / Voluma / Volbella / Juvederm / Kybella / Restylane", "not published", ""], ["The MedSpa at Galleria", "medspascout.com/clinic/the-medspa-at-galleria-houston", "Botox (generic range - boilerplate, see note)", "$12-$15/unit", ""], ["NakedMD Med Spa Katy", "nakedmd.com", "Botox / Dermal Fillers", "not published", ""], ["Katy Medi Spa", "katymedispa.com", "Botox / Laser Hair Removal / Facials", "not published", ""], ["Oasis Laser MedSpa", "oasislasermedspa.com", "Botox / Lip Fillers", "not published", ""], ["MedSpa at Villagio", "medspaatvillagio.com", "Skin Rejuvenation / Laser Hair Removal / Botox / Massage", "not published", ""], ["MedSPA Katy Sapphira Prive", "sapphiraprivemedspa.com", "Facials / Botox / Microneedling / Laser Hair Removal", "not published", ""], ["Luminous MediSpa", "luminousmedispa.com", "Botox / RF Microneedling / HydraFacial / Chemical Peel / Dermal Fillers", "not published", ""], ["Elase Medical Spa - Sugar Land", "elase.com", "Botox / Laser Hair Removal / Facials / Body Sculpting", "not published", ""], ["VIO Med Spa | Sugar Land", "viomedspa.com", "Club VIO Membership (toxin)", "$3 off/unit + 15% off", ""], ["Vira Medspa", "viramedspa.com", "Botox / Injectables", "not published", ""], ["Revitalize Medi-Spa", "revitalizemedispa.co", "Botox / Dermal Fillers", "not published", ""], ["Skin 105 Medical Spa & Apothecary", "skin105.com", "Ultherapy / VirtueRF Microneedling / HydraFacial / Botox/Fillers / IV Hydration", "not published", ""], ["It's A Secret Med Spa - The Woodlands", "secretmedspa.com", "Botox / Lasers / Facials", "not published", ""], ["Seychelles Med & Laser Spa", "seychellesmedspa.com", "Botox / Dysport / Juvederm / Voluma / Volbella / Restylane / Radiesse / Belotero / Sculptra / PDO Threads / PRP", "not published", ""], ["Elase Medical Spa - The Woodlands", "elase.com", "Botox / Dysport / Dermal Fillers / BBL / Moxi Laser / HydraFacial", "not published", ""], ["Gen B Medspa", "genbmedspa.com", "Botox / Dermal Fillers / Lip Fillers / Microneedling / Kybella", "not published", ""], ["Rejuve' Wellness & Aesthetics - The Woodlands", "rejuvemedspatx.com", "Botox / Lip Injections / Facials", "not published", ""], ["MINTbody Med Spa & Wellness Fairfield", "mintbodymedspa.com", "Botox / Fillers / PDO Lifts / Microneedling with PRP", "not published", ""], ["Balle Bliss Luxury Medical Spa", "ballebliss.com", "Botox / Dermal Fillers / Chemical Peels", "not published", ""], ["Le Blanc Wellness & Beauty", "leblancwellnessandbeauty.com", "Cosmetic Injections (Neurotoxins/Fillers)", "not published", ""], ["LIT & Aesthetics Spa", "litaestheticsrn.com", "Tox (Botox)", "$10/unit", ""], ["Vital Clinic and Spa", "vitalclinicandspa.com", "Botox / Fillers / Laser Treatments", "not published", ""], ["UR Royalty Med Spa", "urroyaltymedspa.com", "Botox / Dermal Fillers / Laser Therapies / Body Sculpting", "not published", ""], ["Oasis Luxury Med Spa", "oasisluxurymedspa.com", "HydraFacial / Botox / Medical Weight Loss", "not published", ""], ["Dermalogy Med Spa", "dermalogypearland.com", "Botox / Dermal Fillers / Laser Treatments", "not published", ""], ["Nefer Med Spa", "nefermedspa.net", "Botox / Fillers / PRF / Kybella", "not published", ""], ["Azarella Med Spa", "atly.com/location/AzarellaMedSpa", "Fillers / Botox / Kybella / PRP+PRF", "not published", ""], ["Elase Medical Spas - Clear Lake", "elase.com", "Botox / Dysport", "not published", ""], ["Clear Lake Medical Spa", "clmedspa.com", "Botox / Fillers / Facials / Microneedling", "not published", ""], ["PS Medical Spa", "drsukkar.com", "Botox Injections / Skin Tightening / Dermaplaning / Ultrasonic Cavitation / Wood Therapy", "not published", ""], ["SKIN 101 Medspa - Botox, Fillers & Lasers", "skin101medspa.com", "Botox / Dysport / Fillers", "not published", ""], ["Z Med Clinic and Med Spa - Weight Loss, Hormone Therapy and IV Clinic", "zmedclinic.com", "Vanquish Fat Reduction / Bellafill / Thread Lift / Botox", "not published", ""], ["Butterfly Medspa & Wellness", "butterflymedspaandwellness.com", "Botox / Dermal Fillers / HydraFacials / Laser Hair Removal / Laser Resurfacing", "not published", ""], ["Aesthetica MD Med Spa - Cypress", "aestheticamdcypress.com", "Botox/Dysport / Dermal Fillers / Lip Fillers", "not published", ""], ["Aesthetica MD Med Spa - Cypress", "aestheticamdcypress.com", "Monthly Membership (facial/massage/detox wrap/RF, choice of 1)", "not published (amount not shown)", ""]], "Dermal / Lip Fillers": [["Houston Medical Spa", "thehoustonmedspa.glossgenius.com", "Filler", "not published", ""], ["Elevate Wellness & Med Spa", "elevatewellmedspa.com", "Dermal Fillers", "not published", ""], ["Artavi Med Spa - Dr. Tarina Desai, MD", "artavimedspa.com", "Botox / Fillers", "not published", ""], ["NakedMD Med Spa Houston", "nakedmd.com", "Juvederm / Restylane / Prollenium Fillers", "not published", ""], ["Montrose Med Spa", "montrosemedspa.com", "Membership Filler Discount", "$100 off", ""], ["Montrose Med Spa", "montrosemedspa.com", "Dermal Fillers (generic range - aggregator, see note)", "$600-$2,000/syringe", ""], ["River Oaks Galleria Medspa", "rogmedspa.com", "HA Filler", "from $750/syringe", ""], ["Alabama Med Spa By Voupre", "fresha.com/alabama-med-spa-by-voupre", "Fillers", "not published", ""], ["Tulum Wellness Spa", "tulumwellness.com", "Fillers (generic range - boilerplate, see note)", "$600-$1,200/syringe", ""], ["It's A Secret Med Spa - Houston", "secretmedspa.com", "Dermal Fillers", "not published", ""], ["It's A Secret Med Spa - Houston", "secretmedspa.com", "Lip Fillers", "not published", ""], ["TLC MedSpa Houston", "tlcmedspahouston.com", "Fillers (generic range - boilerplate, see note)", "$600-$1,200/syringe", ""], ["Amora Med Spa", "amoramedspa.com", "Fillers (generic range - boilerplate, see note)", "$600-$1,200/syringe", ""], ["Vida Aesthetics and Wellness", "allmyvida.com", "Dermal Fillers (generic range - aggregator, see note)", "$600-$2,000/syringe", ""], ["Persona Medical Spa", "personamedspa.live-website.com", "Fillers (generic range - boilerplate, see note)", "$600-$1,200/syringe", ""], ["River Oaks MedSpa", "riveroaksmedspa.com", "HA Filler", "from $750/syringe", ""], ["River Oaks MedSpa", "riveroaksmedspa.com", "SKINVIVE (promo)", "$550 ($50 off $600)", ""], ["milk + honey | River Oaks", "milkandhoney.com", "Botox / Dysport / Fillers", "not published", ""], ["Beverly Hills Rejuvenation Center Houston - River Oaks", "bhrchoustonriveroaks.com", "Botox & Neurotoxins / Fillers / Laser Treatments / CoolSculpting / Body Contouring", "not published", ""], ["4Ever Young Med Spa & Wellness Center - Heights Houston", "4everyoungantiaging.com", "Juvederm / Restylane Fillers", "not published", ""], ["New Heights Med Spa", "newheightsmedspa.com", "Botox / Juvederm", "not published", ""], ["PurA Medical Aesthetics", "thepuralife.com", "Fillers (generic range - boilerplate, see note)", "$600-$1,200/syringe", ""], ["SkinSpirit Houston - Rice Village", "skinspirit.com", "Dysport / Juvederm / Restylane / Sculptra / Kybella / PDO Threads / SkinVive", "not published", ""], ["15Aesthetics Medspa", "15aesthetics.com", "Facial Balancing Injectables (RHA fillers)", "not published", ""], ["Aesthetica MD Med Spa - Memorial", "aestheticamdmedspa.com", "Botox / Fillers", "not published", ""], ["MD Aesthetica MedSpa", "mdamedspa.com", "Botox / Fillers", "not published", ""], ["myEvergreen MedSpa", "myevergreenmedspa.com", "Botox / Dermal Fillers / Laser Treatments", "not published", ""], ["Alchemy 43 Houston - Memorial at Lantern Lane", "alchemy43.com", "Botox / Filler / Microneedling / PRP / Clear + Brilliant Laser / Peels", "not published", ""], ["Amerejuve Medspa Galleria - Laser, Botox & CoolSculpting", "amerejuve.com", "Botox / Voluma / Volbella / Juvederm / Kybella / Restylane", "not published", ""], ["The MedSpa at Galleria", "medspascout.com/clinic/the-medspa-at-galleria-houston", "Fillers (generic range - boilerplate, see note)", "$600-$1,200/syringe", ""], ["The MedSpa at Galleria", "medspascout.com/clinic/the-medspa-at-galleria-houston", "Radiesse / Chemical Peels / IV Therapy", "not published", ""], ["NakedMD Med Spa Katy", "nakedmd.com", "Botox / Dermal Fillers", "not published", ""], ["Oasis Laser MedSpa", "oasislasermedspa.com", "Botox / Lip Fillers", "not published", ""], ["Luminous MediSpa", "luminousmedispa.com", "Botox / RF Microneedling / HydraFacial / Chemical Peel / Dermal Fillers", "not published", ""], ["Revitalize Medi-Spa", "revitalizemedispa.co", "Botox / Dermal Fillers", "not published", ""], ["Skin 105 Medical Spa & Apothecary", "skin105.com", "Ultherapy / VirtueRF Microneedling / HydraFacial / Botox/Fillers / IV Hydration", "not published", ""], ["Seychelles Med & Laser Spa", "seychellesmedspa.com", "Botox / Dysport / Juvederm / Voluma / Volbella / Restylane / Radiesse / Belotero / Sculptra / PDO Threads / PRP", "not published", ""], ["Elase Medical Spa - The Woodlands", "elase.com", "Botox / Dysport / Dermal Fillers / BBL / Moxi Laser / HydraFacial", "not published", ""], ["Gen B Medspa", "genbmedspa.com", "Botox / Dermal Fillers / Lip Fillers / Microneedling / Kybella", "not published", ""], ["Rejuve' Wellness & Aesthetics - The Woodlands", "rejuvemedspatx.com", "Botox / Lip Injections / Facials", "not published", ""], ["MINTbody Med Spa & Wellness Fairfield", "mintbodymedspa.com", "Botox / Fillers / PDO Lifts / Microneedling with PRP", "not published", ""], ["Balle Bliss Luxury Medical Spa", "ballebliss.com", "Botox / Dermal Fillers / Chemical Peels", "not published", ""], ["Le Blanc Wellness & Beauty", "leblancwellnessandbeauty.com", "Cosmetic Injections (Neurotoxins/Fillers)", "not published", ""], ["LIT & Aesthetics Spa", "litaestheticsrn.com", "Dermal Filler", "$600/syringe", ""], ["Vital Clinic and Spa", "vitalclinicandspa.com", "Botox / Fillers / Laser Treatments", "not published", ""], ["UR Royalty Med Spa", "urroyaltymedspa.com", "Botox / Dermal Fillers / Laser Therapies / Body Sculpting", "not published", ""], ["Dermalogy Med Spa", "dermalogypearland.com", "Botox / Dermal Fillers / Laser Treatments", "not published", ""], ["Nefer Med Spa", "nefermedspa.net", "Botox / Fillers / PRF / Kybella", "not published", ""], ["Pearland Med Spa", "pearlandmedspa.com", "Medical Grade Facials / Dermaplaning / Microneedling / Dermal Fillers", "not published", ""], ["Azarella Med Spa", "atly.com/location/AzarellaMedSpa", "Fillers / Botox / Kybella / PRP+PRF", "not published", ""], ["Clear Lake Medical Spa", "clmedspa.com", "Botox / Fillers / Facials / Microneedling", "not published", ""], ["Houston Med Spa & Aesthetics", "fresha.com/houston-med-spa-aesthetics", "Dermal Fillers / Anti-Wrinkle Injections / Lip Fillers", "not published", ""], ["Art Of Wellness Medspa", "artofwellnessmedspa.com", "Facial Treatments / Injectables / Dermal Fillers / Laser Procedures", "not published", ""], ["SKIN 101 Medspa - Botox, Fillers & Lasers", "skin101medspa.com", "Botox / Dysport / Fillers", "not published", ""], ["Z Med Clinic and Med Spa - Weight Loss, Hormone Therapy and IV Clinic", "zmedclinic.com", "Vanquish Fat Reduction / Bellafill / Thread Lift / Botox", "not published", ""], ["Butterfly Medspa & Wellness", "butterflymedspaandwellness.com", "Botox / Dermal Fillers / HydraFacials / Laser Hair Removal / Laser Resurfacing", "not published", ""], ["Aesthetica MD Med Spa - Cypress", "aestheticamdcypress.com", "Botox/Dysport / Dermal Fillers / Lip Fillers", "not published", ""]], "Sculptra / Biostimulators": [["Artavi Med Spa - Dr. Tarina Desai, MD", "artavimedspa.com", "Secret RF / IPL / Sculptra", "not published", ""], ["NakedMD Med Spa Houston", "nakedmd.com", "Biostimulators", "not published", ""], ["River Oaks Galleria Medspa", "rogmedspa.com", "Sculptra", "from $1,050", ""], ["Vida Aesthetics and Wellness", "allmyvida.com", "Medical Weight Loss / Hormone Replacement / IV Hydration / PDO Threads", "not published", ""], ["River Oaks MedSpa", "riveroaksmedspa.com", "Sculptra", "from $1,050", ""], ["SkinSpirit Houston - Rice Village", "skinspirit.com", "Dysport / Juvederm / Restylane / Sculptra / Kybella / PDO Threads / SkinVive", "not published", ""], ["Premier Health Spa", "premierhealthspa.com", "Microneedling / IV Therapy / Weight Loss / Hormone Replacement / PDO Thread Lift", "not published", ""], ["Seychelles Med & Laser Spa", "seychellesmedspa.com", "Botox / Dysport / Juvederm / Voluma / Volbella / Restylane / Radiesse / Belotero / Sculptra / PDO Threads / PRP", "not published", ""], ["Radiance Medical Aesthetics & Wellness", "woodlandsradiancespa.com", "Radiance Miracle Lift (PDO Threads)", "not published", ""], ["MINTbody Med Spa & Wellness Fairfield", "mintbodymedspa.com", "Botox / Fillers / PDO Lifts / Microneedling with PRP", "not published", ""], ["LIT & Aesthetics Spa", "litaestheticsrn.com", "Barbed PDO Threads", "$189/thread", ""], ["LIT & Aesthetics Spa", "litaestheticsrn.com", "Smooth PDO Threads", "$15/thread", ""], ["Z Med Clinic and Med Spa - Weight Loss, Hormone Therapy and IV Clinic", "zmedclinic.com", "Vanquish Fat Reduction / Bellafill / Thread Lift / Botox", "not published", ""]], "Kybella": [["Dream Aesthetics Medspa", "dreamhoustonmedspa.com", "Botox / Dysport / Kybella (per-unit, amount not shown)", "not published", ""], ["SkinSpirit Houston - Rice Village", "skinspirit.com", "Dysport / Juvederm / Restylane / Sculptra / Kybella / PDO Threads / SkinVive", "not published", ""], ["Amerejuve Medspa Galleria - Laser, Botox & CoolSculpting", "amerejuve.com", "Botox / Voluma / Volbella / Juvederm / Kybella / Restylane", "not published", ""], ["Gen B Medspa", "genbmedspa.com", "Botox / Dermal Fillers / Lip Fillers / Microneedling / Kybella", "not published", ""], ["Nefer Med Spa", "nefermedspa.net", "Botox / Fillers / PRF / Kybella", "not published", ""], ["Azarella Med Spa", "atly.com/location/AzarellaMedSpa", "Fillers / Botox / Kybella / PRP+PRF", "not published", ""]], "HydraFacial": [["Montrose Med Spa", "montrosemedspa.com", "HydraFacial / PRP Hair Restoration / IV Therapy", "not published", ""], ["River Oaks Galleria Medspa", "rogmedspa.com", "HydraFacial / Chemical Peels / Laser Resurfacing", "not published", ""], ["Tulum Wellness Spa", "tulumwellness.com", "Chemical Peels / HydraFacial / Laser Hair Removal / Microneedling", "not published", ""], ["Miliv Med Spa & Facials", "milivmed-spa.com", "LED Therapy / HydraFacial / 24K Gold Facial", "not published", ""], ["Vida Aesthetics and Wellness", "allmyvida.com", "HydraFacial (generic range - aggregator, see note)", "$150-$350/session", ""], ["River Oaks MedSpa", "riveroaksmedspa.com", "HydraFacial / Microblading / Emsculpting / Photofacial / Laser Hair Removal", "not published", ""], ["4Ever Young Med Spa & Wellness Center - Heights Houston", "4everyoungantiaging.com", "HydraFacial / Microneedling / Chemical Peels", "not published", ""], ["Rose Milk Aesthetics", "rosemilkaesthetics.com", "HydraFacial / PRP Microneedling / Chemical Peels", "not published", ""], ["Dream Aesthetics Medspa", "dreamhoustonmedspa.com", "HydraFacial", "not published", ""], ["myEvergreen MedSpa", "myevergreenmedspa.com", "HydraFacial (reviewer-reported)", "$200", ""], ["Luminous MediSpa", "luminousmedispa.com", "Botox / RF Microneedling / HydraFacial / Chemical Peel / Dermal Fillers", "not published", ""], ["Vira Medspa", "viramedspa.com", "HydraFacial / Acne Scar Treatment / Hyperpigmentation Solutions", "not published", ""], ["Forever Young Medi Spa", "foreveryoungmedispas.com", "HydraFacial / Forever Glow Facial", "not published", ""], ["Skin 105 Medical Spa & Apothecary", "skin105.com", "Ultherapy / VirtueRF Microneedling / HydraFacial / Botox/Fillers / IV Hydration", "not published", ""], ["Elase Medical Spa - The Woodlands", "elase.com", "Botox / Dysport / Dermal Fillers / BBL / Moxi Laser / HydraFacial", "not published", ""], ["Avante Laser & MediSpa", "avantemedispa.com", "DiamondGlow (first-time promo)", "$175", ""], ["Art of Beauty Wellness and Spa", "artofbeautywellnessandspa.glossgenius.com", "Glow-Up Trio Package (Microneedling + HydraFacial + IV Drip)", "$458 ($700 value)", ""], ["Oasis Luxury Med Spa", "oasisluxurymedspa.com", "HydraFacial / Botox / Medical Weight Loss", "not published", ""], ["Elase Medical Spas - Clear Lake", "elase.com", "BBL / Moxi Laser Resurfacing / HydraFacial / Chemical Peels", "not published", ""], ["SKIN 101 Medspa - Botox, Fillers & Lasers", "skin101medspa.com", "Emsculpt NEO / Emface / Exion / CoolPeel / DiamondGlow / Aerolase Laser", "not published", ""], ["Butterfly Medspa & Wellness", "butterflymedspaandwellness.com", "Botox / Dermal Fillers / HydraFacials / Laser Hair Removal / Laser Resurfacing", "not published", ""]], "Chemical Peels": [["Elevate Wellness & Med Spa", "elevatewellmedspa.com", "Chemical Peels", "not published", ""], ["NakedMD Med Spa Houston", "nakedmd.com", "Chemical Peels", "not published", ""], ["Montrose Med Spa", "montrosemedspa.com", "Chemical Peels (generic range - aggregator, see note)", "$100-$800/treatment", ""], ["River Oaks Galleria Medspa", "rogmedspa.com", "HydraFacial / Chemical Peels / Laser Resurfacing", "not published", ""], ["Alabama Med Spa By Voupre", "fresha.com/alabama-med-spa-by-voupre", "Chemical Peels", "not published", ""], ["Tulum Wellness Spa", "tulumwellness.com", "Chemical Peels / HydraFacial / Laser Hair Removal / Microneedling", "not published", ""], ["The Total You Medical Spa - Blossom Hotel", "thetotalyoumedicalspa.com", "Facials / Lasers / Peels / Injectables", "not published", ""], ["The Total You Medical Spa - Memorial City", "thetotalyoumedicalspa.com", "Facials / Lasers / Peels / Injectables", "not published", ""], ["Alira Med-Spa", "aliramedspa.com", "Morpheus8 / Ultherapy / Laser Hair Removal / Chemical Peels / IPL", "not published", ""], ["Amora Med Spa", "amoramedspa.com", "Facials / Chemical Peels / Microneedling", "not published", ""], ["River Oaks MedSpa", "riveroaksmedspa.com", "VI Body Peel (promo)", "$375-$475 ($75 off $450-$550)", ""], ["milk + honey | River Oaks", "milkandhoney.com", "Microneedling / Chemical Peels", "not published", ""], ["4Ever Young Med Spa & Wellness Center - Heights Houston", "4everyoungantiaging.com", "HydraFacial / Microneedling / Chemical Peels", "not published", ""], ["Rose Milk Aesthetics", "rosemilkaesthetics.com", "HydraFacial / PRP Microneedling / Chemical Peels", "not published", ""], ["MD Aesthetica MedSpa", "mdamedspa.com", "Microneedling / Chemical Peels", "not published", ""], ["Alchemy 43 Houston - Memorial at Lantern Lane", "alchemy43.com", "Botox / Filler / Microneedling / PRP / Clear + Brilliant Laser / Peels", "not published", ""], ["The MedSpa at Galleria", "medspascout.com/clinic/the-medspa-at-galleria-houston", "Radiesse / Chemical Peels / IV Therapy", "not published", ""], ["Luminous MediSpa", "luminousmedispa.com", "Botox / RF Microneedling / HydraFacial / Chemical Peel / Dermal Fillers", "not published", ""], ["Balle Bliss Luxury Medical Spa", "ballebliss.com", "Botox / Dermal Fillers / Chemical Peels", "not published", ""], ["Le Blanc Wellness & Beauty", "leblancwellnessandbeauty.com", "Chemical Peels / Oxygen Facials / RF Facials", "not published", ""], ["Nefer Med Spa", "nefermedspa.net", "VI Peels / B12 Shots", "not published", ""], ["Elase Medical Spas - Clear Lake", "elase.com", "BBL / Moxi Laser Resurfacing / HydraFacial / Chemical Peels", "not published", ""], ["Tranquil Rejuvenation Med Spa LLC", "tranquilrejuvenationmedspa.com", "Hydrating Facial + Chemical Peel (Groupon)", "$186 (reg $248)", ""], ["Liv Med Spa & Facials", "liv-medspatx.com", "Facials / Microneedling / Chemical Peels", "not published", ""], ["SKIN 101 Medspa - Botox, Fillers & Lasers", "skin101medspa.com", "Emsculpt NEO / Emface / Exion / CoolPeel / DiamondGlow / Aerolase Laser", "not published", ""], ["HBR Medspa & Laser Center", "hbrmedspa.com", "Derma Plane & Brightening Glo Peel Combo", "$150", ""], ["Z Med Clinic and Med Spa - Weight Loss, Hormone Therapy and IV Clinic", "zmedclinic.com", "Laser Hair Removal / Vampire Facelift / Chemical Peels / Non-Surgical Breast Lift", "not published", ""], ["Aesthetica MD Med Spa - Cypress", "aestheticamdcypress.com", "Chemical Peels / Microneedling / Lymphatic Massage / Laser Hair Removal / Body Contouring", "not published", ""]], "Microneedling": [["Elevate Wellness & Med Spa", "elevatewellmedspa.com", "Microneedling", "not published", ""], ["NakedMD Med Spa Houston", "nakedmd.com", "Microneedling", "not published", ""], ["Montrose Med Spa", "montrosemedspa.com", "Microneedling (generic range - aggregator, see note)", "$200-$700/session", ""], ["River Oaks Galleria Medspa", "rogmedspa.com", "SkinPen Microneedling (promo)", "$525 ($75 off $600)", ""], ["Alabama Med Spa By Voupre", "fresha.com/alabama-med-spa-by-voupre", "Microneedling", "not published", ""], ["Tulum Wellness Spa", "tulumwellness.com", "Chemical Peels / HydraFacial / Laser Hair Removal / Microneedling", "not published", ""], ["Amora Med Spa", "amoramedspa.com", "Facials / Chemical Peels / Microneedling", "not published", ""], ["Vida Aesthetics and Wellness", "allmyvida.com", "Microneedling (generic range - aggregator, see note)", "$200-$700/session", ""], ["River Oaks MedSpa", "riveroaksmedspa.com", "SkinPen Microneedling (promo)", "$525 ($75 off $600)", ""], ["milk + honey | River Oaks", "milkandhoney.com", "Microneedling / Chemical Peels", "not published", ""], ["INFINITY MED SPA", "infinitymedspas.com", "Microneedling", "not published", ""], ["4Ever Young Med Spa & Wellness Center - Heights Houston", "4everyoungantiaging.com", "HydraFacial / Microneedling / Chemical Peels", "not published", ""], ["Rose Milk Aesthetics", "rosemilkaesthetics.com", "HydraFacial / PRP Microneedling / Chemical Peels", "not published", ""], ["New Heights Med Spa", "newheightsmedspa.com", "Microneedling", "not published", ""], ["MD Aesthetica MedSpa", "mdamedspa.com", "Microneedling / Chemical Peels", "not published", ""], ["Alchemy 43 Houston - Memorial at Lantern Lane", "alchemy43.com", "Botox / Filler / Microneedling / PRP / Clear + Brilliant Laser / Peels", "not published", ""], ["Zero Age MedSpa Katy", "zeroagemedspa.com", "RF Microneedling (single session)", "$800", ""], ["Zero Age MedSpa Katy", "zeroagemedspa.com", "RF Microneedling (3-session package)", "$2,288", ""], ["MedSPA Katy Sapphira Prive", "sapphiraprivemedspa.com", "Facials / Botox / Microneedling / Laser Hair Removal", "not published", ""], ["Luminous MediSpa", "luminousmedispa.com", "Botox / RF Microneedling / HydraFacial / Chemical Peel / Dermal Fillers", "not published", ""], ["Lab De Skin KATY", "labdeskin.com", "Stellar M22 IPL / ResurFX / Thermage FLX / HiFu / RF Microneedling / Mesotherapy", "not published", ""], ["Premier Health Spa", "premierhealthspa.com", "Microneedling / IV Therapy / Weight Loss / Hormone Replacement / PDO Thread Lift", "not published", ""], ["Revitalize Medi-Spa", "revitalizemedispa.co", "Microneedling / RF Skin Tightening / IV Therapy", "not published", ""], ["Skin 105 Medical Spa & Apothecary", "skin105.com", "Ultherapy / VirtueRF Microneedling / HydraFacial / Botox/Fillers / IV Hydration", "not published", ""], ["Gen B Medspa", "genbmedspa.com", "Botox / Dermal Fillers / Lip Fillers / Microneedling / Kybella", "not published", ""], ["MINTbody Med Spa & Wellness Fairfield", "mintbodymedspa.com", "Botox / Fillers / PDO Lifts / Microneedling with PRP", "not published", ""], ["Art of Beauty Wellness and Spa", "artofbeautywellnessandspa.glossgenius.com", "Glow-Up Trio Package (Microneedling + HydraFacial + IV Drip)", "$458 ($700 value)", ""], ["Pearland Med Spa", "pearlandmedspa.com", "Medical Grade Facials / Dermaplaning / Microneedling / Dermal Fillers", "not published", ""], ["Clear Lake Medical Spa", "clmedspa.com", "Botox / Fillers / Facials / Microneedling", "not published", ""], ["Houston Med Spa & Aesthetics", "fresha.com/houston-med-spa-aesthetics", "Mesotherapy / Laser Resurfacing / Microneedling / Stretch Mark Removal", "not published", ""], ["Liv Med Spa & Facials", "liv-medspatx.com", "Facials / Microneedling / Chemical Peels", "not published", ""], ["Aesthetica MD Med Spa - Cypress", "aestheticamdcypress.com", "Chemical Peels / Microneedling / Lymphatic Massage / Laser Hair Removal / Body Contouring", "not published", ""]], "Laser Hair Removal": [["River Oaks Galleria Medspa", "rogmedspa.com", "Body Contouring / Skin Tightening / Laser Hair Removal", "not published", ""], ["Tulum Wellness Spa", "tulumwellness.com", "Chemical Peels / HydraFacial / Laser Hair Removal / Microneedling", "not published", ""], ["Alira Med-Spa", "aliramedspa.com", "Morpheus8 / Ultherapy / Laser Hair Removal / Chemical Peels / IPL", "not published", ""], ["Vida Aesthetics and Wellness", "allmyvida.com", "Laser Hair Removal (generic range - aggregator, see note)", "$150-$500/session", ""], ["Persona Medical Spa", "personamedspa.live-website.com", "Facials / Massages / CoolSculpting / Laser Hair Removal", "not published", ""], ["River Oaks MedSpa", "riveroaksmedspa.com", "HydraFacial / Microblading / Emsculpting / Photofacial / Laser Hair Removal", "not published", ""], ["New Heights Med Spa", "newheightsmedspa.com", "SAF Lipo / Ultra Shape / Laser Hair Removal", "not published", ""], ["Aesthetica MD Med Spa - Memorial", "aestheticamdmedspa.com", "Laser Hair Removal / Vampire Facials / Lymphatic Massage", "not published", ""], ["Amerejuve Medspa Galleria - Laser, Botox & CoolSculpting", "amerejuve.com", "Laser Hair Removal Promo", "free (limited time)", ""], ["Katy Medi Spa", "katymedispa.com", "Botox / Laser Hair Removal / Facials", "not published", ""], ["Oasis Laser MedSpa", "oasislasermedspa.com", "Laser Hair Removal / Skin Rejuvenation / Body Contouring", "not published", ""], ["MedSpa at Villagio", "medspaatvillagio.com", "Skin Rejuvenation / Laser Hair Removal / Botox / Massage", "not published", ""], ["MedSPA Katy Sapphira Prive", "sapphiraprivemedspa.com", "Facials / Botox / Microneedling / Laser Hair Removal", "not published", ""], ["Luminous MediSpa", "luminousmedispa.com", "Laser Hair Removal - Small Area", "$50-$150/session", ""], ["Luminous MediSpa", "luminousmedispa.com", "Laser Hair Removal - Medium Area", "$150-$300/session", ""], ["Luminous MediSpa", "luminousmedispa.com", "Laser Hair Removal - Large Area", "$300-$600/session", ""], ["Elase Medical Spa - Sugar Land", "elase.com", "Botox / Laser Hair Removal / Facials / Body Sculpting", "not published", ""], ["Skin 105 Medical Spa & Apothecary", "skin105.com", "Motus AZ+ Laser Hair Removal / Thermage FLX / Clear and Brilliant / Fraxel Dual Laser", "not published", ""], ["Vedas Medical Spa", "vedasmedspa.com", "Laser Hair Removal / Skin Care", "not published", ""], ["Balle Bliss Luxury Medical Spa", "ballebliss.com", "Laser Hair Removal - Small Area (3-tx, promo)", "$149", ""], ["Balle Bliss Luxury Medical Spa", "ballebliss.com", "Laser Hair Removal - Medium Area (3-tx, promo)", "$299", ""], ["Balle Bliss Luxury Medical Spa", "ballebliss.com", "Laser Hair Removal - Large Area (3-tx, promo)", "$499", ""], ["Oasis Luxury Med Spa", "oasisluxurymedspa.com", "Laser Hair Removal - Full Legs (6-tx)", "$549", ""], ["Grace Full Aesthetics - Pearland", "grace-medspa.com", "Laser Hair Removal - X-Small Area", "$50", ""], ["Grace Full Aesthetics - Pearland", "grace-medspa.com", "Laser Hair Removal - Small Area", "$75", ""], ["Grace Full Aesthetics - Pearland", "grace-medspa.com", "Laser Hair Removal - Medium Area", "$100", ""], ["Grace Full Aesthetics - Pearland", "grace-medspa.com", "Laser Hair Removal - Large Area", "$125", ""], ["Tranquil Rejuvenation Med Spa LLC", "tranquilrejuvenationmedspa.com", "Laser Hair Removal", "not published", ""], ["HBR Medspa & Laser Center", "hbrmedspa.com", "Laser Hair Removal / Body Contouring / Laser Skin Resurfacing", "not published", ""], ["Z Med Clinic and Med Spa - Weight Loss, Hormone Therapy and IV Clinic", "zmedclinic.com", "Laser Hair Removal / Vampire Facelift / Chemical Peels / Non-Surgical Breast Lift", "not published", ""], ["Butterfly Medspa & Wellness", "butterflymedspaandwellness.com", "Botox / Dermal Fillers / HydraFacials / Laser Hair Removal / Laser Resurfacing", "not published", ""], ["Harmony Aesthetics Spa - Spring, TX", "harmonyaestheticsspa.com", "Medical-Grade Facials / Laser Hair Removal / IPL Photofacials / AviClear / Emsella / HRT", "not published", ""], ["Aesthetica MD Med Spa - Cypress", "aestheticamdcypress.com", "Chemical Peels / Microneedling / Lymphatic Massage / Laser Hair Removal / Body Contouring", "not published", ""]], "Body Contouring / CoolSculpting": [["Tru Essence Cosmetic and Medical Spa", "truessencespa.com", "Body Contouring", "not published", ""], ["Montrose Med Spa", "montrosemedspa.com", "EMFace / EmSculpt Neo", "not published", ""], ["River Oaks Galleria Medspa", "rogmedspa.com", "Body Contouring / Skin Tightening / Laser Hair Removal", "not published", ""], ["TLC MedSpa Houston", "tlcmedspahouston.com", "Body Contouring / CoolSculpting", "not published", ""], ["Miliv Med Spa & Facials", "milivmed-spa.com", "Body Contouring", "not published", ""], ["Persona Medical Spa", "personamedspa.live-website.com", "Facials / Massages / CoolSculpting / Laser Hair Removal", "not published", ""], ["River Oaks MedSpa", "riveroaksmedspa.com", "HydraFacial / Microblading / Emsculpting / Photofacial / Laser Hair Removal", "not published", ""], ["Beverly Hills Rejuvenation Center Houston - River Oaks", "bhrchoustonriveroaks.com", "Botox & Neurotoxins / Fillers / Laser Treatments / CoolSculpting / Body Contouring", "not published", ""], ["Dream Aesthetics Medspa", "dreamhoustonmedspa.com", "truSculpt iD Body Contouring", "not published", ""], ["VIO Med Spa | West U", "viomedspa.com", "Botox / Facials / Body Sculpting", "not published", ""], ["Aesthetica MD Med Spa - Memorial", "aestheticamdmedspa.com", "Body Sculpting / Fat Removal / Cellulite Treatments", "not published", ""], ["MD Aesthetica MedSpa", "mdamedspa.com", "CoolSculpting", "not published", ""], ["Amerejuve Medspa Galleria - Laser, Botox & CoolSculpting", "amerejuve.com", "CoolSculpting Promo", "$300 off", ""], ["Katy Med Tech Spa", "katymedtechspa.com", "Body Contouring", "not published", ""], ["Oasis Laser MedSpa", "oasislasermedspa.com", "Laser Hair Removal / Skin Rejuvenation / Body Contouring", "not published", ""], ["Elase Medical Spa - Sugar Land", "elase.com", "Botox / Laser Hair Removal / Facials / Body Sculpting", "not published", ""], ["Premier Health Spa", "premierhealthspa.com", "Injectables / Hair Restoration / Body Sculpting", "not published", ""], ["Forever Young Medi Spa", "foreveryoungmedispas.com", "Venus Legacy Body Contouring", "not published", ""], ["Avante Laser & MediSpa", "avantemedispa.com", "SculpSure (4 treatments, promo)", "$2,500 (reg $2,300/2)", ""], ["UR Royalty Med Spa", "urroyaltymedspa.com", "Botox / Dermal Fillers / Laser Therapies / Body Sculpting", "not published", ""], ["Exclusively Radiant Aesthetics & Regenerative Medicine", "ermedspa.com", "Cosmetic Injectables / Facials / Waxing / Body Contouring", "not published", ""], ["PS Medical Spa", "drsukkar.com", "Botox Injections / Skin Tightening / Dermaplaning / Ultrasonic Cavitation / Wood Therapy", "not published", ""], ["Liv Med Spa & Facials", "liv-medspatx.com", "Body Sculpting / LED Light Therapy", "not published", ""], ["Art Of Wellness Medspa", "artofwellnessmedspa.com", "Viora Body Contouring (6 sessions)", "$999", ""], ["SKIN 101 Medspa - Botox, Fillers & Lasers", "skin101medspa.com", "Emsculpt NEO / Emface / Exion / CoolPeel / DiamondGlow / Aerolase Laser", "not published", ""], ["HBR Medspa & Laser Center", "hbrmedspa.com", "Laser Hair Removal / Body Contouring / Laser Skin Resurfacing", "not published", ""], ["Z Med Clinic and Med Spa - Weight Loss, Hormone Therapy and IV Clinic", "zmedclinic.com", "Vanquish Fat Reduction / Bellafill / Thread Lift / Botox", "not published", ""], ["Butterfly Medspa & Wellness", "butterflymedspaandwellness.com", "Body Sculpting (range)", "$1,500-$5,000/package", ""], ["Aesthetica MD Med Spa - Cypress", "aestheticamdcypress.com", "Chemical Peels / Microneedling / Lymphatic Massage / Laser Hair Removal / Body Contouring", "not published", ""]], "Skin Tightening (Morpheus8/RF)": [["Artavi Med Spa - Dr. Tarina Desai, MD", "artavimedspa.com", "Secret RF / IPL / Sculptra", "not published", ""], ["Montrose Med Spa", "montrosemedspa.com", "EMFace / EmSculpt Neo", "not published", ""], ["River Oaks Galleria Medspa", "rogmedspa.com", "Body Contouring / Skin Tightening / Laser Hair Removal", "not published", ""], ["TLC MedSpa Houston", "tlcmedspahouston.com", "Hair Restoration / IV Therapy / Skin Tightening", "not published", ""], ["Alira Med-Spa", "aliramedspa.com", "Morpheus8 / Ultherapy / Laser Hair Removal / Chemical Peels / IPL", "not published", ""], ["MD Aesthetica MedSpa", "mdamedspa.com", "Ultherapy / Fraxel Laser Resurfacing / Photofacials", "not published", ""], ["Amerejuve Medspa Galleria - Laser, Botox & CoolSculpting", "amerejuve.com", "IPL Photofacial / Laser Skin Resurfacing / VelaShape / Ultherapy", "not published", ""], ["Zero Age MedSpa Katy", "zeroagemedspa.com", "Ultherapy (targeted area)", "from $488", ""], ["Zero Age MedSpa Katy", "zeroagemedspa.com", "Ultherapy (lower face)", "from $1,988", ""], ["Zero Age MedSpa Katy", "zeroagemedspa.com", "Ultherapy (full neck)", "$1,820", ""], ["Zero Age MedSpa Katy", "zeroagemedspa.com", "Ultherapy (full face)", "from $2,588", ""], ["Zero Age MedSpa Katy", "zeroagemedspa.com", "Ultherapy (abdomen)", "$2,488", ""], ["Lab De Skin KATY", "labdeskin.com", "Stellar M22 IPL / ResurFX / Thermage FLX / HiFu / RF Microneedling / Mesotherapy", "not published", ""], ["Forever Young Medi Spa", "foreveryoungmedispas.com", "Venus Legacy Body Contouring", "not published", ""], ["Revitalize Medi-Spa", "revitalizemedispa.co", "Microneedling / RF Skin Tightening / IV Therapy", "not published", ""], ["Skin 105 Medical Spa & Apothecary", "skin105.com", "Motus AZ+ Laser Hair Removal / Thermage FLX / Clear and Brilliant / Fraxel Dual Laser", "not published", ""], ["Skin 105 Medical Spa & Apothecary", "skin105.com", "Ultherapy / VirtueRF Microneedling / HydraFacial / Botox/Fillers / IV Hydration", "not published", ""], ["PS Medical Spa", "drsukkar.com", "Botox Injections / Skin Tightening / Dermaplaning / Ultrasonic Cavitation / Wood Therapy", "not published", ""], ["SKIN 101 Medspa - Botox, Fillers & Lasers", "skin101medspa.com", "Emsculpt NEO / Emface / Exion / CoolPeel / DiamondGlow / Aerolase Laser", "not published", ""]], "IV Therapy": [["Elevate Wellness & Med Spa", "elevatewellmedspa.com", "IV Hydration Therapy", "not published", ""], ["Montrose Med Spa", "montrosemedspa.com", "HydraFacial / PRP Hair Restoration / IV Therapy", "not published", ""], ["TLC MedSpa Houston", "tlcmedspahouston.com", "Hair Restoration / IV Therapy / Skin Tightening", "not published", ""], ["Vida Aesthetics and Wellness", "allmyvida.com", "Medical Weight Loss / Hormone Replacement / IV Hydration / PDO Threads", "not published", ""], ["The MedSpa at Galleria", "medspascout.com/clinic/the-medspa-at-galleria-houston", "Radiesse / Chemical Peels / IV Therapy", "not published", ""], ["Vira Medspa", "viramedspa.com", "Hair Restoration / Medical Weight Loss / IV Hydration", "not published", ""], ["Premier Health Spa", "premierhealthspa.com", "Microneedling / IV Therapy / Weight Loss / Hormone Replacement / PDO Thread Lift", "not published", ""], ["Revitalize Medi-Spa", "revitalizemedispa.co", "Microneedling / RF Skin Tightening / IV Therapy", "not published", ""], ["Skin 105 Medical Spa & Apothecary", "skin105.com", "Ultherapy / VirtueRF Microneedling / HydraFacial / Botox/Fillers / IV Hydration", "not published", ""], ["Nefer Med Spa", "nefermedspa.net", "VI Peels / B12 Shots", "not published", ""], ["Pearland Med Spa", "pearlandmedspa.com", "IV Vitamin Drip Therapy (Groupon)", "$122", ""]], "PRP / PRF": [["Montrose Med Spa", "montrosemedspa.com", "HydraFacial / PRP Hair Restoration / IV Therapy", "not published", ""], ["Rose Milk Aesthetics", "rosemilkaesthetics.com", "HydraFacial / PRP Microneedling / Chemical Peels", "not published", ""], ["PH Med", "phmedhouston.com", "Skin Rejuvenation / PRF & PRP Therapy", "not published", ""], ["Aesthetica MD Med Spa - Memorial", "aestheticamdmedspa.com", "Laser Hair Removal / Vampire Facials / Lymphatic Massage", "not published", ""], ["Alchemy 43 Houston - Memorial at Lantern Lane", "alchemy43.com", "Botox / Filler / Microneedling / PRP / Clear + Brilliant Laser / Peels", "not published", ""], ["Ruaa MedSpa", "ruaamedspa.com", "Advanced Injectables / CO2 Laser / Exosome Therapy", "not published", ""], ["Seychelles Med & Laser Spa", "seychellesmedspa.com", "Botox / Dysport / Juvederm / Voluma / Volbella / Restylane / Radiesse / Belotero / Sculptra / PDO Threads / PRP", "not published", ""], ["MINTbody Med Spa & Wellness Fairfield", "mintbodymedspa.com", "Botox / Fillers / PDO Lifts / Microneedling with PRP", "not published", ""], ["Nefer Med Spa", "nefermedspa.net", "Botox / Fillers / PRF / Kybella", "not published", ""], ["Azarella Med Spa", "atly.com/location/AzarellaMedSpa", "Fillers / Botox / Kybella / PRP+PRF", "not published", ""], ["Z Med Clinic and Med Spa - Weight Loss, Hormone Therapy and IV Clinic", "zmedclinic.com", "Laser Hair Removal / Vampire Facelift / Chemical Peels / Non-Surgical Breast Lift", "not published", ""]], "Medical Weight Loss / GLP-1": [["Houston Medical Spa", "thehoustonmedspa.glossgenius.com", "Weight Loss", "not published", ""], ["Elevate Wellness & Med Spa", "elevatewellmedspa.com", "Weight Loss", "not published", ""], ["Vida Aesthetics and Wellness", "allmyvida.com", "Medical Weight Loss / Hormone Replacement / IV Hydration / PDO Threads", "not published", ""], ["Rejuve Wellness & Aesthetics Houston", "rejuvemedspatx.com", "Injectables / Facial Balancing / Skincare / Medical Weight Loss", "not published", ""], ["Vira Medspa", "viramedspa.com", "Hair Restoration / Medical Weight Loss / IV Hydration", "not published", ""], ["Premier Health Spa", "premierhealthspa.com", "Microneedling / IV Therapy / Weight Loss / Hormone Replacement / PDO Thread Lift", "not published", ""], ["LIT & Aesthetics Spa", "litaestheticsrn.com", "Semaglutide (first 3 months)", "$400/mo", ""], ["Oasis Luxury Med Spa", "oasisluxurymedspa.com", "HydraFacial / Botox / Medical Weight Loss", "not published", ""], ["Exclusively Radiant Aesthetics & Regenerative Medicine", "ermedspa.com", "Weight Loss Program (30-day, injectable + supplies + B12)", "$549", ""], ["Art Of Wellness Medspa", "artofwellnessmedspa.com", "Weight Loss (new client promo)", "$75 off first visit", ""], ["Harmony Aesthetics Spa - Spring, TX", "harmonyaestheticsspa.com", "Semaglutide / Tirzepatide Weight Loss Injections", "not published", ""], ["Aesthetica MD Med Spa - Cypress", "aestheticamdcypress.com", "Weight Loss / Hormone Replacement Therapy", "not published", ""]], "Hormone Therapy": [["The Total You Medical Spa - Blossom Hotel", "thetotalyoumedicalspa.com", "Hormone Injections", "not published", ""], ["The Total You Medical Spa - Memorial City", "thetotalyoumedicalspa.com", "Hormone Injections", "not published", ""], ["Vida Aesthetics and Wellness", "allmyvida.com", "Medical Weight Loss / Hormone Replacement / IV Hydration / PDO Threads", "not published", ""], ["4Ever Young Med Spa & Wellness Center - Heights Houston", "4everyoungantiaging.com", "HRT / TRT / Peptide Therapy / IV Vitamin Therapy", "not published", ""], ["Premier Health Spa", "premierhealthspa.com", "Microneedling / IV Therapy / Weight Loss / Hormone Replacement / PDO Thread Lift", "not published", ""], ["Harmony Aesthetics Spa - Spring, TX", "harmonyaestheticsspa.com", "Medical-Grade Facials / Laser Hair Removal / IPL Photofacials / AviClear / Emsella / HRT", "not published", ""], ["Aesthetica MD Med Spa - Cypress", "aestheticamdcypress.com", "Weight Loss / Hormone Replacement Therapy", "not published", ""]], "IPL / Photofacial": [["Artavi Med Spa - Dr. Tarina Desai, MD", "artavimedspa.com", "Secret RF / IPL / Sculptra", "not published", ""], ["River Oaks Galleria Medspa", "rogmedspa.com", "HydraFacial / Chemical Peels / Laser Resurfacing", "not published", ""], ["Alira Med-Spa", "aliramedspa.com", "Morpheus8 / Ultherapy / Laser Hair Removal / Chemical Peels / IPL", "not published", ""], ["Amora Med Spa", "amoramedspa.com", "IPL PhotoFacial (Groupon)", "from $247.50", ""], ["River Oaks MedSpa", "riveroaksmedspa.com", "HydraFacial / Microblading / Emsculpting / Photofacial / Laser Hair Removal", "not published", ""], ["milk + honey | River Oaks", "milkandhoney.com", "BBL / Moxi Laser", "not published", ""], ["MD Aesthetica MedSpa", "mdamedspa.com", "Ultherapy / Fraxel Laser Resurfacing / Photofacials", "not published", ""], ["Amerejuve Medspa Galleria - Laser, Botox & CoolSculpting", "amerejuve.com", "IPL Photofacial / Laser Skin Resurfacing / VelaShape / Ultherapy", "not published", ""], ["Lab De Skin KATY", "labdeskin.com", "Stellar M22 IPL / ResurFX / Thermage FLX / HiFu / RF Microneedling / Mesotherapy", "not published", ""], ["Skin 105 Medical Spa & Apothecary", "skin105.com", "Motus AZ+ Laser Hair Removal / Thermage FLX / Clear and Brilliant / Fraxel Dual Laser", "not published", ""], ["Ruaa MedSpa", "ruaamedspa.com", "Advanced Injectables / CO2 Laser / Exosome Therapy", "not published", ""], ["Elase Medical Spa - The Woodlands", "elase.com", "Botox / Dysport / Dermal Fillers / BBL / Moxi Laser / HydraFacial", "not published", ""], ["Gen B Medspa", "genbmedspa.com", "Tixel / AquaFirme", "not published", ""], ["Elase Medical Spas - Clear Lake", "elase.com", "BBL / Moxi Laser Resurfacing / HydraFacial / Chemical Peels", "not published", ""], ["Houston Med Spa & Aesthetics", "fresha.com/houston-med-spa-aesthetics", "Mesotherapy / Laser Resurfacing / Microneedling / Stretch Mark Removal", "not published", ""], ["SKIN 101 Medspa - Botox, Fillers & Lasers", "skin101medspa.com", "Emsculpt NEO / Emface / Exion / CoolPeel / DiamondGlow / Aerolase Laser", "not published", ""], ["HBR Medspa & Laser Center", "hbrmedspa.com", "Laser Hair Removal / Body Contouring / Laser Skin Resurfacing", "not published", ""], ["Butterfly Medspa & Wellness", "butterflymedspaandwellness.com", "Botox / Dermal Fillers / HydraFacials / Laser Hair Removal / Laser Resurfacing", "not published", ""], ["Harmony Aesthetics Spa - Spring, TX", "harmonyaestheticsspa.com", "Medical-Grade Facials / Laser Hair Removal / IPL Photofacials / AviClear / Emsella / HRT", "not published", ""]]};
+
+  const breakdownModalOverlay = document.getElementById('breakdown-modal-overlay');
+  const breakdownTitle = document.getElementById('breakdown-title');
+  const breakdownSub = document.getElementById('breakdown-sub');
+  const breakdownBody = document.getElementById('breakdown-body');
+  const sortButtons = Array.from(document.querySelectorAll('.sort-btn'));
+  let currentCategory = null;
+  let currentSort = 'clinic';
+
+  function parsePriceForSort(priceStr) {
+    const m = String(priceStr).match(/\$([\d,]+(?:\.\d+)?)/);
+    return m ? parseFloat(m[1].replace(/,/g, '')) : null;
+  }
+
+  function renderBreakdown() {
+    const rows = (breakdownData[currentCategory] || []).slice();
+    if (currentSort === 'clinic') {
+      rows.sort((a, b) => a[0].localeCompare(b[0]));
+    } else if (currentSort === 'price-asc' || currentSort === 'price-desc') {
+      rows.sort((a, b) => {
+        const pa = parsePriceForSort(a[3]);
+        const pb = parsePriceForSort(b[3]);
+        if (pa === null && pb === null) return 0;
+        if (pa === null) return 1;
+        if (pb === null) return -1;
+        return currentSort === 'price-asc' ? pa - pb : pb - pa;
+      });
+    }
+
+    if (!rows.length) {
+      breakdownBody.innerHTML = '<div class="breakdown-empty">No listings found for this category.</div>';
+      return;
+    }
+
+    breakdownBody.innerHTML = rows.map(([clinic, website, proc, price, duration]) => {
+      const durationHtml = duration && duration !== 'Not published'
+        ? `<div class="breakdown-duration">${duration}</div>` : '';
+      const clinicHtml = website
+        ? `<a href="${website.startsWith('http') ? website : 'https://' + website}" target="_blank" rel="noopener noreferrer">${clinic}</a>`
+        : `<span class="no-link">${clinic}</span>`;
+      return `
+        <div class="breakdown-row">
+          <div>
+            <div class="breakdown-clinic">${clinicHtml}</div>
+            <div class="breakdown-proc">${proc}</div>
+          </div>
+          <div class="breakdown-price-col">
+            <div class="breakdown-price">${price}</div>
+            ${durationHtml}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function openBreakdown(category) {
+    if (!breakdownData[category]) return;
+    currentCategory = category;
+    currentSort = 'clinic';
+    sortButtons.forEach(b => b.classList.toggle('active', b.dataset.sort === 'clinic'));
+    const rows = breakdownData[category] || [];
+    const distinctClinics = new Set(rows.map(r => r[0])).size;
+    breakdownTitle.textContent = category;
+    breakdownSub.textContent = `${distinctClinics} clinics · ${rows.length} tracked listing${rows.length === 1 ? '' : 's'}`;
+    renderBreakdown();
+    breakdownModalOverlay.classList.add('open');
+  }
+
+  function closeBreakdown() {
+    breakdownModalOverlay.classList.remove('open');
+  }
+
+  document.querySelectorAll('.proc-name-link').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openBreakdown(el.dataset.category);
+    });
+  });
+
+  document.getElementById('breakdown-close').addEventListener('click', closeBreakdown);
+  breakdownModalOverlay.addEventListener('click', (e) => {
+    if (e.target === breakdownModalOverlay) closeBreakdown();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeBreakdown();
+  });
+  sortButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentSort = btn.dataset.sort;
+      sortButtons.forEach(b => b.classList.toggle('active', b === btn));
+      renderBreakdown();
+    });
+  });
+
+</script>
+
+</body>
+</html>

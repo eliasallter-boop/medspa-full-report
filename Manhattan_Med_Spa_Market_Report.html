@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manhattan Med Spa Market Report</title>
+<style>
+  :root {
+    --blue: #2563eb;
+    --blue-dark: #1d4ed8;
+    --blue-light: #eff6ff;
+    --ink: #111827;
+    --gray: #6b7280;
+    --gray-light: #9ca3af;
+    --border: #e5e7eb;
+    --bg: #f9fafb;
+    --green: #059669;
+    --amber: #d97706;
+    --red: #dc2626;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.5;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  header.hero {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #3b82f6 100%);
+    color: white;
+    padding: 26px 24px;
+    border-radius: 0 0 20px 20px;
+  }
+  header.hero .inner { max-width: 980px; margin: 0 auto; }
+  header.hero .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: 11px;
+    font-weight: 700;
+    opacity: .85;
+    margin-bottom: 6px;
+  }
+  header.hero h1 { font-size: 24px; margin: 0 0 6px; font-weight: 800; letter-spacing: -0.02em; }
+  header.hero p.sub { font-size: 13px; opacity: .9; margin: 0; max-width: 640px; }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: -26px;
+  }
+  .stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
+    border: 1px solid var(--border);
+  }
+  .stat-card .num { font-size: 30px; font-weight: 800; color: var(--blue); letter-spacing: -0.02em; }
+  .stat-card .label { font-size: 12.5px; color: var(--gray); margin-top: 4px; font-weight: 600; }
+
+  .stat-card.has-tooltip { position: relative; cursor: help; }
+  .stat-card.has-tooltip .label { text-decoration: underline dotted var(--gray-light); text-underline-offset: 3px; }
+  .stat-card .tooltip {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 340px;
+    max-width: 80vw;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 14px 34px rgba(15,23,42,0.18);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity .15s ease, transform .15s ease;
+    z-index: 20;
+    text-align: left;
+    cursor: default;
+  }
+  .stat-card.has-tooltip:hover .tooltip,
+  .stat-card.has-tooltip.tooltip-open .tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .tooltip-title { font-size: 12.5px; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
+  .tooltip p { font-size: 12px; color: var(--gray); margin: 0 0 12px; font-weight: 400; line-height: 1.5; }
+  .tooltip .pill-row { margin-top: 0; gap: 6px; }
+  .tooltip .pill { font-size: 11px; padding: 4px 9px; }
+
+  section { margin-top: 56px; }
+  h2 {
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+  }
+  p.section-desc { color: var(--gray); font-size: 14px; margin: 0 0 24px; max-width: 680px; }
+
+  .card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.04);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Funnel / campaign */
+  .funnel { display: flex; gap: 14px; flex-wrap: wrap; }
+  .funnel-step {
+    flex: 1 1 150px;
+    text-align: center;
+    padding: 18px 12px;
+    border-radius: 12px;
+    background: var(--blue-light);
+  }
+  .funnel-step .n { font-size: 26px; font-weight: 800; color: var(--blue-dark); }
+  .funnel-step .l { font-size: 12px; color: var(--gray); margin-top: 4px; font-weight: 600; }
+  .funnel-arrow { align-self: center; color: var(--gray-light); font-size: 20px; }
+
+  .pill-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+  .pill {
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+  .pill.green { background: #ecfdf5; color: var(--green); }
+  .pill.amber { background: #fffbeb; color: var(--amber); }
+  .pill.red   { background: #fef2f2; color: var(--red); }
+  .pill.gray  { background: #f3f4f6; color: var(--gray); }
+
+  /* Procedure bars */
+  .proc-row { display: grid; grid-template-columns: 220px 1fr 90px; align-items: center; gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--border); animation: rowIn .5s ease backwards; }
+  .proc-row:last-child { border-bottom: none; }
+  .proc-name { font-size: 13.5px; font-weight: 700; }
+  .proc-price { font-size: 11.5px; color: var(--gray); margin-top: 2px; font-weight: 500; }
+  .proc-name-link { cursor: pointer; text-decoration: underline dotted var(--gray-light); text-underline-offset: 3px; }
+  .proc-name-link:hover { color: var(--blue); }
+  .table-note { font-size: 11px; color: var(--gray); margin-top: 4px; font-weight: 400; line-height: 1.45; max-width: 420px; }
+  .bar-track { background: #eef2f7; border-radius: 8px; height: 22px; overflow: hidden; }
+  .bar-fill { background: linear-gradient(90deg, #60a5fa, var(--blue)); height: 100%; border-radius: 8px 0 0 8px; width: 0%; transition: width 1.1s cubic-bezier(.16,.8,.3,1); }
+  .bar-fill.trend { background: linear-gradient(90deg, #c4b5fd, #7c3aed); }
+  .proc-count { text-align: right; font-weight: 800; color: var(--blue-dark); font-size: 14px; }
+  .proc-count.trend { color: #6d28d9; }
+
+  @keyframes rowIn {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .stat-card .num { transition: none; }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  /* animation-fill-mode: backwards (not forwards, and no standing opacity:0 rule) so the card
+     doesn't retain a fractional-opacity stacking context after the fade-in finishes — a standing
+     "opacity: 0" here would trap the tooltip's z-index inside this card, letting later sections
+     in the DOM paint over it. Once the animation ends the card just falls back to normal opacity:1. */
+  .stat-card { animation: cardIn .5s ease backwards; }
+  .stat-card:nth-child(1) { animation-delay: .05s; }
+  .stat-card:nth-child(2) { animation-delay: .15s; }
+  .stat-card:nth-child(3) { animation-delay: .25s; }
+  .stat-card.has-tooltip { z-index: 1; }
+
+  /* Table */
+  table { width: 100%; min-width: 480px; border-collapse: collapse; font-size: 13.5px; }
+  th { text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--gray); padding: 10px 12px; border-bottom: 2px solid var(--border); }
+  td { padding: 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td.num { font-weight: 700; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  /* Tablet */
+  @media (max-width: 720px) {
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  /* Phones */
+  @media (max-width: 600px) {
+    .wrap { padding: 32px 16px 60px; }
+    header.hero { padding: 20px 16px; }
+    header.hero h1 { font-size: 20px; }
+    header.hero p.sub { font-size: 12.5px; }
+    section { margin-top: 40px; }
+    h2 { font-size: 18px; }
+    p.section-desc { font-size: 13px; }
+    .card { padding: 18px; }
+
+    .stat-card .num { font-size: 24px; }
+    .stat-card { padding: 16px; }
+
+    /* Tooltip: full-bleed under its card instead of a fixed 340px box that can overhang the
+       screen edge on narrow phones. */
+    .stat-card .tooltip { width: calc(100vw - 32px); max-width: none; left: 50%; transform: translateX(-50%) translateY(-6px); }
+    .stat-card.has-tooltip:hover .tooltip,
+    .stat-card.has-tooltip.tooltip-open .tooltip { transform: translateX(-50%) translateY(0); }
+
+    /* Procedure / trends / overlay rows: stack name, bar, and count instead of squeezing a
+       fixed 220px label column onto a ~360px screen. */
+    .proc-row, .overlay-row {
+      grid-template-columns: 1fr;
+      grid-template-areas: "name" "bar" "count";
+      row-gap: 6px;
+      padding: 12px 0;
+    }
+    .proc-row > div:first-child, .overlay-row > .proc-name { grid-area: name; }
+    .proc-row > .bar-track, .overlay-row > .overlay-track { grid-area: bar; }
+    .proc-row > .proc-count, .overlay-row > .overlay-pct { grid-area: count; text-align: left; }
+
+    .funnel-step { flex: 1 1 45%; }
+
+    .pill { font-size: 11.5px; padding: 5px 10px; }
+
+    #breakdown-modal-overlay { padding: 0; align-items: stretch; }
+    .breakdown-modal { max-height: 100vh; height: 100vh; border-radius: 0; max-width: 100%; }
+    .breakdown-modal-header, .breakdown-modal-controls, .breakdown-modal-body { padding-left: 16px; padding-right: 16px; }
+    .breakdown-row { flex-direction: column; gap: 2px; }
+    .breakdown-price-col { text-align: left; }
+    .table-note { max-width: none; }
+  }
+
+  ul.notes { margin: 0; padding-left: 18px; font-size: 13.5px; color: #374151; }
+  ul.notes li { margin-bottom: 10px; }
+
+  /* Overlay comparison chart */
+  .overlay-legend { display: flex; gap: 14px 22px; flex-wrap: wrap; margin-bottom: 20px; }
+  .overlay-legend-item { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 700; color: #374151; }
+  .sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; }
+  .sw-clinics { background: linear-gradient(90deg, #bfdbfe, #60a5fa); }
+  .sw-trends { background: linear-gradient(90deg, #c4b5fd, #7c3aed); }
+  .overlay-row { display: grid; grid-template-columns: 220px 1fr 96px; align-items: center; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--border); animation: rowIn .5s ease backwards; }
+  .overlay-row:last-child { border-bottom: none; }
+  .overlay-track { position: relative; height: 26px; background: #eef2f7; border-radius: 7px; overflow: visible; }
+  .overlay-bar-clinics {
+    position: absolute; left: 0; top: 0; height: 100%; width: 0%;
+    background: linear-gradient(90deg, #bfdbfe, #60a5fa);
+    border-radius: 7px;
+    transition: width 1.1s cubic-bezier(.16,.8,.3,1);
+  }
+  .overlay-bar-trends {
+    position: absolute; left: 0; top: 50%; height: 10px; width: 0%;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, #c4b5fd, #7c3aed);
+    border-radius: 6px;
+    box-shadow: 0 0 0 2px #fff;
+    transition: width 1.1s cubic-bezier(.16,.8,.3,1) .1s;
+  }
+  .overlay-pct { text-align: right; font-size: 11.5px; line-height: 1.5; }
+  .overlay-pct .c { color: var(--blue-dark); font-weight: 800; }
+  .overlay-pct .t { color: #6d28d9; font-weight: 800; }
+
+  footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 12px; color: var(--gray-light); text-align: center; }
+
+  /* Per-clinic breakdown modal */
+  #breakdown-modal-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(15,23,42,0.5);
+    display: none; align-items: flex-start; justify-content: center;
+    padding: 40px 16px; overflow-y: auto;
+  }
+  #breakdown-modal-overlay.open { display: flex; }
+  .breakdown-modal {
+    background: white; border-radius: 16px; max-width: 720px; width: 100%;
+    box-shadow: 0 20px 60px rgba(15,23,42,0.3);
+    max-height: calc(100vh - 80px);
+    display: flex; flex-direction: column;
+  }
+  .breakdown-modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .breakdown-modal-title { font-size: 17px; font-weight: 800; }
+  .breakdown-modal-sub { font-size: 12.5px; color: var(--gray); margin-top: 4px; }
+  .breakdown-modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--gray); line-height: 1; padding: 2px 6px; border-radius: 6px; }
+  .breakdown-modal-close:hover { color: var(--ink); background: var(--bg); }
+  .breakdown-modal-controls { padding: 12px 24px; border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .breakdown-sort-label { font-size: 11.5px; color: var(--gray); font-weight: 700; text-transform: uppercase; letter-spacing: .03em; margin-right: 2px; }
+  .sort-btn { font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border); background: white; cursor: pointer; color: var(--gray); }
+  .sort-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .sort-btn.active { background: var(--blue); border-color: var(--blue); color: white; }
+  .breakdown-modal-body { overflow-y: auto; padding: 6px 24px 20px; }
+  .breakdown-row { padding: 11px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; }
+  .breakdown-row:last-child { border-bottom: none; }
+  .breakdown-clinic a { color: var(--blue-dark); font-weight: 700; font-size: 13.5px; text-decoration: none; }
+  .breakdown-clinic a:hover { text-decoration: underline; }
+  .breakdown-clinic .no-link { color: var(--ink); font-weight: 700; font-size: 13.5px; }
+  .breakdown-proc { font-size: 12px; color: var(--gray); margin-top: 2px; }
+  .breakdown-price-col { text-align: right; flex-shrink: 0; }
+  .breakdown-price { font-weight: 800; color: var(--ink); font-size: 13.5px; white-space: nowrap; }
+  .breakdown-duration { font-size: 11px; color: var(--gray-light); margin-top: 2px; }
+  .breakdown-empty { padding: 24px 0; text-align: center; color: var(--gray); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="inner">
+    <div class="eyebrow">Market Research &middot; Updated Aug 14, 2026</div>
+    <h1>Manhattan Med Spa Market Report</h1>
+    <p class="sub">Pricing transparency across Manhattan-area med spas, built from live research and direct outreach.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="stat-grid">
+    <div class="stat-card has-tooltip">
+      <div class="num">176</div><div class="label">Clinics tracked</div>
+      <div class="tooltip">
+        <div class="tooltip-title">Coverage at a glance</div>
+        <p>167 clinics came from an initial Manhattan sweep plus a Google Maps gap-fill pass. A user-supplied directory of 51 additional NYC-metro clinics was cross-checked against the existing list; after removing 15 whose websites turned out to be dead, expired, or parked domains, 10 genuinely new clinics were added &mdash; expanding coverage into Williamsburg, Long Island City, and Brooklyn Heights.</p>
+        <div class="pill-row">
+          <span class="pill green">62 &mdash; full pricing</span>
+          <span class="pill amber">21 &mdash; partial pricing</span>
+          <span class="pill gray">93 &mdash; no public pricing</span>
+        </div>
+      </div>
+    </div>
+    <div class="stat-card"><div class="num">47%</div><div class="label">Clinics with pricing on file (full or partial)</div></div>
+    <div class="stat-card"><div class="num">65</div><div class="label">Pricing-request emails sent</div></div>
+  </div>
+
+  <section>
+    <h2>Most popular procedures</h2>
+    <p class="section-desc">Ranked by number of distinct clinics offering each treatment, across all 176 tracked clinics. <strong>Click a procedure name</strong> to see the clinic-by-clinic breakdown and prices.</p>
+    <div class="card">
+      <div id="procedures"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Search interest in New York <span style="font-weight:600;color:var(--gray);font-size:13px;">(Google Trends)</span></h2>
+    <p class="section-desc">Relative search interest for each treatment among New York searchers over the past 12 months, indexed 0&ndash;100 against the single highest-volume term (Botox) across all comparisons. One representative search term was used per category &mdash; see note below.</p>
+    <div class="card">
+      <div id="trends"></div>
+      <p style="font-size:11.5px;color:var(--gray-light);margin:16px 0 0;line-height:1.5;">Source: trends.google.com, geo = New York, Aug 2025&ndash;Aug 2026. Google Trends indexes relative search volume for the exact term entered, not category-wide demand &mdash; e.g. "Microneedling" doesn't capture searches for "Morpheus8," and "PRP Injection" doesn't capture "PRP facial." Treat this as a directional signal, not an absolute demand figure.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Clinics vs. search demand</h2>
+    <p class="section-desc">Reading clinic supply against consumer search interest side by side.</p>
+    <div class="card">
+      <ul class="notes">
+        <li><strong>Botox leads on both supply and demand.</strong> It's now the single most-offered category by distinct clinic count (41 of 176 clinics, just ahead of fillers at 40) <em>and</em> the runaway leader on search, with an index of 81 &mdash; more than double the next-closest term (Laser Hair Removal, 33). Search demand in NY is heavily concentrated on Botox specifically, which likely explains why it's the treatment clinics lead with in ads and homepage copy.</li>
+        <li><strong>Fillers are a close #2 on supply but far behind on search &mdash; with a caveat.</strong> Dermal/lip fillers are offered by nearly as many clinics as Botox (40 vs. 41) but the generic term "Lip Filler" indexes at just 13. This is probably understated: NY searchers likely split filler searches across brand names (Juvederm, Restylane, Sculptra) rather than the generic term, so true category demand is likely higher than this single term suggests.</li>
+        <li><strong>Laser Hair Removal and Microneedling look well-matched.</strong> Both post the next-highest search indexes (33 and 29) alongside solid mid-tier clinic counts (27 and 35), suggesting healthy alignment between what's searched and what's offered.</li>
+        <li><strong>Body-contouring devices show a supply/demand gap.</strong> CoolSculpting, Emsculpt, Ultherapy, and Kybella each sit at a search index of 2&ndash;3 &mdash; among the lowest measured &mdash; despite each being offered by 10&ndash;17 clinics. Either NY searchers are using different terms for these (e.g. "fat freezing near me"), or clinic supply here is running ahead of measurable search demand.</li>
+        <li><strong>PDO Thread Lift and IPL/Photofacial are niche on both sides</strong> &mdash; modest clinic counts (16 and 24) and negligible NY search volume (index 1) &mdash; with no meaningful mismatch to flag.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Popularity overlay: clinic supply vs. search demand</h2>
+    <p class="section-desc">Clinic supply is scaled to % of the top clinic category (Botox / Neuromodulators, 41 clinics). Search demand uses the actual Google Trends index (0&ndash;100) from the Search Interest chart above &mdash; unscaled, so the numbers match exactly. Where the purple bar reaches further than the blue, search demand is outrunning clinic supply &mdash; and vice versa.</p>
+    <div class="card">
+      <div class="overlay-legend">
+        <span class="overlay-legend-item"><i class="sw sw-clinics"></i>Clinic supply (% of top category)</span>
+        <span class="overlay-legend-item"><i class="sw sw-trends"></i>Search demand (Google Trends index, 0&ndash;100)</span>
+      </div>
+      <div id="overlay"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Typical pricing by procedure</h2>
+    <p class="section-desc">Ranges and medians below are computed from actual parsed listing prices, not estimates. <strong>Click a procedure name</strong> to see exactly which clinic and listing each price came from &mdash; important, since a wide range often means the listings aren't really comparable (see "Are we comparing the same thing?" below).</p>
+    <div class="card" style="padding:0;">
+      <table>
+        <thead>
+          <tr><th>Procedure</th><th># clinics</th><th>Typical range</th><th>Median</th></tr>
+        </thead>
+        <tbody id="price-table"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Are we comparing the same thing?</h2>
+    <p class="section-desc">Short answer: not always &mdash; and that's worth knowing before reading too much into any single price range above.</p>
+    <div class="card">
+      <ul class="notes">
+        <li><strong>The clearest example is Botox.</strong> Its $5&ndash;$650 range mixes two different pricing models: some clinics quote a flat price for a fixed unit count (e.g. "20 units for $199"), others quote a per-unit rate (e.g. "$10/unit," which would be $200 for the same 20 units, or far less for a smaller touch-up). A $5 line item and a $650 line item aren't necessarily "cheap" vs. "expensive" &mdash; they may just be priced by different units entirely. Click "Botox / Neuromodulators" above to see the exact wording clinics used for each price.</li>
+        <li><strong>Laser Hair Removal ($39&ndash;$7,000) is a package-size problem, not a pricing problem.</strong> $39 is a realistic price for a single small area (upper lip, underarms); $7,000 is a realistic price for a full-body, multi-session package. Both are legitimately "Laser Hair Removal," just at opposite ends of scope.</li>
+        <li><strong>Fillers and Sculptra span single-unit vs. multi-unit purchases</strong> (one syringe or vial vs. a full treatment plan requiring several), which is most of why those ranges look so wide.</li>
+        <li><strong>What we did about it:</strong> every "# clinics" figure in this report now counts <em>distinct clinics</em>, not raw price listings (a clinic offering both Botox and Dysport used to get counted twice under "Botox" &mdash; it no longer does). We can't fully normalize prices to a common unit automatically, since clinics describe quantities in inconsistent free text, so instead every procedure name is clickable and opens the full list of underlying listings &mdash; exact wording, exact price, per clinic &mdash; so you can check whether two prices are actually for the same thing before comparing them.</li>
+        <li><strong>Not every listing has a price at all.</strong> Many clinics require a consultation before quoting, so a category's price range is often built from a minority of its listings (noted under each row in the table above) &mdash; a real range, just not a complete one.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Outreach campaign results</h2>
+    <p class="section-desc">For every clinic without published pricing, a short personalized email was sent asking for rates. Replies are still coming in.</p>
+    <div class="card">
+      <div class="funnel">
+        <div class="funnel-step"><div class="n">65</div><div class="l">Emails sent</div></div>
+        <div class="funnel-arrow">&rarr;</div>
+        <div class="funnel-step"><div class="n">~10</div><div class="l">Replies received so far</div></div>
+        <div class="funnel-arrow">&rarr;</div>
+        <div class="funnel-step"><div class="n">5</div><div class="l">Gave full pricing</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Geographic coverage</h2>
+    <div class="card">
+      <ul class="notes">
+        <li><strong>Manhattan</strong> &mdash; primary coverage area, ~167 clinics across all neighborhoods.</li>
+        <li><strong>Williamsburg</strong> &mdash; added via directory cross-check (Purely Natural Medical Spa, modMD, Restore Hyper Wellness).</li>
+        <li><strong>Long Island City</strong> &mdash; added via directory cross-check (The Dermatology Specialists).</li>
+        <li><strong>Brooklyn Heights</strong> &mdash; added via directory cross-check (KHROM Medspa; LovMedSpa's Brooklyn location was merged into its existing Chelsea entry).</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    Source: Manhattan_Med_Spa_Procedures.xlsx &middot; Compiled from direct website research, Google Maps sweep, a user-supplied directory cross-check, and live email outreach &middot; Report generated 8/14/26
+  </footer>
+
+</div>
+
+<div id="breakdown-modal-overlay">
+  <div class="breakdown-modal">
+    <div class="breakdown-modal-header">
+      <div>
+        <div class="breakdown-modal-title" id="breakdown-title">Procedure</div>
+        <div class="breakdown-modal-sub" id="breakdown-sub">Every tracked listing for this category, clinic by clinic.</div>
+      </div>
+      <button class="breakdown-modal-close" id="breakdown-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="breakdown-modal-controls">
+      <span class="breakdown-sort-label">Sort:</span>
+      <button class="sort-btn active" data-sort="clinic">Clinic A&ndash;Z</button>
+      <button class="sort-btn" data-sort="price-asc">Price: low to high</button>
+      <button class="sort-btn" data-sort="price-desc">Price: high to low</button>
+    </div>
+    <div class="breakdown-modal-body" id="breakdown-body"></div>
+  </div>
+</div>
+
+<script>
+  // Password gate — see CSS comment above for caveats. Runs first so the report content
+  // (populated below) stays hidden behind #protected-content's display:none until unlocked.
+
+  // Tap-to-open tooltip for touch devices. CSS :hover alone is unreliable on phones/tablets
+  // (no real hover state), so clicking/tapping the "Clinics tracked" card toggles a class that
+  // the tooltip CSS also responds to. Tapping anywhere else closes it.
+  (function () {
+    const tooltipCard = document.querySelector('.stat-card.has-tooltip');
+    if (!tooltipCard) return;
+    tooltipCard.addEventListener('click', function (e) {
+      e.stopPropagation();
+      tooltipCard.classList.toggle('tooltip-open');
+    });
+    document.addEventListener('click', function () {
+      tooltipCard.classList.remove('tooltip-open');
+    });
+  })();
+
+  // Counted as DISTINCT CLINICS offering the category (deduplicated), not raw procedure-listing
+  // rows — a clinic listing both "Botox 20 units" and "Dysport 60 units" as separate line items
+  // only counts once here. Price range is the real min–max of parsed prices across all matching
+  // listings (not a hand-set estimate) — click a procedure name to see exactly which clinic and
+  // listing each price came from.
+  const procedures = [
+    { name: "Botox / Neuromodulators", count: 41, price: "$5–$650" },
+    { name: "Dermal / Lip Fillers", count: 40, price: "$3–$5,999" },
+    { name: "Microneedling / RF", count: 35, price: "$175–$3,600" },
+    { name: "Chemical Peels", count: 29, price: "$125–$650" },
+    { name: "Sculptra / Biostimulators", count: 28, price: "$599–$5,999" },
+    { name: "Laser Hair Removal", count: 27, price: "$39–$7,000" },
+    { name: "IPL / Photofacial", count: 24, price: "$150–$850" },
+    { name: "HydraFacial", count: 19, price: "$139–$650" },
+    { name: "PRP Therapy", count: 18, price: "$299–$1,000" },
+    { name: "Kybella", count: 17, price: "$600–$1,000" },
+    { name: "PDO Thread Lift", count: 16, price: "~$72 (1 listing)" },
+    { name: "Microdermabrasion / Dermaplaning", count: 15, price: "$50–$200" },
+    { name: "CoolSculpting / CoolTone", count: 14, price: "$400–$800" },
+    { name: "Emsculpt / Body Contouring", count: 14, price: "$249–$800" },
+    { name: "Ultherapy", count: 10, price: "$1,000–$4,000" },
+  ];
+  const max = Math.max(...procedures.map(p => p.count));
+  const container = document.getElementById('procedures');
+  const barsToAnimate = [];
+  procedures.forEach((p, i) => {
+    const row = document.createElement('div');
+    row.className = 'proc-row';
+    row.style.animationDelay = `${i * 0.04}s`;
+    const pct = (p.count / max * 100).toFixed(0);
+    row.innerHTML = `
+      <div>
+        <div class="proc-name proc-name-link" data-category="${p.name}">${p.name}</div>
+        <div class="proc-price">${p.price}</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" data-pct="${pct}"></div></div>
+      <div class="proc-count">${p.count} clinics</div>
+    `;
+    container.appendChild(row);
+    barsToAnimate.push(row.querySelector('.bar-fill'));
+  });
+
+  // Google Trends search-interest data — New York, past 12 months, indexed 0-100
+  // (Botox = highest-volume anchor term across all Trends comparisons; one representative
+  // search term used per category. See caveat note in the Search Interest section.)
+  const trends = [
+    { name: "Dermal / Lip Fillers", term: '"Lip Filler"', index: 13 },
+    { name: "Botox / Neuromodulators", term: '"Botox"', index: 81 },
+    { name: "Microneedling / RF", term: '"Microneedling"', index: 29 },
+    { name: "Chemical Peels", term: '"Chemical Peel"', index: 8 },
+    { name: "IPL / Photofacial", term: '"IPL Photofacial"', index: 1 },
+    { name: "Laser Hair Removal", term: '"Laser Hair Removal"', index: 33 },
+    { name: "Sculptra / Biostimulators", term: '"Sculptra"', index: 7 },
+    { name: "HydraFacial", term: '"HydraFacial"', index: 5 },
+    { name: "PRP Therapy", term: '"PRP Injection"', index: 3 },
+    { name: "CoolSculpting / CoolTone", term: '"CoolSculpting"', index: 3 },
+    { name: "Microdermabrasion / Dermaplaning", term: '"Microdermabrasion"', index: 3 },
+    { name: "Emsculpt / Body Contouring", term: '"Emsculpt"', index: 3 },
+    { name: "Kybella", term: '"Kybella"', index: 2 },
+    { name: "Ultherapy", term: '"Ultherapy"', index: 3 },
+    { name: "PDO Thread Lift", term: '"PDO Thread Lift"', index: 1 },
+  ];
+  const trendsContainer = document.getElementById('trends');
+  trends.forEach((t, i) => {
+    const row = document.createElement('div');
+    row.className = 'proc-row';
+    row.style.animationDelay = `${i * 0.04}s`;
+    row.innerHTML = `
+      <div>
+        <div class="proc-name">${t.name}</div>
+        <div class="proc-price">Search term: ${t.term}</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill trend" data-pct="${t.index}"></div></div>
+      <div class="proc-count trend">${t.index} / 100</div>
+    `;
+    trendsContainer.appendChild(row);
+    barsToAnimate.push(row.querySelector('.bar-fill'));
+  });
+
+  // Overlay comparison chart: clinic supply % (of top clinic category) vs. search demand % (of top Trends index)
+  const overlayContainer = document.getElementById('overlay');
+  const clinicMax = Math.max(...procedures.map(p => p.count));
+  procedures.forEach((p, i) => {
+    const t = trends.find(x => x.name === p.name) || { index: 0 };
+    const clinicPct = Math.round(p.count / clinicMax * 100);
+    const trendPct = t.index; // use the actual Google Trends index (already 0-100) — same number as the Search Interest chart above, not rescaled to our own dataset's max
+    const row = document.createElement('div');
+    row.className = 'overlay-row';
+    row.style.animationDelay = `${i * 0.04}s`;
+    row.innerHTML = `
+      <div class="proc-name">${p.name}</div>
+      <div class="overlay-track">
+        <div class="overlay-bar-clinics" data-pct="${clinicPct}"></div>
+        <div class="overlay-bar-trends" data-pct="${trendPct}"></div>
+      </div>
+      <div class="overlay-pct"><span class="c">${clinicPct}%</span> clinics<br><span class="t">${trendPct}</span> search idx</div>
+    `;
+    overlayContainer.appendChild(row);
+    barsToAnimate.push(row.querySelector('.overlay-bar-clinics'));
+    barsToAnimate.push(row.querySelector('.overlay-bar-trends'));
+  });
+
+  // Trigger bar-fill width transitions after layout, staggered slightly after each row fades in
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      barsToAnimate.forEach((el, i) => {
+        setTimeout(() => { el.style.width = el.dataset.pct + '%'; }, i * 25);
+      });
+    }, 150);
+  });
+
+  // Count-up animation for the top stat cards
+  function animateCount(el, target, opts = {}) {
+    const { suffix = '', duration = 1200, decimals = 0, prefix = '' } = opts;
+    const start = performance.now();
+    function tick(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const val = target * eased;
+      el.textContent = prefix + val.toLocaleString('en-US', { maximumFractionDigits: decimals, minimumFractionDigits: decimals }) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = prefix + target.toLocaleString('en-US') + suffix;
+    }
+    requestAnimationFrame(tick);
+  }
+  document.querySelectorAll('.stat-card .num').forEach(el => {
+    const raw = el.textContent.trim();
+    const suffix = raw.match(/%$/) ? '%' : '';
+    const target = parseFloat(raw.replace(/[^0-9.]/g, ''));
+    if (!isNaN(target)) {
+      el.textContent = suffix ? '0%' : '0';
+      setTimeout(() => animateCount(el, target, { suffix }), 200);
+    }
+  });
+
+  // [name, distinct clinics, real min–max price range, real median, comparability note]
+  // Ranges/medians are computed from actual parsed listing prices, not estimates. Many ranges
+  // are wide because they mix different units, package sizes, or session counts — see each row's
+  // note, and click the procedure name for the full per-clinic breakdown.
+  const priceRows = [
+    ["Botox / Neuromodulators", "41", "$5–$650", "~$16", "Mixes per-unit pricing (~$10–$18/unit) with flat unit-package deals (e.g. 20 units for $199) — not directly comparable at face value. 35 of 95 listings had a published price."],
+    ["Dermal / Lip Fillers", "40", "$3–$5,999", "~$775", "Spans single syringes to multi-syringe packages and premium biostimulator fillers. 50 of 138 listings had a published price."],
+    ["Microneedling / RF", "35", "$175–$3,600", "~$700", "Includes both standard microneedling and RF-device treatments (e.g. Morpheus8) at very different price points. 29 of 70 listings had a published price."],
+    ["Chemical Peels", "29", "$125–$650", "~$299", "Ranges from light peels to deep/multi-layer peels — depth drives most of the spread. 17 of 52 listings had a published price."],
+    ["Sculptra / Biostimulators", "28", "$599–$5,999", "~$800", "Typically sold per vial/session; totals vary by how many vials a treatment plan needs. 13 of 46 listings had a published price."],
+    ["Laser Hair Removal", "27", "$39–$7,000", "~$250", "Small single-area sessions vs. full-body multi-session packages account for most of the spread. 11 of 31 listings had a published price."],
+    ["IPL / Photofacial", "24", "$150–$850", "~$300", "Some clinics price per session, others per full course — always check which. 13 of 34 listings had a published price."],
+    ["HydraFacial", "19", "$139–$650", "~$263", "Base treatment vs. add-on/boosted versions account for most of the range. 16 of 28 listings had a published price."],
+    ["PRP Therapy", "18", "$299–$1,000", "~$800", "Injection-only vs. PRP + microneedling combo treatments are priced very differently. 11 of 27 listings had a published price."],
+    ["Kybella", "17", "$600–$1,000", "~$700", "Priced per vial in most cases — vials needed varies by treatment area. 7 of 18 listings had a published price."],
+    ["PDO Thread Lift", "16", "~$72", "$72", "Only 1 of 16 listings had a published price — treat this figure as directional only, not a real range."],
+    ["Microdermabrasion / Dermaplaning", "15", "$50–$200", "~$150", "Basic vs. advanced/combo versions of this treatment vary in price. 6 of 20 listings had a published price."],
+    ["CoolSculpting / CoolTone", "14", "$400–$800", "~$700", "Priced per applicator/cycle — total cost depends on areas/cycles needed. 4 of 21 listings had a published price."],
+    ["Emsculpt / Body Contouring", "14", "$249–$800", "~$450", "Single session vs. multi-session packages account for most of the spread. 6 of 22 listings had a published price."],
+    ["Ultherapy", "10", "$1,000–$4,000", "~$2,850", "Full-face vs. partial-area treatments are priced very differently. 6 of 15 listings had a published price."],
+  ];
+  const tbody = document.getElementById('price-table');
+  priceRows.forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><div class="proc-name proc-name-link" data-category="${r[0]}">${r[0]}</div><div class="table-note">${r[4]}</div></td><td class="num">${r[1]}</td><td>${r[2]}</td><td class="num">${r[3]}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  const breakdownData = {"Botox / Neuromodulators":[["Plump Cosmetics & Injectables","https://getplump.com/","Neuromodulators (Botox/Dysport)","Not published (consultation required)","Not published"],["Next Health","https://www.next-health.com/location/new-york-city","Next Beauty Aesthetics (Botox/Fillers/Microneedling)","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Botox","$12-$16 per unit, starting (per email reply, 8/14/26)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Dysport","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Daxxify","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Xeomin","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Jeuveau/Nabota","Not published (consultation required)","Not published"],["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","Botox","Not published (consultation required)","Not published"],["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","Dysport","Not published (consultation required)","Not published"],["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","Daxxify","Not published (consultation required)","Not published"],["CPW Vein & Aesthetic Center (Jessica Plotnick, PA-C)","https://www.cpwmedspa.com/","Botox & Neurotoxins","Not published (consultation required)","Not published"],["SkinTight MedSpa","https://www.skintightmedspa.com/","Botox","$16/unit","Not published"],["SkinTight MedSpa","https://www.skintightmedspa.com/","Dysport","$16/unit","Not published"],["SkinTight MedSpa","https://www.skintightmedspa.com/","Jeuveau","$16/unit","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","Botox","Not published (consultation required)","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","Dysport","Not published (consultation required)","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","Xeomin","Not published (consultation required)","Not published"],["AIREM","https://www.airem.com/","DermaSmooth (Botox)","Not published (consultation required)","Not published"],["Coolspa by Aethos","https://www.coolspa.com/","Botox / Dysport / Xeomin / Jeuveau / Daxxify","Not published (consultation required)","~under 30 min (results 7-10 days, last 3-5 mo)"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Botox","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Botox for Crow's Feet","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Botox Eyebrow Lift","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Botox for Masseters","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Chin Botox","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Baby Botox","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","DAO Botox","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","TMJ Botox","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Botox for Hyperhidrosis","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Dysport","Not published (consultation required)","Not published"],["Skinova Medspa","https://skinovamedspa.com/","Botox","$18/unit","Not published"],["Peachy (Grand Central Studio)","https://peachystudio.com/pages/grand-central-botox","Wrinkle Treatment (forehead/glabella/crow's feet, unlimited Xeomin/Jeuveau units)","$425 flat fee","30-45 min (results 5-10 days, last 2-4 mo)"],["Peachy (Grand Central Studio)","https://peachystudio.com/pages/grand-central-botox","Botox Facial with AquaGold","$375 flat fee","Not published"],["Peachy (Grand Central Studio)","https://peachystudio.com/pages/grand-central-botox","Brand Botox® or Dysport® upcharge","+$150","Not published"],["Manhattan Aesthetics","https://www.manhattan-aesthetics.com/","Botox","Not published (consultation required)","Not published"],["Thérapie Clinic (Upper East Side)","https://therapieclinic.com/us/locations/upper-east-side","Botox / Cosmetic Injections","Not published (consultation required)","Not published"],["Youtherapy MedSpa","https://youtherapymedspa.com/","Botox","Not published (consultation required)","Not published"],["Youtherapy MedSpa","https://youtherapymedspa.com/","Dysport","Not published (consultation required)","Not published"],["Youtherapy MedSpa","https://youtherapymedspa.com/","Xeomin","Not published (consultation required)","Not published"],["Youtherapy MedSpa","https://youtherapymedspa.com/","Masseter Botox (TMJ/migraine)","Not published (consultation required)","Not published"],["Alchemy 43","https://alchemy43.com/upper-east-side-ny/","Botox / Dysport / Letybo","$13.18/unit (member) or $15.50/unit (non-member)","~15-20 min (results 7-14 days, last 3-4 mo)"],["Fayced Aesthetics NYC","https://faycedaestheticsnyc.com/","Botox","Starting at $650+ (blanket floor price, not itemized)","Not published"],["Fayced Aesthetics NYC","https://faycedaestheticsnyc.com/","Dysport","Starting at $650+ (blanket floor price, not itemized)","Not published"],["Fayced Aesthetics NYC","https://faycedaestheticsnyc.com/","Jeuveau","Starting at $650+ (blanket floor price, not itemized)","Not published"],["Skin Spa New York","https://skinspanewyork.com/","Neuromodulators (Botox/Dysport/Xeomin)","20u $300 / 60u $900 (~$15/unit)","Not published"],["Skin Spa New York","https://skinspanewyork.com/","Botox for Hyperhidrosis","Not published (consultation required)","Not published"],["LovMedSpa","https://www.lovmedspa.com/new-york","Botox (retail)","$15/unit","Not published"],["LovMedSpa","https://www.lovmedspa.com/new-york","Botox (Essential member)","$12/unit","Not published"],["LovMedSpa","https://www.lovmedspa.com/new-york","Botox (Premium member)","$11/unit","Not published"],["LovMedSpa","https://www.lovmedspa.com/new-york","Botox (Elite member)","$10/unit (results last 3-6 mo)","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Neurotoxin (Botox/Dysport) standard","$17-19/unit","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Wrinkle Relaxers / Botox Party","Not published (consultation required)","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","Botox","$18/unit","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","Dysport","$6/unit","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","Daxxify","$12/unit","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","Xeomin","$18/unit","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Botox","$15/unit","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Dysport","$13/unit","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Xeomin","$10/unit","Not published"],["Bel Angé MedSpa","https://www.belangemedspa.com/","Botox","Not published (consultation required)","Not published"],["SkinCeuticals SkinLab by Tribeca MedSpa","https://www.skinlab-nyc.com/","Botox / Xeomin / Dysport / Jeuveau","Not published (consultation required)","Not published"],["SkinCeuticals SkinLab by Tribeca MedSpa","https://www.skinlab-nyc.com/","Botox Lip Flip","Not published (consultation required)","Not published"],["Manhattan Medspa","https://www.manhattan-medspa.com/","Cosmetic Injectables (Botox/fillers)","Not published (consultation required)","Not published"],["SEV Laser (Midtown/NoMad)","https://sevlaser.com/midtown/","Botox","from $11/unit","Not published"],["SEV Laser (Midtown/NoMad)","https://sevlaser.com/midtown/","Xeomin","Not published (consultation required)","Not published"],["Midtown Med Spa NYC","https://midtownmedspanyc.com/","Botox","$12-$15/unit","results last 3-4 mo"],["Midtown Medical Spa and Lasers of NYC","https://www.midtownmedicalspalasersnyc.com/","Botox","Not published (consultation required)","Not published"],["Dr. Lanna Aesthetics","https://doctorlanna.com/","Botox","Not published (consultation required)","Not published"],["Dr. Lanna Aesthetics","https://doctorlanna.com/","Dysport","Not published (consultation required)","Not published"],["Dr. Lanna Aesthetics","https://doctorlanna.com/","Xeomin","Not published (consultation required)","Not published"],["Dr. Lanna Aesthetics","https://doctorlanna.com/","Meso Botox","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","Botox","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","Daxxify","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","Xeomin","Not published (consultation required)","Not published"],["Future Face & Body","https://futurefaceandbody.com/","Botox / Dysport / Jeuveau","$499 flat (unlimited units, 3 areas, promo)","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","Botox","$15/unit","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","Red Carpet Microbotox","$450","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","Botox","Price available upon consultation","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","Daxxify","Price available upon consultation","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","Dysport","Price available upon consultation","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Botox","$15/unit","results 3-7 days, last 3-4 mo"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Dysport","$5/unit","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Xeomin","$11/unit","Not published"],["L'Elite MediSpa","https://lelitemedispa.com/lelite-medispa-manhattan/","Botox / Dysport / Newtox","Not published (consultation required)","Not published"],["Beauty Lyft Med Spa","https://beautylyftmedspa.com/","Botox & Jeuveau","Not published (consultation required)","simple tx ~30-45 min; comprehensive tx 1-2 hrs (general FAQ range)"],["Rothaus MD","https://www.rothausmd.com/","Botox","Not published (consultation required)","Not published"],["Rothaus MD","https://www.rothausmd.com/","Dysport","Not published (consultation required)","Not published"],["Rothaus MD","https://www.rothausmd.com/","Xeomin","Not published (consultation required)","Not published"],["Rothaus MD","https://www.rothausmd.com/","Preventative Botox","Not published (consultation required)","Not published"],["Rothaus MD","https://www.rothausmd.com/","Daxxify","Not published (consultation required)","Not published"],["Perfect Med Spa","https://www.perfectmedspa.com/nyc-med-spa/","Botox","Not published (consultation required)","Not published"],["NY Med Spa","https://nycmedspa.nyc/","Botox","Not published (consultation required)","Not published"],["NY Med Spa","https://nycmedspa.nyc/","Dysport","Not published (consultation required)","Not published"],["TREAT MEDSPA","https://treatmedspa.com/","Botox","Not published (consultation required)","Not published"],["Eureka Body Care and Spa + Medspa, Botox","eurekabodycareandspa.com","Botox - 20 units","$199.00","35 mins"],["Eureka Body Care and Spa + Medspa, Botox","eurekabodycareandspa.com","Dysport - 60 units","$220.00","30 mins"]],"Dermal / Lip Fillers":[["Plump Cosmetics & Injectables","https://getplump.com/","Filler","Not published (consultation required)","Not published"],["Next Health","https://www.next-health.com/location/new-york-city","Next Beauty Aesthetics (Botox/Fillers/Microneedling)","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Radiesse","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Juvederm Ultra XC","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Juvederm Ultra Plus XC","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Juvederm Volbella XC","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Juvederm Vollure XC","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Juvederm Voluma XC","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Juvederm Volux XC","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Restylane-L","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Restylane Lyft","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Restylane Silk","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Restylane Kysse","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Restylane Refyne","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Restylane Defyne","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Restylane Contour","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Restylane Eyelight","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Skinvive by Juvederm","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Non-Surgical Forehead Filler","From $599, starting (per email reply, 8/14/26 - general filler starting price, may vary by area)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Non-Surgical Labia Filler","From $599, starting (per email reply, 8/14/26 - general filler starting price, may vary by area)","Not published"],["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","Dermal Filler (general)","Not published (consultation required)","Not published"],["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","Juvederm","Not published (consultation required)","Not published"],["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","Restylane","Not published (consultation required)","Not published"],["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","Radiesse","Not published (consultation required)","Not published"],["CPW Vein & Aesthetic Center (Jessica Plotnick, PA-C)","https://www.cpwmedspa.com/","Facial Fillers (Juvederm Voluma/Ultra XC, Restylane Lyft, Volbella, Silk, Belotero)","Not published (consultation required)","Not published"],["CPW Vein & Aesthetic Center (Jessica Plotnick, PA-C)","https://www.cpwmedspa.com/","Lip Flip / Lip Filler","Not published (consultation required)","Not published"],["SkinTight MedSpa","https://www.skintightmedspa.com/","Juvederm","$800/syringe","Not published"],["SkinTight MedSpa","https://www.skintightmedspa.com/","Restylane Lyft","$950/1ml syringe","Not published"],["SkinTight MedSpa","https://www.skintightmedspa.com/","Restylane Kysse","$850","Not published"],["SkinTight MedSpa","https://www.skintightmedspa.com/","Filler Touch-Up","$300","Not published"],["SkinTight MedSpa","https://www.skintightmedspa.com/","Radiesse","$800/syringe","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","Juvederm Filler","Not published (consultation required)","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","Restylane","Not published (consultation required)","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","Radiesse Treatment","Not published (consultation required)","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","Lip Fillers","Not published (consultation required)","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","Cheek Filler","Not published (consultation required)","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","Under Eye Fillers","Not published (consultation required)","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","Non-Surgical Rhinoplasty (Nose Filler)","Not published (consultation required)","Not published"],["AIREM","https://www.airem.com/","Voluderm (dermal fillers)","Not published (consultation required)","Not published"],["Coolspa by Aethos","https://www.coolspa.com/","Dermal Fillers","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Juvederm Filler","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Restylane Filler","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Radiesse Filler","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","RHA Filler","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Forehead Filler","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Under Eye Filler","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Cheek Filler","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Nasolabial Fold Filler","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Lip Filler","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Jawline Filler","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Chin Filler","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Hyaluronidase (filler dissolving)","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Hand Filler","Not published (consultation required)","Not published"],["Skinova Medspa","https://skinovamedspa.com/","Juvederm Ultra","$650/syringe","Not published"],["Skinova Medspa","https://skinovamedspa.com/","Juvederm Voluma","$750/syringe","Not published"],["Skinova Medspa","https://skinovamedspa.com/","Juvederm Volbella","$700/syringe","Not published"],["Skinova Medspa","https://skinovamedspa.com/","Restylane","$650/syringe","Not published"],["Manhattan Aesthetics","https://www.manhattan-aesthetics.com/","Dermal Fillers","Not published (consultation required)","Not published"],["Thérapie Clinic (Upper East Side)","https://therapieclinic.com/us/locations/upper-east-side","Dermal Fillers","Not published (consultation required)","Not published"],["Thérapie Clinic (Upper East Side)","https://therapieclinic.com/us/locations/upper-east-side","Lip Fillers","Not published (consultation required)","Not published"],["Youtherapy MedSpa","https://youtherapymedspa.com/","Juvederm","Not published (consultation required)","Not published"],["Youtherapy MedSpa","https://youtherapymedspa.com/","Hyperdiluted Radiesse (Collagen Stimulator)","Not published (consultation required)","Not published"],["M Beauty Studio & Spa","https://mbeauty.studio/","Venus Versa TriBella Facial Rejuvenation","Not published (consultation required)","Not published"],["M Beauty Studio & Spa","https://mbeauty.studio/","Venus Versa Skin Tightening","Not published (consultation required)","Not published"],["Alchemy 43","https://alchemy43.com/upper-east-side-ny/","Lip Filler","Not published (consultation required)","Not published"],["Alchemy 43","https://alchemy43.com/upper-east-side-ny/","Jawline Filler","Not published (consultation required)","Not published"],["Alchemy 43","https://alchemy43.com/upper-east-side-ny/","Dermal Fillers","Not published (consultation required)","Not published"],["Fayced Aesthetics NYC","https://faycedaestheticsnyc.com/","Dermal Fillers (Lip, Jawline, Cheek, Under-Eye, Chin, Nasolabial, Temple)","Starting at $650+ (blanket floor price, not itemized)","Not published"],["Fayced Aesthetics NYC","https://faycedaestheticsnyc.com/","Filler Dissolving","Starting at $650+ (blanket floor price, not itemized)","Not published"],["Fayced Aesthetics NYC","https://faycedaestheticsnyc.com/","Radiesse","Starting at $650+ (blanket floor price, not itemized)","Not published"],["Skin Spa New York","https://skinspanewyork.com/","Cosmetic Fillers (1 syringe HA)","$800","Not published"],["Skin Spa New York","https://skinspanewyork.com/","Cosmetic Fillers (1 syringe Radiesse/Sculptra)","$900","Not published"],["LovMedSpa","https://www.lovmedspa.com/new-york","Dermal Fillers (RHA/Restylane)","Not published (consultation required)","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Filler - Cheek","$1,050-$1,250","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Filler - Chin","$1,050-$1,250","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Filler - Earlobe","$850-$1,050","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Filler - Jawline","$1,050-$1,250","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Filler - Lip","$950-$1,150","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Filler - Neck / Tech Neck","$850-$1,050","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Filler - Chin Shadow","$950-$1,150","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Filler - Nasolabial Fold","$850-$1,050","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Filler - Temple","$1,050-$1,250","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Filler - Under Eye","$950-$1,150","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","Dermal Filler","starting at $595","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","Lip Filler","Not published (consultation required)","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Lip/Dermal Filler - Versa","$400/syringe","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Filler - Radiesse","$600","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Filler - Belotero","$600","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Filler - Restylane","$700","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Filler - Sculptra","$749","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Non-Surgical Butt Lift (Radiesse BBL)","$2,750 (10 syr) - $9,500 (50 syr)","Not published"],["Bel Angé MedSpa","https://www.belangemedspa.com/","Dermal Fillers (Juvederm, Restylane)","Not published (consultation required)","Not published"],["SkinCeuticals SkinLab by Tribeca MedSpa","https://www.skinlab-nyc.com/","Juvederm","Not published (consultation required)","Not published"],["Manhattan Medspa","https://www.manhattan-medspa.com/","Cosmetic Injectables (Botox/fillers)","Not published (consultation required)","Not published"],["SEV Laser (Midtown/NoMad)","https://sevlaser.com/midtown/","Dermal Fillers (Juvéderm, Restylane)","Not published (consultation required)","Not published"],["SEV Laser (Midtown/NoMad)","https://sevlaser.com/midtown/","Lip Filler","intro $499 (reg $600)","Not published"],["Midtown Med Spa NYC","https://midtownmedspanyc.com/","Dermal Fillers (Juvederm)","starting ~$650/syringe","results last 6-18 mo"],["Midtown Medical Spa and Lasers of NYC","https://www.midtownmedicalspalasersnyc.com/","Facial Fillers","Not published (consultation required)","Not published"],["Dr. Lanna Aesthetics","https://doctorlanna.com/","Restylane","Not published (consultation required)","Not published"],["Dr. Lanna Aesthetics","https://doctorlanna.com/","Radiesse","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","HA Fillers","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","Evolysse Fillers","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","Hyperdilute Radiesse","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","Jawline Filler","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","Lip Fillers","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","Juvederm","Not published (consultation required)","Not published"],["Future Face & Body","https://futurefaceandbody.com/","Fillers","Not published (consultation required)","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","Juvederm","$699/1cc","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","Volbella (lip filler)","$850/1cc","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","Filler Package - Duet (2 fillers)","$1,400","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","Filler Package - Trifecta (3 fillers)","$1,900","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","Filler Package - Quatro (4 fillers)","$2,400","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","Juvederm (family)","Price available upon consultation","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","Restylane","Price available upon consultation","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","Radiesse","Price available upon consultation","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","RHA Fillers","Price available upon consultation","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","Tear Trough (Under-Eye) Filler","Price available upon consultation","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Filler - Cheeks/Jawline","$800-$900/syringe","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Filler - Chin","$750-$900/syringe","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Filler - Smile Lines","$700-$850/syringe","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Radiesse / Hyperdilute","$800","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Hylenex (filler dissolver)","$3/unit","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Under Eye Filler","$700","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Radiesse BBL","$5,999","Not published"],["Beauty Lyft Med Spa","https://beautylyftmedspa.com/","Dermal Fillers","Not published (consultation required)","simple tx ~30-45 min; comprehensive tx 1-2 hrs (general FAQ range)"],["Beauty Lyft Med Spa","https://beautylyftmedspa.com/","Filler Dissolver Treatment","Not published (consultation required)","simple tx ~30-45 min; comprehensive tx 1-2 hrs (general FAQ range)"],["Rothaus MD","https://www.rothausmd.com/","Juvederm","Not published (consultation required)","Not published"],["Rothaus MD","https://www.rothausmd.com/","Restylane","Not published (consultation required)","Not published"],["Rothaus MD","https://www.rothausmd.com/","Belotero","Not published (consultation required)","Not published"],["Rothaus MD","https://www.rothausmd.com/","Hyperdilute Radiesse","Not published (consultation required)","Not published"],["Rothaus MD","https://www.rothausmd.com/","RHA Fillers","Not published (consultation required)","Not published"],["Perfect Med Spa","https://www.perfectmedspa.com/nyc-med-spa/","Dermal Fillers","Not published (consultation required)","Not published"],["NY Med Spa","https://nycmedspa.nyc/","Juvederm","Not published (consultation required)","Not published"],["NY Med Spa","https://nycmedspa.nyc/","Restylane","Not published (consultation required)","Not published"],["TREAT MEDSPA","https://treatmedspa.com/","Dermal Fillers (Cheek/Lip)","Not published (consultation required)","Not published"],["Eureka Body Care and Spa + Medspa, Botox","eurekabodycareandspa.com","Juvederm Dermal Filler (1 Syringe)","$799.00","35 mins"],["Eureka Body Care and Spa + Medspa, Botox","eurekabodycareandspa.com","Restylane Filler (1 Syringe)","$529.00","35 mins"],["Eureka Body Care and Spa + Medspa, Botox","eurekabodycareandspa.com","Restylane Lip Filler - Kysse","$299.00+","25 mins+"]],"Microneedling / RF":[["Next Health","https://www.next-health.com/location/new-york-city","Next Beauty Aesthetics (Botox/Fillers/Microneedling)","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Genius RF Microneedling","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Microneedling Pen","Not published (consultation required)","Not published"],["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","Microneedling","Not published (consultation required)","Not published"],["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","Microneedling with Exosomes","Not published (consultation required)","Not published"],["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","Microneedling with Growth Factors (AnteAGE MD)","Not published (consultation required)","Not published"],["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","Microneedling with PRP/PRF","Not published (consultation required)","Not published"],["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","RF Microneedling (Morpheus8)","Not published (consultation required)","Not published"],["Joanna Vargas","https://joannavargas.com/","Twilight Facial (Morpheus8)","$1,200","Not published"],["SkinTight MedSpa","https://www.skintightmedspa.com/","Microneedling with HA","$640","Not published"],["SkinTight MedSpa","https://www.skintightmedspa.com/","Microneedling with PRP (Vampire Facial)","$800","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","Microneedling","Not published (consultation required)","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","Secret RF Microneedling","Not published (consultation required)","Not published"],["Coolspa by Aethos","https://www.coolspa.com/","Morpheus8","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Secret RF Microneedling","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Morpheus8","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","DermaPen Microneedling","Not published (consultation required)","Not published"],["Skinova Medspa","https://skinovamedspa.com/","Microneedling","$250","Not published"],["Skinova Medspa","https://skinovamedspa.com/","PRP Microneedling","$500/session","Not published"],["KUR Skin Lab","https://kurskinlab.com/","Enhanced Microneedling","Not published (consultation required)","75 min"],["Youtherapy MedSpa","https://youtherapymedspa.com/","Microneedling","Not published (consultation required)","Not published"],["Youtherapy MedSpa","https://youtherapymedspa.com/","VirtueRF Microneedling","Not published (consultation required)","Not published"],["M Beauty Studio & Spa","https://mbeauty.studio/","Microneedling (2 sessions)","$400 (reg. $600)","Not published"],["M Beauty Studio & Spa","https://mbeauty.studio/","RF Microneedling","Not published (consultation required)","Not published"],["Alchemy 43","https://alchemy43.com/upper-east-side-ny/","Microneedling (+ with PRP)","Not published (consultation required)","Not published"],["Fayced Aesthetics NYC","https://faycedaestheticsnyc.com/","Morpheus8 (Face & Body)","Starting at $650+ (blanket floor price, not itemized)","Not published"],["Fayced Aesthetics NYC","https://faycedaestheticsnyc.com/","SkinPen Microneedling","Starting at $650+ (blanket floor price, not itemized)","Not published"],["Skin Spa New York","https://skinspanewyork.com/","Morpheus8 Face & Neck","$1,500 (3-pack $4,500)","Not published"],["Skin Spa New York","https://skinspanewyork.com/","Morpheus8 Full Face","$1,200 (3-pack $3,600)","Not published"],["Skin Spa New York","https://skinspanewyork.com/","Morpheus8 Neck","$950 (3-pack $2,850)","Not published"],["Skin Spa New York","https://skinspanewyork.com/","Morpheus8 Stretch Marks (3-pack)","$1,700","Not published"],["Skin Spa New York","https://skinspanewyork.com/","Morpheus8 Body Small/Medium/Large (3-pack)","$3,600 / $4,050 / $4,500","Not published"],["Skin Spa New York","https://skinspanewyork.com/","Collagen Induction Therapy (SkinPen)","Not published (consultation required)","Not published"],["LovMedSpa","https://www.lovmedspa.com/new-york","RF Microneedling","Not published (consultation required)","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Morpheus8 - Eyes or Mouth","$700","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Morpheus8 - Full Face","$1,250","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Morpheus8 - Neck","$1,000","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Morpheus8 - Face & Neck","$1,500","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Morpheus8 - Face/Neck/Décolletage","$1,750","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Morpheus8 - Body S/M/L","$1,250 / $1,500 / $1,750","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","SkinPen Microneedling Face","$500","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","SkinPen Microneedling Face & Neck","$700","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","Morpheus8 RF Microneedling","Not published (consultation required)","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","Dual Radiance (IPL & Microneedling)","Not published (consultation required)","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Microneedling (face)","$365 - $1,440 (face+neck 3-pack)","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Morpheus8 (face)","$800 - $2,550 (abdomen 3-pack)","Not published"],["Bel Angé MedSpa","https://www.belangemedspa.com/","Microneedling","Not published (consultation required)","Not published"],["SkinCeuticals SkinLab by Tribeca MedSpa","https://www.skinlab-nyc.com/","SkinFirm Facial (Microneedling + HB5)","Not published (consultation required)","Not published"],["SkinCeuticals SkinLab by Tribeca MedSpa","https://www.skinlab-nyc.com/","Morpheus8","Not published (consultation required)","Not published"],["SEV Laser (Midtown/NoMad)","https://sevlaser.com/midtown/","SkinPen Microneedling","from $175/mo membership; intro $129 (reg $350)","Not published"],["Midtown Med Spa NYC","https://midtownmedspanyc.com/","RF Microneedling","Not published (consultation required)","Not published"],["Midtown Medical Spa and Lasers of NYC","https://www.midtownmedicalspalasersnyc.com/","Microneedling","Not published (consultation required)","Not published"],["Dr. Lanna Aesthetics","https://doctorlanna.com/","Morpheus8 (Face & Body)","Not published (consultation required)","Not published"],["Dr. Lanna Aesthetics","https://doctorlanna.com/","Morpheus8V","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","Microneedling","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","Virtue RF Microneedling","Not published (consultation required)","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","Microneedling (full face)","$300","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","Morpheus8","Price available upon consultation","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","Microneedling (Standard/Deluxe/Platinum/Complex/Dual Power)","Price available upon consultation","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Microneedling","$200 (3-pack $550) + PRP add-on $300","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","RF Microneedling","$400 (pkg $1,200)","Not published"],["Beauty Lyft Med Spa","https://beautylyftmedspa.com/","SkinPen Microneedling","Not published (consultation required)","simple tx ~30-45 min; comprehensive tx 1-2 hrs (general FAQ range)"],["Beauty Lyft Med Spa","https://beautylyftmedspa.com/","Vybe RF Microneedling","Not published (consultation required)","simple tx ~30-45 min; comprehensive tx 1-2 hrs (general FAQ range)"],["Rothaus MD","https://www.rothausmd.com/","Virtue RF Microneedling","Not published (consultation required)","Not published"],["Perfect Med Spa","https://www.perfectmedspa.com/nyc-med-spa/","Morpheus8","Not published (consultation required)","Not published"],["Perfect Med Spa","https://www.perfectmedspa.com/nyc-med-spa/","Microneedling","Not published (consultation required)","Not published"],["NY Med Spa","https://nycmedspa.nyc/","Microneedling (Skin Repair)","Not published (consultation required)","Not published"],["TREAT MEDSPA","https://treatmedspa.com/","SkinPen Microneedling","Not published (consultation required)","Not published"],["Eureka Body Care and Spa + Medspa, Botox","eurekabodycareandspa.com","RF Microneedling Face & Neck w/ Vitamin Infusion","$189.00+","1 hr+"],["Eureka Body Care and Spa + Medspa, Botox","eurekabodycareandspa.com","PRP Microneedling Face and Neck","$299.00+","30 mins+"]],"Chemical Peels":[["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","Chemical Peels","Not published (consultation required)","Not published"],["CPW Vein & Aesthetic Center (Jessica Plotnick, PA-C)","https://www.cpwmedspa.com/","Tetra PRO CoolPeel CO2 Laser","Not published (consultation required)","Not published"],["CPW Vein & Aesthetic Center (Jessica Plotnick, PA-C)","https://www.cpwmedspa.com/","Chemical Peels","Not published (consultation required)","Not published"],["Joanna Vargas","https://joannavargas.com/","Power Peel Series","$325","Not published"],["AIREM","https://www.airem.com/","SkinBright Peel Series","Not published (consultation required)","Not published"],["Coolspa by Aethos","https://www.coolspa.com/","VI Peel","Not published (consultation required)","Not published"],["Skinova Medspa","https://skinovamedspa.com/","Chemical Peel","$160","Not published"],["Skinova Medspa","https://skinovamedspa.com/","VI Peel Original","$250","Not published"],["Skinova Medspa","https://skinovamedspa.com/","VI Peel Advanced","$299","Not published"],["Skinova Medspa","https://skinovamedspa.com/","VI Peel Precision Plus","$299","Not published"],["Skinova Medspa","https://skinovamedspa.com/","VI Peel Purify Precision Plus","$299","Not published"],["Skinova Medspa","https://skinovamedspa.com/","VI Peel Body","$500 (4ml) / $700 (8ml)","Not published"],["Facegym","https://facegym.com/","Booster: Resurfacing Peel","£50 (£30 member)","15 min"],["KUR Skin Lab","https://kurskinlab.com/","Hydro-Oxygenating Jet Peel or HydraFacial","Not published (consultation required)","60 min"],["Manhattan Aesthetics","https://www.manhattan-aesthetics.com/","Chemical Peels","Not published (consultation required)","Not published"],["Youtherapy MedSpa","https://youtherapymedspa.com/","CoolPeel","Not published (consultation required)","Not published"],["Youtherapy MedSpa","https://youtherapymedspa.com/","Chemical Peels","Not published (consultation required)","Not published"],["Alchemy 43","https://alchemy43.com/upper-east-side-ny/","Chemical Peels","Not published (consultation required)","Not published"],["Fayced Aesthetics NYC","https://faycedaestheticsnyc.com/","CoolPeel/CO2 Laser","Starting at $650+ (blanket floor price, not itemized)","Not published"],["Fayced Aesthetics NYC","https://faycedaestheticsnyc.com/","Chemical Peels","Starting at $650+ (blanket floor price, not itemized)","Not published"],["Fayced Aesthetics NYC","https://faycedaestheticsnyc.com/","VI Peel","Starting at $650+ (blanket floor price, not itemized)","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","VI Peel","$350","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","Chemical Peel","Not published (consultation required)","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Chemical Peel (PCA Peel)","$125","Not published"],["SkinCeuticals SkinLab by Tribeca MedSpa","https://www.skinlab-nyc.com/","SkinSmooth Facial (LED Micropeel + Phyto)","Not published (consultation required)","Not published"],["SkinCeuticals SkinLab by Tribeca MedSpa","https://www.skinlab-nyc.com/","SkinBright Facial (HydraFacialMD + Chemical Peel)","Not published (consultation required)","Not published"],["SkinCeuticals SkinLab by Tribeca MedSpa","https://www.skinlab-nyc.com/","SkinClear Facial (Micropeel + Blue Light)","Not published (consultation required)","Not published"],["SkinCeuticals SkinLab by Tribeca MedSpa","https://www.skinlab-nyc.com/","Chemical Peels","Not published (consultation required)","Not published"],["Manhattan Medspa","https://www.manhattan-medspa.com/","VI Peels","Not published (consultation required)","Not published"],["Midtown Med Spa NYC","https://midtownmedspanyc.com/","Chemical Peels","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","CoolPeel","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","NaturaPeel Laser Facial","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","Chemical Peels","Not published (consultation required)","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","SkinMedica Peel - Illuminize","$175","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","SkinMedica Peel - Vitalize","$250","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","SkinMedica Peel - Rejuvenize","$350","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","CoolPeel","Price available upon consultation","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","BioRePeel","Price available upon consultation","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","Chemical Peels (Jessner/Salicylic/Lactic/Glycolic/Enzyme/ZO/Perfect Derma/Illuminize)","Price available upon consultation","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Chemical Peels","$350","Not published"],["L'Elite MediSpa","https://lelitemedispa.com/lelite-medispa-manhattan/","Chemical Peel","Not published (consultation required)","Not published"],["L'Elite MediSpa","https://lelitemedispa.com/lelite-medispa-manhattan/","JetPeel Facials","Not published (consultation required)","Not published"],["Beauty Lyft Med Spa","https://beautylyftmedspa.com/","Chemical Peels","Not published (consultation required)","simple tx ~30-45 min; comprehensive tx 1-2 hrs (general FAQ range)"],["Rothaus MD","https://www.rothausmd.com/","CoolPeel","Not published (consultation required)","Not published"],["Rothaus MD","https://www.rothausmd.com/","RothausMD Peel","Not published (consultation required)","Not published"],["Rothaus MD","https://www.rothausmd.com/","Spectra Peel","Not published (consultation required)","Not published"],["Perfect Med Spa","https://www.perfectmedspa.com/nyc-med-spa/","Dermal Infusion (Silk Peel)","Not published (consultation required)","Not published"],["Perfect Med Spa","https://www.perfectmedspa.com/nyc-med-spa/","Peels (chemical, photodamage repair)","Not published (consultation required)","Not published"],["NY Med Spa","https://nycmedspa.nyc/","Carbon Laser Peel (Hollywood Facial)","Not published (consultation required)","Not published"],["NY Med Spa","https://nycmedspa.nyc/","Vi Peel","Not published (consultation required)","Not published"],["TREAT MEDSPA","https://treatmedspa.com/","VI Peel","Not published (consultation required)","Not published"],["Eureka Body Care and Spa + Medspa, Botox","eurekabodycareandspa.com","VI Peel (Chemical Peel)","$220.00+","30 mins+"]],"Sculptra / Biostimulators":[["Plump Cosmetics & Injectables","https://getplump.com/","Sculptra","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Sculptra Face","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Sculptra Body","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Sculptra Butt Lift","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Radiesse","Not published (consultation required)","Not published"],["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","Sculptra","Not published (consultation required)","Not published"],["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","Radiesse","Not published (consultation required)","Not published"],["SkinTight MedSpa","https://www.skintightmedspa.com/","Radiesse","$800/syringe","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","Radiesse Treatment","Not published (consultation required)","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","Sculptra Butt Lift","Not published (consultation required)","Not published"],["Coolspa by Aethos","https://www.coolspa.com/","Sculptra","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Radiesse Filler","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Sculptra","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Injectable BBL (Sculptra BBL)","Not published (consultation required)","Not published"],["Thérapie Clinic (Upper East Side)","https://therapieclinic.com/us/locations/upper-east-side","Sculptra","Not published (consultation required)","Not published"],["Youtherapy MedSpa","https://youtherapymedspa.com/","Hyperdiluted Radiesse (Collagen Stimulator)","Not published (consultation required)","Not published"],["Youtherapy MedSpa","https://youtherapymedspa.com/","Sculptra Butt Lift","Not published (consultation required)","Not published"],["Alchemy 43","https://alchemy43.com/upper-east-side-ny/","Sculptra","Not published (consultation required)","Not published"],["Fayced Aesthetics NYC","https://faycedaestheticsnyc.com/","Sculptra","Starting at $650+ (blanket floor price, not itemized)","Not published"],["Fayced Aesthetics NYC","https://faycedaestheticsnyc.com/","Radiesse","Starting at $650+ (blanket floor price, not itemized)","Not published"],["Skin Spa New York","https://skinspanewyork.com/","Cosmetic Fillers (1 syringe Radiesse/Sculptra)","$900","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Sculptra","$1,500/vial","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","Sculptra","Not published (consultation required)","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Filler - Radiesse","$600","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Filler - Sculptra","$749","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Non-Surgical Butt Lift (Radiesse BBL)","$2,750 (10 syr) - $9,500 (50 syr)","Not published"],["Bel Angé MedSpa","https://www.belangemedspa.com/","Sculptra","Not published (consultation required)","Not published"],["SkinCeuticals SkinLab by Tribeca MedSpa","https://www.skinlab-nyc.com/","Sculptra","Not published (consultation required)","Not published"],["Midtown Med Spa NYC","https://midtownmedspanyc.com/","Sculptra","Not published (consultation required)","results last up to 2 yrs"],["Dr. Lanna Aesthetics","https://doctorlanna.com/","Radiesse","Not published (consultation required)","Not published"],["Dr. Lanna Aesthetics","https://doctorlanna.com/","Sculptra","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","Hyperdilute Radiesse","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","Sculptra","Not published (consultation required)","Not published"],["Future Face & Body","https://futurefaceandbody.com/","Sculptra","Not published (consultation required)","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","Radiesse","Price available upon consultation","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","Sculptra","Price available upon consultation","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","Sculptra Butt Lift","Price available upon consultation","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Sculptra","$800","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Radiesse / Hyperdilute","$800","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Radiesse BBL","$5,999","Not published"],["L'Elite MediSpa","https://lelitemedispa.com/lelite-medispa-manhattan/","Sculptra","Not published (consultation required)","Not published"],["Beauty Lyft Med Spa","https://beautylyftmedspa.com/","Biostimulators","Not published (consultation required)","simple tx ~30-45 min; comprehensive tx 1-2 hrs (general FAQ range)"],["Rothaus MD","https://www.rothausmd.com/","Sculptra","Not published (consultation required)","Not published"],["Rothaus MD","https://www.rothausmd.com/","Hyperdilute Radiesse","Not published (consultation required)","Not published"],["Perfect Med Spa","https://www.perfectmedspa.com/nyc-med-spa/","Sculptra","$599 (reg. $800)","Not published"],["Eureka Body Care and Spa + Medspa, Botox","eurekabodycareandspa.com","Sculptra Treatment","$850.00","40 mins"]],"Laser Hair Removal":[["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Cynosure Elite+ Laser Hair Removal","Not published (consultation required)","Not published"],["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","Laser Hair Removal","Not published (consultation required)","Not published"],["CPW Vein & Aesthetic Center (Jessica Plotnick, PA-C)","https://www.cpwmedspa.com/","Laser Hair Removal","Not published (consultation required)","Not published"],["SkinTight MedSpa","https://www.skintightmedspa.com/","Laser Hair Growth Helmet (Theradome)","Not published (consultation required)","Not published"],["Coolspa by Aethos","https://www.coolspa.com/","Laser Hair Removal","Not published (consultation required)","Not published"],["Skinova Medspa","https://skinovamedspa.com/","Laser Hair Removal","Not published (consultation required)","Not published"],["Manhattan Aesthetics","https://www.manhattan-aesthetics.com/","Laser Hair Removal","Not published (consultation required)","Not published"],["Thérapie Clinic (Upper East Side)","https://therapieclinic.com/us/locations/upper-east-side","Laser Hair Removal (women & men)","Not published (consultation required)","Not published"],["Youtherapy MedSpa","https://youtherapymedspa.com/","Laser Hair Removal","Not published (consultation required)","Not published"],["M Beauty Studio & Spa","https://mbeauty.studio/","Laser Hair Removal (1 medium + 1 small area)","$250 (reg. $700)","Not published"],["M Beauty Studio & Spa","https://mbeauty.studio/","Soprano Ice Laser Hair Removal","Not published (consultation required)","Not published"],["Fayced Aesthetics NYC","https://faycedaestheticsnyc.com/","DiolazeXL Laser Hair Removal","Starting at $650+ (blanket floor price, not itemized)","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","Laser Hair Removal","starting at $99","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Laser Hair Removal (per session)","$120 (lip) - $1,000 (full body)","Not published"],["Manhattan Medspa","https://www.manhattan-medspa.com/","Laser Hair Removal (incl. Brazilian 6-session package promo)","Not published (consultation required)","Not published"],["SEV Laser (Midtown/NoMad)","https://sevlaser.com/midtown/","Laser Hair Removal","from $39/session (membership from $20/mo)","Not published"],["Midtown Med Spa NYC","https://midtownmedspanyc.com/","Laser Hair Removal","Not published (consultation required)","Not published"],["Midtown Medical Spa and Lasers of NYC","https://www.midtownmedicalspalasersnyc.com/","Laser Hair Removal","Not published (consultation required)","Not published"],["Dr. Lanna Aesthetics","https://doctorlanna.com/","Laser Hair Removal","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","Laser Hair Removal","Not published (consultation required)","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","Laser Hair Removal - Small","$99/session","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","Laser Hair Removal - Medium","$199/session","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","Laser Hair Removal - Large","$399/session","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","Laser Hair Reduction","Price available upon consultation","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Laser Hair Removal (underarms, 6x)","from $550","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Laser Hair Removal (full body, 9x)","up to $7,000","Not published"],["L'Elite MediSpa","https://lelitemedispa.com/lelite-medispa-manhattan/","Laser Hair Removal","Not published (consultation required)","Not published"],["Beauty Lyft Med Spa","https://beautylyftmedspa.com/","Laser Hair Removal","Not published (consultation required)","simple tx ~30-45 min; comprehensive tx 1-2 hrs (general FAQ range)"],["Perfect Med Spa","https://www.perfectmedspa.com/nyc-med-spa/","Laser Hair Removal","Not published (consultation required)","Not published"],["TREAT MEDSPA","https://treatmedspa.com/","Laser Hair Removal","Not published (consultation required)","Not published"],["Eureka Body Care and Spa + Medspa, Botox","eurekabodycareandspa.com","Laser Hair Removal - Touch-Up (Legs/Brazilian/Underarms)","$250.00","45 mins"]],"IPL / Photofacial":[["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","ICON Max G IPL","Not published (consultation required)","Not published"],["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","BBL/IPL Photofacial","Not published (consultation required)","Not published"],["CPW Vein & Aesthetic Center (Jessica Plotnick, PA-C)","https://www.cpwmedspa.com/","IPL Photofacials","Not published (consultation required)","Not published"],["CPW Vein & Aesthetic Center (Jessica Plotnick, PA-C)","https://www.cpwmedspa.com/","M22 IPL (veins/acne/cherry hemangioma)","Not published (consultation required)","Not published"],["Joanna Vargas","https://joannavargas.com/","Triple Crown Classic (facial)","$275","Not published"],["Joanna Vargas","https://joannavargas.com/","Triple Crown Royale","Not published (consultation required)","Not published"],["SkinTight MedSpa","https://www.skintightmedspa.com/","IPL Lumecca","$500-$750/session","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","Intense Pulsed Light (IPL)","Not published (consultation required)","Not published"],["M Beauty Studio & Spa","https://mbeauty.studio/","IPL Photofacial","Not published (consultation required)","Not published"],["Alchemy 43","https://alchemy43.com/upper-east-side-ny/","IPL Photofacial","Not published (consultation required)","Not published"],["Fayced Aesthetics NYC","https://faycedaestheticsnyc.com/","Lumecca IPL","Starting at $650+ (blanket floor price, not itemized)","Not published"],["Skin Spa New York","https://skinspanewyork.com/","Lumecca IPL Face/Body","Not published (consultation required)","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Lumecca IPL Face Spot","$200","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Lumecca IPL Full Face","$500","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Lumecca IPL Face & Neck","$700","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Lumecca IPL Face/Neck/Décolletage","$850","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Lumecca IPL Body S/M/L","$300 / $600 / $700","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","IPL Photo Facial","Not published (consultation required)","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","Dual Radiance (IPL & Microneedling)","Not published (consultation required)","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","IPL Photofacial","$175 (spot) - $1,485 (face+chest 3-pack)","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Candela Photofacial","$300 single / $825 (3-pack)","Not published"],["Bel Angé MedSpa","https://www.belangemedspa.com/","Laser Skin Rejuvenation (BBL HEROic, Sciton MOXI, IPL)","Not published (consultation required)","Not published"],["SkinCeuticals SkinLab by Tribeca MedSpa","https://www.skinlab-nyc.com/","Intense Pulsed Light (IPL)","Not published (consultation required)","Not published"],["Midtown Medical Spa and Lasers of NYC","https://www.midtownmedicalspalasersnyc.com/","Medical Facials (Anti-Aging/Hollywood/Acne/IPL Photofacial/Skin Rejuvenation/Resurfacing)","Not published (consultation required)","Not published"],["Dr. Lanna Aesthetics","https://doctorlanna.com/","IPL Photofacial","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","Photofacial","Not published (consultation required)","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","IPL Photofacial - Full Face","$300","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","IPL Photofacial - Spot/Vessels","$150","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","IPL/Photo Rejuvenation","Price available upon consultation","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","IPL","$200 (pkg $500)","Not published"],["Rothaus MD","https://www.rothausmd.com/","Starlux IPL","Not published (consultation required)","Not published"],["Perfect Med Spa","https://www.perfectmedspa.com/nyc-med-spa/","LipLase","Not published (consultation required)","Not published"],["Perfect Med Spa","https://www.perfectmedspa.com/nyc-med-spa/","IPL Photofacial","Not published (consultation required)","Not published"],["TREAT MEDSPA","https://treatmedspa.com/","IPL","Not published (consultation required)","Not published"]],"HydraFacial":[["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","4D HydrafacialMD Treatment","Not published (consultation required)","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","HydraFacial","Not published (consultation required)","Not published"],["Coolspa by Aethos","https://www.coolspa.com/","HydraFacial","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","HydraFacial","Not published (consultation required)","Not published"],["KUR Skin Lab","https://kurskinlab.com/","Hydro-Oxygenating Jet Peel or HydraFacial","Not published (consultation required)","60 min"],["Manhattan Aesthetics","https://www.manhattan-aesthetics.com/","HydraFacial","Not published (consultation required)","Not published"],["Thérapie Clinic (Upper East Side)","https://therapieclinic.com/us/locations/upper-east-side","HydraFacial-type Treatments","Not published (consultation required)","Not published"],["M Beauty Studio & Spa","https://mbeauty.studio/","HydraFacial","$199 (reg. $299)","Not published"],["M Beauty Studio & Spa","https://mbeauty.studio/","2x HydraFacial Sessions","$400 (reg. $500)","Not published"],["Fayced Aesthetics NYC","https://faycedaestheticsnyc.com/","HydraFacial","Starting at $650+ (blanket floor price, not itemized)","Not published"],["Skin Spa New York","https://skinspanewyork.com/","HydraFacial Deluxe","$250 single / $750 (3-pack) / $1,500 (6-pack)","45 min"],["Skin Spa New York","https://skinspanewyork.com/","HydraFacial Platinum (7-step)","Not published (consultation required)","1h 15min"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","HydraFacial Deluxe","$275","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","HydraFacial Platinum","$325","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","HydraFacial Neck & Décolletage","$249","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","HydraFacial Booty","$349","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","HydraFacial Full Back","$349","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","HydraFacial Half Back","$249","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","HydraFacial Deluxe","Not published (consultation required)","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Hydrafacial Signature","$199","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Hydrafacial Deluxe","$275","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Hydrafacial Platinum","$349","Not published"],["Bel Angé MedSpa","https://www.belangemedspa.com/","Hydrafacial","Not published (consultation required)","Not published"],["SkinCeuticals SkinLab by Tribeca MedSpa","https://www.skinlab-nyc.com/","SkinBright Facial (HydraFacialMD + Chemical Peel)","Not published (consultation required)","Not published"],["Future Face & Body","https://futurefaceandbody.com/","Hydrafacial","$250","60 min"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Hydrafacial","$199 (3-pack $400)","Not published"],["TREAT MEDSPA","https://treatmedspa.com/","HydraFacial","Not published (consultation required)","Not published"],["Eureka Body Care and Spa + Medspa, Botox","eurekabodycareandspa.com","HydraFacial","$139.00+","1 hr+"]],"PRP Therapy":[["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","Microneedling with PRP/PRF","Not published (consultation required)","Not published"],["SkinTight MedSpa","https://www.skintightmedspa.com/","Microneedling with PRP (Vampire Facial)","$800","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","PRP Facial","Not published (consultation required)","Not published"],["Coolspa by Aethos","https://www.coolspa.com/","PRP","Not published (consultation required)","Not published"],["Coolspa by Aethos","https://www.coolspa.com/","PRP Hair Restoration","Not published (consultation required)","Not published"],["Skinova Medspa","https://skinovamedspa.com/","PRP Hair Restoration","$800/session","Not published"],["Skinova Medspa","https://skinovamedspa.com/","PRP Microneedling","$500/session","Not published"],["Alchemy 43","https://alchemy43.com/upper-east-side-ny/","PRP Injections","Not published (consultation required)","Not published"],["Alchemy 43","https://alchemy43.com/upper-east-side-ny/","PRP Hair Therapy","Not published (consultation required)","Not published"],["Alchemy 43","https://alchemy43.com/upper-east-side-ny/","Microneedling (+ with PRP)","Not published (consultation required)","Not published"],["Fayced Aesthetics NYC","https://faycedaestheticsnyc.com/","PRP for Facial Restoration","Starting at $650+ (blanket floor price, not itemized)","Not published"],["Fayced Aesthetics NYC","https://faycedaestheticsnyc.com/","PRP for Hair Restoration","Starting at $650+ (blanket floor price, not itemized)","Not published"],["Skin Spa New York","https://skinspanewyork.com/","Liquid Gold Facial (PRP)","Not published (consultation required)","Not published"],["Skin Spa New York","https://skinspanewyork.com/","PRP Hair Restoration","Not published (consultation required)","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","PRP / PRF","$1,000","Not published"],["Bel Angé MedSpa","https://www.belangemedspa.com/","PRP","Not published (consultation required)","Not published"],["Future Face & Body","https://futurefaceandbody.com/","PRP Under Eyes","Not published (consultation required)","Not published"],["Future Face & Body","https://futurefaceandbody.com/","PRP Hair Restoration (PRFM)","Not published (consultation required)","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","PRP Facial","$800","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","PRP Facial + Injections","$1,000","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","PRP Hair Restoration","$1,000","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","PRP","$500","Not published"],["L'Elite MediSpa","https://lelitemedispa.com/lelite-medispa-manhattan/","Hair Restoration & PRP","Not published (consultation required)","Not published"],["Rothaus MD","https://www.rothausmd.com/","PRP Injections","Not published (consultation required)","Not published"],["Perfect Med Spa","https://www.perfectmedspa.com/nyc-med-spa/","PRP Hair Restoration","Not published (consultation required)","Not published"],["NY Med Spa","https://nycmedspa.nyc/","PRP/PRF Facial","Not published (consultation required)","Not published"],["Eureka Body Care and Spa + Medspa, Botox","eurekabodycareandspa.com","PRP Microneedling Face and Neck","$299.00+","30 mins+"]],"Kybella":[["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","Kybella","Not published (consultation required)","Not published"],["SkinTight MedSpa","https://www.skintightmedspa.com/","Kybella","$800/session","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","Kybella","Not published (consultation required)","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","Kybella for Jowls & Cheeks","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Kybella","Not published (consultation required)","Not published"],["Skinova Medspa","https://skinovamedspa.com/","Kybella","$700/syringe","Not published"],["Youtherapy MedSpa","https://youtherapymedspa.com/","Kybella","Not published (consultation required)","Not published"],["Fayced Aesthetics NYC","https://faycedaestheticsnyc.com/","Kybella","Starting at $650+ (blanket floor price, not itemized)","Not published"],["Elite Aesthetics NYC","https://eliteaestheticsnyc.com/","Kybella","$1,000/vial","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","Kybella","Not published (consultation required)","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Kybella","$650 (1 vial) - $1,996 (4 vials)","Not published"],["SkinCeuticals SkinLab by Tribeca MedSpa","https://www.skinlab-nyc.com/","Kybella","Not published (consultation required)","Not published"],["Midtown Med Spa NYC","https://midtownmedspanyc.com/","Kybella","Not published (consultation required)","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","Kybella","$600/vial","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","Kybella","Price available upon consultation","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Kybella","$700","Not published"],["Beauty Lyft Med Spa","https://beautylyftmedspa.com/","Kybella","Not published (consultation required)","simple tx ~30-45 min; comprehensive tx 1-2 hrs (general FAQ range)"],["NY Med Spa","https://nycmedspa.nyc/","Kybella","Not published (consultation required)","Not published"]],"PDO Thread Lift":[["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","PDO Face Threads","Not published (consultation required)","Not published"],["SkinSpirit","https://www.skinspirit.com/locations/nyc-east89","PDO Threads","Not published (consultation required)","Not published"],["SkinTight MedSpa","https://www.skintightmedspa.com/","PDO Thread Lift","Not published (consultation required)","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","PDO Thread Face Lift","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","PDO Thread Lift","Not published (consultation required)","Not published"],["Youtherapy MedSpa","https://youtherapymedspa.com/","Thread Lifts","Not published (consultation required)","Not published"],["LovMedSpa","https://www.lovmedspa.com/new-york","PDO Thread Facelift","Not published (consultation required)","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","PDO Threads","$72/thread","Not published"],["SkinCeuticals SkinLab by Tribeca MedSpa","https://www.skinlab-nyc.com/","PDO Thread Lift","Not published (consultation required)","Not published"],["Dr. Lanna Aesthetics","https://doctorlanna.com/","PDO Threads","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","PDO Thread Lift","Not published (consultation required)","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","Thread Lift","Price available upon consultation","Not published"],["Beauty Lyft Med Spa","https://beautylyftmedspa.com/","PDO Thread Lift","Not published (consultation required)","simple tx ~30-45 min; comprehensive tx 1-2 hrs (general FAQ range)"],["Rothaus MD","https://www.rothausmd.com/","Thread Lifts","Not published (consultation required)","Not published"],["Perfect Med Spa","https://www.perfectmedspa.com/nyc-med-spa/","PDO Thread Lift","Not published (consultation required)","Not published"],["NY Med Spa","https://nycmedspa.nyc/","PDO Thread Lift","Not published (consultation required)","Not published"]],"Microdermabrasion / Dermaplaning":[["Joanna Vargas","https://joannavargas.com/","Full-Body Microdermabrasion","$200","Not published"],["Skinova Medspa","https://skinovamedspa.com/","Microdermabrasion Facial","$150","Not published"],["Skinova Medspa","https://skinovamedspa.com/","Dermaplaning Facial","$180","Not published"],["KUR Skin Lab","https://kurskinlab.com/","Dermaplaning or Microdermabrasion + LED/Hyperbaric O2/RF add-on","Not published (consultation required)","75 min"],["Manhattan Aesthetics","https://www.manhattan-aesthetics.com/","Microdermabrasion","Not published (consultation required)","Not published"],["Youtherapy MedSpa","https://youtherapymedspa.com/","Microdermabrasion","Not published (consultation required)","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","Dermaplaning","Not published (consultation required)","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","Dermaplaning","$99 single / $49 add-on","Not published"],["SkinCeuticals SkinLab by Tribeca MedSpa","https://www.skinlab-nyc.com/","Dermaplaning","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","Dermaplaning Facial","Not published (consultation required)","Not published"],["HausMD","https://thehausmd.com/","Microdermabrasion Facial","Not published (consultation required)","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","Microdermabrasion","$150","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","Dermaplaning","Price available upon consultation","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","Microdermabrasion","Price available upon consultation","Not published"],["UPKEEP Med Spa","https://upkeepmedspa.com/","Dermaplane","$50 (3-pack $120)","Not published"],["L'Elite MediSpa","https://lelitemedispa.com/lelite-medispa-manhattan/","Microdermabrasion","Not published (consultation required)","Not published"],["Rothaus MD","https://www.rothausmd.com/","Dermaplaning","Not published (consultation required)","Not published"],["NY Med Spa","https://nycmedspa.nyc/","Microdermabrasion Facial","Not published (consultation required)","Not published"],["NY Med Spa","https://nycmedspa.nyc/","Dermaplaning Facial","Not published (consultation required)","Not published"],["NY Med Spa","https://nycmedspa.nyc/","Crystal Microdermabrasion w/ Oxygen","Not published (consultation required)","Not published"]],"CoolSculpting / CoolTone":[["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","CoolSculpting Elite","Not published (consultation required)","Not published"],["CPW Vein & Aesthetic Center (Jessica Plotnick, PA-C)","https://www.cpwmedspa.com/","CoolSculpting","Not published (consultation required)","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","CoolSculpting","Not published (consultation required)","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","CoolTone","Not published (consultation required)","Not published"],["Coolspa by Aethos","https://www.coolspa.com/","CoolSculpting (incl. Elite)","Not published (consultation required)","Not published"],["Coolspa by Aethos","https://www.coolspa.com/","CoolTone","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","CoolTone","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","CoolSculpting","Not published (consultation required)","Not published"],["Manhattan Aesthetics","https://www.manhattan-aesthetics.com/","CoolSculpting","Not published (consultation required)","Not published"],["Youtherapy MedSpa","https://youtherapymedspa.com/","CoolSculpting","Not published (consultation required)","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","CoolSculpting Elite","starting at $800","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","CoolTone","Not published (consultation required)","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","CoolSculpting Elite","$800 (1 applicator) - $6,400 (16)","Not published"],["Midtown Medical Spa and Lasers of NYC","https://www.midtownmedicalspalasersnyc.com/","CoolSculpting","Not published (consultation required)","Not published"],["Midtown Medical Spa and Lasers of NYC","https://www.midtownmedicalspalasersnyc.com/","CoolTone","Not published (consultation required)","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","CoolSculpting Elite (per applicator)","$400-$600","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","CoolTone","$600/session","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","CoolSculpting Elite","Price available upon consultation","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","CoolTone","Price available upon consultation","Not published"],["Perfect Med Spa","https://www.perfectmedspa.com/nyc-med-spa/","Coolsculpting","Not published (consultation required)","Not published"],["TREAT MEDSPA","https://treatmedspa.com/","CoolSculpting Elite","Not published (consultation required)","Not published"]],"Emsculpt / Body Contouring":[["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","EMSCULPT","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","EMSCULPT NEO","Not published (consultation required)","Not published"],["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","EmSculpt Edge","Not published (consultation required)","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","EmSculpt","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","EMSculpt","Not published (consultation required)","Not published"],["Manhattan Aesthetics","https://www.manhattan-aesthetics.com/","EmSculpt","Not published (consultation required)","Not published"],["Youtherapy MedSpa","https://youtherapymedspa.com/","ONDA Pro Body Contouring","Not published (consultation required)","Not published"],["Youtherapy MedSpa","https://youtherapymedspa.com/","EMSculpt NEO","Not published (consultation required)","Not published"],["M Beauty Studio & Spa","https://mbeauty.studio/","Cryolipolysis (Fat Freeze)","$249 (reg. $499)","Not published"],["M Beauty Studio & Spa","https://mbeauty.studio/","Fat Freeze + Cavitation Combo","$250 (reg. $500)","Not published"],["M Beauty Studio & Spa","https://mbeauty.studio/","EmSculpt (2 sessions)","$600 (reg. $1,200)","Not published"],["M Beauty Studio & Spa","https://mbeauty.studio/","Venus Legacy Body Contouring","Not published (consultation required)","Not published"],["M Beauty Studio & Spa","https://mbeauty.studio/","Vacuum Butt Lifting","Not published (consultation required)","Not published"],["Skin Spa New York","https://skinspanewyork.com/","Emsculpt NEO","Not published (consultation required)","Not published"],["Evolve Med Spa (Tribeca)","https://evolvemedspa.com/in/new-york/tribeca-ny/","EmSculpt NEO","$800 single - $4,000 (10-pack)","Not published"],["Bel Angé MedSpa","https://www.belangemedspa.com/","EmSculpt Neo","Not published (consultation required)","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","RF Body Contouring","$300/session","Not published"],["L'Elite MediSpa","https://lelitemedispa.com/lelite-medispa-manhattan/","Body Contouring","Not published (consultation required)","Not published"],["L'Elite MediSpa","https://lelitemedispa.com/lelite-medispa-manhattan/","Emsculpt","Not published (consultation required)","Not published"],["NY Med Spa","https://nycmedspa.nyc/","Vacuum Butt Lift","Not published (consultation required)","Not published"],["TREAT MEDSPA","https://treatmedspa.com/","Emsculpt NEO","Not published (consultation required)","Not published"],["Eureka Body Care and Spa + Medspa, Botox","eurekabodycareandspa.com","EMSculpt Neo Body Contouring (Small Applicator)","$650.00+","30 mins"]],"Ultherapy":[["Anna Avaliani MD Cosmetic & Laser Surgery","https://www.dravaliani.com/","Ultherapy Prime","Not published (consultation required)","Not published"],["MiracleFace MedSpa","https://miraclefacemedspanyc.com/","Ultherapy","Not published (consultation required)","Not published"],["Skinly Aesthetics","https://skinlyaesthetics.com/","Ultherapy","Not published (consultation required)","Not published"],["Youtherapy MedSpa","https://youtherapymedspa.com/","Ultherapy","Not published (consultation required)","Not published"],["Tribeca MedSpa","https://www.tribecamedspa.com/","Ultherapy","Not published (consultation required)","Not published"],["SkinCeuticals SkinLab by Tribeca MedSpa","https://www.skinlab-nyc.com/","Ultherapy","Not published (consultation required)","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","Ultherapy - Upper Face","$1,000","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","Ultherapy - Lower Face","$2,500","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","Ultherapy - Décolletage","$2,000","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","Ultherapy - Full Face","$3,200","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","Ultherapy - Lower Face + Neck","$3,500","Not published"],["Trifecta Med Spa (Wall Street Botox NYC)","https://wallstreetbotoxnyc.com/","Ultherapy - Full Face + Neck","$4,000","Not published"],["Deep Blue Med Spa","https://www.deepbluemedspa.com/locations/nyc/","Ultherapy","Price available upon consultation","Not published"],["Rothaus MD","https://www.rothausmd.com/","Ultherapy","Not published (consultation required)","Not published"],["Perfect Med Spa","https://www.perfectmedspa.com/nyc-med-spa/","Ultherapy","Not published (consultation required)","Not published"]]};
+
+  // Per-clinic breakdown modal: click a procedure name in "Most popular procedures" or
+  // "Typical pricing by procedure" to see every matching listing, clinic by clinic, with a
+  // link to each clinic's site and a sort control. Data below is grouped straight from the
+  // underlying All Procedures sheet (categorized by keyword match), so it's the same raw
+  // listings the charts above are summarizing -- useful for checking whether two prices are
+  // actually for the same thing (same unit count, package size, etc.) before comparing them.
+  const breakdownModalOverlay = document.getElementById('breakdown-modal-overlay');
+  const breakdownTitle = document.getElementById('breakdown-title');
+  const breakdownSub = document.getElementById('breakdown-sub');
+  const breakdownBody = document.getElementById('breakdown-body');
+  const sortButtons = Array.from(document.querySelectorAll('.sort-btn'));
+  let currentCategory = null;
+  let currentSort = 'clinic';
+
+  function parsePriceForSort(priceStr) {
+    const m = String(priceStr).match(/\$([\d,]+(?:\.\d+)?)/);
+    return m ? parseFloat(m[1].replace(/,/g, '')) : null;
+  }
+
+  function renderBreakdown() {
+    const rows = (breakdownData[currentCategory] || []).slice();
+    if (currentSort === 'clinic') {
+      rows.sort((a, b) => a[0].localeCompare(b[0]));
+    } else if (currentSort === 'price-asc' || currentSort === 'price-desc') {
+      rows.sort((a, b) => {
+        const pa = parsePriceForSort(a[3]);
+        const pb = parsePriceForSort(b[3]);
+        if (pa === null && pb === null) return 0;
+        if (pa === null) return 1;   // unpriced listings sink to the bottom either way
+        if (pb === null) return -1;
+        return currentSort === 'price-asc' ? pa - pb : pb - pa;
+      });
+    }
+
+    if (!rows.length) {
+      breakdownBody.innerHTML = '<div class="breakdown-empty">No listings found for this category.</div>';
+      return;
+    }
+
+    breakdownBody.innerHTML = rows.map(([clinic, website, proc, price, duration]) => {
+      const durationHtml = duration && duration !== 'Not published'
+        ? `<div class="breakdown-duration">${duration}</div>` : '';
+      const clinicHtml = website
+        ? `<a href="${website.startsWith('http') ? website : 'https://' + website}" target="_blank" rel="noopener noreferrer">${clinic}</a>`
+        : `<span class="no-link">${clinic}</span>`;
+      return `
+        <div class="breakdown-row">
+          <div>
+            <div class="breakdown-clinic">${clinicHtml}</div>
+            <div class="breakdown-proc">${proc}</div>
+          </div>
+          <div class="breakdown-price-col">
+            <div class="breakdown-price">${price}</div>
+            ${durationHtml}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function openBreakdown(category) {
+    if (!breakdownData[category]) return;
+    currentCategory = category;
+    currentSort = 'clinic';
+    sortButtons.forEach(b => b.classList.toggle('active', b.dataset.sort === 'clinic'));
+    const rows = breakdownData[category] || [];
+    const distinctClinics = new Set(rows.map(r => r[0])).size;
+    breakdownTitle.textContent = category;
+    breakdownSub.textContent = `${distinctClinics} clinics · ${rows.length} tracked listing${rows.length === 1 ? '' : 's'}`;
+    renderBreakdown();
+    breakdownModalOverlay.classList.add('open');
+  }
+
+  function closeBreakdown() {
+    breakdownModalOverlay.classList.remove('open');
+  }
+
+  document.querySelectorAll('.proc-name-link').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openBreakdown(el.dataset.category);
+    });
+  });
+
+  document.getElementById('breakdown-close').addEventListener('click', closeBreakdown);
+  breakdownModalOverlay.addEventListener('click', (e) => {
+    if (e.target === breakdownModalOverlay) closeBreakdown();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeBreakdown();
+  });
+  sortButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentSort = btn.dataset.sort;
+      sortButtons.forEach(b => b.classList.toggle('active', b === btn));
+      renderBreakdown();
+    });
+  });
+
+</script>
+
+</body>
+</html>

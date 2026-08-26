@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orlando Med Spa Market Report</title>
+<style>
+  :root {
+    --blue: #2563eb;
+    --blue-dark: #1d4ed8;
+    --blue-light: #eff6ff;
+    --ink: #111827;
+    --gray: #6b7280;
+    --gray-light: #9ca3af;
+    --border: #e5e7eb;
+    --bg: #f9fafb;
+    --green: #059669;
+    --amber: #d97706;
+    --red: #dc2626;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.5;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  header.hero {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #3b82f6 100%);
+    color: white;
+    padding: 26px 24px;
+    border-radius: 0 0 20px 20px;
+  }
+  header.hero .inner { max-width: 980px; margin: 0 auto; }
+  header.hero .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: 11px;
+    font-weight: 700;
+    opacity: .85;
+    margin-bottom: 6px;
+  }
+  header.hero h1 { font-size: 24px; margin: 0 0 6px; font-weight: 800; letter-spacing: -0.02em; }
+  header.hero p.sub { font-size: 13px; opacity: .9; margin: 0; max-width: 640px; }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: -26px;
+  }
+  .stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
+    border: 1px solid var(--border);
+  }
+  .stat-card .num { font-size: 30px; font-weight: 800; color: var(--blue); letter-spacing: -0.02em; }
+  .stat-card .label { font-size: 12.5px; color: var(--gray); margin-top: 4px; font-weight: 600; }
+
+  .stat-card.has-tooltip { position: relative; cursor: help; }
+  .stat-card.has-tooltip .label { text-decoration: underline dotted var(--gray-light); text-underline-offset: 3px; }
+  .stat-card .tooltip {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 340px;
+    max-width: 80vw;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 14px 34px rgba(15,23,42,0.18);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity .15s ease, transform .15s ease;
+    z-index: 20;
+    text-align: left;
+    cursor: default;
+  }
+  .stat-card.has-tooltip:hover .tooltip,
+  .stat-card.has-tooltip.tooltip-open .tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .tooltip-title { font-size: 12.5px; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
+  .tooltip p { font-size: 12px; color: var(--gray); margin: 0 0 12px; font-weight: 400; line-height: 1.5; }
+  .tooltip .pill-row { margin-top: 0; gap: 6px; }
+  .tooltip .pill { font-size: 11px; padding: 4px 9px; }
+
+  section { margin-top: 56px; }
+  h2 {
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+  }
+  p.section-desc { color: var(--gray); font-size: 14px; margin: 0 0 24px; max-width: 680px; }
+
+  .card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.04);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Funnel / campaign */
+  .funnel { display: flex; gap: 14px; flex-wrap: wrap; }
+  .funnel-step {
+    flex: 1 1 150px;
+    text-align: center;
+    padding: 18px 12px;
+    border-radius: 12px;
+    background: var(--blue-light);
+  }
+  .funnel-step .n { font-size: 26px; font-weight: 800; color: var(--blue-dark); }
+  .funnel-step .l { font-size: 12px; color: var(--gray); margin-top: 4px; font-weight: 600; }
+  .funnel-arrow { align-self: center; color: var(--gray-light); font-size: 20px; }
+
+  .pill-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+  .pill {
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+  .pill.green { background: #ecfdf5; color: var(--green); }
+  .pill.amber { background: #fffbeb; color: var(--amber); }
+  .pill.red   { background: #fef2f2; color: var(--red); }
+  .pill.gray  { background: #f3f4f6; color: var(--gray); }
+
+  /* Procedure bars */
+  .proc-row { display: grid; grid-template-columns: 220px 1fr 90px; align-items: center; gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--border); animation: rowIn .5s ease backwards; }
+  .proc-row:last-child { border-bottom: none; }
+  .proc-name { font-size: 13.5px; font-weight: 700; }
+  .proc-price { font-size: 11.5px; color: var(--gray); margin-top: 2px; font-weight: 500; }
+  .proc-name-link { cursor: pointer; text-decoration: underline dotted var(--gray-light); text-underline-offset: 3px; }
+  .proc-name-link:hover { color: var(--blue); }
+  .table-note { font-size: 11px; color: var(--gray); margin-top: 4px; font-weight: 400; line-height: 1.45; max-width: 420px; }
+  .bar-track { background: #eef2f7; border-radius: 8px; height: 22px; overflow: hidden; }
+  .bar-fill { background: linear-gradient(90deg, #60a5fa, var(--blue)); height: 100%; border-radius: 8px 0 0 8px; width: 0%; transition: width 1.1s cubic-bezier(.16,.8,.3,1); }
+  .bar-fill.trend { background: linear-gradient(90deg, #c4b5fd, #7c3aed); }
+  .proc-count { text-align: right; font-weight: 800; color: var(--blue-dark); font-size: 14px; }
+  .proc-count.trend { color: #6d28d9; }
+
+  @keyframes rowIn {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .stat-card .num { transition: none; }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  /* animation-fill-mode: backwards (not forwards, and no standing opacity:0 rule) so the card
+     doesn't retain a fractional-opacity stacking context after the fade-in finishes — a standing
+     "opacity: 0" here would trap the tooltip's z-index inside this card, letting later sections
+     in the DOM paint over it. Once the animation ends the card just falls back to normal opacity:1. */
+  .stat-card { animation: cardIn .5s ease backwards; }
+  .stat-card:nth-child(1) { animation-delay: .05s; }
+  .stat-card:nth-child(2) { animation-delay: .15s; }
+  .stat-card:nth-child(3) { animation-delay: .25s; }
+  .stat-card.has-tooltip { z-index: 1; }
+
+  /* Table */
+  table { width: 100%; min-width: 480px; border-collapse: collapse; font-size: 13.5px; }
+  th { text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--gray); padding: 10px 12px; border-bottom: 2px solid var(--border); }
+  td { padding: 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td.num { font-weight: 700; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  /* Tablet */
+  @media (max-width: 720px) {
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  /* Phones */
+  @media (max-width: 600px) {
+    .wrap { padding: 32px 16px 60px; }
+    header.hero { padding: 20px 16px; }
+    header.hero h1 { font-size: 20px; }
+    header.hero p.sub { font-size: 12.5px; }
+    section { margin-top: 40px; }
+    h2 { font-size: 18px; }
+    p.section-desc { font-size: 13px; }
+    .card { padding: 18px; }
+
+    .stat-card .num { font-size: 24px; }
+    .stat-card { padding: 16px; }
+
+    /* Tooltip: full-bleed under its card instead of a fixed 340px box that can overhang the
+       screen edge on narrow phones. */
+    .stat-card .tooltip { width: calc(100vw - 32px); max-width: none; left: 50%; transform: translateX(-50%) translateY(-6px); }
+    .stat-card.has-tooltip:hover .tooltip,
+    .stat-card.has-tooltip.tooltip-open .tooltip { transform: translateX(-50%) translateY(0); }
+
+    /* Procedure / trends / overlay rows: stack name, bar, and count instead of squeezing a
+       fixed 220px label column onto a ~360px screen. */
+    .proc-row, .overlay-row {
+      grid-template-columns: 1fr;
+      grid-template-areas: "name" "bar" "count";
+      row-gap: 6px;
+      padding: 12px 0;
+    }
+    .proc-row > div:first-child, .overlay-row > .proc-name { grid-area: name; }
+    .proc-row > .bar-track, .overlay-row > .overlay-track { grid-area: bar; }
+    .proc-row > .proc-count, .overlay-row > .overlay-pct { grid-area: count; text-align: left; }
+
+    .funnel-step { flex: 1 1 45%; }
+
+    .pill { font-size: 11.5px; padding: 5px 10px; }
+
+    #breakdown-modal-overlay { padding: 0; align-items: stretch; }
+    .breakdown-modal { max-height: 100vh; height: 100vh; border-radius: 0; max-width: 100%; }
+    .breakdown-modal-header, .breakdown-modal-controls, .breakdown-modal-body { padding-left: 16px; padding-right: 16px; }
+    .breakdown-row { flex-direction: column; gap: 2px; }
+    .breakdown-price-col { text-align: left; }
+    .table-note { max-width: none; }
+  }
+
+  ul.notes { margin: 0; padding-left: 18px; font-size: 13.5px; color: #374151; }
+  ul.notes li { margin-bottom: 10px; }
+
+  /* Overlay comparison chart */
+  .overlay-legend { display: flex; gap: 14px 22px; flex-wrap: wrap; margin-bottom: 20px; }
+  .overlay-legend-item { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 700; color: #374151; }
+  .sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; }
+  .sw-clinics { background: linear-gradient(90deg, #bfdbfe, #60a5fa); }
+  .sw-trends { background: linear-gradient(90deg, #c4b5fd, #7c3aed); }
+  .overlay-row { display: grid; grid-template-columns: 220px 1fr 96px; align-items: center; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--border); animation: rowIn .5s ease backwards; }
+  .overlay-row:last-child { border-bottom: none; }
+  .overlay-track { position: relative; height: 26px; background: #eef2f7; border-radius: 7px; overflow: visible; }
+  .overlay-bar-clinics {
+    position: absolute; left: 0; top: 0; height: 100%; width: 0%;
+    background: linear-gradient(90deg, #bfdbfe, #60a5fa);
+    border-radius: 7px;
+    transition: width 1.1s cubic-bezier(.16,.8,.3,1);
+  }
+  .overlay-bar-trends {
+    position: absolute; left: 0; top: 50%; height: 10px; width: 0%;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, #c4b5fd, #7c3aed);
+    border-radius: 6px;
+    box-shadow: 0 0 0 2px #fff;
+    transition: width 1.1s cubic-bezier(.16,.8,.3,1) .1s;
+  }
+  .overlay-pct { text-align: right; font-size: 11.5px; line-height: 1.5; }
+  .overlay-pct .c { color: var(--blue-dark); font-weight: 800; }
+  .overlay-pct .t { color: #6d28d9; font-weight: 800; }
+
+  footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 12px; color: var(--gray-light); text-align: center; }
+
+  /* Per-clinic breakdown modal */
+  #breakdown-modal-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(15,23,42,0.5);
+    display: none; align-items: flex-start; justify-content: center;
+    padding: 40px 16px; overflow-y: auto;
+  }
+  #breakdown-modal-overlay.open { display: flex; }
+  .breakdown-modal {
+    background: white; border-radius: 16px; max-width: 720px; width: 100%;
+    box-shadow: 0 20px 60px rgba(15,23,42,0.3);
+    max-height: calc(100vh - 80px);
+    display: flex; flex-direction: column;
+  }
+  .breakdown-modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .breakdown-modal-title { font-size: 17px; font-weight: 800; }
+  .breakdown-modal-sub { font-size: 12.5px; color: var(--gray); margin-top: 4px; }
+  .breakdown-modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--gray); line-height: 1; padding: 2px 6px; border-radius: 6px; }
+  .breakdown-modal-close:hover { color: var(--ink); background: var(--bg); }
+  .breakdown-modal-controls { padding: 12px 24px; border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .breakdown-sort-label { font-size: 11.5px; color: var(--gray); font-weight: 700; text-transform: uppercase; letter-spacing: .03em; margin-right: 2px; }
+  .sort-btn { font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border); background: white; cursor: pointer; color: var(--gray); }
+  .sort-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .sort-btn.active { background: var(--blue); border-color: var(--blue); color: white; }
+  .breakdown-modal-body { overflow-y: auto; padding: 6px 24px 20px; }
+  .breakdown-row { padding: 11px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; }
+  .breakdown-row:last-child { border-bottom: none; }
+  .breakdown-clinic a { color: var(--blue-dark); font-weight: 700; font-size: 13.5px; text-decoration: none; }
+  .breakdown-clinic a:hover { text-decoration: underline; }
+  .breakdown-clinic .no-link { color: var(--ink); font-weight: 700; font-size: 13.5px; }
+  .breakdown-proc { font-size: 12px; color: var(--gray); margin-top: 2px; }
+  .breakdown-price-col { text-align: right; flex-shrink: 0; }
+  .breakdown-price { font-weight: 800; color: var(--ink); font-size: 13.5px; white-space: nowrap; }
+  .breakdown-duration { font-size: 11px; color: var(--gray-light); margin-top: 2px; }
+  .breakdown-empty { padding: 24px 0; text-align: center; color: var(--gray); font-size: 13px; }
+
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="inner">
+    <div class="eyebrow">Market Research &middot; Updated Aug 24, 2026</div>
+    <h1>Orlando Med Spa Market Report</h1>
+    <p class="sub">Pricing transparency across Orlando-metro med spas, built from live website research. Outreach campaign has not started yet.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="stat-grid">
+    <div class="stat-card has-tooltip">
+      <div class="num">71</div><div class="label">Clinics tracked</div>
+      <div class="tooltip">
+        <div class="tooltip-title">Coverage at a glance</div>
+        <p>Since a single citywide Google Maps search consistently capped at 6 visible results, coverage was built from 15 neighborhood/suburb-scoped searches instead across the Orlando metro (Downtown Orlando, Winter Park, Dr. Phillips, Windermere, Winter Garden, Ocoee, Altamonte Springs, Oviedo, Winter Springs, Kissimmee, Celebration, Lake Mary, Sanford, and Longwood), turning up 75 distinct candidates. 4 were dropped as non-medical spas (day-spa/salon services only, or in one case a permanent-makeup/cosmetic-tattoo studio with no injectables or laser treatments) &mdash; leaving 71 confirmed medical spas.</p>
+        <div class="pill-row">
+          <span class="pill green">29 &mdash; full pricing</span>
+          <span class="pill amber">18 &mdash; partial pricing</span>
+          <span class="pill gray">24 &mdash; no public pricing</span>
+        </div>
+      </div>
+    </div>
+    <div class="stat-card"><div class="num">66%</div><div class="label">Clinics with pricing on file (full or partial)</div></div>
+    <div class="stat-card"><div class="num">0</div><div class="label">Pricing-request emails sent (outreach not yet started)</div></div>
+  </div>
+
+  <section>
+    <h2>Most popular procedures</h2>
+    <p class="section-desc">Ranked by number of distinct clinics offering each treatment, across all 71 tracked clinics. <strong>Click a procedure name</strong> to see the clinic-by-clinic breakdown and prices.</p>
+    <div class="card">
+      <div id="procedures"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Search interest in Orlando <span style="font-weight:600;color:var(--gray);font-size:13px;">(Google Trends)</span></h2>
+    <p class="section-desc">Relative search interest for each treatment among Orlando&ndash;area searchers over the past 12 months, indexed 0&ndash;100 against the single highest-volume term (Botox) across all comparisons. One representative search term was used per category &mdash; see note below.</p>
+    <div class="card">
+      <div id="trends"></div>
+      <p style="font-size:11.5px;color:var(--gray-light);margin:16px 0 0;line-height:1.5;">Source: trends.google.com, geo = Orlando-Daytona Beach-Melbourne, FL (Nielsen DMA US-FL-534), Aug 2025&ndash;Aug 2026, weekly values averaged and read directly from the Trends API response rather than estimated visually, using a single Chrome tab with spaced-out requests (no parallel tabs) to avoid the bot-detection block hit in an earlier attempt for this city. Google Trends indexes relative search volume for the exact term entered, not category-wide demand &mdash; e.g. "Dermal Fillers" doesn't capture searches for "Juv&eacute;derm" or "Restylane," and "IPL Photofacial" doesn't capture "BBL" or "Lumecca." Treat this as a directional signal, not an absolute demand figure.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Clinics vs. search demand</h2>
+    <p class="section-desc">Reading clinic supply against consumer search interest side by side.</p>
+    <div class="card">
+      <ul class="notes">
+        <li><strong>Botox leads both supply and demand.</strong> Botox / Neuromodulators is both the most-offered category by distinct clinic count (50 of 71 clinics, 70%) and the runaway search leader (index 80). Dermal / Lip Fillers is the second most-offered category (41 clinics, 58%) but searches at essentially index 1 &mdash; Orlando searchers likely split filler searches across brand names (Juv&eacute;derm, Restylane, Sculptra) rather than the generic term, the same understatement pattern seen in every city in this project.</li>
+        <li><strong>Microneedling and Laser Hair Removal are the best-aligned categories.</strong> Both are tied for 3rd-4th most-offered (19 clinics each, 27%) and post the two highest non-Botox search indexes (31 and 29) &mdash; real consumer interest that's actually matched by real clinic supply, a rarer pattern in this dataset.</li>
+        <li><strong>Medical Weight Loss / GLP-1 is the starkest demand-ahead-of-supply mismatch.</strong> Only 10 of 71 clinics offer it (14%, tied for 6th-7th) yet it posts a search index of 51 &mdash; reflecting the broader Semaglutide/GLP-1 wave outpacing local clinic listings, a pattern that turned out to be even sharper in Dallas and Houston once those cities' Trends data came in.</li>
+        <li><strong>Body Contouring / CoolSculpting is the starkest supply-ahead-of-demand mismatch.</strong> It's the 5th most-offered category (15 clinics, 21%) yet its search index is just 1 &mdash; among the lowest in the whole set, consistent with the near-zero CoolSculpting-brand search interest seen in every city researched.</li>
+        <li><strong>Kybella and IPL / Photofacial are thin or invisible on the demand side despite real supply.</strong> Kybella sits at just 2 of 71 clinics (3%) and a search index of 0; IPL / Photofacial has moderate supply (7 clinics, 10%) but an index of 0 &mdash; searchers may be using device or brand names (BBL, Lumecca) rather than the generic category term.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Popularity overlay: clinic supply vs. search demand</h2>
+    <p class="section-desc">Clinic supply is scaled to % of the top clinic category (Botox / Neuromodulators). Search demand uses the actual Google Trends index (0&ndash;100) from the Search Interest chart above &mdash; unscaled, so the numbers match exactly. Where the purple bar reaches further than the blue, search demand is outrunning clinic supply &mdash; and vice versa.</p>
+    <div class="card">
+      <div class="overlay-legend">
+        <span class="overlay-legend-item"><i class="sw sw-clinics"></i>Clinic supply (% of top category)</span>
+        <span class="overlay-legend-item"><i class="sw sw-trends"></i>Search demand (Google Trends index, 0&ndash;100)</span>
+      </div>
+      <div id="overlay"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Typical pricing by procedure</h2>
+    <p class="section-desc">Ranges and medians below are computed from actual parsed listing prices, not estimates. <strong>Click a procedure name</strong> to see exactly which clinic and listing each price came from &mdash; important, since a wide range often means the listings aren't really comparable (see "Are we comparing the same thing?" below).</p>
+    <div class="card" style="padding:0;">
+      <table>
+        <thead>
+          <tr><th>Procedure</th><th># clinics</th><th>Typical range</th><th>Median</th></tr>
+        </thead>
+        <tbody id="price-table"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Are we comparing the same thing?</h2>
+    <p class="section-desc">Short answer: not always &mdash; and that's worth knowing before reading too much into any single price range above.</p>
+    <div class="card">
+      <ul class="notes">
+        <li><strong>Botox's published per-unit pricing comes from just 13 of 50 clinics</strong>, most of it introductory or event-day promo pricing rather than a standing rate (Couture Med Spa's $7.97/unit intro rate appears identically across its Oviedo, Kissimmee, and Lake Mary locations, since all three are the same chain). 3 unrelated clinics (VIO Med Spa SoDo, 180 MedSpa, Windermere Medical Spa &amp; Laser Institute - Winter Park) show the exact same '$12-$15/unit' phrasing seen repeated verbatim in Atlanta and Miami &mdash; treated as generic boilerplate estimate text, not real clinic pricing, and excluded from this report's range.</li>
+        <li><strong>Dermal / Lip Fillers ($349&ndash;$850/syringe) mixes single-syringe rates, member rates, and multi-syringe packages</strong> &mdash; not all directly comparable to each other. The same 3-clinic boilerplate contamination pattern appears here too ('$600-$1,200/syringe', verbatim across VIO SoDo, 180 MedSpa, and Windermere Winter Park) and was excluded.</li>
+        <li><strong>Microneedling (19 clinics) has almost no genuine pricing</strong> &mdash; only 1 of 19 publishes a real clinic price. A second apparent listing (Homa Rejuvenation Center's $880-$1,650/session) came from a third-party pricing-aggregator site rather than the clinic's own website and was excluded as not clinic-verified.</li>
+        <li><strong>Skin Tightening ($229&ndash;$2,400) is a single clinic's two very different treatments</strong> &mdash; an RF session versus a full non-surgical facelift package &mdash; not a market range at all; treat this figure with caution.</li>
+        <li><strong>What we did about it:</strong> every "# clinics" figure in this report counts <em>distinct clinics</em>, not raw price listings. We can't fully normalize prices to a common unit automatically, since clinics describe quantities and package sizes in inconsistent free text, so every procedure name is clickable and opens the full list of underlying listings &mdash; exact wording, exact price, per clinic &mdash; so you can check whether two prices are actually for the same thing before comparing them.</li>
+        <li><strong>65% of Orlando clinics show any pricing at all, full or partial</strong> &mdash; the highest rate seen in this project after Charlotte (70%), well above Atlanta and Miami (32%) and West Palm Beach (31%). The Oviedo/Winter Springs/Lake Mary/Sanford corridor, dense with independent single-location clinics running visible promo pricing, drives most of this.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Outreach campaign</h2>
+    <p class="section-desc">For every clinic without published pricing, a short personalized email asking for rates is planned &mdash; following the same process used for Manhattan, Charlotte, Atlanta, Miami, and West Palm Beach. That campaign has not started yet for Orlando.</p>
+    <div class="card">
+      <div class="funnel">
+        <div class="funnel-step"><div class="n">25</div><div class="l">Clinics with no published pricing (outreach targets)</div></div>
+        <div class="funnel-arrow">&rarr;</div>
+        <div class="funnel-step"><div class="n">0</div><div class="l">Emails sent</div></div>
+        <div class="funnel-arrow">&rarr;</div>
+        <div class="funnel-step"><div class="n">&mdash;</div><div class="l">Campaign not yet started</div></div>
+      </div>
+      <p style="font-size:12px;color:var(--gray);margin:18px 0 0;">A further 18 clinics have <em>partial</em> pricing (a promo rate, one or two line items, or a package price only) and are also reasonable outreach candidates for their standard rates. As in prior cities, most clinics in this dataset have no discoverable email address (contact form or phone only) &mdash; only a small handful publish a direct email &mdash; so this campaign will need a different outreach channel more often than Charlotte's did.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Geographic coverage</h2>
+    <div class="card">
+      <ul class="notes">
+        <li><strong>Winter Park</strong> (7) &mdash; Look Lab Med Spa, 180 MedSpa, Winter Park Medspa, Couture Med Spa - Winter Park, Polished Beauty Medspa, Aesthetic District Medspa - Winter Park, Windermere Medical Spa & Laser Institute - Winter Park.</li>
+        <li><strong>Downtown Orlando</strong> (6) &mdash; LUXE Med Spa Aesthetics, Bijoux Med Spa & Wellness, VIO Med Spa | SoDo, CONFIDENTLY Med Spa, Nectar Aesthetics Med Spa - Orlando, Unive Med Spa.</li>
+        <li><strong>Dr. Phillips</strong> (6) &mdash; Dr. Phillips Medical Spa, Facial Mania Med Spa Orlando, Sand Lake MedSpa, Makeover Aesthetics, Vamped Aesthetics, New U Med Spa.</li>
+        <li><strong>Oviedo</strong> (6) &mdash; VIO Med Spa | Oviedo, Couture Med Spa - Oviedo, Oviedo Med Spa, Beauty & Medicine Medspa - Oviedo, Trandi Med Spa - Oviedo, Vita Medspa - Oviedo.</li>
+        <li><strong>Lake Mary</strong> (6) &mdash; Couture Med Spa - Lake Mary, Tres Jolie Medical Spa, RenuMe Medspa, Puar Elevated Beauty, The Aesthetic Lounge, The Rose Spa Of Lake Mary.</li>
+        <li><strong>Lake Nona</strong> (5) &mdash; Nona Med Spa, NUR MedSpa & Wellness - Lake Nona, Aesthetic District Medspa - Lake Nona, Pristine Spas, Prixus MedSpa.</li>
+        <li><strong>Winter Garden</strong> (5) &mdash; VIO Med Spa | Winter Garden, Body By SKIN Med Spa, Sheis Beauty Medical Spa, Sapphira Prive Winter Garden MedSpa, Imagine Medspa.</li>
+        <li><strong>Altamonte Springs</strong> (5) &mdash; REV Med Spa, Meraki Wellness and Med Spa, NUR Med Spa & Wellness - Altamonte Springs, 4Ever Young Med Spa & Wellness Center - Altamonte Springs, Homa Rejuvenation Center, Med Spa.</li>
+        <li><strong>Kissimmee</strong> (4) &mdash; Couture Med Spa - Kissimmee, Beautiful Orlando Spa and Cosmetic Surgery, NuVa Wellness & Spa, All Body Spa by Yeliz.</li>
+        <li><strong>Sanford</strong> (4) &mdash; Nectar Aesthetics Med Spa - Sanford, Reviv Beauty Med Spa, Belle Ame Wellness, Elite Aesthetics Skin & Wellness Center - Sanford.</li>
+        <li><strong>Longwood</strong> (4) &mdash; Mariah's Medical Spa, AloEver Medspa, NovaGen Skin & Wellness, Luminous Skin Medical Spa.</li>
+        <li><strong>Windermere</strong> (3) &mdash; Windermere Medical Spa & Laser Institute, N6 Aesthetics Spa and Wellness, Exclusive Med Aesthetics & Hair Restoration.</li>
+        <li><strong>Winter Springs</strong> (3) &mdash; Maki Med Spa & Wellness, Absolute Face & Body Medspa, Victoria Edward Spa & Wellness Center.</li>
+        <li><strong>Baldwin Park</strong> (2) &mdash; Healthy Glow Med Spa, SkinLocal Orlando.</li>
+        <li><strong>College Park</strong> (2) &mdash; One Aesthetics, Zoya Medical Orlando.</li>
+        <li><strong>Winter Garden/Ocoee</strong> (1) &mdash; Sol Bonita Med Spa.</li>
+        <li><strong>Celebration</strong> (1) &mdash; Celebration Wellness Spa.</li>
+        <li><strong>Orlando</strong> (1) &mdash; Elevate Aesthetics.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    Source: Orlando_Med_Spa_Procedures.xlsx &middot; Compiled from direct website research and a Google Maps sweep &middot; Report generated 8/24/26
+  </footer>
+
+</div>
+
+<div id="breakdown-modal-overlay">
+  <div class="breakdown-modal">
+    <div class="breakdown-modal-header">
+      <div>
+        <div class="breakdown-modal-title" id="breakdown-title">Procedure</div>
+        <div class="breakdown-modal-sub" id="breakdown-sub">Every tracked listing for this category, clinic by clinic.</div>
+      </div>
+      <button class="breakdown-modal-close" id="breakdown-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="breakdown-modal-controls">
+      <span class="breakdown-sort-label">Sort:</span>
+      <button class="sort-btn active" data-sort="clinic">Clinic A&ndash;Z</button>
+      <button class="sort-btn" data-sort="price-asc">Price: low to high</button>
+      <button class="sort-btn" data-sort="price-desc">Price: high to low</button>
+    </div>
+    <div class="breakdown-modal-body" id="breakdown-body"></div>
+  </div>
+</div>
+
+<script>
+
+  (function () {
+    const tooltipCard = document.querySelector('.stat-card.has-tooltip');
+    if (!tooltipCard) return;
+    tooltipCard.addEventListener('click', function (e) {
+      e.stopPropagation();
+      tooltipCard.classList.toggle('tooltip-open');
+    });
+    document.addEventListener('click', function () {
+      tooltipCard.classList.remove('tooltip-open');
+    });
+  })();
+
+  const procedures = [{"name": "Botox / Neuromodulators", "count": 50, "price": "~$9/unit"}, {"name": "Dermal / Lip Fillers", "count": 41, "price": "~$550/syringe"}, {"name": "Microneedling", "count": 19, "price": "\u2014"}, {"name": "Laser Hair Removal", "count": 19, "price": "\u2014"}, {"name": "Body Contouring / CoolSculpting", "count": 15, "price": "\u2014"}, {"name": "PRP / PRF", "count": 10, "price": "\u2014"}, {"name": "Medical Weight Loss / GLP-1", "count": 10, "price": "\u2014"}, {"name": "IV Therapy", "count": 9, "price": "\u2014"}, {"name": "Sculptra / Biostimulators", "count": 7, "price": "$800/vial"}, {"name": "HydraFacial", "count": 7, "price": "\u2014"}, {"name": "Hormone Therapy", "count": 7, "price": "\u2014"}, {"name": "IPL / Photofacial", "count": 7, "price": "\u2014"}, {"name": "Chemical Peels", "count": 6, "price": "\u2014"}, {"name": "Skin Tightening (Morpheus8/RF)", "count": 4, "price": "\u2014"}, {"name": "Kybella", "count": 2, "price": "\u2014"}];
+  const max = Math.max(...procedures.map(p => p.count));
+  const container = document.getElementById('procedures');
+  const barsToAnimate = [];
+  procedures.forEach((p, i) => {
+    const row = document.createElement('div');
+    row.className = 'proc-row';
+    row.style.animationDelay = `${i * 0.04}s`;
+    const pct = (p.count / max * 100).toFixed(0);
+    row.innerHTML = `
+      <div>
+        <div class="proc-name proc-name-link" data-category="${p.name}">${p.name}</div>
+        <div class="proc-price">${p.price}</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" data-pct="${pct}"></div></div>
+      <div class="proc-count">${p.count} clinics</div>
+    `;
+    container.appendChild(row);
+    barsToAnimate.push(row.querySelector('.bar-fill'));
+  });
+
+  const trends = [{"name": "Botox / Neuromodulators", "term": "\"Botox\"", "index": 80}, {"name": "Dermal / Lip Fillers", "term": "\"Dermal Fillers\"", "index": 1}, {"name": "Sculptra / Biostimulators", "term": "\"Sculptra\"", "index": 6}, {"name": "Kybella", "term": "\"Kybella\"", "index": 0}, {"name": "HydraFacial", "term": "\"HydraFacial\"", "index": 3}, {"name": "Chemical Peels", "term": "\"Chemical Peel\"", "index": 5}, {"name": "Microneedling", "term": "\"Microneedling\"", "index": 31}, {"name": "Laser Hair Removal", "term": "\"Laser Hair Removal\"", "index": 29}, {"name": "Body Contouring / CoolSculpting", "term": "\"CoolSculpting\"", "index": 1}, {"name": "Skin Tightening (Morpheus8/RF)", "term": "\"Morpheus8\"", "index": 1}, {"name": "IV Therapy", "term": "\"IV Therapy\"", "index": 14}, {"name": "PRP / PRF", "term": "\"PRP Therapy\"", "index": 0}, {"name": "Medical Weight Loss / GLP-1", "term": "\"Semaglutide\"", "index": 51}, {"name": "Hormone Therapy", "term": "\"Hormone Replacement Therapy\"", "index": 6}, {"name": "IPL / Photofacial", "term": "\"IPL Photofacial\"", "index": 0}];
+  const trendsContainer = document.getElementById('trends');
+  trends.forEach((t, i) => {
+    const row = document.createElement('div');
+    row.className = 'proc-row';
+    row.style.animationDelay = `${i * 0.04}s`;
+    row.innerHTML = `
+      <div>
+        <div class="proc-name">${t.name}</div>
+        <div class="proc-price">Search term: ${t.term}</div>
+      </div>
+      <div class="bar-track"><div class="bar-fill trend" data-pct="${t.index}"></div></div>
+      <div class="proc-count trend">${t.index} / 100</div>
+    `;
+    trendsContainer.appendChild(row);
+    barsToAnimate.push(row.querySelector('.bar-fill'));
+  });
+
+  const overlayContainer = document.getElementById('overlay');
+  const clinicMax = Math.max(...procedures.map(p => p.count));
+  procedures.forEach((p, i) => {
+    const t = trends.find(x => x.name === p.name) || { index: 0 };
+    const clinicPct = Math.round(p.count / clinicMax * 100);
+    const trendPct = t.index;
+    const row = document.createElement('div');
+    row.className = 'overlay-row';
+    row.style.animationDelay = `${i * 0.04}s`;
+    row.innerHTML = `
+      <div class="proc-name">${p.name}</div>
+      <div class="overlay-track">
+        <div class="overlay-bar-clinics" data-pct="${clinicPct}"></div>
+        <div class="overlay-bar-trends" data-pct="${trendPct}"></div>
+      </div>
+      <div class="overlay-pct"><span class="c">${clinicPct}%</span> clinics<br><span class="t">${trendPct}</span> search idx</div>
+    `;
+    overlayContainer.appendChild(row);
+    barsToAnimate.push(row.querySelector('.overlay-bar-clinics'));
+    barsToAnimate.push(row.querySelector('.overlay-bar-trends'));
+  });
+
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      barsToAnimate.forEach((el, i) => {
+        setTimeout(() => { el.style.width = el.dataset.pct + '%'; }, i * 25);
+      });
+    }, 150);
+  });
+
+  function animateCount(el, target, opts = {}) {
+    const { suffix = '', duration = 1200, decimals = 0, prefix = '' } = opts;
+    const start = performance.now();
+    function tick(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const val = target * eased;
+      el.textContent = prefix + val.toLocaleString('en-US', { maximumFractionDigits: decimals, minimumFractionDigits: decimals }) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = prefix + target.toLocaleString('en-US') + suffix;
+    }
+    requestAnimationFrame(tick);
+  }
+  document.querySelectorAll('.stat-card .num').forEach(el => {
+    const raw = el.textContent.trim();
+    const suffix = raw.match(/%$/) ? '%' : '';
+    const target = parseFloat(raw.replace(/[^0-9.]/g, ''));
+    if (!isNaN(target)) {
+      el.textContent = suffix ? '0%' : '0';
+      setTimeout(() => animateCount(el, target, { suffix }), 200);
+    }
+  });
+
+  const priceRows = [["Botox / Neuromodulators", "$7\u2013$15/unit", "~$9/unit", "14 of 50 clinics publish a genuine per-unit rate, mostly introductory/promo pricing (Sheis Beauty Medical Spa $7/unit \u2014 confirmed via pricing-request email, 2026-08-24; Couture Med Spa's $7.97/unit intro rate appears identically at its Oviedo, Kissimmee, and Lake Mary locations; Absolute Face & Body $9.99/unit promo vs $17 regular; Homa Rejuvenation $8.99/unit promo; Reviv Beauty Sanford $9.99/unit). 3 clinics (VIO Med Spa SoDo, 180 MedSpa, Windermere Medical Spa & Laser Institute - Winter Park) show the identical '$12-$15/unit' phrase seen repeated verbatim in Atlanta and Miami \u2014 treated as generic third-party estimate text, not real clinic pricing, and excluded from this range."], ["Dermal / Lip Fillers", "$349\u2013$850/syringe", "~$550/syringe", "11 of 41 clinics publish a genuine per-syringe or per-package rate (Reviv Beauty Sanford's full menu from $349-$725; Nectar Aesthetics from $475 for members; N6 Aesthetics and Aesthetic District Lake Nona both around $549-$600). 3 clinics (VIO Med Spa SoDo, 180 MedSpa, Windermere Medical Spa & Laser Institute - Winter Park) repeat the same '$600-$1,200/syringe' boilerplate phrase and are excluded from this range."], ["Sculptra / Biostimulators", "$800\u2013$1,000/vial", "$800/vial", "3 of 7 clinics publish Sculptra pricing and they converge tightly: Look Lab Med Spa and Polished Beauty Medspa both list $800/vial, Vamped Aesthetics $800-$1,000/vial \u2014 the most consistent pricing signal found in this dataset."], ["Laser Hair Removal", "$98\u2013$250 (6-session package)", "\u2014", "Only 2 of 19 clinics publish genuine pricing, both as discounted 6-session packages rather than per-session rates (Couture Med Spa Kissimmee's Groupon deal from $98.10, Sapphira Prive Winter Garden from $250) \u2014 the wide spread likely reflects different treatment-area sizes rather than a real price difference. A third listing (Couture Med Spa Oviedo's 'industry avg $500/treatment') is a competitor-comparison figure, not the clinic's own price, and was excluded."], ["Chemical Peels", "$225\u2013$375+", "\u2014", "3 of 6 clinics publish peel pricing (Elite Aesthetics Skin & Wellness Center's Blue Peel Radiance Facial at $225, Reviv Beauty's PRX 'no-peel peel' at $300/session or $1,000 for a 4-pack, Polished Beauty Medspa's medical-grade VI Peel from $375) \u2014 note these are different peel technologies, not a single comparable product."], ["Medical Weight Loss / GLP-1", "$99/mo\u2013$1,000 (4-week plan)", "\u2014", "3 of 10 clinics publish weight-loss pricing, but on incompatible billing structures \u2014 Reviv Beauty Sanford's $99/mo program membership, Healthy Glow Med Spa's 10-12 week program starting at $450, and Look Lab Med Spa's 4-week semaglutide plan from $1,000 \u2014 so this isn't a single comparable rate."], ["Skin Tightening (Morpheus8/RF)", "$229\u2013$2,400", "\u2014", "Only 1 of 4 clinics (Sol Bonita Med Spa) publishes pricing, and it spans two very different treatments: RF lifting sessions at $229 (reg. $275) versus a full non-surgical Trilift RF facelift at $2,400 (promo $1,440) \u2014 not directly comparable to each other."], ["PRP / PRF", "$500/session", "\u2014", "Only 1 of 10 clinics (New U Med Spa, $500/session) publishes PRP pricing; the other 9 offering PRP/PRF/vampire facial treatments show no price."], ["Microneedling", "Not widely published", "\u2014", "Only 1 of 19 clinics (Polished Beauty Medspa, from $475) publishes a genuine microneedling price. A second listing (Homa Rejuvenation Center's $880-$1,650/session) is sourced from a third-party pricing aggregator rather than the clinic's own site and was excluded as not clinic-verified."], ["Body Contouring / CoolSculpting", "Not widely published", "\u2014", "Only 1 of 15 clinics shows any price, and it's a $99/mo membership access fee (Couture Med Spa Winter Park) rather than a per-treatment rate \u2014 effectively no genuine body-contouring treatment pricing was found in this dataset."], ["HydraFacial", "Not widely published", "\u2014", "Only 1 of 7 clinics (Victoria Edward Spa & Wellness Center) publishes a price, and it's a bundled promo ($149 for HydraFacial + LED Light Therapy + Dermaplaning together, not HydraFacial alone)."], ["Hormone Therapy", "Not widely published", "\u2014", "None of the 7 clinics offering hormone therapy in this dataset publish a price \u2014 consistent with this category skewing toward consult-first, membership-style pricing everywhere in this project so far."], ["IPL / Photofacial", "Not widely published", "\u2014", "None of the 7 clinics offering IPL/photofacial/laser resurfacing treatments in this dataset publish a price."], ["IV Therapy", "Not widely published", "\u2014", "Only 1 of 9 clinics (Reviv Beauty Sanford, signature drips from $149) publishes IV pricing; the other 8 show no price at all."], ["Kybella", "Not widely published", "\u2014", "Neither of the 2 clinics offering Kybella in this dataset (both via generic services-page mentions) publishes a price."]];
+  const tbody = document.getElementById('price-table');
+  priceRows.forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><div class="proc-name proc-name-link" data-category="${r[0]}">${r[0]}</div><div class="table-note">${r[4]}</div></td><td class="num">${r[1]}</td><td>${r[2]}</td><td class="num">${r[3]}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  const breakdownData = {"Botox / Neuromodulators": [["LUXE Med Spa Aesthetics", "luxemedspaaesthetics.com", "Jeuveau/Dysport", "not published", ""], ["Bijoux Med Spa & Wellness", "bijouxmedspa.com", "Botox", "not published", ""], ["VIO Med Spa | SoDo", "viomedspa.com/sodo", "Botox", "$12-$15/unit (repeated generic-range phrasing, treat as directional)", ""], ["CONFIDENTLY Med Spa", "confidentlymedspa.com", "Botox (Neurotoxin)", "not published", ""], ["Nectar Aesthetics Med Spa - Orlando", "nectaraesthetics.com", "Botox", "not published", ""], ["Unive Med Spa", "", "Botox", "not published", ""], ["Look Lab Med Spa", "looklab.com", "Botox", "not published", ""], ["180 MedSpa", "180medspa.com", "Botox", "$12-$15/unit (repeated generic-range phrasing, treat as directional)", ""], ["Winter Park Medspa", "winterparkmedspa.com", "Botox", "not published", ""], ["Couture Med Spa - Winter Park", "couturemedspa.com/locations/winter-park", "Botox", "not published", ""], ["Polished Beauty Medspa", "polishedbeautymedspa.com", "Botox / Dysport", "$250 and up", ""], ["Dr. Phillips Medical Spa", "drphillipsmedicalspa.com", "Botox", "not published", ""], ["Facial Mania Med Spa Orlando", "orlando.facialmaniamedspa.com", "Botox", "not published", ""], ["Vamped Aesthetics", "vampedaesthetics.com", "Botox", "$10-15/unit; full forehead+crow's feet treatment $300-$600", ""], ["New U Med Spa", "newumedspaorlando.com", "Botox", "not published", ""], ["NUR MedSpa & Wellness - Lake Nona", "thenurmedspa.com", "Botox (crow's feet, per side)", "$100-$200/side", ""], ["NUR MedSpa & Wellness - Lake Nona", "thenurmedspa.com", "Botox (membership, up to 20% off repeat visits)", "not published", ""], ["Aesthetic District Medspa - Lake Nona", "admedicalspa.com", "Xeomin/SmartTox (promo, first 100 clients)", "$7.99/unit", ""], ["Aesthetic District Medspa - Lake Nona", "admedicalspa.com", "Botox", "not published", ""], ["Prixus MedSpa", "prixusmedspa.com", "Botox", "$10/unit", ""], ["Healthy Glow Med Spa", "healthyglowmedspa.com", "Botox", "not published", ""], ["One Aesthetics", "oneaesthetics.com", "Neurotoxins (Botox/Dysport)", "not published (event-only promo specials seen)", ""], ["Zoya Medical Orlando", "zoyamedicalorlando.com", "Botox", "~$699 (per one customer review, no first-time discount, unit count unclear)", ""], ["Windermere Medical Spa & Laser Institute", "windermeremedicalspa.com", "Botox", "not published", ""], ["Exclusive Med Aesthetics & Hair Restoration", "exclusivemedaesthetics.com", "Botox/Xeomin/Jeuveau/Dysport", "not published", ""], ["Sheis Beauty Medical Spa", "sheisbeautymedicalspa.com", "Forehead Lines (Botox)", "$7/unit \u2014 confirmed via pricing-request email, 2026-08-24 (most clients need ~40\u201350 units for forehead + glabella/11s combined, roughly $280\u2013$350)", ""], ["Sheis Beauty Medical Spa", "sheisbeautymedicalspa.com", "Glabella/11s (Botox)", "$7/unit \u2014 confirmed via pricing-request email, 2026-08-24 (most clients need ~40\u201350 units for forehead + glabella/11s combined, roughly $280\u2013$350)", ""], ["Sheis Beauty Medical Spa", "sheisbeautymedicalspa.com", "Crows Feet (Botox)", "$7/unit \u2014 confirmed via pricing-request email, 2026-08-24 (most clients need ~40\u201350 units for forehead + glabella/11s combined, roughly $280\u2013$350)", ""], ["Sheis Beauty Medical Spa", "sheisbeautymedicalspa.com", "Eyebrow Lift (Botox)", "$7/unit \u2014 confirmed via pricing-request email, 2026-08-24 (most clients need ~40\u201350 units for forehead + glabella/11s combined, roughly $280\u2013$350)", ""], ["Sheis Beauty Medical Spa", "sheisbeautymedicalspa.com", "Bunny Lines (Botox)", "$7/unit \u2014 confirmed via pricing-request email, 2026-08-24 (most clients need ~40\u201350 units for forehead + glabella/11s combined, roughly $280\u2013$350)", ""], ["Sheis Beauty Medical Spa", "sheisbeautymedicalspa.com", "Nose Tip Lift (Botox)", "$7/unit \u2014 confirmed via pricing-request email, 2026-08-24 (most clients need ~40\u201350 units for forehead + glabella/11s combined, roughly $280\u2013$350)", ""], ["Sheis Beauty Medical Spa", "sheisbeautymedicalspa.com", "Nasal Flare Reduction (Botox)", "$7/unit \u2014 confirmed via pricing-request email, 2026-08-24 (most clients need ~40\u201350 units for forehead + glabella/11s combined, roughly $280\u2013$350)", ""], ["Sheis Beauty Medical Spa", "sheisbeautymedicalspa.com", "Lip Flip (Botox)", "$7/unit \u2014 confirmed via pricing-request email, 2026-08-24 (most clients need ~40\u201350 units for forehead + glabella/11s combined, roughly $280\u2013$350)", ""], ["Sheis Beauty Medical Spa", "sheisbeautymedicalspa.com", "Gummy Smile Correction (Botox)", "$7/unit \u2014 confirmed via pricing-request email, 2026-08-24 (most clients need ~40\u201350 units for forehead + glabella/11s combined, roughly $280\u2013$350)", ""], ["Sheis Beauty Medical Spa", "sheisbeautymedicalspa.com", "Chin Dimpling (Botox)", "$7/unit \u2014 confirmed via pricing-request email, 2026-08-24 (most clients need ~40\u201350 units for forehead + glabella/11s combined, roughly $280\u2013$350)", ""], ["Sheis Beauty Medical Spa", "sheisbeautymedicalspa.com", "Downturned Mouth Corners (Botox)", "$7/unit \u2014 confirmed via pricing-request email, 2026-08-24 (most clients need ~40\u201350 units for forehead + glabella/11s combined, roughly $280\u2013$350)", ""], ["Sheis Beauty Medical Spa", "sheisbeautymedicalspa.com", "Masseter Slimming/TMJ (Botox)", "$7/unit \u2014 confirmed via pricing-request email, 2026-08-24 (most clients need ~40\u201350 units for forehead + glabella/11s combined, roughly $280\u2013$350)", ""], ["Sheis Beauty Medical Spa", "sheisbeautymedicalspa.com", "Nefertiti Jawline Lift (Botox)", "$7/unit \u2014 confirmed via pricing-request email, 2026-08-24 (most clients need ~40\u201350 units for forehead + glabella/11s combined, roughly $280\u2013$350)", ""], ["Sheis Beauty Medical Spa", "sheisbeautymedicalspa.com", "Platysmal/Neck Bands (Botox)", "$7/unit \u2014 confirmed via pricing-request email, 2026-08-24 (most clients need ~40\u201350 units for forehead + glabella/11s combined, roughly $280\u2013$350)", ""], ["Sheis Beauty Medical Spa", "sheisbeautymedicalspa.com", "Underarm Sweat Reduction (Botox)", "$7/unit \u2014 confirmed via pricing-request email, 2026-08-24 (most clients need ~40\u201350 units for forehead + glabella/11s combined, roughly $280\u2013$350)", ""], ["REV Med Spa", "revmedicalspa.com", "Dysport Injections", "not published", ""], ["Meraki Wellness and Med Spa", "merakimedspafl.com", "Injection Therapy (Botox/filler)", "up to 34% off promo pricing", ""], ["NUR Med Spa & Wellness - Altamonte Springs", "thenurmedspa.com", "Botox/Neuromodulator", "not published", ""], ["4Ever Young Med Spa & Wellness Center - Altamonte Springs", "4everyoungantiaging.com/altamonte-springs", "Botox/Tox (member pricing)", "not published", ""], ["Homa Rejuvenation Center, Med Spa", "homarejuvenation.com", "Botox (new client promo)", "$8.99/unit", ""], ["Absolute Face & Body Medspa", "absolutefaceandbodymedspa.com", "Botox (special promo)", "$9.99/unit (reg $17/unit); also seen 100 units for $999 promo", ""], ["VIO Med Spa | Oviedo", "viomedspa.com/oviedo", "Wrinkle Relaxer Package (promo)", "$500 off", ""], ["Couture Med Spa - Oviedo", "couturemedspa.com/locations/oviedo", "Botox/Dysport (intro rate, new clients/members)", "$7.97/unit", ""], ["Oviedo Med Spa", "oviedomedspa.com", "Injectables (Botox/Fillers/PRP)", "not published", ""], ["Beauty & Medicine Medspa - Oviedo", "beautyandmedicinemedspa.com", "Botox", "not published", ""], ["Trandi Med Spa - Oviedo", "trandimed.com", "Dysport (special)", "$3/unit", ""], ["Trandi Med Spa - Oviedo", "trandimed.com", "Daxxify (special)", "$5/spot", ""], ["Vita Medspa - Oviedo", "vitamedspafl.com", "Botox/Tox (special promo)", "$7.99/unit", ""], ["Vita Medspa - Oviedo", "vitamedspafl.com", "Botox (20/30/40 units, Groupon)", "from $188.10", ""], ["Couture Med Spa - Kissimmee", "couturemedspa.com/locations/kissimmee", "Botox/Dysport (intro rate, new clients/members)", "$7.97/unit", ""], ["Celebration Wellness Spa", "celebrationwellnessspa.com", "Botox (promo)", "$11/unit", ""], ["Celebration Wellness Spa", "celebrationwellnessspa.com", "Xeomin (promo)", "$9/unit", ""], ["NuVa Wellness & Spa", "nuvawellnesspa.com", "Botox", "not published", ""], ["Couture Med Spa - Lake Mary", "couturemedspa.com/locations/lake-mary", "Botox/Dysport (intro rate, new clients/members)", "$7.97/unit", ""], ["Tres Jolie Medical Spa", "tresjoliemedispa.com", "Botox + DiamondGlow (combo promo)", "save up to $100", ""], ["Tres Jolie Medical Spa", "tresjoliemedispa.com", "Botox", "not published", ""], ["RenuMe Medspa", "renumemed.com", "Botox/Xeomin", "not published", ""], ["Puar Elevated Beauty", "thepuar.com", "Botox (event pricing)", "$8.50/unit", ""], ["The Aesthetic Lounge", "theaestheticloungefl.com", "Dysport (event/promo)", "$8.99/unit", ""], ["The Aesthetic Lounge", "theaestheticloungefl.com", "Other Neuromodulators (event pricing)", "varies by event promo", ""], ["The Aesthetic Lounge", "theaestheticloungefl.com", "Botox", "not published", ""], ["The Aesthetic Lounge", "theaestheticloungefl.com", "Xeomin", "not published", ""], ["The Aesthetic Lounge", "theaestheticloungefl.com", "Jeuveau", "not published", ""], ["Nectar Aesthetics Med Spa - Sanford", "nectaraesthetics.com", "Botox (member pricing)", "$12/unit", ""], ["Nectar Aesthetics Med Spa - Sanford", "nectaraesthetics.com", "DAXXIFY", "not published", ""], ["Reviv Beauty Med Spa", "revivbeauty.com", "Botox", "$9.99/unit", ""], ["Elevate Aesthetics", "lookfeelelevated.com", "Botox", "not published", ""], ["AloEver Medspa", "aloevermedspa.com", "Botox", "not published", ""], ["AloEver Medspa", "aloevermedspa.com", "Daxxify", "not published", ""], ["AloEver Medspa", "aloevermedspa.com", "Neuromodulators (general)", "not published", ""], ["Luminous Skin Medical Spa", "luminousskinmedicalspa.com", "Daxxify", "not published", ""], ["Luminous Skin Medical Spa", "luminousskinmedicalspa.com", "Botox", "not published", ""], ["Windermere Medical Spa & Laser Institute - Winter Park", "windermeremedicalspa.com/winter-park", "Botox", "$12-$15/unit (repeated generic-range phrasing, treat as directional)", ""]], "Dermal / Lip Fillers": [["LUXE Med Spa Aesthetics", "luxemedspaaesthetics.com", "Restylane", "not published", ""], ["LUXE Med Spa Aesthetics", "luxemedspaaesthetics.com", "Radiesse", "not published", ""], ["Bijoux Med Spa & Wellness", "bijouxmedspa.com", "Dermal Fillers", "not published", ""], ["VIO Med Spa | SoDo", "viomedspa.com/sodo", "Fillers", "$600-$1,200/syringe (repeated generic-range phrasing, treat as directional)", ""], ["CONFIDENTLY Med Spa", "confidentlymedspa.com", "Dermal Fillers", "not published", ""], ["Nectar Aesthetics Med Spa - Orlando", "nectaraesthetics.com", "Petite Lip Filler (member)", "starting at $475", ""], ["Nectar Aesthetics Med Spa - Orlando", "nectaraesthetics.com", "Just Right Lip Filler (member)", "$765", ""], ["Look Lab Med Spa", "looklab.com", "Fillers", "not published", ""], ["180 MedSpa", "180medspa.com", "Fillers", "$600-$1,200/syringe (repeated generic-range phrasing, treat as directional); also cited starting at $550/syringe", ""], ["180 MedSpa", "180medspa.com", "Lip Filler", "not published", ""], ["Winter Park Medspa", "winterparkmedspa.com", "Fillers", "not published", ""], ["Polished Beauty Medspa", "polishedbeautymedspa.com", "Hyaluronic Acid Filler", "$695 and up", ""], ["Aesthetic District Medspa - Winter Park", "admedicalspa.com", "Fillers", "not published", ""], ["Dr. Phillips Medical Spa", "drphillipsmedicalspa.com", "Dermal Fillers", "not published", ""], ["Facial Mania Med Spa Orlando", "orlando.facialmaniamedspa.com", "Dermal Fillers", "not published", ""], ["Vamped Aesthetics", "vampedaesthetics.com", "Fillers", "not published", ""], ["New U Med Spa", "newumedspaorlando.com", "Dermal Fillers", "not published", ""], ["NUR MedSpa & Wellness - Lake Nona", "thenurmedspa.com", "Dermal Fillers", "not published", ""], ["Aesthetic District Medspa - Lake Nona", "admedicalspa.com", "Filler Syringe (promo)", "$549 (reg. $850/syringe)", ""], ["Prixus MedSpa", "prixusmedspa.com", "Fillers", "not published", ""], ["Healthy Glow Med Spa", "healthyglowmedspa.com", "Lip Filler", "not published", ""], ["One Aesthetics", "oneaesthetics.com", "Dermal Fillers", "not published", ""], ["Zoya Medical Orlando", "zoyamedicalorlando.com", "Lip Filler", "not published", ""], ["Windermere Medical Spa & Laser Institute", "windermeremedicalspa.com", "Fillers", "not published", ""], ["N6 Aesthetics Spa and Wellness", "n6aesthetics.glossgenius.com", "Lip Filler (1/2 syringe)", "$600+ (90+ min)", ""], ["Exclusive Med Aesthetics & Hair Restoration", "exclusivemedaesthetics.com", "Restylane/Juvederm Fillers", "not published", ""], ["Sheis Beauty Medical Spa", "sheisbeautymedicalspa.com", "Lip Flip (Botox)", "$7/unit \u2014 confirmed via pricing-request email, 2026-08-24 (most clients need ~40\u201350 units for forehead + glabella/11s combined, roughly $280\u2013$350)", ""], ["Sheis Beauty Medical Spa", "sheisbeautymedicalspa.com", "Signature Lip Enhancement (Filler)", "not published", ""], ["Sheis Beauty Medical Spa", "sheisbeautymedicalspa.com", "Perioral Lines (Filler)", "not published", ""], ["Sheis Beauty Medical Spa", "sheisbeautymedicalspa.com", "Cheek Enhancement & Contour (Filler)", "not published", ""], ["Meraki Wellness and Med Spa", "merakimedspafl.com", "Injection Therapy (Botox/filler)", "up to 34% off promo pricing", ""], ["NUR Med Spa & Wellness - Altamonte Springs", "thenurmedspa.com", "Dermal Fillers (1 syringe)", "$549", ""], ["NUR Med Spa & Wellness - Altamonte Springs", "thenurmedspa.com", "Dermal Fillers (multi-syringe promo)", "$499/syringe", ""], ["Homa Rejuvenation Center, Med Spa", "homarejuvenation.com", "Lip Filler", "not published", ""], ["Maki Med Spa & Wellness", "makimedspandwellness.com", "Filler", "not published", ""], ["Oviedo Med Spa", "oviedomedspa.com", "Injectables (Botox/Fillers/PRP)", "not published", ""], ["Beauty & Medicine Medspa - Oviedo", "beautyandmedicinemedspa.com", "Lip Filler", "not published", ""], ["Vita Medspa - Oviedo", "vitamedspafl.com", "Dermal Fillers", "not published", ""], ["NuVa Wellness & Spa", "nuvawellnesspa.com", "Dermal Fillers", "not published", ""], ["Tres Jolie Medical Spa", "tresjoliemedispa.com", "Juvederm", "not published", ""], ["RenuMe Medspa", "renumemed.com", "Dermal Filler (promo)", "$75 off 1 syringe or bundle promo up to $500 off", ""], ["The Aesthetic Lounge", "theaestheticloungefl.com", "Dermal Fillers", "not published", ""], ["Nectar Aesthetics Med Spa - Sanford", "nectaraesthetics.com", "Petite Lip Filler (member)", "starting at $475", ""], ["Nectar Aesthetics Med Spa - Sanford", "nectaraesthetics.com", "Dermal Filler Package (3+ syringes)", "$1,500", ""], ["Reviv Beauty Med Spa", "revivbeauty.com", "Lip Filler", "from $350", ""], ["Reviv Beauty Med Spa", "revivbeauty.com", "Juvederm", "$599-$725", ""], ["Reviv Beauty Med Spa", "revivbeauty.com", "Skinvive (skin booster)", "from $365", ""], ["Reviv Beauty Med Spa", "revivbeauty.com", "Baby Lips (lip filler)", "$349", ""], ["Elevate Aesthetics", "lookfeelelevated.com", "Dermal Fillers", "not published", ""], ["AloEver Medspa", "aloevermedspa.com", "Dermal Fillers", "not published", ""], ["Luminous Skin Medical Spa", "luminousskinmedicalspa.com", "Dermal/Lip Fillers", "not published", ""], ["Windermere Medical Spa & Laser Institute - Winter Park", "windermeremedicalspa.com/winter-park", "Fillers", "$600-$1,200/syringe (repeated generic-range phrasing, treat as directional)", ""]], "Sculptra / Biostimulators": [["LUXE Med Spa Aesthetics", "luxemedspaaesthetics.com", "Sculptra", "not published", ""], ["Look Lab Med Spa", "looklab.com", "Sculptra", "$800/vial", ""], ["Polished Beauty Medspa", "polishedbeautymedspa.com", "Sculptra", "$800 and up", ""], ["Vamped Aesthetics", "vampedaesthetics.com", "Sculptra", "$800-$1,000/vial", ""], ["Healthy Glow Med Spa", "healthyglowmedspa.com", "Sculptra", "not published", ""], ["NUR Med Spa & Wellness - Altamonte Springs", "thenurmedspa.com", "Sculptra", "not published", ""], ["Elevate Aesthetics", "lookfeelelevated.com", "Sculptra", "not published", ""]], "Kybella": [["Nectar Aesthetics Med Spa - Orlando", "nectaraesthetics.com", "Kybella", "not published", ""], ["Elevate Aesthetics", "lookfeelelevated.com", "Kybella", "not published", ""]], "HydraFacial": [["LUXE Med Spa Aesthetics", "luxemedspaaesthetics.com", "HydraFacial", "not published", ""], ["Nectar Aesthetics Med Spa - Orlando", "nectaraesthetics.com", "HydraFacial", "not published", ""], ["Aesthetic District Medspa - Lake Nona", "admedicalspa.com", "HydraFacial", "not published", ""], ["Pristine Spas", "pristinespas.com", "HydraFacial", "not published", ""], ["REV Med Spa", "revmedicalspa.com", "Custom Facials/HydraFacial", "not published", ""], ["The Rose Spa Of Lake Mary", "theroselakemary.com", "HydraFacial", "not published", ""], ["Victoria Edward Spa & Wellness Center", "victoriaedwardspa.com", "Signature HydraFacial + LED Light Therapy + Dermaplaning (promo)", "$149 ($100 off)", ""]], "Chemical Peels": [["LUXE Med Spa Aesthetics", "luxemedspaaesthetics.com", "Chemical Peels", "not published", ""], ["Polished Beauty Medspa", "polishedbeautymedspa.com", "Medical Grade Chemical Peel (VI Peel)", "$375 and up", ""], ["Zoya Medical Orlando", "zoyamedicalorlando.com", "Chemical Peel", "not published (promo: free with Botox, $200 value)", ""], ["Reviv Beauty Med Spa", "revivbeauty.com", "PRX Treatment (no-peel peel)", "$300/session or $1,000 4-pack", ""], ["Elite Aesthetics Skin & Wellness Center - Sanford", "eliteaestheticsllc.com", "Blue Peel Radiance Facial", "$225", ""], ["Luminous Skin Medical Spa", "luminousskinmedicalspa.com", "Skin Peels", "not published", ""]], "Microneedling": [["LUXE Med Spa Aesthetics", "luxemedspaaesthetics.com", "Microneedling", "not published", ""], ["LUXE Med Spa Aesthetics", "luxemedspaaesthetics.com", "RF Microneedling", "not published", ""], ["Nectar Aesthetics Med Spa - Orlando", "nectaraesthetics.com", "Microneedling", "not published", ""], ["Look Lab Med Spa", "looklab.com", "Microneedling", "not published", ""], ["Polished Beauty Medspa", "polishedbeautymedspa.com", "Microneedling", "$475 and up", ""], ["Dr. Phillips Medical Spa", "drphillipsmedicalspa.com", "Microneedling", "not published", ""], ["Facial Mania Med Spa Orlando", "orlando.facialmaniamedspa.com", "Microneedling", "not published", ""], ["Vamped Aesthetics", "vampedaesthetics.com", "Microneedling", "not published", ""], ["Nona Med Spa", "nonamedspa.com", "Microneedling", "not published", ""], ["NUR MedSpa & Wellness - Lake Nona", "thenurmedspa.com", "Microneedling", "not published", ""], ["One Aesthetics", "oneaesthetics.com", "Microneedling", "not published", ""], ["VIO Med Spa | Winter Garden", "viomedspa.com/winter-garden", "Microneedling", "not published", ""], ["Sol Bonita Med Spa", "solbonitamedspa.com", "Microneedling", "not published", ""], ["Imagine Medspa", "imaginemedspa.com", "Microneedling", "not published", ""], ["Homa Rejuvenation Center, Med Spa", "homarejuvenation.com", "RF Microneedling", "$880-$1,650/session (third-party aggregator estimate)", ""], ["Couture Med Spa - Oviedo", "couturemedspa.com/locations/oviedo", "SkinPen Microneedling", "not published", ""], ["Celebration Wellness Spa", "celebrationwellnessspa.com", "Microneedling", "not published", ""], ["The Rose Spa Of Lake Mary", "theroselakemary.com", "Microneedling", "not published", ""], ["Luminous Skin Medical Spa", "luminousskinmedicalspa.com", "Microneedling", "not published", ""], ["Windermere Medical Spa & Laser Institute - Winter Park", "windermeremedicalspa.com/winter-park", "Microneedling", "not published", ""]], "Laser Hair Removal": [["Unive Med Spa", "", "Laser Hair Removal", "not published", ""], ["180 MedSpa", "180medspa.com", "Laser Hair Removal", "not published", ""], ["Couture Med Spa - Winter Park", "couturemedspa.com/locations/winter-park", "Laser Hair Removal", "not published", ""], ["Dr. Phillips Medical Spa", "drphillipsmedicalspa.com", "Laser Hair Removal", "not published", ""], ["Makeover Aesthetics", "makeoveraesthetics.com", "Laser Hair Removal", "not published", ""], ["New U Med Spa", "newumedspaorlando.com", "Laser Hair Removal", "not published", ""], ["Nona Med Spa", "nonamedspa.com", "Laser Hair Removal", "not published", ""], ["Pristine Spas", "pristinespas.com", "Laser Hair Removal", "not published", ""], ["Prixus MedSpa", "prixusmedspa.com", "Laser Hair Removal", "not published", ""], ["Body By SKIN Med Spa", "bodybyskinmedspa.com", "Laser Hair Removal", "not published", ""], ["Sapphira Prive Winter Garden MedSpa", "sapphiraprivemedspa.com", "Laser Hair Removal (6 sessions)", "from $250", ""], ["Imagine Medspa", "imaginemedspa.com", "Laser Hair Removal", "not published", ""], ["4Ever Young Med Spa & Wellness Center - Altamonte Springs", "4everyoungantiaging.com/altamonte-springs", "Laser Hair Removal", "not published", ""], ["Couture Med Spa - Oviedo", "couturemedspa.com/locations/oviedo", "Laser Hair Removal (membership incl.)", "industry avg $500/treatment (competitor comparison)", ""], ["Beauty & Medicine Medspa - Oviedo", "beautyandmedicinemedspa.com", "Laser Hair Removal", "not published", ""], ["Couture Med Spa - Kissimmee", "couturemedspa.com/locations/kissimmee", "Laser Hair Removal (6 sessions, Groupon)", "from $98.10", ""], ["Tres Jolie Medical Spa", "tresjoliemedispa.com", "Laser Hair Removal", "not published", ""], ["RenuMe Medspa", "renumemed.com", "Laser Hair Removal", "not published", ""], ["Windermere Medical Spa & Laser Institute - Winter Park", "windermeremedicalspa.com/winter-park", "Laser Hair Removal", "not published", ""]], "Body Contouring / CoolSculpting": [["Bijoux Med Spa & Wellness", "bijouxmedspa.com", "Body Contouring", "not published", ""], ["Unive Med Spa", "", "Body Contouring", "not published", ""], ["Look Lab Med Spa", "looklab.com", "Body Contouring", "not published", ""], ["Couture Med Spa - Winter Park", "couturemedspa.com/locations/winter-park", "Body Contouring Membership", "$99/mo", ""], ["Dr. Phillips Medical Spa", "drphillipsmedicalspa.com", "Body Sculpting", "not published", ""], ["New U Med Spa", "newumedspaorlando.com", "Body Contouring", "not published", ""], ["Nona Med Spa", "nonamedspa.com", "Body Sculpting", "not published", ""], ["Prixus MedSpa", "prixusmedspa.com", "Body Sculpting", "not published", ""], ["VIO Med Spa | Winter Garden", "viomedspa.com/winter-garden", "Body Contouring", "not published", ""], ["Sapphira Prive Winter Garden MedSpa", "sapphiraprivemedspa.com", "Body Contouring", "not published", ""], ["Sol Bonita Med Spa", "solbonitamedspa.com", "Body Contouring", "not published", ""], ["Imagine Medspa", "imaginemedspa.com", "Nonsurgical Body Sculpting", "not published", ""], ["Maki Med Spa & Wellness", "makimedspandwellness.com", "CryoSkin Slimming Therapy", "not published", ""], ["VIO Med Spa | Oviedo", "viomedspa.com/oviedo", "Body Contouring", "not published", ""], ["All Body Spa by Yeliz", "", "Post-Surgical Lymphatic Drainage", "not published", ""], ["All Body Spa by Yeliz", "", "Body Contouring/Reductive Treatments", "not published", ""], ["All Body Spa by Yeliz", "", "Body Molding Treatments", "not published", ""], ["All Body Spa by Yeliz", "", "Body Lifting Treatments", "not published", ""]], "Skin Tightening (Morpheus8/RF)": [["NUR MedSpa & Wellness - Lake Nona", "thenurmedspa.com", "Morpheus8", "not published", ""], ["SkinLocal Orlando", "skinlocalorlando.com", "Laser Skin Tightening", "not published", ""], ["Sol Bonita Med Spa", "solbonitamedspa.com", "Non-Surgical Trilift Facelift (RF)", "$2,400 (promo $1,440)", ""], ["Sol Bonita Med Spa", "solbonitamedspa.com", "RF Lifting Sessions", "$229 (reg $275)", ""], ["Sol Bonita Med Spa", "solbonitamedspa.com", "RF Skin Tightening", "not published", ""], ["NUR Med Spa & Wellness - Altamonte Springs", "thenurmedspa.com", "Morpheus8", "not published", ""]], "IV Therapy": [["Unive Med Spa", "", "IV Therapy", "not published", ""], ["Dr. Phillips Medical Spa", "drphillipsmedicalspa.com", "IV Hydration", "not published", ""], ["Facial Mania Med Spa Orlando", "orlando.facialmaniamedspa.com", "IV Therapy", "not published", ""], ["Body By SKIN Med Spa", "bodybyskinmedspa.com", "IV Therapy", "not published", ""], ["Sol Bonita Med Spa", "solbonitamedspa.com", "IV Therapy", "not published", ""], ["Celebration Wellness Spa", "celebrationwellnessspa.com", "IV Therapy", "not published", ""], ["NuVa Wellness & Spa", "nuvawellnesspa.com", "Vitamin Injections (buy 4)", "20% off promo", ""], ["NuVa Wellness & Spa", "nuvawellnesspa.com", "IV Therapy", "not published", ""], ["Reviv Beauty Med Spa", "revivbeauty.com", "IV Therapy (signature drips)", "from $149", ""], ["Victoria Edward Spa & Wellness Center", "victoriaedwardspa.com", "IV Therapy", "not published", ""]], "PRP / PRF": [["LUXE Med Spa Aesthetics", "luxemedspaaesthetics.com", "PRF", "not published", ""], ["Look Lab Med Spa", "looklab.com", "PRF", "not published", ""], ["Polished Beauty Medspa", "polishedbeautymedspa.com", "PRF", "not published", ""], ["Polished Beauty Medspa", "polishedbeautymedspa.com", "PRP Hair Restoration", "not published", ""], ["Facial Mania Med Spa Orlando", "orlando.facialmaniamedspa.com", "PRP", "not published", ""], ["New U Med Spa", "newumedspaorlando.com", "PRP", "$500/session", ""], ["Sapphira Prive Winter Garden MedSpa", "sapphiraprivemedspa.com", "PRP Hair Restoration", "not published", ""], ["Absolute Face & Body Medspa", "absolutefaceandbodymedspa.com", "PRP Facial", "not published", ""], ["Oviedo Med Spa", "oviedomedspa.com", "Injectables (Botox/Fillers/PRP)", "not published", ""], ["Beautiful Orlando Spa and Cosmetic Surgery", "beautifulorlando.com", "PRP Hair Restoration", "not published", ""], ["Beautiful Orlando Spa and Cosmetic Surgery", "beautifulorlando.com", "PRP Facials", "not published", ""], ["Luminous Skin Medical Spa", "luminousskinmedicalspa.com", "PRP", "not published", ""]], "Medical Weight Loss / GLP-1": [["LUXE Med Spa Aesthetics", "luxemedspaaesthetics.com", "Medical Weight Loss", "not published", ""], ["CONFIDENTLY Med Spa", "confidentlymedspa.com", "Medical Weight Loss", "not published", ""], ["Look Lab Med Spa", "looklab.com", "Semaglutide Weight Loss (4-week plan)", "from $1,000", ""], ["Healthy Glow Med Spa", "healthyglowmedspa.com", "Medical Weight Loss Program (10-12 weeks)", "starting at $450", ""], ["SkinLocal Orlando", "skinlocalorlando.com", "Medical Weight Loss", "not published", ""], ["Exclusive Med Aesthetics & Hair Restoration", "exclusivemedaesthetics.com", "Medical Weight Loss (GLP-1/GIP)", "not published", ""], ["NuVa Wellness & Spa", "nuvawellnesspa.com", "Weight Loss", "not published", ""], ["Reviv Beauty Med Spa", "revivbeauty.com", "Medical Weight Loss", "$99/mo", ""], ["Luminous Skin Medical Spa", "luminousskinmedicalspa.com", "GLP-1 Weight Loss Treatment", "not published", ""], ["Victoria Edward Spa & Wellness Center", "victoriaedwardspa.com", "Weight Loss", "not published", ""]], "Hormone Therapy": [["LUXE Med Spa Aesthetics", "luxemedspaaesthetics.com", "Hormone Replacement Therapy", "not published", ""], ["Unive Med Spa", "", "Hormone Therapy", "not published", ""], ["180 MedSpa", "180medspa.com", "Hormone Replacement Therapy", "not published", ""], ["Healthy Glow Med Spa", "healthyglowmedspa.com", "Hormone Replacement Therapy", "not published", ""], ["NUR Med Spa & Wellness - Altamonte Springs", "thenurmedspa.com", "Derive Hair Restoration", "not published", ""], ["4Ever Young Med Spa & Wellness Center - Altamonte Springs", "4everyoungantiaging.com/altamonte-springs", "Hormone Replacement Therapy", "not published", ""], ["NuVa Wellness & Spa", "nuvawellnesspa.com", "Hormone Therapy", "not published", ""]], "IPL / Photofacial": [["Couture Med Spa - Winter Park", "couturemedspa.com/locations/winter-park", "IPL Photorejuvenation", "not published", ""], ["Facial Mania Med Spa Orlando", "orlando.facialmaniamedspa.com", "IPL", "not published", ""], ["Nona Med Spa", "nonamedspa.com", "BBL", "not published", ""], ["SkinLocal Orlando", "skinlocalorlando.com", "Laser Skin Tightening", "not published", ""], ["Exclusive Med Aesthetics & Hair Restoration", "exclusivemedaesthetics.com", "BBL (Forever Young/Hero)", "not published", ""], ["Maki Med Spa & Wellness", "makimedspandwellness.com", "Plexr Plasma (Non-Surgical Blepharoplasty)", "not published", ""], ["Tres Jolie Medical Spa", "tresjoliemedispa.com", "IPL", "not published", ""]]};
+
+  const breakdownModalOverlay = document.getElementById('breakdown-modal-overlay');
+  const breakdownTitle = document.getElementById('breakdown-title');
+  const breakdownSub = document.getElementById('breakdown-sub');
+  const breakdownBody = document.getElementById('breakdown-body');
+  const sortButtons = Array.from(document.querySelectorAll('.sort-btn'));
+  let currentCategory = null;
+  let currentSort = 'clinic';
+
+  function parsePriceForSort(priceStr) {
+    const m = String(priceStr).match(/\$([\d,]+(?:\.\d+)?)/);
+    return m ? parseFloat(m[1].replace(/,/g, '')) : null;
+  }
+
+  function renderBreakdown() {
+    const rows = (breakdownData[currentCategory] || []).slice();
+    if (currentSort === 'clinic') {
+      rows.sort((a, b) => a[0].localeCompare(b[0]));
+    } else if (currentSort === 'price-asc' || currentSort === 'price-desc') {
+      rows.sort((a, b) => {
+        const pa = parsePriceForSort(a[3]);
+        const pb = parsePriceForSort(b[3]);
+        if (pa === null && pb === null) return 0;
+        if (pa === null) return 1;
+        if (pb === null) return -1;
+        return currentSort === 'price-asc' ? pa - pb : pb - pa;
+      });
+    }
+
+    if (!rows.length) {
+      breakdownBody.innerHTML = '<div class="breakdown-empty">No listings found for this category.</div>';
+      return;
+    }
+
+    breakdownBody.innerHTML = rows.map(([clinic, website, proc, price, duration]) => {
+      const durationHtml = duration && duration !== 'Not published'
+        ? `<div class="breakdown-duration">${duration}</div>` : '';
+      const clinicHtml = website
+        ? `<a href="${website.startsWith('http') ? website : 'https://' + website}" target="_blank" rel="noopener noreferrer">${clinic}</a>`
+        : `<span class="no-link">${clinic}</span>`;
+      return `
+        <div class="breakdown-row">
+          <div>
+            <div class="breakdown-clinic">${clinicHtml}</div>
+            <div class="breakdown-proc">${proc}</div>
+          </div>
+          <div class="breakdown-price-col">
+            <div class="breakdown-price">${price}</div>
+            ${durationHtml}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function openBreakdown(category) {
+    if (!breakdownData[category]) return;
+    currentCategory = category;
+    currentSort = 'clinic';
+    sortButtons.forEach(b => b.classList.toggle('active', b.dataset.sort === 'clinic'));
+    const rows = breakdownData[category] || [];
+    const distinctClinics = new Set(rows.map(r => r[0])).size;
+    breakdownTitle.textContent = category;
+    breakdownSub.textContent = `${distinctClinics} clinics · ${rows.length} tracked listing${rows.length === 1 ? '' : 's'}`;
+    renderBreakdown();
+    breakdownModalOverlay.classList.add('open');
+  }
+
+  function closeBreakdown() {
+    breakdownModalOverlay.classList.remove('open');
+  }
+
+  document.querySelectorAll('.proc-name-link').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openBreakdown(el.dataset.category);
+    });
+  });
+
+  document.getElementById('breakdown-close').addEventListener('click', closeBreakdown);
+  breakdownModalOverlay.addEventListener('click', (e) => {
+    if (e.target === breakdownModalOverlay) closeBreakdown();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeBreakdown();
+  });
+  sortButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentSort = btn.dataset.sort;
+      sortButtons.forEach(b => b.classList.toggle('active', b === btn));
+      renderBreakdown();
+    });
+  });
+
+</script>
+
+</body>
+</html>
