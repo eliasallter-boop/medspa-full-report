@@ -4,308 +4,363 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Miami Med Spa Market Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500;12..96,75..100,700;12..96,75..100,800&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
-  :root {
-    --blue: #2563eb;
-    --blue-dark: #1d4ed8;
-    --blue-light: #eff6ff;
-    --ink: #111827;
-    --gray: #6b7280;
-    --gray-light: #9ca3af;
-    --border: #e5e7eb;
-    --bg: #f9fafb;
-    --green: #059669;
-    --amber: #d97706;
-    --red: #dc2626;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    color: var(--ink);
-    background: var(--bg);
-    line-height: 1.5;
-  }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 48px 24px 80px; }
+:root{
+  color-scheme: light;
+  --ground:       #E9EDF3;
+  --ground-2:     #DCE3EC;
+  --surface:      #FFFFFF;
+  --surface-2:    #F1F4F8;
+  --line:         #C6D0DD;
+  --line-soft:    #DEE5EE;
 
-  header.hero {
-    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #3b82f6 100%);
-    color: white;
-    padding: 26px 24px;
-    border-radius: 0 0 20px 20px;
-  }
-  header.hero .inner { max-width: 980px; margin: 0 auto; }
-  header.hero .eyebrow {
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    font-size: 11px;
-    font-weight: 700;
-    opacity: .85;
-    margin-bottom: 6px;
-  }
-  header.hero h1 { font-size: 24px; margin: 0 0 6px; font-weight: 800; letter-spacing: -0.02em; }
-  header.hero p.sub { font-size: 13px; opacity: .9; margin: 0; max-width: 640px; }
+  --ink:          #0B1220;
+  --ink-2:        #3D4A5C;
+  --ink-3:        #74839A;
 
-  .stat-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    margin-top: -26px;
-  }
-  .stat-card {
-    background: white;
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
-    border: 1px solid var(--border);
-  }
-  .stat-card .num { font-size: 30px; font-weight: 800; color: var(--blue); letter-spacing: -0.02em; }
-  .stat-card .label { font-size: 12.5px; color: var(--gray); margin-top: 4px; font-weight: 600; }
+  --above:        #2a78d6;
+  --above-soft:   #D7E5F8;
+  --below:        #eb6834;
+  --below-soft:   #FBE2D8;
+  --third:        #1baf7a;
+  --third-soft:   #D5F1E6;
+  --stone:        #97A3B4;
+  --amber:        #b8720f;
+  --amber-soft:   #F7EAD2;
 
-  .stat-card.has-tooltip { position: relative; cursor: help; }
-  .stat-card.has-tooltip .label { text-decoration: underline dotted var(--gray-light); text-underline-offset: 3px; }
-  .stat-card .tooltip {
-    position: absolute;
-    top: calc(100% + 10px);
-    left: 0;
-    width: 340px;
-    max-width: 80vw;
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px;
-    box-shadow: 0 14px 34px rgba(15,23,42,0.18);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-6px);
-    transition: opacity .15s ease, transform .15s ease;
-    z-index: 20;
-    text-align: left;
-    cursor: default;
+  --accent:       #1c5cab;
+  --neutral-mark: #B3BECE;
+
+  --glow-a:       rgba(42,120,214,.30);
+  --glow-b:       rgba(235,104,52,.22);
+  --glow-c:       rgba(27,175,122,.18);
+
+  --shadow-s:     0 1px 2px rgba(11,18,32,.06);
+  --shadow-m:     0 2px 4px rgba(11,18,32,.05), 0 14px 34px -22px rgba(11,18,32,.45);
+  --shadow-l:     0 4px 10px rgba(11,18,32,.07), 0 26px 60px -30px rgba(11,18,32,.55);
+
+  --ease: cubic-bezier(.22,.9,.28,1);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ground:#070B13; --ground-2:#0C121C; --surface:#121A28; --surface-2:#182231;
+    --line:#29354A; --line-soft:#1D2839;
+    --ink:#EAF0F8; --ink-2:#AFBDD0; --ink-3:#7A8AA0;
+    --above:#3987e5; --above-soft:#16283F;
+    --below:#d95926; --below-soft:#33200F;
+    --third:#199e70; --third-soft:#0F2A21;
+    --stone:#6C7A8D; --amber:#e0a856; --amber-soft:#332711;
+    --accent:#7FB0F0; --neutral-mark:#38465C;
+    --glow-a:rgba(57,135,229,.34); --glow-b:rgba(217,89,38,.24); --glow-c:rgba(25,158,112,.20);
+    --shadow-s:0 1px 2px rgba(0,0,0,.5);
+    --shadow-m:0 2px 4px rgba(0,0,0,.45), 0 16px 36px -24px rgba(0,0,0,.95);
+    --shadow-l:0 4px 10px rgba(0,0,0,.5), 0 28px 64px -32px rgba(0,0,0,1);
   }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ground:#070B13; --ground-2:#0C121C; --surface:#121A28; --surface-2:#182231;
+  --line:#29354A; --line-soft:#1D2839;
+  --ink:#EAF0F8; --ink-2:#AFBDD0; --ink-3:#7A8AA0;
+  --above:#3987e5; --above-soft:#16283F;
+  --below:#d95926; --below-soft:#33200F;
+  --third:#199e70; --third-soft:#0F2A21;
+  --stone:#6C7A8D; --amber:#e0a856; --amber-soft:#332711;
+  --accent:#7FB0F0; --neutral-mark:#38465C;
+  --glow-a:rgba(57,135,229,.34); --glow-b:rgba(217,89,38,.24); --glow-c:rgba(25,158,112,.20);
+  --shadow-s:0 1px 2px rgba(0,0,0,.5);
+  --shadow-m:0 2px 4px rgba(0,0,0,.45), 0 16px 36px -24px rgba(0,0,0,.95);
+  --shadow-l:0 4px 10px rgba(0,0,0,.5), 0 28px 64px -32px rgba(0,0,0,1);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Public Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--ground);
+  line-height: 1.62;
+  font-size: 15.5px;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+h1,h2,h3{ font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; text-wrap:balance; font-weight:700; }
+.num, td.num, .n, .stat-card .num { font-variant-numeric: tabular-nums; }
+
+/* ---------- ambient field ---------- */
+.aurora{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.aurora i{ position:absolute; display:block; border-radius:50%; filter:blur(90px); opacity:.85; will-change:transform; }
+.aurora .a{ width:52vw;height:52vw;left:-10vw;top:-16vw;background:var(--glow-a);animation:drift-a 34s var(--ease) infinite alternate; }
+.aurora .b{ width:40vw;height:40vw;right:-8vw;top:6vw;background:var(--glow-b);animation:drift-b 41s var(--ease) infinite alternate; }
+.aurora .c{ width:44vw;height:44vw;left:22vw;top:34vw;background:var(--glow-c);animation:drift-c 47s var(--ease) infinite alternate; }
+@keyframes drift-a{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(9vw,7vw,0) scale(1.14)}}
+@keyframes drift-b{from{transform:translate3d(0,0,0) scale(1.05)}to{transform:translate3d(-11vw,10vw,0) scale(.9)}}
+@keyframes drift-c{from{transform:translate3d(0,0,0) scale(.95)}to{transform:translate3d(7vw,-9vw,0) scale(1.16)}}
+
+.wrap { position:relative; z-index:1; max-width: 1040px; margin: 0 auto; padding: 48px 24px 80px; }
+
+/* ---------- masthead ---------- */
+header.hero {
+  position:relative; z-index:1;
+  background: transparent;
+  color: var(--ink);
+  padding: 70px 24px 30px;
+  border-radius: 0;
+}
+header.hero .inner { max-width: 1040px; margin: 0 auto; display:flex; flex-direction:column; gap:16px; }
+.back-to-hub {
+  display: inline-flex; align-items: center; gap: 6px; align-self:flex-start;
+  font-family:"IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11.5px; font-weight: 600; color: var(--ink-3);
+  text-decoration: none; margin-bottom: 2px;
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: 5px 12px 5px 10px; transition: background .22s var(--ease), color .22s var(--ease), border-color .22s var(--ease);
+  animation: rise .6s var(--ease) both;
+}
+.back-to-hub:hover { background: var(--surface-2); color: var(--ink); border-color: var(--stone); }
+header.hero .eyebrow {
+  font-family:"IBM Plex Mono", ui-monospace, monospace;
+  text-transform: uppercase; letter-spacing: .18em; font-size: 11px; font-weight: 500;
+  color: var(--ink-3); margin-bottom: 2px;
+  display:inline-flex; align-items:center; gap:9px;
+  animation: rise .7s var(--ease) .05s both;
+}
+header.hero .eyebrow::before{
+  content:""; width:22px; height:3px; border-radius:2px; flex:0 0 auto;
+  background: linear-gradient(90deg, var(--below), var(--stone) 50%, var(--above));
+}
+header.hero h1 {
+  font-size: clamp(1.9rem, 4.4vw, 3rem); margin: 0; font-weight: 800; letter-spacing: -0.03em;
+  line-height: 1.04; font-variation-settings:"wdth" 90;
+  animation: rise .78s var(--ease) .12s both;
+}
+header.hero p.sub {
+  font-size: clamp(.95rem,1.5vw,1.08rem); opacity: 1; color: var(--ink-2); margin: 0; max-width: 640px; line-height:1.55;
+  animation: rise .78s var(--ease) .2s both;
+}
+.hero-spectrum{
+  height:4px; border-radius:3px; max-width:1040px; width:100%;
+  background: linear-gradient(90deg, var(--below), #c9772f 22%, var(--stone) 48%, var(--above) 76%, var(--third));
+  transform-origin:left center; animation: wipe 1.1s var(--ease) .3s both;
+  margin-top:4px;
+}
+@keyframes wipe{ from{transform:scaleX(0)} to{transform:scaleX(1)} }
+@keyframes rise{ from{opacity:0; transform:translate3d(0,14px,0)} to{opacity:1; transform:none} }
+
+/* ---------- stat cards ---------- */
+.stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 26px; }
+.stat-card {
+  background: var(--surface); border-radius: 14px; padding: 20px 20px 18px;
+  box-shadow: var(--shadow-m); border: 1px solid var(--line-soft);
+  position:relative; overflow:visible;
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.stat-card::before{
+  content:""; position:absolute; left:0; right:0; top:0; height:4px;
+  border-radius:14px 14px 0 0; overflow:hidden;
+  background: var(--above); transform:scaleX(0); transform-origin:left;
+  animation: wipe .8s var(--ease) .45s both;
+}
+.stat-card:nth-child(2)::before{ background: var(--third); animation-delay:.55s; }
+.stat-card:nth-child(3)::before{ background: var(--below); animation-delay:.65s; }
+.stat-card:hover{ transform: translateY(-4px); box-shadow: var(--shadow-l); }
+.stat-card .num { font-family:"Bricolage Grotesque",sans-serif; font-size: 2rem; font-weight: 800; color: var(--above); letter-spacing: -0.03em; }
+.stat-card:nth-child(2) .num{ color: var(--third); }
+.stat-card:nth-child(3) .num{ color: var(--below); }
+.stat-card .label { font-size: 12.5px; color: var(--ink-2); margin-top: 4px; font-weight: 500; }
+
+.stat-card.has-tooltip { position: relative; cursor: help; z-index:50; }
+.stat-card.has-tooltip .label { text-decoration: underline dotted var(--stone); text-underline-offset: 3px; }
+.stat-card .tooltip {
+  position: absolute; top: calc(100% + 10px); left: 0; width: 340px; max-width: 80vw;
+  background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 18px;
+  box-shadow: var(--shadow-l);
+  opacity: 0; visibility: hidden; transform: translateY(-6px);
+  transition: opacity .2s var(--ease), transform .2s var(--ease);
+  z-index: 20; text-align: left; cursor: default;
+}
+.stat-card.has-tooltip:hover .tooltip,
+.stat-card.has-tooltip.tooltip-open .tooltip { opacity: 1; visibility: visible; transform: translateY(0); }
+.tooltip-title { font-size: 12.5px; font-weight: 700; color: var(--ink); margin-bottom: 6px; font-family:"Bricolage Grotesque",sans-serif; }
+.tooltip p { font-size: 12px; color: var(--ink-2); margin: 0 0 12px; font-weight: 400; line-height: 1.5; }
+.tooltip .pill-row { margin-top: 0; gap: 6px; }
+.tooltip .pill { font-size: 11px; padding: 4px 9px; }
+
+/* ---------- sections ---------- */
+section { margin-top: 56px; padding-top:22px; border-top:1px solid var(--line); }
+section:first-of-type { border-top:0; padding-top:0; }
+h2 { font-size: clamp(1.2rem,2.4vw,1.55rem); font-weight: 700; letter-spacing: -0.02em; margin: 0 0 6px; color:var(--ink); }
+p.section-desc { color: var(--ink-3); font-size: 14px; margin: 0 0 24px; max-width: 680px; line-height:1.55; }
+
+.card {
+  background: var(--surface); border: 1px solid var(--line-soft); border-radius: 14px;
+  padding: 28px; box-shadow: var(--shadow-m);
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+
+/* ---------- funnel ---------- */
+.funnel { display: flex; gap: 14px; flex-wrap: wrap; }
+.funnel-step { flex: 1 1 150px; text-align: center; padding: 18px 12px; border-radius: 12px; background: var(--surface-2); }
+.funnel-step .n { font-size: 26px; font-weight: 800; color: var(--above); font-family:"Bricolage Grotesque",sans-serif; }
+.funnel-step .l { font-size: 12px; color: var(--ink-3); margin-top: 4px; font-weight: 500; font-family:"IBM Plex Mono",monospace; }
+.funnel-arrow { align-self: center; color: var(--stone); font-size: 20px; }
+
+/* ---------- pills ---------- */
+.pill-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+.pill { font-size: 12.5px; font-weight: 600; padding: 6px 12px; border-radius: 999px; font-family:"IBM Plex Mono",monospace; }
+.pill.green { background: var(--third-soft); color: var(--third); }
+.pill.amber { background: var(--amber-soft); color: var(--amber); }
+.pill.red   { background: var(--below-soft); color: var(--below); }
+.pill.gray  { background: var(--surface-2); color: var(--ink-3); }
+
+/* ---------- procedure / trend bars ---------- */
+.proc-row { display: grid; grid-template-columns: 220px 1fr 108px; align-items: center; gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--line-soft); animation: rowIn .5s var(--ease) backwards; }
+.proc-count { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; line-height: 1.15; text-align: right; font-weight: 700; color: var(--above); font-size: 14px; font-family:"IBM Plex Mono",monospace; }
+.proc-pct { font-size: 10.5px; font-weight: 500; color: var(--ink-3); }
+.proc-row:last-child { border-bottom: none; }
+.proc-name { font-size: 13.5px; font-weight: 700; color: var(--ink); }
+.proc-price { font-size: 11.5px; color: var(--ink-3); margin-top: 2px; font-weight: 500; }
+.proc-name-link { cursor: pointer; text-decoration: underline dotted var(--stone); text-underline-offset: 3px; }
+.proc-name-link:hover { color: var(--accent); }
+.table-note { font-size: 11px; color: var(--ink-3); margin-top: 4px; font-weight: 400; line-height: 1.45; max-width: 420px; }
+.bar-track { background: var(--surface-2); border-radius: 8px; height: 22px; overflow: hidden; }
+.bar-fill { background: linear-gradient(90deg, color-mix(in srgb, var(--above) 55%, var(--third)), var(--above)); height: 100%; border-radius: 8px 0 0 8px; width: 0%; transition: width 1.1s var(--ease); }
+.bar-fill.trend { background: linear-gradient(90deg, color-mix(in srgb, var(--third) 55%, var(--above)), var(--third)); }
+.proc-count.trend { color: var(--third); }
+
+@keyframes rowIn { from{opacity:0; transform:translateX(-8px);} to{opacity:1; transform:translateX(0);} }
+@keyframes cardIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+.stat-card { animation: cardIn .5s var(--ease) backwards; }
+.stat-card:nth-child(1) { animation-delay: .05s; }
+.stat-card:nth-child(2) { animation-delay: .15s; }
+.stat-card:nth-child(3) { animation-delay: .25s; }
+.stat-card.has-tooltip { z-index: 50; }
+
+/* ---------- table ---------- */
+table { width: 100%; min-width: 480px; border-collapse: collapse; font-size: 13.5px; background:var(--surface); }
+th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-3); padding: 10px 12px; border-bottom: 2px solid var(--line); background:var(--surface-2); font-family:"IBM Plex Mono",monospace; font-weight:500; }
+td { padding: 12px; border-bottom: 1px solid var(--line-soft); vertical-align: top; color:var(--ink-2); }
+tr:last-child td { border-bottom: none; }
+td.num { font-weight: 700; color:var(--ink); font-variant-numeric:tabular-nums; }
+tbody tr{ transition: background .2s var(--ease); }
+tbody tr:hover{ background: var(--surface-2); }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+@media (max-width: 720px) {
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .two-col { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .wrap { padding: 32px 16px 60px; }
+  header.hero { padding: 44px 16px 20px; }
+  header.hero h1 { font-size: 1.5rem; }
+  header.hero p.sub { font-size: 12.5px; }
+  section { margin-top: 40px; }
+  h2 { font-size: 18px; }
+  p.section-desc { font-size: 13px; }
+  .card { padding: 18px; }
+  .stat-card .num { font-size: 24px; }
+  .stat-card { padding: 16px; }
+  .stat-card .tooltip { width: calc(100vw - 32px); max-width: none; left: 50%; transform: translateX(-50%) translateY(-6px); }
   .stat-card.has-tooltip:hover .tooltip,
-  .stat-card.has-tooltip.tooltip-open .tooltip {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-  .tooltip-title { font-size: 12.5px; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
-  .tooltip p { font-size: 12px; color: var(--gray); margin: 0 0 12px; font-weight: 400; line-height: 1.5; }
-  .tooltip .pill-row { margin-top: 0; gap: 6px; }
-  .tooltip .pill { font-size: 11px; padding: 4px 9px; }
+  .stat-card.has-tooltip.tooltip-open .tooltip { transform: translateX(-50%) translateY(0); }
+  .proc-row, .overlay-row { grid-template-columns: 1fr; grid-template-areas: "name" "bar" "count"; row-gap: 6px; padding: 12px 0; }
+  .proc-row > div:first-child, .overlay-row > .proc-name { grid-area: name; }
+  .proc-row > .bar-track, .overlay-row > .overlay-track { grid-area: bar; }
+  .proc-row > .proc-count, .overlay-row > .overlay-pct { grid-area: count; text-align: left; }
+  .proc-count { align-items: flex-start; }
+  .funnel-step { flex: 1 1 45%; }
+  .pill { font-size: 11.5px; padding: 5px 10px; }
+  #breakdown-modal-overlay { padding: 0; align-items: stretch; }
+  .breakdown-modal { max-height: 100vh; height: 100vh; border-radius: 0; max-width: 100%; }
+  .breakdown-modal-header, .breakdown-modal-controls, .breakdown-modal-body { padding-left: 16px; padding-right: 16px; }
+  .breakdown-row { flex-direction: column; gap: 2px; }
+  .breakdown-price-col { text-align: left; }
+  .table-note { max-width: none; }
+}
 
-  section { margin-top: 56px; }
-  h2 {
-    font-size: 21px;
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    margin: 0 0 6px;
-  }
-  p.section-desc { color: var(--gray); font-size: 14px; margin: 0 0 24px; max-width: 680px; }
+ul.notes { margin: 0; padding-left: 18px; font-size: 13.5px; color: var(--ink-2); }
+ul.notes li { margin-bottom: 10px; }
 
-  .card {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px;
-    box-shadow: 0 1px 3px rgba(15,23,42,0.04);
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
+/* ---------- overlay comparison chart ---------- */
+.overlay-legend { display: flex; gap: 14px 22px; flex-wrap: wrap; margin-bottom: 20px; }
+.overlay-legend-item { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+.sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; }
+.sw-clinics { background: linear-gradient(90deg, color-mix(in srgb, var(--above) 40%, white), var(--above)); }
+.sw-trends { background: linear-gradient(90deg, color-mix(in srgb, var(--third) 40%, white), var(--third)); }
+.overlay-row { display: grid; grid-template-columns: 220px 1fr 96px; align-items: center; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--line-soft); animation: rowIn .5s var(--ease) backwards; }
+.overlay-row:last-child { border-bottom: none; }
+.overlay-track { position: relative; height: 26px; background: var(--surface-2); border-radius: 7px; overflow: visible; }
+.overlay-bar-clinics { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: linear-gradient(90deg, color-mix(in srgb, var(--above) 40%, white), var(--above)); border-radius: 7px; transition: width 1.1s var(--ease); }
+.overlay-bar-trends { position: absolute; left: 0; top: 50%; height: 10px; width: 0%; transform: translateY(-50%); background: linear-gradient(90deg, color-mix(in srgb, var(--third) 40%, white), var(--third)); border-radius: 6px; box-shadow: 0 0 0 2px var(--surface); transition: width 1.1s var(--ease) .1s; }
+.overlay-pct { text-align: right; font-size: 11.5px; line-height: 1.5; font-family:"IBM Plex Mono",monospace; }
+.overlay-pct .c { color: var(--above); font-weight: 700; }
+.overlay-pct .t { color: var(--third); font-weight: 700; }
 
-  /* Funnel / campaign */
-  .funnel { display: flex; gap: 14px; flex-wrap: wrap; }
-  .funnel-step {
-    flex: 1 1 150px;
-    text-align: center;
-    padding: 18px 12px;
-    border-radius: 12px;
-    background: var(--blue-light);
-  }
-  .funnel-step .n { font-size: 26px; font-weight: 800; color: var(--blue-dark); }
-  .funnel-step .l { font-size: 12px; color: var(--gray); margin-top: 4px; font-weight: 600; }
-  .funnel-arrow { align-self: center; color: var(--gray-light); font-size: 20px; }
+footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 12px; color: var(--ink-3); text-align: center; font-family:"IBM Plex Mono",monospace; position:relative; z-index:1; }
 
-  .pill-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
-  .pill {
-    font-size: 12.5px;
-    font-weight: 700;
-    padding: 6px 12px;
-    border-radius: 999px;
-  }
-  .pill.green { background: #ecfdf5; color: var(--green); }
-  .pill.amber { background: #fffbeb; color: var(--amber); }
-  .pill.red   { background: #fef2f2; color: var(--red); }
-  .pill.gray  { background: #f3f4f6; color: var(--gray); }
+/* ---------- per-clinic breakdown modal ---------- */
+#breakdown-modal-overlay {
+  position: fixed; inset: 0; z-index: 500; background: rgba(11,18,32,0.55);
+  display: none; align-items: flex-start; justify-content: center;
+  padding: 40px 16px; overflow-y: auto;
+}
+#breakdown-modal-overlay.open { display: flex; }
+.breakdown-modal {
+  background: var(--surface); border-radius: 16px; max-width: 720px; width: 100%;
+  box-shadow: var(--shadow-l); max-height: calc(100vh - 80px);
+  display: flex; flex-direction: column; border:1px solid var(--line-soft);
+}
+.breakdown-modal-header { padding: 20px 24px; border-bottom: 1px solid var(--line-soft); display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.breakdown-modal-title { font-size: 17px; font-weight: 700; color:var(--ink); font-family:"Bricolage Grotesque",sans-serif; }
+.breakdown-modal-sub { font-size: 12.5px; color: var(--ink-3); margin-top: 4px; }
+.breakdown-modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--ink-3); line-height: 1; padding: 2px 6px; border-radius: 6px; }
+.breakdown-modal-close:hover { color: var(--ink); background: var(--surface-2); }
+.breakdown-modal-controls { padding: 12px 24px; border-bottom: 1px solid var(--line-soft); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.breakdown-sort-label { font-size: 11px; color: var(--ink-3); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; margin-right: 2px; font-family:"IBM Plex Mono",monospace; }
+.sort-btn { font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; color: var(--ink-3); transition: border-color .2s var(--ease), color .2s var(--ease); }
+.sort-btn:hover { border-color: var(--above); color: var(--above); }
+.sort-btn.active { background: var(--above); border-color: var(--above); color: #fff; }
+.breakdown-modal-body { overflow-y: auto; padding: 6px 24px 20px; }
+.breakdown-row { padding: 11px 0; border-bottom: 1px solid var(--line-soft); display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; }
+.breakdown-row:last-child { border-bottom: none; }
+.breakdown-clinic a { color: var(--above); font-weight: 700; font-size: 13.5px; text-decoration: none; }
+.breakdown-clinic a:hover { text-decoration: underline; }
+.breakdown-clinic .no-link { color: var(--ink); font-weight: 700; font-size: 13.5px; }
+.breakdown-proc { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+.breakdown-price-col { text-align: right; flex-shrink: 0; }
+.breakdown-price { font-weight: 700; color: var(--ink); font-size: 13.5px; white-space: nowrap; }
+.breakdown-duration { font-size: 11px; color: var(--ink-3); margin-top: 2px; }
+.breakdown-empty { padding: 24px 0; text-align: center; color: var(--ink-3); font-size: 13px; }
 
-  /* Procedure bars */
-  .proc-row { display: grid; grid-template-columns: 220px 1fr 90px; align-items: center; gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--border); animation: rowIn .5s ease backwards; }
-  .proc-row:last-child { border-bottom: none; }
-  .proc-name { font-size: 13.5px; font-weight: 700; }
-  .proc-price { font-size: 11.5px; color: var(--gray); margin-top: 2px; font-weight: 500; }
-  .proc-name-link { cursor: pointer; text-decoration: underline dotted var(--gray-light); text-underline-offset: 3px; }
-  .proc-name-link:hover { color: var(--blue); }
-  .table-note { font-size: 11px; color: var(--gray); margin-top: 4px; font-weight: 400; line-height: 1.45; max-width: 420px; }
-  .bar-track { background: #eef2f7; border-radius: 8px; height: 22px; overflow: hidden; }
-  .bar-fill { background: linear-gradient(90deg, #60a5fa, var(--blue)); height: 100%; border-radius: 8px 0 0 8px; width: 0%; transition: width 1.1s cubic-bezier(.16,.8,.3,1); }
-  .bar-fill.trend { background: linear-gradient(90deg, #c4b5fd, #7c3aed); }
-  .proc-count { text-align: right; font-weight: 800; color: var(--blue-dark); font-size: 14px; }
-  .proc-count.trend { color: #6d28d9; }
+a:focus-visible, .sort-btn:focus-visible, .proc-name-link:focus-visible, .back-to-hub:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px;
+}
 
-  @keyframes rowIn {
-    from { opacity: 0; transform: translateX(-8px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  .stat-card .num { transition: none; }
-  @keyframes cardIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  /* animation-fill-mode: backwards (not forwards, and no standing opacity:0 rule) so the card
-     doesn't retain a fractional-opacity stacking context after the fade-in finishes — a standing
-     "opacity: 0" here would trap the tooltip's z-index inside this card, letting later sections
-     in the DOM paint over it. Once the animation ends the card just falls back to normal opacity:1. */
-  .stat-card { animation: cardIn .5s ease backwards; }
-  .stat-card:nth-child(1) { animation-delay: .05s; }
-  .stat-card:nth-child(2) { animation-delay: .15s; }
-  .stat-card:nth-child(3) { animation-delay: .25s; }
-  .stat-card.has-tooltip { z-index: 1; }
-
-  /* Table */
-  table { width: 100%; min-width: 480px; border-collapse: collapse; font-size: 13.5px; }
-  th { text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--gray); padding: 10px 12px; border-bottom: 2px solid var(--border); }
-  td { padding: 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
-  tr:last-child td { border-bottom: none; }
-  td.num { font-weight: 700; }
-
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-
-  /* Tablet */
-  @media (max-width: 720px) {
-    .stat-grid { grid-template-columns: repeat(2, 1fr); }
-    .two-col { grid-template-columns: 1fr; }
-  }
-
-  /* Phones */
-  @media (max-width: 600px) {
-    .wrap { padding: 32px 16px 60px; }
-    header.hero { padding: 20px 16px; }
-    header.hero h1 { font-size: 20px; }
-    header.hero p.sub { font-size: 12.5px; }
-    section { margin-top: 40px; }
-    h2 { font-size: 18px; }
-    p.section-desc { font-size: 13px; }
-    .card { padding: 18px; }
-
-    .stat-card .num { font-size: 24px; }
-    .stat-card { padding: 16px; }
-
-    /* Tooltip: full-bleed under its card instead of a fixed 340px box that can overhang the
-       screen edge on narrow phones. */
-    .stat-card .tooltip { width: calc(100vw - 32px); max-width: none; left: 50%; transform: translateX(-50%) translateY(-6px); }
-    .stat-card.has-tooltip:hover .tooltip,
-    .stat-card.has-tooltip.tooltip-open .tooltip { transform: translateX(-50%) translateY(0); }
-
-    /* Procedure / trends / overlay rows: stack name, bar, and count instead of squeezing a
-       fixed 220px label column onto a ~360px screen. */
-    .proc-row, .overlay-row {
-      grid-template-columns: 1fr;
-      grid-template-areas: "name" "bar" "count";
-      row-gap: 6px;
-      padding: 12px 0;
-    }
-    .proc-row > div:first-child, .overlay-row > .proc-name { grid-area: name; }
-    .proc-row > .bar-track, .overlay-row > .overlay-track { grid-area: bar; }
-    .proc-row > .proc-count, .overlay-row > .overlay-pct { grid-area: count; text-align: left; }
-
-    .funnel-step { flex: 1 1 45%; }
-
-    .pill { font-size: 11.5px; padding: 5px 10px; }
-
-    #breakdown-modal-overlay { padding: 0; align-items: stretch; }
-    .breakdown-modal { max-height: 100vh; height: 100vh; border-radius: 0; max-width: 100%; }
-    .breakdown-modal-header, .breakdown-modal-controls, .breakdown-modal-body { padding-left: 16px; padding-right: 16px; }
-    .breakdown-row { flex-direction: column; gap: 2px; }
-    .breakdown-price-col { text-align: left; }
-    .table-note { max-width: none; }
-  }
-
-  ul.notes { margin: 0; padding-left: 18px; font-size: 13.5px; color: #374151; }
-  ul.notes li { margin-bottom: 10px; }
-
-  /* Overlay comparison chart */
-  .overlay-legend { display: flex; gap: 14px 22px; flex-wrap: wrap; margin-bottom: 20px; }
-  .overlay-legend-item { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 700; color: #374151; }
-  .sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; }
-  .sw-clinics { background: linear-gradient(90deg, #bfdbfe, #60a5fa); }
-  .sw-trends { background: linear-gradient(90deg, #c4b5fd, #7c3aed); }
-  .overlay-row { display: grid; grid-template-columns: 220px 1fr 96px; align-items: center; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--border); animation: rowIn .5s ease backwards; }
-  .overlay-row:last-child { border-bottom: none; }
-  .overlay-track { position: relative; height: 26px; background: #eef2f7; border-radius: 7px; overflow: visible; }
-  .overlay-bar-clinics {
-    position: absolute; left: 0; top: 0; height: 100%; width: 0%;
-    background: linear-gradient(90deg, #bfdbfe, #60a5fa);
-    border-radius: 7px;
-    transition: width 1.1s cubic-bezier(.16,.8,.3,1);
-  }
-  .overlay-bar-trends {
-    position: absolute; left: 0; top: 50%; height: 10px; width: 0%;
-    transform: translateY(-50%);
-    background: linear-gradient(90deg, #c4b5fd, #7c3aed);
-    border-radius: 6px;
-    box-shadow: 0 0 0 2px #fff;
-    transition: width 1.1s cubic-bezier(.16,.8,.3,1) .1s;
-  }
-  .overlay-pct { text-align: right; font-size: 11.5px; line-height: 1.5; }
-  .overlay-pct .c { color: var(--blue-dark); font-weight: 800; }
-  .overlay-pct .t { color: #6d28d9; font-weight: 800; }
-
-  footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 12px; color: var(--gray-light); text-align: center; }
-
-  /* Per-clinic breakdown modal */
-  #breakdown-modal-overlay {
-    position: fixed; inset: 0; z-index: 500;
-    background: rgba(15,23,42,0.5);
-    display: none; align-items: flex-start; justify-content: center;
-    padding: 40px 16px; overflow-y: auto;
-  }
-  #breakdown-modal-overlay.open { display: flex; }
-  .breakdown-modal {
-    background: white; border-radius: 16px; max-width: 720px; width: 100%;
-    box-shadow: 0 20px 60px rgba(15,23,42,0.3);
-    max-height: calc(100vh - 80px);
-    display: flex; flex-direction: column;
-  }
-  .breakdown-modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-  .breakdown-modal-title { font-size: 17px; font-weight: 800; }
-  .breakdown-modal-sub { font-size: 12.5px; color: var(--gray); margin-top: 4px; }
-  .breakdown-modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--gray); line-height: 1; padding: 2px 6px; border-radius: 6px; }
-  .breakdown-modal-close:hover { color: var(--ink); background: var(--bg); }
-  .breakdown-modal-controls { padding: 12px 24px; border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .breakdown-sort-label { font-size: 11.5px; color: var(--gray); font-weight: 700; text-transform: uppercase; letter-spacing: .03em; margin-right: 2px; }
-  .sort-btn { font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border); background: white; cursor: pointer; color: var(--gray); }
-  .sort-btn:hover { border-color: var(--blue); color: var(--blue); }
-  .sort-btn.active { background: var(--blue); border-color: var(--blue); color: white; }
-  .breakdown-modal-body { overflow-y: auto; padding: 6px 24px 20px; }
-  .breakdown-row { padding: 11px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; }
-  .breakdown-row:last-child { border-bottom: none; }
-  .breakdown-clinic a { color: var(--blue-dark); font-weight: 700; font-size: 13.5px; text-decoration: none; }
-  .breakdown-clinic a:hover { text-decoration: underline; }
-  .breakdown-clinic .no-link { color: var(--ink); font-weight: 700; font-size: 13.5px; }
-  .breakdown-proc { font-size: 12px; color: var(--gray); margin-top: 2px; }
-  .breakdown-price-col { text-align: right; flex-shrink: 0; }
-  .breakdown-price { font-weight: 800; color: var(--ink); font-size: 13.5px; white-space: nowrap; }
-  .breakdown-duration { font-size: 11px; color: var(--gray-light); margin-top: 2px; }
-  .breakdown-empty { padding: 24px 0; text-align: center; color: var(--gray); font-size: 13px; }
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ animation:none !important; transition:none !important; }
+  .aurora i{ animation:none !important; }
+  .hero-spectrum, .stat-card::before{ transform:none !important; }
+  .proc-row, .overlay-row, .stat-card, .back-to-hub, header.hero .eyebrow, header.hero h1, header.hero p.sub{ opacity:1 !important; transform:none !important; }
+  .bar-fill, .overlay-bar-clinics, .overlay-bar-trends{ width: revert !important; }
+}
 </style>
 </head>
 <body>
+<div class="aurora"><i class="a"></i><i class="b"></i><i class="c"></i></div>
 
 <header class="hero">
   <div class="inner">
+    <a class="back-to-hub" href="Med_Spa_Multi_City_Hub.html">&larr; Back to National Hub</a>
     <div class="eyebrow">Market Research &middot; Updated Aug 18, 2026</div>
     <h1>Miami Med Spa Market Report</h1>
     <p class="sub">Pricing transparency across Miami-Dade med spas, built from live website research. Outreach campaign has not started yet.</p>
+    <div class="hero-spectrum"></div>
   </div>
 </header>
 
@@ -504,6 +559,7 @@
     { name: "CoolSculpting / CoolTone", count: 5, price: "Not widely published" },
   ];
   const max = Math.max(...procedures.map(p => p.count));
+  const procTotal = procedures.reduce((s, p) => s + p.count, 0);
   const container = document.getElementById('procedures');
   const barsToAnimate = [];
   procedures.forEach((p, i) => {
@@ -517,7 +573,7 @@
         <div class="proc-price">${p.price}</div>
       </div>
       <div class="bar-track"><div class="bar-fill" data-pct="${pct}"></div></div>
-      <div class="proc-count">${p.count} clinics</div>
+      <div class="proc-count">${p.count} clinics<span class="proc-pct">${(p.count / procTotal * 100).toFixed(1)}% of total</span></div>
     `;
     container.appendChild(row);
     barsToAnimate.push(row.querySelector('.bar-fill'));
@@ -544,6 +600,7 @@
     { name: "CoolSculpting / CoolTone", term: '"CoolSculpting"', index: 1 },
   ];
   const trendsContainer = document.getElementById('trends');
+  const trendTotal = trends.reduce((s, t) => s + t.index, 0);
   trends.forEach((t, i) => {
     const row = document.createElement('div');
     row.className = 'proc-row';
@@ -554,7 +611,7 @@
         <div class="proc-price">Search term: ${t.term}</div>
       </div>
       <div class="bar-track"><div class="bar-fill trend" data-pct="${t.index}"></div></div>
-      <div class="proc-count trend">${t.index} / 100</div>
+      <div class="proc-count trend">${t.index} / 100<span class="proc-pct">${(t.index / trendTotal * 100).toFixed(1)}% of total</span></div>
     `;
     trendsContainer.appendChild(row);
     barsToAnimate.push(row.querySelector('.bar-fill'));
@@ -644,7 +701,7 @@
     tbody.appendChild(tr);
   });
 
-  const breakdownData = {"Botox / Neuromodulators":[["South Florida Face and Body","https://www.southfloridafaceandbody.com/miami-beach/aesthetic-services/","Botox","$12/unit",""],["South Florida Face and Body","https://www.southfloridafaceandbody.com/miami-beach/aesthetic-services/","Dysport","Not published",""],["Skin Spa New York - Miami Beach Medical Spa","https://skinspanewyork.com/pages/miami-beach","Neuromodulators (Botox/Dysport/Xeomin)","From $200 (per Groupon-listed starting price)",""],["VIIV WELLNESS HAUS","https://viivwellnesshaus.com/","Botox","Not published",""],["Brickell Cosmetic Center-Aesthetics & Dermatology","https://brickellcosmetic.com/services","Botox","$12-$15/unit (repeated generic-range phrasing, treat as directional)",""],["Solea Brickell Spa","https://soleabrickellspa.com/services","Botox","Not published",""],["No Filter Medical Spa","https://nofiltermedspa.com/","Botox","Not published (free consultation)",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","Botox","$12-$15/unit (repeated generic-range phrasing, treat as directional)",""],["Caruna Med Spa & Laser Center","https://carunamedspa.com/","Botox","Not published",""],["Facial Mania Med Spa - Coral Gables","https://www.facialmaniamedspa.com/coral-gables-miami/skin-care/","Botox / Dysport / Xeomin","Not published (membership: 30% off medspa services)",""],["Plenitude MedSpa","https://plenitudemedspa.com/coral-gables-fl/","Botox / Dysport / Daxxify","Not published (self-pay only)",""],["Infinity Medspa Miami","https://www.mindbodyonline.com/explore/locations/infinity-medspa-miami","Botox","Not published",""],["Medilight Aesthetic Clinic - Coral Gables","https://medilight.us/en/","Botox","Not published",""],["Lavish Laser Med Spa Coconut Grove","https://lavishlasermedspa.com/","Botox","Not published (20% off via membership)",""],["4Beauty Medspa","https://4beautymedspa.com/services/","Botox","Not published",""],["Dolce Medical Spa - Miami","https://medspafind.com/us/fl/miami/dolce-medical-spa-miami","Botox","$12-$15/unit (repeated generic-range phrasing, treat as directional)",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Botox","Not published",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","Botox / Dysport","Not published",""],["Facial Mania Med Spa Midtown","https://facialmaniamedspamiami.com/locations/midtown/","Botox","Not published (membership tiers: Amber $49/mo, Topaz $69/mo, Diamond $99/mo)",""],["Aviva Medical Spa","https://avivamedicalspa.com/aviva-services-pricing-guide/","Botox","Not published",""],["Miami Skin Spa Midtown","https://www.miamiskinspa.com/location/","Wrinkle Relaxers (Botox/Dysport)","Not published (free consultation)",""],["VIO Med Spa | Aventura","https://www.viomedspa.com/locations/aventura","Botox","Not published",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","Botox","Not published (free consultation)",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","Dysport","Groupon promo: up to 50 units for ~$156.60 (promotional, not standard rate)",""],["4Ever Young Med Spa & Wellness Center - Aventura","https://4everyoungantiaging.com/aventura/","Botox","Not published",""],["4Ever Young Med Spa & Wellness Center - Aventura","https://4everyoungantiaging.com/aventura/","Dysport","Not published",""],["Infinity Beauty Lab Med Spa","https://www.infinitybeautylab.com/","Botox","Not published",""],["Bella Vida Aesthetics & Wellness","https://bellavidaaesthetics.com/","Botox","$12-$15/unit (repeated generic-range phrasing, treat as directional)",""],["Aromas Medspa at Doral","https://aromaslaser.com/spa-price-list-aromas-med-spa-doral/","Botox","Not published",""],["FaceBeauty Med Spa","https://www.fbmedspa.com/our-services/","Botox / Dysport / Jeuveau","Not published",""],["Luminer Wellness & Medspa","https://www.luminerwellness.com/","Botox & Neurotoxins","$200-$900/session (generic industry range, not itemized)",""],["Live Medspa","https://livespaclinic.com/","Anti-Wrinkle Injections","Not published",""],["Pure Med Miami","https://puremed.us/en/home-en/","Botox / Neuromodulators","Not published",""],["Medilight Aesthetic Clinic - Doral","https://medilight.us/en/","Botox","Not published",""],["Aromas Medspa at Kendall","https://aromaslaser.com/aromas-medspa-south-florida-location/","Botox / Dysport","Not published",""],["Luminance Aesthetics","https://www.luminanceaestheticsmiami.com/pricing-miami-florida","Neuromodulators (Botox etc.)","$13/unit \u2014 confirmed via pricing-request email, 2026-08-25",""],["Le Mar Aesthetics - Kendall MedSpa","https://lemaraesthetics.com/services/","Neurotoxins (Botox/Dysport)","Not published",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","Botox","Not published",""],["Lab Skin Med Spa","https://labskinmedspa.com/medspa/","Botox","Not published",""],["Rochelin Medical Spa and Wellness","https://drrochelin.com/contact/","Botox","Not published",""],["Pler Clinics - North Miami","https://pler.com/botox-treatment/","Botox","From $9.99/unit",""],["Youthful Glow","https://youthful-glow.com/","Botox","$9/unit (promo)",""],["Rejuvenation Medical Aesthetics & Spa","https://rejumedaesthetics.com/","Botox","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","Botox / Fillers","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","Dermal Fillers / Neuromodulators","Not published",""],["Perfection Plastic Surgery & Med Spa","https://perfectionsurgery.com/","Cosmetic Injections / Botox / Fillers","Not published",""],["Cleopatra Med Spa","https://cleopatramedspa.com/","Botox","$12-$15/unit (repeated generic-range phrasing, treat as directional)",""],["Laria MedSpa","https://lariamedspa.com/pricing/","Botox","Not published",""],["The Aesthetics & Wellness Lounge Pinecrest","https://pinecrest.theaestheticsloungeandspa.com/","Botox / Injectables","Not published",""],["Skin Plus Beauty","https://skinplusbeauty.com/","Anti-Wrinkle Injectable Treatments (Botox-type toxin)","Not published",""],["R&R Skin and Aesthetics","https://rrskin.com/","Dermal Fillers / Anti-Wrinkle Injections / Lip Fillers","Not published",""],["CoralMedAesthetic","https://www.quest-go.com/listing/CoralMedAesthetic","Botox","From $169 (Groupon promo, 52% off)",""],["Coco Medical Spa Mitjans Aesthetics Miami","https://cocomedicalspa.com/services/","Botox","Not published",""],["Coco Medical Spa Mitjans Aesthetics Miami","https://cocomedicalspa.com/services/","Injectable Fillers / PDO Threads / Neuromodulators","Not published",""],["MIAMI VIP MEDICAL","https://vipmedical.miami/","Botox & Neurotoxins","$200-$900/session (generic industry range, not itemized)",""],["Miami Lakes Med Spa","https://miamilakesmedspa.com/pricing/","Botox","$10-$18/unit (generic industry range, not itemized)",""],["Cure Wellness Medical Center","https://curewmc.com/?page_id=185","Botox","Not published",""],["Epic Beauty & Wellness (DBA Epic Health)","https://www.wellnessliving.com/explore/locations/medical-aesthetics/us-fl-homestead/epicbeautywellnessdbaepichealth/","Botox","Not published",""],["Health & Beauty Medspa","https://healthbeautymedspa.com/en-services","Botox","Not published ($25 deposit required to book; prices change weekly per clinic)",""]],"Dermal / Lip Fillers":[["Rejuvaline Medspa at Flamingo","https://rejuvalinemedspa.com/miami-beach/","Dermal Fillers / Injectables","Not published",""],["South Florida Face and Body","https://www.southfloridafaceandbody.com/miami-beach/aesthetic-services/","Dermal Fillers","$650/syringe",""],["VIIV WELLNESS HAUS","https://viivwellnesshaus.com/","Dermal Fillers (incl. Tear Trough)","Not published",""],["Brickell Cosmetic Center-Aesthetics & Dermatology","https://brickellcosmetic.com/services","Dermal Fillers","$600-$1,200/syringe (repeated generic-range phrasing, treat as directional)",""],["Solea Brickell Spa","https://soleabrickellspa.com/services","Dermal Fillers","Not published",""],["No Filter Medical Spa","https://nofiltermedspa.com/","Dermal Fillers","Not published",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","Dermal Fillers / Lip Filler","$600-$1,200/syringe (repeated generic-range phrasing, treat as directional)",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","Dermal Fillers","Not published",""],["Caruna Med Spa & Laser Center","https://carunamedspa.com/","Dermal Fillers / Lip Fillers","Not published",""],["Facial Mania Med Spa - Coral Gables","https://www.facialmaniamedspa.com/coral-gables-miami/skin-care/","Dermal Fillers (Juvederm/Restylane/Radiesse/Versa)","Not published",""],["Plenitude MedSpa","https://plenitudemedspa.com/coral-gables-fl/","Dermal Fillers","Not published",""],["Infinity Medspa Miami","https://www.mindbodyonline.com/explore/locations/infinity-medspa-miami","Dermal Fillers / Lip Fillers","Not published",""],["Medilight Aesthetic Clinic - Coral Gables","https://medilight.us/en/","Dermal Fillers","Not published",""],["Lavish Laser Med Spa Coconut Grove","https://lavishlasermedspa.com/","Juvederm / Dermal Fillers","Not published",""],["4Beauty Medspa","https://4beautymedspa.com/services/","Lip Fillers / Derma Fillers","Not published",""],["Dolce Medical Spa - Miami","https://medspafind.com/us/fl/miami/dolce-medical-spa-miami","Dermal Fillers","$600-$1,200/syringe (repeated generic-range phrasing, treat as directional)",""],["Dolce Medical Spa - Miami","https://medspafind.com/us/fl/miami/dolce-medical-spa-miami","Lip Fillers","Not published",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","Dermal / Hyaluronic Acid Fillers","Not published",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","Radiesse","Not published",""],["Facial Mania Med Spa Midtown","https://facialmaniamedspamiami.com/locations/midtown/","Dermal Fillers","Not published",""],["Aviva Medical Spa","https://avivamedicalspa.com/aviva-services-pricing-guide/","Dermal Fillers","Not published",""],["Miami Skin Spa Midtown","https://www.miamiskinspa.com/location/","Dermal Fillers","Not published",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","Restylane / Juvederm / Versa / Radiesse (Fillers)","Not published",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","Liquid Face Lift","Not published",""],["4Ever Young Med Spa & Wellness Center - Aventura","https://4everyoungantiaging.com/aventura/","Dermal Fillers (Juvederm/Restylane)","Not published",""],["Bella Vida Aesthetics & Wellness","https://bellavidaaesthetics.com/","Dermal Fillers","$600-$1,200/syringe (repeated generic-range phrasing, treat as directional)",""],["Bella Vida Aesthetics & Wellness","https://bellavidaaesthetics.com/","Lip Fillers","Not published",""],["Aromas Medspa at Doral","https://aromaslaser.com/spa-price-list-aromas-med-spa-doral/","Juvederm / Restylane / Radiesse (Fillers)","Not published",""],["Luminer Wellness & Medspa","https://www.luminerwellness.com/","Dermal Fillers","$600-$2,000/syringe (generic industry range, not itemized)",""],["Live Medspa","https://livespaclinic.com/","Dermal Fillers / Lip Fillers","Not published",""],["Pure Med Miami","https://puremed.us/en/home-en/","Dermal Fillers","Not published",""],["Medilight Aesthetic Clinic - Doral","https://medilight.us/en/","Dermal Fillers","Not published",""],["Aromas Medspa at Kendall","https://aromaslaser.com/aromas-medspa-south-florida-location/","Juvederm / Restylane / Radiesse (Fillers)","Not published",""],["Cosmetic Laser Professionals MED SPA","https://www.cosmeticlaserprofessionals.com/","Dermal Fillers","Not published",""],["Luminance Aesthetics","https://www.luminanceaestheticsmiami.com/pricing-miami-florida","Dermal Fillers","$550/half syringe, $850/full syringe (lip filler); $100 consult fee applied toward treatment \u2014 confirmed via pricing-request email, 2026-08-25",""],["Le Mar Aesthetics - Kendall MedSpa","https://lemaraesthetics.com/services/","Dermal Fillers / Lip Enhancement","Not published",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","Fillers (Juvederm/Restylane/Sculptra)","Not published",""],["Lab Skin Med Spa","https://labskinmedspa.com/medspa/","Lip Fillers","Not published",""],["Rochelin Medical Spa and Wellness","https://drrochelin.com/contact/","Injectables / Fillers","Not published",""],["Pler Clinics - North Miami","https://pler.com/botox-treatment/","Dermal Fillers","From $785",""],["Pler Clinics - North Miami","https://pler.com/botox-treatment/","Radiesse","Not published",""],["Youthful Glow","https://youthful-glow.com/","Face Fillers","$100 off promo",""],["Rejuvenation Medical Aesthetics & Spa","https://rejumedaesthetics.com/","Dermal Fillers","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","Botox / Fillers","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","Dermal Fillers / Neuromodulators","Not published",""],["Perfection Plastic Surgery & Med Spa","https://perfectionsurgery.com/","Cosmetic Injections / Botox / Fillers","Not published",""],["Cleopatra Med Spa","https://cleopatramedspa.com/","Dermal Fillers / Lip Fillers","$600-$1,200/syringe (repeated generic-range phrasing, treat as directional)",""],["The Aesthetics & Wellness Lounge Pinecrest","https://pinecrest.theaestheticsloungeandspa.com/","Juvederm / Restylane (Fillers)","Not published",""],["R&R Skin and Aesthetics","https://rrskin.com/","Dermal Fillers / Anti-Wrinkle Injections / Lip Fillers","Not published",""],["Coco Medical Spa Mitjans Aesthetics Miami","https://cocomedicalspa.com/services/","Injectable Fillers / PDO Threads / Neuromodulators","Not published",""],["MIAMI VIP MEDICAL","https://vipmedical.miami/","Dermal Fillers","$600-$2,000/syringe (generic industry range, not itemized)",""],["RTMedSpa","https://retromodernomedspa.com/","Injectables / Fillers / Lip Fillers","Not published",""],["Miami Lakes Med Spa","https://miamilakesmedspa.com/pricing/","Dermal Fillers","Not published",""],["Cure Wellness Medical Center","https://curewmc.com/?page_id=185","Filler Treatments / Lip Augmentation","Not published",""],["Health & Beauty Medspa","https://healthbeautymedspa.com/en-services","Dermal Fillers","Not published",""]],"Microneedling / RF":[["BODYWELLE","https://alonsomartinmd.com/miami-beach-office/","Morpheus8","Not published",""],["BODYWELLE","https://alonsomartinmd.com/miami-beach-office/","Microneedling with PRF","Not published",""],["South Florida Face and Body","https://www.southfloridafaceandbody.com/miami-beach/aesthetic-services/","Medical Microneedling","$400/treatment",""],["VIIV WELLNESS HAUS","https://viivwellnesshaus.com/","Microneedling","Not published",""],["Brickell Cosmetic Center-Aesthetics & Dermatology","https://brickellcosmetic.com/services","Morpheus8","Not published",""],["Brickell Cosmetic Center-Aesthetics & Dermatology","https://brickellcosmetic.com/services","Microneedling","Not published",""],["Solea Brickell Spa","https://soleabrickellspa.com/services","Microneedling","Not published",""],["No Filter Medical Spa","https://nofiltermedspa.com/","Morpheus8","Not published",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","Microneedling","Not published",""],["Caruna Med Spa & Laser Center","https://carunamedspa.com/","Microneedling","Not published",""],["Facial Mania Med Spa - Coral Gables","https://www.facialmaniamedspa.com/coral-gables-miami/skin-care/","Microneedling with RF","$284",""],["Plenitude MedSpa","https://plenitudemedspa.com/coral-gables-fl/","Morpheus8 / CO2 Resurfacing","Not published",""],["Plenitude MedSpa","https://plenitudemedspa.com/coral-gables-fl/","Microneedling (PRP/exosomes)","Not published",""],["Medilight Aesthetic Clinic - Coral Gables","https://medilight.us/en/","Attiva RF (Body Contouring)","Not published",""],["Medilight Aesthetic Clinic - Coral Gables","https://medilight.us/en/","Microneedling","Not published",""],["Lavish Laser Med Spa Coconut Grove","https://lavishlasermedspa.com/","RF Microneedling","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Agnes RF","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Fractional RF","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Morpheus8","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Skinpen Microneedling","Not published",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","Morpheus8 (Face and Body)","$699/session or $999/session (tier not specified)",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","Microneedling","Not published",""],["Facial Mania Med Spa Midtown","https://facialmaniamedspamiami.com/locations/midtown/","Microneedling","Not published",""],["Aviva Medical Spa","https://avivamedicalspa.com/aviva-services-pricing-guide/","Morpheus8","Not published (pricing guide is a downloadable PDF, not published inline)",""],["Miami Skin Spa Midtown","https://www.miamiskinspa.com/location/","Morpheus8","Not published",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","Microneedling","Not published",""],["4Ever Young Med Spa & Wellness Center - Aventura","https://4everyoungantiaging.com/aventura/","Microneedling","Not published",""],["Med Aesthetics Miami in Aventura","https://www.medaestheticsmiami.com/contact/aventura/","Morpheus8","Not published",""],["Alicia Med Spa","https://aliciamedspa.com/services/","Microneedling","Not published",""],["Infinity Beauty Lab Med Spa","https://www.infinitybeautylab.com/","Microneedling","$200-$700/session (range, not itemized per package)",""],["Infinity Beauty Lab Med Spa","https://www.infinitybeautylab.com/","Morpheus8","Not published",""],["Bella Vida Aesthetics & Wellness","https://bellavidaaesthetics.com/","Microneedling","Not published",""],["Luminer Wellness & Medspa","https://www.luminerwellness.com/","Microneedling","$200-$700/session (generic industry range, not itemized)",""],["Pure Med Miami","https://puremed.us/en/home-en/","Microneedling","Not published",""],["Medilight Aesthetic Clinic - Doral","https://medilight.us/en/","Attiva RF (Body Contouring)","Not published",""],["Medilight Aesthetic Clinic - Doral","https://medilight.us/en/","Microneedling","Not published",""],["Aromas Medspa at Kendall","https://aromaslaser.com/aromas-medspa-south-florida-location/","Ematrix RF","Not published",""],["Facial Mania Med Spa - Kendallgate Shopping Center","https://facialmaniamedspamiami.com/locations/kendall/","Microneedling with RF","$284",""],["Le Mar Aesthetics - Kendall MedSpa","https://lemaraesthetics.com/services/","Microneedling with PRP","Not published",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","DermaPen Microneedling","Not published",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","SylfirmX RFMN","Not published",""],["Rejuvenation Medical Aesthetics & Spa","https://rejumedaesthetics.com/","Morpheus8","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","Microneedling / PRP Microneedling","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","Morpheus8 / Fotona 4D / Rejuvapen","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","Microneedling","Not published",""],["The Aesthetics & Wellness Lounge Pinecrest","https://pinecrest.theaestheticsloungeandspa.com/","Microneedling","Not published",""],["Skin Plus Beauty","https://skinplusbeauty.com/","Microneedling","Not published",""],["R&R Skin and Aesthetics","https://rrskin.com/","Virtue RF Microneedling","Not published",""],["MIAMI VIP MEDICAL","https://vipmedical.miami/","Microneedling","$200-$700/session (generic industry range, not itemized)",""],["Miami Lakes Med Spa","https://miamilakesmedspa.com/pricing/","Morpheus8","Not published",""],["Miami Lakes Med Spa","https://miamilakesmedspa.com/pricing/","SkinPen Microneedling","Not published",""],["Cure Wellness Medical Center","https://curewmc.com/?page_id=185","Morpheus8","Not published",""],["Beauty First Med-Spa","https://beautyfirstmedspaservices.com/","Morpheus8","Not published",""],["Health & Beauty Medspa","https://healthbeautymedspa.com/en-services","Microneedling","Not published",""]],"Laser Hair Removal":[["Skin Spa New York - Miami Beach Medical Spa","https://skinspanewyork.com/pages/miami-beach","Laser Hair Removal","From $40",""],["VIIV WELLNESS HAUS","https://viivwellnesshaus.com/","Laser Hair Removal","Not published",""],["Solea Brickell Spa","https://soleabrickellspa.com/services","Laser Hair Removal","Not published",""],["No Filter Medical Spa","https://nofiltermedspa.com/","Laser Hair Removal","Not published",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","Laser Hair Removal","Not published",""],["Caruna Med Spa & Laser Center","https://carunamedspa.com/","Laser Hair Removal","Not published",""],["Facial Mania Med Spa - Coral Gables","https://www.facialmaniamedspa.com/coral-gables-miami/skin-care/","Laser Hair Removal (medium area, 6-session pkg)","$330 (reg. $660)",""],["Plenitude MedSpa","https://plenitudemedspa.com/coral-gables-fl/","Laser Hair Removal","Not published",""],["Med Aesthetics Miami","https://www.medaestheticsmiami.com/contact/coral-gables/","Laser Hair Removal","Not published",""],["Infinity Medspa Miami","https://www.mindbodyonline.com/explore/locations/infinity-medspa-miami","Laser Hair Removal","Not published",""],["Lavish Laser Med Spa Coconut Grove","https://lavishlasermedspa.com/","Laser Hair Removal","Not published (membership incl. 1 large or 2-3 smaller areas)",""],["Dolce Medical Spa - Miami","https://medspafind.com/us/fl/miami/dolce-medical-spa-miami","Laser Hair Removal","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Laser Hair Removal","Not published",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","Laser Hair Removal","Not published",""],["Aviva Medical Spa","https://avivamedicalspa.com/aviva-services-pricing-guide/","Laser Hair Removal","Not published",""],["Arviv Medical Aesthetics Miami","https://arvivaesthetics.com/pricing-2/","Laser Hair Removal","Not published (VIP membership $199/mo)",""],["Med Aesthetics Miami in Aventura","https://www.medaestheticsmiami.com/contact/aventura/","Laser Hair Removal","Not published",""],["Aromas Medspa at Doral","https://aromaslaser.com/spa-price-list-aromas-med-spa-doral/","Laser Hair Removal","Not published",""],["FaceBeauty Med Spa","https://www.fbmedspa.com/our-services/","Laser Hair Removal","Not published",""],["Luminer Wellness & Medspa","https://www.luminerwellness.com/","Laser Hair Removal","$150-$500/session (generic industry range, not itemized)",""],["Aromas Medspa at Kendall","https://aromaslaser.com/aromas-medspa-south-florida-location/","Laser Hair Removal","Not published",""],["Facial Mania Med Spa - Kendallgate Shopping Center","https://facialmaniamedspamiami.com/locations/kendall/","Laser Hair Removal (medium area, 6-session pkg)","$330 (reg. $660)",""],["Cosmetic Laser Professionals MED SPA","https://www.cosmeticlaserprofessionals.com/","Laser Hair Removal","Not published (15% off regular-priced services via prepay Happy Hour promo)",""],["Lab Skin Med Spa","https://labskinmedspa.com/medspa/","Laser Hair Removal","Not published",""],["Rochelin Medical Spa and Wellness","https://drrochelin.com/contact/","Laser Hair Removal","Not published",""],["Pler Clinics - North Miami","https://pler.com/botox-treatment/","Laser Hair Removal","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","Laser Hair Removal","Not published (promo treatments from $59)",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","Laser Hair Removal (Candela GentleMax Pro)","Not published (Groupon promo from $132)",""],["Perfection Plastic Surgery & Med Spa","https://perfectionsurgery.com/","Laser Hair Removal","Not published",""],["Mari Skin & Laser Clinic","https://www.vagaro.com/mariskinlaser","Laser Hair Removal","Not published",""],["Aventura Aesthetics Spa","https://aventuraesthetics.com/","Laser Hair Removal","Not published",""],["Cleopatra Med Spa","https://cleopatramedspa.com/","Laser Hair Removal","Not published",""],["Laria MedSpa","https://lariamedspa.com/pricing/","Laser Hair Removal","Not published",""],["Skin Plus Beauty","https://skinplusbeauty.com/","Laser Hair Removal (Candela GentleMax Pro Plus)","Not published",""],["R&R Skin and Aesthetics","https://rrskin.com/","Laser Hair Removal","Not published",""],["CoralMedAesthetic","https://www.quest-go.com/listing/CoralMedAesthetic","Laser Hair Removal","Not published",""],["Coco Medical Spa Mitjans Aesthetics Miami","https://cocomedicalspa.com/services/","Laser Hair Removal / IPL","Not published",""],["Miami Lakes Med Spa","https://miamilakesmedspa.com/pricing/","Laser Hair Removal","From $50/session, 6-session pkg from $250",""],["Cure Wellness Medical Center","https://curewmc.com/?page_id=185","Laser Hair Removal (full body/underarms/legs)","Not published",""],["Beauty First Med-Spa","https://beautyfirstmedspaservices.com/","Laser Hair Removal","Not published",""]],"Emsculpt / Body Contouring":[["BODYWELLE","https://alonsomartinmd.com/miami-beach-office/","Emsculpt NEO (Body Sculpting)","Not published",""],["BODYWELLE","https://alonsomartinmd.com/miami-beach-office/","EMTone (Cellulite)","Not published",""],["Skin Spa New York - Miami Beach Medical Spa","https://skinspanewyork.com/pages/miami-beach","Body Sculpting","Not published",""],["VIIV WELLNESS HAUS","https://viivwellnesshaus.com/","Emsculpt / Emsculpt Neo","Not published",""],["Solea Brickell Spa","https://soleabrickellspa.com/services","UltraShape Power (Body Contouring)","Not published",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","Body Contouring","Not published",""],["Caruna Med Spa & Laser Center","https://carunamedspa.com/","Body Contouring / Skin Tightening","Not published",""],["Facial Mania Med Spa - Coral Gables","https://www.facialmaniamedspa.com/coral-gables-miami/skin-care/","Body Contouring","Not published",""],["Plenitude MedSpa","https://plenitudemedspa.com/coral-gables-fl/","Quantum Liposuction (Body Contouring)","Not published",""],["Medilight Aesthetic Clinic - Coral Gables","https://medilight.us/en/","Attiva RF (Body Contouring)","Not published",""],["Lavish Laser Med Spa Coconut Grove","https://lavishlasermedspa.com/","Venus Legacy (Body Sculpting)","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Body Sculpting","Not published",""],["Miami Skin Spa Midtown","https://www.miamiskinspa.com/location/","Body Contouring","Not published",""],["VIO Med Spa | Aventura","https://www.viomedspa.com/locations/aventura","Body Contouring","Not published",""],["Alicia Med Spa","https://aliciamedspa.com/services/","Emsculpt","$6,000 for 10 sessions",""],["Bella Vida Aesthetics & Wellness","https://bellavidaaesthetics.com/","Body Contouring","Not published",""],["FaceBeauty Med Spa","https://www.fbmedspa.com/our-services/","Emsculpt / Exilis (BTL)","Not published",""],["Medilight Aesthetic Clinic - Doral","https://medilight.us/en/","Attiva RF (Body Contouring)","Not published",""],["Aromas Medspa at Kendall","https://aromaslaser.com/aromas-medspa-south-florida-location/","Cavitation / Lipo-Laser (Body Contouring)","Not published",""],["Aromas Medspa at Kendall","https://aromaslaser.com/aromas-medspa-south-florida-location/","Mesotherapy / Carboxytherapy","Not published",""],["Cosmetic Laser Professionals MED SPA","https://www.cosmeticlaserprofessionals.com/","Body Sculpting / Skin Tightening","Not published",""],["Le Mar Aesthetics - Kendall MedSpa","https://lemaraesthetics.com/services/","Non-Invasive Body Sculpting","Not published",""],["NextGen Med Spa","https://nextgenmedicalspa.com/","Body Contouring","Not published",""],["Lab Skin Med Spa","https://labskinmedspa.com/medspa/","Body Contouring","Not published",""],["Rejuvenation Medical Aesthetics & Spa","https://rejumedaesthetics.com/","Body Contouring","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","Cellulite Reduction / LPG Endermologie","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","UltraShape Power (Fat Reduction)","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","Venus Legacy / Selene Cryo (Skin Tightening)","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","CoolSculpting / EMSculpt / Endosphere / LPG","Not published",""],["Perfection Plastic Surgery & Med Spa","https://perfectionsurgery.com/","Body Contouring / Liposuction","Not published",""],["Aventura Aesthetics Spa","https://aventuraesthetics.com/","Lipo Laser / Fat Freeze","Not published",""],["Cleopatra Med Spa","https://cleopatramedspa.com/","Body Contouring","Not published",""],["BLUE WELLNESS CENTER Med Spa","https://bluewellnesscentermiami.com/","Body Sculpting / Fat Reduction","Not published",""],["Laria MedSpa","https://lariamedspa.com/pricing/","Body Contouring / Fat Reduction","Not published",""],["Skin Plus Beauty","https://skinplusbeauty.com/","VelaShape III (Fat/Cellulite Reduction)","Not published",""],["CoralMedAesthetic","https://www.quest-go.com/listing/CoralMedAesthetic","VelaShape / CoolSculpting / Zerona (Body Shaping)","Not published",""],["CoralMedAesthetic","https://www.quest-go.com/listing/CoralMedAesthetic","Ultracavitation / RF / Carboxytherapy","Not published",""],["Coco Medical Spa Mitjans Aesthetics Miami","https://cocomedicalspa.com/services/","VelaShape","Not published",""],["RejuvaSkin Medspa","https://www.rejuvaskinmedspa.net/","Body Sculpting / Contouring","Not published",""]],"PRP Therapy":[["BODYWELLE","https://alonsomartinmd.com/miami-beach-office/","Microneedling with PRF","Not published",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","PRP/PRF Treatments","Not published",""],["Caruna Med Spa & Laser Center","https://carunamedspa.com/","PRP/PRF Treatments","Not published",""],["Plenitude MedSpa","https://plenitudemedspa.com/coral-gables-fl/","Microneedling (PRP/exosomes)","Not published",""],["Infinity Medspa Miami","https://www.mindbodyonline.com/explore/locations/infinity-medspa-miami","PRP/PRF Treatments","Not published",""],["Medilight Aesthetic Clinic - Coral Gables","https://medilight.us/en/","Exosomes / PDRN","Not published",""],["Dolce Medical Spa - Miami","https://medspafind.com/us/fl/miami/dolce-medical-spa-miami","PRP/PRF Treatments","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","PRP","Not published",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","PRF/PRP Therapy","Not published",""],["Facial Mania Med Spa Midtown","https://facialmaniamedspamiami.com/locations/midtown/","PRP","Not published",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","PRP","Not published",""],["Bella Vida Aesthetics & Wellness","https://bellavidaaesthetics.com/","PRP/PRF Treatments","Not published",""],["Aromas Medspa at Doral","https://aromaslaser.com/spa-price-list-aromas-med-spa-doral/","PRP","Not published",""],["Aromas Medspa at Doral","https://aromaslaser.com/spa-price-list-aromas-med-spa-doral/","Exosomes","Not published",""],["FaceBeauty Med Spa","https://www.fbmedspa.com/our-services/","Exosome Facial","Not published",""],["FaceBeauty Med Spa","https://www.fbmedspa.com/our-services/","PRP Treatments","Not published",""],["Medilight Aesthetic Clinic - Doral","https://medilight.us/en/","Exosomes / PDRN","Not published",""],["Aromas Medspa at Kendall","https://aromaslaser.com/aromas-medspa-south-florida-location/","PRP / Hair Loss Treatments","Not published",""],["Luminance Aesthetics","https://www.luminanceaestheticsmiami.com/pricing-miami-florida","Plasma / PRF","Not published",""],["Le Mar Aesthetics - Kendall MedSpa","https://lemaraesthetics.com/services/","Microneedling with PRP","Not published",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","PRP + PRF / Exosomes","Not published",""],["Lab Skin Med Spa","https://labskinmedspa.com/medspa/","PRP Facial","Not published",""],["Youthful Glow","https://youthful-glow.com/","PRP (Facial/Facelift/Hair/Breast Lift/Sexual Revitalization)","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","Microneedling / PRP Microneedling","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","PRP / Vitamin Infusions","Not published",""],["Laria MedSpa","https://lariamedspa.com/pricing/","PRP Treatments","Not published",""],["The Aesthetics & Wellness Lounge Pinecrest","https://pinecrest.theaestheticsloungeandspa.com/","PRP Therapy","Not published",""],["Miami Lakes Med Spa","https://miamilakesmedspa.com/pricing/","PRP","Not published",""],["Health & Beauty Medspa","https://healthbeautymedspa.com/en-services","Plasma PRP Therapy","Not published",""]],"Chemical Peels":[["BODYWELLE","https://alonsomartinmd.com/miami-beach-office/","Chemical Peels","Not published",""],["VIIV WELLNESS HAUS","https://viivwellnesshaus.com/","Chemical Peels","Not published",""],["LUX MedSpa Brickell","https://www.luxmedspabrickell.com/","Metabolic Peels","Not published",""],["Solea Brickell Spa","https://soleabrickellspa.com/services","Chemical Peels","Not published",""],["No Filter Medical Spa","https://nofiltermedspa.com/","Chemical Peels","Not published",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","Chemical Peels","Not published",""],["Caruna Med Spa & Laser Center","https://carunamedspa.com/","Chemical Peels","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","VI Peel","Not published",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","Chemical Peels","Not published",""],["Aviva Medical Spa","https://avivamedicalspa.com/aviva-services-pricing-guide/","Chemical Peels","Not published",""],["4Ever Young Med Spa & Wellness Center - Aventura","https://4everyoungantiaging.com/aventura/","Chemical Peels","Not published",""],["Dolce Medical Spa Aventura","https://dolcemedicalspas.com/locations","BioRePeel","Not published",""],["FaceBeauty Med Spa","https://www.fbmedspa.com/our-services/","Micro Peeling / Advanced Peelings","Not published",""],["Pure Med Miami","https://puremed.us/en/home-en/","Chemical Peels","Not published",""],["Facial Mania Med Spa - Kendallgate Shopping Center","https://facialmaniamedspamiami.com/locations/kendall/","Chemical Peels","Not published",""],["Le Mar Aesthetics - Kendall MedSpa","https://lemaraesthetics.com/services/","Chemical Peels","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","HydraFacial / JetPeel / PRX-T33 Peel","Not published",""],["Cleopatra Med Spa","https://cleopatramedspa.com/","Chemical Peels","Not published",""],["Skin Plus Beauty","https://skinplusbeauty.com/","Chemical Peels","Not published",""],["Coco Medical Spa Mitjans Aesthetics Miami","https://cocomedicalspa.com/services/","Chemical Peels","Not published",""],["MIAMI VIP MEDICAL","https://vipmedical.miami/","Chemical Peels","$100-$800/treatment (generic industry range, not itemized)",""],["Miami Lakes Med Spa","https://miamilakesmedspa.com/pricing/","Chemical Peels","Not published",""],["Miami Lakes Med Spa","https://miamilakesmedspa.com/pricing/","VI Peel","Not published",""],["Cure Wellness Medical Center","https://curewmc.com/?page_id=185","Chemical Peels","Not published",""]],"IPL / Photofacial":[["No Filter Medical Spa","https://nofiltermedspa.com/","IPL Photofacial","Not published",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","IPL Photofacial","Not published",""],["Caruna Med Spa & Laser Center","https://carunamedspa.com/","IPL Photofacial","Not published",""],["Facial Mania Med Spa - Coral Gables","https://www.facialmaniamedspa.com/coral-gables-miami/skin-care/","IPL","Not published",""],["Plenitude MedSpa","https://plenitudemedspa.com/coral-gables-fl/","IPL / Lumecca","Not published",""],["Infinity Medspa Miami","https://www.mindbodyonline.com/explore/locations/infinity-medspa-miami","IPL Photofacial","Not published",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","IPL","Not published",""],["Facial Mania Med Spa Midtown","https://facialmaniamedspamiami.com/locations/midtown/","IPL Photofacial","Not published",""],["Arviv Medical Aesthetics Miami","https://arvivaesthetics.com/pricing-2/","Trinity 3-D Fotofacial / IPL / RF","Not published",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","Non-Surgical BBL","Not published",""],["Aromas Medspa at Doral","https://aromaslaser.com/spa-price-list-aromas-med-spa-doral/","IPL Photofacial","Not published",""],["Live Medspa","https://livespaclinic.com/","IPL Treatment","Not published",""],["Pure Med Miami","https://puremed.us/en/home-en/","IPL","Not published",""],["Facial Mania Med Spa - Kendallgate Shopping Center","https://facialmaniamedspamiami.com/locations/kendall/","IPL Treatment","Not published",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","BBL + Moxi Laser","Not published",""],["Youthful Glow","https://youthful-glow.com/","IPL Photofacial","Not published (BOGO 50% off promo)",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","CO2 Helix Resurfacing / Laser Genesis / Clear+Brilliant / IPL","Not published",""],["R&R Skin and Aesthetics","https://rrskin.com/","IPL Treatment","Not published",""],["CoralMedAesthetic","https://www.quest-go.com/listing/CoralMedAesthetic","Deep Facials / Microdermabrasion / IPL","Not published",""],["Coco Medical Spa Mitjans Aesthetics Miami","https://cocomedicalspa.com/services/","Laser Hair Removal / IPL","Not published",""],["RTMedSpa","https://retromodernomedspa.com/","IPL Treatment","Not published",""],["Health & Beauty Medspa","https://healthbeautymedspa.com/en-services","IPL Treatment / Laser Resurfacing","Not published",""]],"HydraFacial":[["Brickell Cosmetic Center-Aesthetics & Dermatology","https://brickellcosmetic.com/services","HydraFacial","Not published",""],["No Filter Medical Spa","https://nofiltermedspa.com/","Facials / HydraFacial","Not published",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","Facials / HydraFacial","Not published",""],["Plenitude MedSpa","https://plenitudemedspa.com/coral-gables-fl/","HydraFacial","Not published",""],["Lavish Laser Med Spa Coconut Grove","https://lavishlasermedspa.com/","HydraFacial Keravive","Not published (membership tier: $150 enrollment)",""],["Dolce Medical Spa - Miami","https://medspafind.com/us/fl/miami/dolce-medical-spa-miami","Facials / HydraFacial","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","HydraFacial","Not published",""],["Miami Skin Spa Midtown","https://www.miamiskinspa.com/location/","HydraFacial","Not published",""],["4Ever Young Med Spa & Wellness Center - Aventura","https://4everyoungantiaging.com/aventura/","HydraFacial","Not published",""],["Alicia Med Spa","https://aliciamedspa.com/services/","HydraFacial","Not published",""],["Luminer Wellness & Medspa","https://www.luminerwellness.com/","HydraFacial","$150-$350/session (generic industry range, not itemized)",""],["Le Mar Aesthetics - Kendall MedSpa","https://lemaraesthetics.com/services/","HydraFacial","Not published",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","HydraFacial","Not published (complimentary consultations)",""],["Lab Skin Med Spa","https://labskinmedspa.com/medspa/","Facials / HydraFacial","Not published",""],["Rejuvenation Medical Aesthetics & Spa","https://rejumedaesthetics.com/","HydraFacial","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","HydraFacial / Intraceuticals Oxygen Facial","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","HydraFacial / JetPeel / PRX-T33 Peel","Not published",""],["Skin Plus Beauty","https://skinplusbeauty.com/","HydraFacial Synedo","Not published",""],["Miami Lakes Med Spa","https://miamilakesmedspa.com/pricing/","HydraFacial","Not published",""],["Epic Beauty & Wellness (DBA Epic Health)","https://www.wellnessliving.com/explore/locations/medical-aesthetics/us-fl-homestead/epicbeautywellnessdbaepichealth/","HydraFacial","Not published",""]],"Sculptra / Biostimulators":[["South Florida Face and Body","https://www.southfloridafaceandbody.com/miami-beach/aesthetic-services/","Biostimulators (Sculptra-type)","Not published",""],["Brickell Cosmetic Center-Aesthetics & Dermatology","https://brickellcosmetic.com/services","Sculptra","Not published",""],["No Filter Medical Spa","https://nofiltermedspa.com/","Sculptra","Not published",""],["Lavish Laser Med Spa Coconut Grove","https://lavishlasermedspa.com/","Sculptra","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Sculptra","Not published",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","Sculptra (Face and Butt Lift)","Not published",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","Sculptra","Not published",""],["Luminance Aesthetics","https://www.luminanceaestheticsmiami.com/pricing-miami-florida","Sculptra","Not published",""],["Le Mar Aesthetics - Kendall MedSpa","https://lemaraesthetics.com/services/","Sculptra / Biostimulators","Not published",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","Fillers (Juvederm/Restylane/Sculptra)","Not published",""],["Youthful Glow","https://youthful-glow.com/","Sculptra","Not published (Buy 1 Vial Get 1 50% off promo)",""]],"PDO Thread Lift":[["Facial Mania Med Spa - Coral Gables","https://www.facialmaniamedspa.com/coral-gables-miami/skin-care/","PDO Threads","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Mint Thread Lift","Not published",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","PDO Thread Lift","Not published",""],["Facial Mania Med Spa Midtown","https://facialmaniamedspamiami.com/locations/midtown/","PDO Threads","Not published",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","PDO Threads","Not published",""],["Le Mar Aesthetics - Kendall MedSpa","https://lemaraesthetics.com/services/","PDO Threads","Not published",""],["Pler Clinics - North Miami","https://pler.com/botox-treatment/","PDO Thread Lifts","Not published",""],["Youthful Glow","https://youthful-glow.com/","PDO Threads","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","PDO Threads","Not published",""],["The Aesthetics & Wellness Lounge Pinecrest","https://pinecrest.theaestheticsloungeandspa.com/","PDO Thread Lifts","Not published",""],["Coco Medical Spa Mitjans Aesthetics Miami","https://cocomedicalspa.com/services/","Injectable Fillers / PDO Threads / Neuromodulators","Not published",""]],"Microdermabrasion / Dermaplaning":[["VIIV WELLNESS HAUS","https://viivwellnesshaus.com/","Dermaplaning","Not published",""],["Facial Mania Med Spa - Coral Gables","https://www.facialmaniamedspa.com/coral-gables-miami/skin-care/","Oxygenating Facial with Dermaplaning","$284",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Dermaplaning","Not published",""],["FaceBeauty Med Spa","https://www.fbmedspa.com/our-services/","Microdermabrasion Facial","Not published",""],["Facial Mania Med Spa - Kendallgate Shopping Center","https://facialmaniamedspamiami.com/locations/kendall/","Oxygenating Facial with Dermaplaning","$284",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","Dermaplaning","Not published",""],["CoralMedAesthetic","https://www.quest-go.com/listing/CoralMedAesthetic","Deep Facials / Microdermabrasion / IPL","Not published",""]],"Kybella":[["South Florida Face and Body","https://www.southfloridafaceandbody.com/miami-beach/aesthetic-services/","Kybella","Not published",""],["No Filter Medical Spa","https://nofiltermedspa.com/","Kybella","Not published",""],["Infinity Medspa Miami","https://www.mindbodyonline.com/explore/locations/infinity-medspa-miami","Kybella","Not published",""],["Dolce Medical Spa - Miami","https://medspafind.com/us/fl/miami/dolce-medical-spa-miami","Kybella","Not published",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","Kybella","Not published",""],["Bella Vida Aesthetics & Wellness","https://bellavidaaesthetics.com/","Kybella","Not published",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","Kybella","Not published",""],["Pler Clinics - North Miami","https://pler.com/botox-treatment/","Kybella","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","Kybella","Not published",""]],"Ultherapy":[["Facial Mania Med Spa - Coral Gables","https://www.facialmaniamedspa.com/coral-gables-miami/skin-care/","Ultherapy","Not published",""],["Arviv Medical Aesthetics Miami","https://arvivaesthetics.com/pricing-2/","Ultherapy","Not published",""],["Facial Mania Med Spa - Kendallgate Shopping Center","https://facialmaniamedspamiami.com/locations/kendall/","Ultherapy","Not published (membership tiers from $49/mo)",""],["NextGen Med Spa","https://nextgenmedicalspa.com/","Ultherapy","Not published",""],["Aventura Aesthetics Spa","https://aventuraesthetics.com/","Ultherapy","Not published",""],["Coco Medical Spa Mitjans Aesthetics Miami","https://cocomedicalspa.com/services/","Ultherapy","Not published",""]],"CoolSculpting / CoolTone":[["Infinity Medspa Miami","https://www.mindbodyonline.com/explore/locations/infinity-medspa-miami","CoolSculpting","Not published",""],["Dolce Medical Spa - Miami","https://medspafind.com/us/fl/miami/dolce-medical-spa-miami","CoolSculpting","Not published",""],["Rochelin Medical Spa and Wellness","https://drrochelin.com/contact/","CoolSculpting","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","CoolSculpting / EMSculpt / Endosphere / LPG","Not published",""],["CoralMedAesthetic","https://www.quest-go.com/listing/CoralMedAesthetic","VelaShape / CoolSculpting / Zerona (Body Shaping)","Not published",""]]};
+  const breakdownData = {"Botox / Neuromodulators":[["South Florida Face and Body","https://www.southfloridafaceandbody.com/miami-beach/aesthetic-services/","Botox","$12/unit",""],["South Florida Face and Body","https://www.southfloridafaceandbody.com/miami-beach/aesthetic-services/","Dysport","Not published",""],["Skin Spa New York - Miami Beach Medical Spa","https://skinspanewyork.com/pages/miami-beach","Neuromodulators (Botox/Dysport/Xeomin)","From $200 (per Groupon-listed starting price)",""],["VIIV WELLNESS HAUS","https://viivwellnesshaus.com/","Botox","Not published",""],["Brickell Cosmetic Center-Aesthetics & Dermatology","https://brickellcosmetic.com/services","Botox","$12-$15/unit (repeated generic-range phrasing, treat as directional)",""],["Solea Brickell Spa","https://soleabrickellspa.com/services","Botox","Not published",""],["No Filter Medical Spa","https://nofiltermedspa.com/","Botox","Not published (free consultation)",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","Botox","$12-$15/unit (repeated generic-range phrasing, treat as directional)",""],["Caruna Med Spa & Laser Center","https://carunamedspa.com/","Botox","Not published",""],["Facial Mania Med Spa - Coral Gables","https://www.facialmaniamedspa.com/coral-gables-miami/skin-care/","Botox / Dysport / Xeomin","Not published (membership: 30% off medspa services)",""],["Plenitude MedSpa","https://plenitudemedspa.com/coral-gables-fl/","Botox / Dysport / Daxxify","Not published (self-pay only)",""],["Infinity Medspa Miami","https://www.mindbodyonline.com/explore/locations/infinity-medspa-miami","Botox","Not published",""],["Medilight Aesthetic Clinic - Coral Gables","https://medilight.us/en/","Botox","Not published",""],["Lavish Laser Med Spa Coconut Grove","https://lavishlasermedspa.com/","Botox","Not published (20% off via membership)",""],["4Beauty Medspa","https://4beautymedspa.com/services/","Botox","Not published",""],["Dolce Medical Spa - Miami","https://medspafind.com/us/fl/miami/dolce-medical-spa-miami","Botox","$12-$15/unit (repeated generic-range phrasing, treat as directional)",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Botox","Smoothing Neurotoxins starting at $700 (published price list)",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","Botox / Dysport","Not published",""],["Facial Mania Med Spa Midtown","https://facialmaniamedspamiami.com/locations/midtown/","Botox","Not published (membership tiers: Amber $49/mo, Topaz $69/mo, Diamond $99/mo)",""],["Aviva Medical Spa","https://avivamedicalspa.com/aviva-services-pricing-guide/","Botox","Not published",""],["Miami Skin Spa Midtown","https://www.miamiskinspa.com/location/","Wrinkle Relaxers (Botox/Dysport)","Not published (free consultation)",""],["VIO Med Spa | Aventura","https://www.viomedspa.com/locations/aventura","Botox","Not published",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","Botox","Not published (free consultation)",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","Dysport","Groupon promo: up to 50 units for ~$156.60 (promotional, not standard rate)",""],["4Ever Young Med Spa & Wellness Center - Aventura","https://4everyoungantiaging.com/aventura/","Botox","Not published",""],["4Ever Young Med Spa & Wellness Center - Aventura","https://4everyoungantiaging.com/aventura/","Dysport","Not published",""],["Infinity Beauty Lab Med Spa","https://www.infinitybeautylab.com/","Botox","Not published",""],["Bella Vida Aesthetics & Wellness","https://bellavidaaesthetics.com/","Botox","$12-$15/unit (repeated generic-range phrasing, treat as directional)",""],["Aromas Medspa at Doral","https://aromaslaser.com/spa-price-list-aromas-med-spa-doral/","Botox","Not published",""],["FaceBeauty Med Spa","https://www.fbmedspa.com/our-services/","Botox / Dysport / Jeuveau","Not published",""],["Luminer Wellness & Medspa","https://www.luminerwellness.com/","Botox & Neurotoxins","$200-$900/session (generic industry range, not itemized)",""],["Live Medspa","https://livespaclinic.com/","Anti-Wrinkle Injections","Not published",""],["Pure Med Miami","https://puremed.us/en/home-en/","Botox / Neuromodulators","Not published",""],["Medilight Aesthetic Clinic - Doral","https://medilight.us/en/","Botox","Not published",""],["Aromas Medspa at Kendall","https://aromaslaser.com/aromas-medspa-south-florida-location/","Botox / Dysport","Not published",""],["Luminance Aesthetics","https://www.luminanceaestheticsmiami.com/pricing-miami-florida","Neuromodulators (Botox etc.)","$13/unit \u2014 confirmed via pricing-request email, 2026-08-25",""],["Le Mar Aesthetics - Kendall MedSpa","https://lemaraesthetics.com/services/","Neurotoxins (Botox/Dysport)","Not published",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","Botox","Not published",""],["Lab Skin Med Spa","https://labskinmedspa.com/medspa/","Botox","Not published",""],["Rochelin Medical Spa and Wellness","https://drrochelin.com/contact/","Botox","Not published",""],["Pler Clinics - North Miami","https://pler.com/botox-treatment/","Botox","From $9.99/unit",""],["Youthful Glow","https://youthful-glow.com/","Botox","$9/unit (promo)",""],["Rejuvenation Medical Aesthetics & Spa","https://rejumedaesthetics.com/","Botox","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","Botox / Fillers","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","Dermal Fillers / Neuromodulators","Not published",""],["Perfection Plastic Surgery & Med Spa","https://perfectionsurgery.com/","Cosmetic Injections / Botox / Fillers","Not published",""],["Cleopatra Med Spa","https://cleopatramedspa.com/","Botox","$12-$15/unit (repeated generic-range phrasing, treat as directional)",""],["Laria MedSpa","https://lariamedspa.com/pricing/","Botox","Not published",""],["The Aesthetics & Wellness Lounge Pinecrest","https://pinecrest.theaestheticsloungeandspa.com/","Botox / Injectables","Not published",""],["Skin Plus Beauty","https://skinplusbeauty.com/","Anti-Wrinkle Injectable Treatments (Botox-type toxin)","Not published",""],["R&R Skin and Aesthetics","https://rrskin.com/","Dermal Fillers / Anti-Wrinkle Injections / Lip Fillers","Not published",""],["CoralMedAesthetic","https://www.quest-go.com/listing/CoralMedAesthetic","Botox","From $169 (Groupon promo, 52% off)",""],["Coco Medical Spa Mitjans Aesthetics Miami","https://cocomedicalspa.com/services/","Botox","Not published",""],["Coco Medical Spa Mitjans Aesthetics Miami","https://cocomedicalspa.com/services/","Injectable Fillers / PDO Threads / Neuromodulators","Not published",""],["MIAMI VIP MEDICAL","https://vipmedical.miami/","Botox & Neurotoxins","$200-$900/session (generic industry range, not itemized)",""],["Miami Lakes Med Spa","https://miamilakesmedspa.com/pricing/","Botox","$10-$18/unit (generic industry range, not itemized)",""],["Cure Wellness Medical Center","https://curewmc.com/?page_id=185","Botox","Not published",""],["Epic Beauty & Wellness (DBA Epic Health)","https://www.wellnessliving.com/explore/locations/medical-aesthetics/us-fl-homestead/epicbeautywellnessdbaepichealth/","Botox","Not published",""],["Health & Beauty Medspa","https://healthbeautymedspa.com/en-services","Botox","Not published ($25 deposit required to book; prices change weekly per clinic)",""]],"Dermal / Lip Fillers":[["Rejuvaline Medspa at Flamingo","https://rejuvalinemedspa.com/miami-beach/","Dermal Fillers / Injectables","Not published",""],["South Florida Face and Body","https://www.southfloridafaceandbody.com/miami-beach/aesthetic-services/","Dermal Fillers","$650/syringe",""],["VIIV WELLNESS HAUS","https://viivwellnesshaus.com/","Dermal Fillers (incl. Tear Trough)","Not published",""],["Brickell Cosmetic Center-Aesthetics & Dermatology","https://brickellcosmetic.com/services","Dermal Fillers","$600-$1,200/syringe (repeated generic-range phrasing, treat as directional)",""],["Solea Brickell Spa","https://soleabrickellspa.com/services","Dermal Fillers","Not published",""],["No Filter Medical Spa","https://nofiltermedspa.com/","Dermal Fillers","Not published",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","Dermal Fillers / Lip Filler","$600-$1,200/syringe (repeated generic-range phrasing, treat as directional)",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","Dermal Fillers","Not published",""],["Caruna Med Spa & Laser Center","https://carunamedspa.com/","Dermal Fillers / Lip Fillers","Not published",""],["Facial Mania Med Spa - Coral Gables","https://www.facialmaniamedspa.com/coral-gables-miami/skin-care/","Dermal Fillers (Juvederm/Restylane/Radiesse/Versa)","Not published",""],["Plenitude MedSpa","https://plenitudemedspa.com/coral-gables-fl/","Dermal Fillers","Not published",""],["Infinity Medspa Miami","https://www.mindbodyonline.com/explore/locations/infinity-medspa-miami","Dermal Fillers / Lip Fillers","Not published",""],["Medilight Aesthetic Clinic - Coral Gables","https://medilight.us/en/","Dermal Fillers","Not published",""],["Lavish Laser Med Spa Coconut Grove","https://lavishlasermedspa.com/","Juvederm / Dermal Fillers","Not published",""],["4Beauty Medspa","https://4beautymedspa.com/services/","Lip Fillers / Derma Fillers","Not published",""],["Dolce Medical Spa - Miami","https://medspafind.com/us/fl/miami/dolce-medical-spa-miami","Dermal Fillers","$600-$1,200/syringe (repeated generic-range phrasing, treat as directional)",""],["Dolce Medical Spa - Miami","https://medspafind.com/us/fl/miami/dolce-medical-spa-miami","Lip Fillers","Not published",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","Dermal / Hyaluronic Acid Fillers","Not published",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","Radiesse","Not published",""],["Facial Mania Med Spa Midtown","https://facialmaniamedspamiami.com/locations/midtown/","Dermal Fillers","Not published",""],["Aviva Medical Spa","https://avivamedicalspa.com/aviva-services-pricing-guide/","Dermal Fillers","Not published",""],["Miami Skin Spa Midtown","https://www.miamiskinspa.com/location/","Dermal Fillers","Not published",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","Restylane / Juvederm / Versa / Radiesse (Fillers)","Not published",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","Liquid Face Lift","Not published",""],["4Ever Young Med Spa & Wellness Center - Aventura","https://4everyoungantiaging.com/aventura/","Dermal Fillers (Juvederm/Restylane)","Not published",""],["Bella Vida Aesthetics & Wellness","https://bellavidaaesthetics.com/","Dermal Fillers","$600-$1,200/syringe (repeated generic-range phrasing, treat as directional)",""],["Bella Vida Aesthetics & Wellness","https://bellavidaaesthetics.com/","Lip Fillers","Not published",""],["Aromas Medspa at Doral","https://aromaslaser.com/spa-price-list-aromas-med-spa-doral/","Juvederm / Restylane / Radiesse (Fillers)","Package pricing: 2 syringes $1,300; 3 syringes $1,800; 4 syringes $2,650; 5 syringes $2,800 (published price list)",""],["Luminer Wellness & Medspa","https://www.luminerwellness.com/","Dermal Fillers","$600-$2,000/syringe (generic industry range, not itemized)",""],["Live Medspa","https://livespaclinic.com/","Dermal Fillers / Lip Fillers","Not published",""],["Pure Med Miami","https://puremed.us/en/home-en/","Dermal Fillers","Not published",""],["Medilight Aesthetic Clinic - Doral","https://medilight.us/en/","Dermal Fillers","Not published",""],["Aromas Medspa at Kendall","https://aromaslaser.com/aromas-medspa-south-florida-location/","Juvederm / Restylane / Radiesse (Fillers)","Not published",""],["Cosmetic Laser Professionals MED SPA","https://www.cosmeticlaserprofessionals.com/","Dermal Fillers","Not published",""],["Luminance Aesthetics","https://www.luminanceaestheticsmiami.com/pricing-miami-florida","Dermal Fillers","$550/half syringe, $850/full syringe (lip filler); $100 consult fee applied toward treatment \u2014 confirmed via pricing-request email, 2026-08-25",""],["Le Mar Aesthetics - Kendall MedSpa","https://lemaraesthetics.com/services/","Dermal Fillers / Lip Enhancement","Not published",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","Fillers (Juvederm/Restylane/Sculptra)","Not published",""],["Lab Skin Med Spa","https://labskinmedspa.com/medspa/","Lip Fillers","Not published",""],["Rochelin Medical Spa and Wellness","https://drrochelin.com/contact/","Injectables / Fillers","Not published",""],["Pler Clinics - North Miami","https://pler.com/botox-treatment/","Dermal Fillers","From $785",""],["Pler Clinics - North Miami","https://pler.com/botox-treatment/","Radiesse","Not published",""],["Youthful Glow","https://youthful-glow.com/","Face Fillers","$100 off promo",""],["Rejuvenation Medical Aesthetics & Spa","https://rejumedaesthetics.com/","Dermal Fillers","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","Botox / Fillers","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","Dermal Fillers / Neuromodulators","Not published",""],["Perfection Plastic Surgery & Med Spa","https://perfectionsurgery.com/","Cosmetic Injections / Botox / Fillers","Not published",""],["Cleopatra Med Spa","https://cleopatramedspa.com/","Dermal Fillers / Lip Fillers","$600-$1,200/syringe (repeated generic-range phrasing, treat as directional)",""],["The Aesthetics & Wellness Lounge Pinecrest","https://pinecrest.theaestheticsloungeandspa.com/","Juvederm / Restylane (Fillers)","Not published",""],["R&R Skin and Aesthetics","https://rrskin.com/","Dermal Fillers / Anti-Wrinkle Injections / Lip Fillers","Not published",""],["Coco Medical Spa Mitjans Aesthetics Miami","https://cocomedicalspa.com/services/","Injectable Fillers / PDO Threads / Neuromodulators","Not published",""],["MIAMI VIP MEDICAL","https://vipmedical.miami/","Dermal Fillers","$600-$2,000/syringe (generic industry range, not itemized)",""],["RTMedSpa","https://retromodernomedspa.com/","Injectables / Fillers / Lip Fillers","Not published",""],["Miami Lakes Med Spa","https://miamilakesmedspa.com/pricing/","Dermal Fillers","Lips $495 (half)/$695 (full); Cheeks $695; Jawline $695; Chin $695; Sculptra $795 (published price list)",""],["Cure Wellness Medical Center","https://curewmc.com/?page_id=185","Filler Treatments / Lip Augmentation","Not published",""],["Health & Beauty Medspa","https://healthbeautymedspa.com/en-services","Dermal Fillers","Not published",""]],"Microneedling / RF":[["BODYWELLE","https://alonsomartinmd.com/miami-beach-office/","Morpheus8","Not published",""],["BODYWELLE","https://alonsomartinmd.com/miami-beach-office/","Microneedling with PRF","Not published",""],["South Florida Face and Body","https://www.southfloridafaceandbody.com/miami-beach/aesthetic-services/","Medical Microneedling","$400/treatment",""],["VIIV WELLNESS HAUS","https://viivwellnesshaus.com/","Microneedling","Not published",""],["Brickell Cosmetic Center-Aesthetics & Dermatology","https://brickellcosmetic.com/services","Morpheus8","Not published",""],["Brickell Cosmetic Center-Aesthetics & Dermatology","https://brickellcosmetic.com/services","Microneedling","Not published",""],["Solea Brickell Spa","https://soleabrickellspa.com/services","Microneedling","Not published",""],["No Filter Medical Spa","https://nofiltermedspa.com/","Morpheus8","Not published",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","Microneedling","Not published",""],["Caruna Med Spa & Laser Center","https://carunamedspa.com/","Microneedling","Not published",""],["Facial Mania Med Spa - Coral Gables","https://www.facialmaniamedspa.com/coral-gables-miami/skin-care/","Microneedling with RF","$284",""],["Plenitude MedSpa","https://plenitudemedspa.com/coral-gables-fl/","Morpheus8 / CO2 Resurfacing","Not published",""],["Plenitude MedSpa","https://plenitudemedspa.com/coral-gables-fl/","Microneedling (PRP/exosomes)","Not published",""],["Medilight Aesthetic Clinic - Coral Gables","https://medilight.us/en/","Attiva RF (Body Contouring)","Not published",""],["Medilight Aesthetic Clinic - Coral Gables","https://medilight.us/en/","Microneedling","Not published",""],["Lavish Laser Med Spa Coconut Grove","https://lavishlasermedspa.com/","RF Microneedling","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Agnes RF","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Fractional RF","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Morpheus8","Face $1,225; Neck $775; Face & Neck $1,475; Chest $775 (published price list)",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Skinpen Microneedling","Starting at $500 (published price list)",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","Morpheus8 (Face and Body)","$699/session or $999/session (tier not specified)",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","Microneedling","Not published",""],["Facial Mania Med Spa Midtown","https://facialmaniamedspamiami.com/locations/midtown/","Microneedling","Not published",""],["Aviva Medical Spa","https://avivamedicalspa.com/aviva-services-pricing-guide/","Morpheus8","Not published (pricing guide is a downloadable PDF, not published inline)",""],["Miami Skin Spa Midtown","https://www.miamiskinspa.com/location/","Morpheus8","Not published",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","Microneedling","Not published",""],["4Ever Young Med Spa & Wellness Center - Aventura","https://4everyoungantiaging.com/aventura/","Microneedling","Not published",""],["Med Aesthetics Miami in Aventura","https://www.medaestheticsmiami.com/contact/aventura/","Morpheus8","Not published",""],["Alicia Med Spa","https://aliciamedspa.com/services/","Microneedling","Not published",""],["Infinity Beauty Lab Med Spa","https://www.infinitybeautylab.com/","Microneedling","$200-$700/session (range, not itemized per package)",""],["Infinity Beauty Lab Med Spa","https://www.infinitybeautylab.com/","Morpheus8","Not published",""],["Bella Vida Aesthetics & Wellness","https://bellavidaaesthetics.com/","Microneedling","Not published",""],["Luminer Wellness & Medspa","https://www.luminerwellness.com/","Microneedling","$200-$700/session (generic industry range, not itemized)",""],["Pure Med Miami","https://puremed.us/en/home-en/","Microneedling","Not published",""],["Medilight Aesthetic Clinic - Doral","https://medilight.us/en/","Attiva RF (Body Contouring)","Not published",""],["Medilight Aesthetic Clinic - Doral","https://medilight.us/en/","Microneedling","Not published",""],["Aromas Medspa at Kendall","https://aromaslaser.com/aromas-medspa-south-florida-location/","Ematrix RF","Not published",""],["Facial Mania Med Spa - Kendallgate Shopping Center","https://facialmaniamedspamiami.com/locations/kendall/","Microneedling with RF","$284",""],["Le Mar Aesthetics - Kendall MedSpa","https://lemaraesthetics.com/services/","Microneedling with PRP","Not published",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","DermaPen Microneedling","Not published",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","SylfirmX RFMN","Not published",""],["Rejuvenation Medical Aesthetics & Spa","https://rejumedaesthetics.com/","Morpheus8","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","Microneedling / PRP Microneedling","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","Morpheus8 / Fotona 4D / Rejuvapen","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","Microneedling","Not published",""],["The Aesthetics & Wellness Lounge Pinecrest","https://pinecrest.theaestheticsloungeandspa.com/","Microneedling","Not published",""],["Skin Plus Beauty","https://skinplusbeauty.com/","Microneedling","Not published",""],["R&R Skin and Aesthetics","https://rrskin.com/","Virtue RF Microneedling","Not published",""],["MIAMI VIP MEDICAL","https://vipmedical.miami/","Microneedling","$200-$700/session (generic industry range, not itemized)",""],["Miami Lakes Med Spa","https://miamilakesmedspa.com/pricing/","Morpheus8","Face $495; Face+Neck $750; Face+Neck+Decollete $950; Body $750 (published price list)",""],["Miami Lakes Med Spa","https://miamilakesmedspa.com/pricing/","SkinPen Microneedling","Face $395; Face+Neck $450; Face+Neck+Decollete $495 (published price list)",""],["Cure Wellness Medical Center","https://curewmc.com/?page_id=185","Morpheus8","Not published",""],["Beauty First Med-Spa","https://beautyfirstmedspaservices.com/","Morpheus8","Not published",""],["Health & Beauty Medspa","https://healthbeautymedspa.com/en-services","Microneedling","Not published",""]],"Laser Hair Removal":[["Skin Spa New York - Miami Beach Medical Spa","https://skinspanewyork.com/pages/miami-beach","Laser Hair Removal","From $40",""],["VIIV WELLNESS HAUS","https://viivwellnesshaus.com/","Laser Hair Removal","Not published",""],["Solea Brickell Spa","https://soleabrickellspa.com/services","Laser Hair Removal","Not published",""],["No Filter Medical Spa","https://nofiltermedspa.com/","Laser Hair Removal","Not published",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","Laser Hair Removal","Not published",""],["Caruna Med Spa & Laser Center","https://carunamedspa.com/","Laser Hair Removal","Not published",""],["Facial Mania Med Spa - Coral Gables","https://www.facialmaniamedspa.com/coral-gables-miami/skin-care/","Laser Hair Removal (medium area, 6-session pkg)","$330 (reg. $660)",""],["Plenitude MedSpa","https://plenitudemedspa.com/coral-gables-fl/","Laser Hair Removal","Not published",""],["Med Aesthetics Miami","https://www.medaestheticsmiami.com/contact/coral-gables/","Laser Hair Removal","Not published",""],["Infinity Medspa Miami","https://www.mindbodyonline.com/explore/locations/infinity-medspa-miami","Laser Hair Removal","Not published",""],["Lavish Laser Med Spa Coconut Grove","https://lavishlasermedspa.com/","Laser Hair Removal","Not published (membership incl. 1 large or 2-3 smaller areas)",""],["Dolce Medical Spa - Miami","https://medspafind.com/us/fl/miami/dolce-medical-spa-miami","Laser Hair Removal","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Laser Hair Removal","Starting at $100/area (e.g. Full Face $350, Full Brazilian $300, Full Legs $400 — published price list)",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","Laser Hair Removal","Not published",""],["Aviva Medical Spa","https://avivamedicalspa.com/aviva-services-pricing-guide/","Laser Hair Removal","Not published",""],["Arviv Medical Aesthetics Miami","https://arvivaesthetics.com/pricing-2/","Laser Hair Removal","Not published (VIP membership $199/mo)",""],["Med Aesthetics Miami in Aventura","https://www.medaestheticsmiami.com/contact/aventura/","Laser Hair Removal","Not published",""],["Aromas Medspa at Doral","https://aromaslaser.com/spa-price-list-aromas-med-spa-doral/","Laser Hair Removal","Per-area package pricing, e.g. Underarms 4-session $204/8-session $384; Brazilian 4-session $340/8-session $640; Full Legs 4-session $680/8-session $1,280 (published price list)",""],["FaceBeauty Med Spa","https://www.fbmedspa.com/our-services/","Laser Hair Removal","Not published",""],["Luminer Wellness & Medspa","https://www.luminerwellness.com/","Laser Hair Removal","$150-$500/session (generic industry range, not itemized)",""],["Aromas Medspa at Kendall","https://aromaslaser.com/aromas-medspa-south-florida-location/","Laser Hair Removal","Not published",""],["Facial Mania Med Spa - Kendallgate Shopping Center","https://facialmaniamedspamiami.com/locations/kendall/","Laser Hair Removal (medium area, 6-session pkg)","$330 (reg. $660)",""],["Cosmetic Laser Professionals MED SPA","https://www.cosmeticlaserprofessionals.com/","Laser Hair Removal","Not published (15% off regular-priced services via prepay Happy Hour promo)",""],["Lab Skin Med Spa","https://labskinmedspa.com/medspa/","Laser Hair Removal","Not published",""],["Rochelin Medical Spa and Wellness","https://drrochelin.com/contact/","Laser Hair Removal","Not published",""],["Pler Clinics - North Miami","https://pler.com/botox-treatment/","Laser Hair Removal","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","Laser Hair Removal","Not published (promo treatments from $59)",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","Laser Hair Removal (Candela GentleMax Pro)","Not published (Groupon promo from $132)",""],["Perfection Plastic Surgery & Med Spa","https://perfectionsurgery.com/","Laser Hair Removal","Not published",""],["Mari Skin & Laser Clinic","https://www.vagaro.com/mariskinlaser","Laser Hair Removal","Not published",""],["Aventura Aesthetics Spa","https://aventuraesthetics.com/","Laser Hair Removal","Not published",""],["Cleopatra Med Spa","https://cleopatramedspa.com/","Laser Hair Removal","Not published",""],["Laria MedSpa","https://lariamedspa.com/pricing/","Laser Hair Removal","Not published",""],["Skin Plus Beauty","https://skinplusbeauty.com/","Laser Hair Removal (Candela GentleMax Pro Plus)","Not published",""],["R&R Skin and Aesthetics","https://rrskin.com/","Laser Hair Removal","Not published",""],["CoralMedAesthetic","https://www.quest-go.com/listing/CoralMedAesthetic","Laser Hair Removal","Not published",""],["Coco Medical Spa Mitjans Aesthetics Miami","https://cocomedicalspa.com/services/","Laser Hair Removal / IPL","Not published",""],["Miami Lakes Med Spa","https://miamilakesmedspa.com/pricing/","Laser Hair Removal","From $50/session, 6-session pkg from $250",""],["Cure Wellness Medical Center","https://curewmc.com/?page_id=185","Laser Hair Removal (full body/underarms/legs)","Not published",""],["Beauty First Med-Spa","https://beautyfirstmedspaservices.com/","Laser Hair Removal","Not published",""]],"Emsculpt / Body Contouring":[["BODYWELLE","https://alonsomartinmd.com/miami-beach-office/","Emsculpt NEO (Body Sculpting)","Not published",""],["BODYWELLE","https://alonsomartinmd.com/miami-beach-office/","EMTone (Cellulite)","Not published",""],["Skin Spa New York - Miami Beach Medical Spa","https://skinspanewyork.com/pages/miami-beach","Body Sculpting","Not published",""],["VIIV WELLNESS HAUS","https://viivwellnesshaus.com/","Emsculpt / Emsculpt Neo","Not published",""],["Solea Brickell Spa","https://soleabrickellspa.com/services","UltraShape Power (Body Contouring)","Not published",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","Body Contouring","Not published",""],["Caruna Med Spa & Laser Center","https://carunamedspa.com/","Body Contouring / Skin Tightening","Not published",""],["Facial Mania Med Spa - Coral Gables","https://www.facialmaniamedspa.com/coral-gables-miami/skin-care/","Body Contouring","Not published",""],["Plenitude MedSpa","https://plenitudemedspa.com/coral-gables-fl/","Quantum Liposuction (Body Contouring)","Not published",""],["Medilight Aesthetic Clinic - Coral Gables","https://medilight.us/en/","Attiva RF (Body Contouring)","Not published",""],["Lavish Laser Med Spa Coconut Grove","https://lavishlasermedspa.com/","Venus Legacy (Body Sculpting)","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Body Sculpting","Emsculpt Neo $1,000/area (Triceps, Biceps, Abdomen, Glutes) — published price list",""],["Miami Skin Spa Midtown","https://www.miamiskinspa.com/location/","Body Contouring","Not published",""],["VIO Med Spa | Aventura","https://www.viomedspa.com/locations/aventura","Body Contouring","Not published",""],["Alicia Med Spa","https://aliciamedspa.com/services/","Emsculpt","$6,000 for 10 sessions",""],["Bella Vida Aesthetics & Wellness","https://bellavidaaesthetics.com/","Body Contouring","Not published",""],["FaceBeauty Med Spa","https://www.fbmedspa.com/our-services/","Emsculpt / Exilis (BTL)","Not published",""],["Medilight Aesthetic Clinic - Doral","https://medilight.us/en/","Attiva RF (Body Contouring)","Not published",""],["Aromas Medspa at Kendall","https://aromaslaser.com/aromas-medspa-south-florida-location/","Cavitation / Lipo-Laser (Body Contouring)","Not published",""],["Aromas Medspa at Kendall","https://aromaslaser.com/aromas-medspa-south-florida-location/","Mesotherapy / Carboxytherapy","Not published",""],["Cosmetic Laser Professionals MED SPA","https://www.cosmeticlaserprofessionals.com/","Body Sculpting / Skin Tightening","Not published",""],["Le Mar Aesthetics - Kendall MedSpa","https://lemaraesthetics.com/services/","Non-Invasive Body Sculpting","Not published",""],["NextGen Med Spa","https://nextgenmedicalspa.com/","Body Contouring","Not published",""],["Lab Skin Med Spa","https://labskinmedspa.com/medspa/","Body Contouring","Not published",""],["Rejuvenation Medical Aesthetics & Spa","https://rejumedaesthetics.com/","Body Contouring","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","Cellulite Reduction / LPG Endermologie","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","UltraShape Power (Fat Reduction)","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","Venus Legacy / Selene Cryo (Skin Tightening)","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","CoolSculpting / EMSculpt / Endosphere / LPG","Not published",""],["Perfection Plastic Surgery & Med Spa","https://perfectionsurgery.com/","Body Contouring / Liposuction","Not published",""],["Aventura Aesthetics Spa","https://aventuraesthetics.com/","Lipo Laser / Fat Freeze","Not published",""],["Cleopatra Med Spa","https://cleopatramedspa.com/","Body Contouring","Not published",""],["BLUE WELLNESS CENTER Med Spa","https://bluewellnesscentermiami.com/","Body Sculpting / Fat Reduction","Not published",""],["Laria MedSpa","https://lariamedspa.com/pricing/","Body Contouring / Fat Reduction","Not published",""],["Skin Plus Beauty","https://skinplusbeauty.com/","VelaShape III (Fat/Cellulite Reduction)","Not published",""],["CoralMedAesthetic","https://www.quest-go.com/listing/CoralMedAesthetic","VelaShape / CoolSculpting / Zerona (Body Shaping)","Not published",""],["CoralMedAesthetic","https://www.quest-go.com/listing/CoralMedAesthetic","Ultracavitation / RF / Carboxytherapy","Not published",""],["Coco Medical Spa Mitjans Aesthetics Miami","https://cocomedicalspa.com/services/","VelaShape","Not published",""],["RejuvaSkin Medspa","https://www.rejuvaskinmedspa.net/","Body Sculpting / Contouring","Not published",""]],"PRP Therapy":[["BODYWELLE","https://alonsomartinmd.com/miami-beach-office/","Microneedling with PRF","Not published",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","PRP/PRF Treatments","Not published",""],["Caruna Med Spa & Laser Center","https://carunamedspa.com/","PRP/PRF Treatments","Not published",""],["Plenitude MedSpa","https://plenitudemedspa.com/coral-gables-fl/","Microneedling (PRP/exosomes)","Not published",""],["Infinity Medspa Miami","https://www.mindbodyonline.com/explore/locations/infinity-medspa-miami","PRP/PRF Treatments","Not published",""],["Medilight Aesthetic Clinic - Coral Gables","https://medilight.us/en/","Exosomes / PDRN","Not published",""],["Dolce Medical Spa - Miami","https://medspafind.com/us/fl/miami/dolce-medical-spa-miami","PRP/PRF Treatments","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","PRP","Not published",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","PRF/PRP Therapy","Not published",""],["Facial Mania Med Spa Midtown","https://facialmaniamedspamiami.com/locations/midtown/","PRP","Not published",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","PRP","Not published",""],["Bella Vida Aesthetics & Wellness","https://bellavidaaesthetics.com/","PRP/PRF Treatments","Not published",""],["Aromas Medspa at Doral","https://aromaslaser.com/spa-price-list-aromas-med-spa-doral/","PRP","PRP Injected: 3-session package $1,200 (published price list)",""],["Aromas Medspa at Doral","https://aromaslaser.com/spa-price-list-aromas-med-spa-doral/","Exosomes","Dermapen with Exosomes bundle: 3-session package $1,275 (standalone exosome price not separately published)",""],["FaceBeauty Med Spa","https://www.fbmedspa.com/our-services/","Exosome Facial","Not published",""],["FaceBeauty Med Spa","https://www.fbmedspa.com/our-services/","PRP Treatments","Not published",""],["Medilight Aesthetic Clinic - Doral","https://medilight.us/en/","Exosomes / PDRN","Not published",""],["Aromas Medspa at Kendall","https://aromaslaser.com/aromas-medspa-south-florida-location/","PRP / Hair Loss Treatments","Not published",""],["Luminance Aesthetics","https://www.luminanceaestheticsmiami.com/pricing-miami-florida","Plasma / PRF","$500-$700 (published price list)",""],["Le Mar Aesthetics - Kendall MedSpa","https://lemaraesthetics.com/services/","Microneedling with PRP","Not published",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","PRP + PRF / Exosomes","Not published",""],["Lab Skin Med Spa","https://labskinmedspa.com/medspa/","PRP Facial","Not published",""],["Youthful Glow","https://youthful-glow.com/","PRP (Facial/Facelift/Hair/Breast Lift/Sexual Revitalization)","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","Microneedling / PRP Microneedling","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","PRP / Vitamin Infusions","Not published",""],["Laria MedSpa","https://lariamedspa.com/pricing/","PRP Treatments","Not published",""],["The Aesthetics & Wellness Lounge Pinecrest","https://pinecrest.theaestheticsloungeandspa.com/","PRP Therapy","Not published",""],["Miami Lakes Med Spa","https://miamilakesmedspa.com/pricing/","PRP","PRP Hair Growth Therapy $495/session, $950 package (published price list; general facial PRP price not separately listed)",""],["Health & Beauty Medspa","https://healthbeautymedspa.com/en-services","Plasma PRP Therapy","Not published",""]],"Chemical Peels":[["BODYWELLE","https://alonsomartinmd.com/miami-beach-office/","Chemical Peels","Not published",""],["VIIV WELLNESS HAUS","https://viivwellnesshaus.com/","Chemical Peels","Not published",""],["LUX MedSpa Brickell","https://www.luxmedspabrickell.com/","Metabolic Peels","Not published",""],["Solea Brickell Spa","https://soleabrickellspa.com/services","Chemical Peels","Not published",""],["No Filter Medical Spa","https://nofiltermedspa.com/","Chemical Peels","Not published",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","Chemical Peels","Not published",""],["Caruna Med Spa & Laser Center","https://carunamedspa.com/","Chemical Peels","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","VI Peel","$350 (published price list)",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","Chemical Peels","Not published",""],["Aviva Medical Spa","https://avivamedicalspa.com/aviva-services-pricing-guide/","Chemical Peels","Not published",""],["4Ever Young Med Spa & Wellness Center - Aventura","https://4everyoungantiaging.com/aventura/","Chemical Peels","Not published",""],["Dolce Medical Spa Aventura","https://dolcemedicalspas.com/locations","BioRePeel","Not published",""],["FaceBeauty Med Spa","https://www.fbmedspa.com/our-services/","Micro Peeling / Advanced Peelings","Not published",""],["Pure Med Miami","https://puremed.us/en/home-en/","Chemical Peels","Not published",""],["Facial Mania Med Spa - Kendallgate Shopping Center","https://facialmaniamedspamiami.com/locations/kendall/","Chemical Peels","Not published",""],["Le Mar Aesthetics - Kendall MedSpa","https://lemaraesthetics.com/services/","Chemical Peels","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","HydraFacial / JetPeel / PRX-T33 Peel","Not published",""],["Cleopatra Med Spa","https://cleopatramedspa.com/","Chemical Peels","Not published",""],["Skin Plus Beauty","https://skinplusbeauty.com/","Chemical Peels","Not published",""],["Coco Medical Spa Mitjans Aesthetics Miami","https://cocomedicalspa.com/services/","Chemical Peels","Not published",""],["MIAMI VIP MEDICAL","https://vipmedical.miami/","Chemical Peels","$100-$800/treatment (generic industry range, not itemized)",""],["Miami Lakes Med Spa","https://miamilakesmedspa.com/pricing/","Chemical Peels","Not published",""],["Miami Lakes Med Spa","https://miamilakesmedspa.com/pricing/","VI Peel","$250, all variants (published price list)",""],["Cure Wellness Medical Center","https://curewmc.com/?page_id=185","Chemical Peels","Not published",""]],"IPL / Photofacial":[["No Filter Medical Spa","https://nofiltermedspa.com/","IPL Photofacial","Not published",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","IPL Photofacial","Not published",""],["Caruna Med Spa & Laser Center","https://carunamedspa.com/","IPL Photofacial","Not published",""],["Facial Mania Med Spa - Coral Gables","https://www.facialmaniamedspa.com/coral-gables-miami/skin-care/","IPL","Not published",""],["Plenitude MedSpa","https://plenitudemedspa.com/coral-gables-fl/","IPL / Lumecca","Not published",""],["Infinity Medspa Miami","https://www.mindbodyonline.com/explore/locations/infinity-medspa-miami","IPL Photofacial","Not published",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","IPL","Not published",""],["Facial Mania Med Spa Midtown","https://facialmaniamedspamiami.com/locations/midtown/","IPL Photofacial","Not published",""],["Arviv Medical Aesthetics Miami","https://arvivaesthetics.com/pricing-2/","Trinity 3-D Fotofacial / IPL / RF","Not published",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","Non-Surgical BBL","Not published",""],["Aromas Medspa at Doral","https://aromaslaser.com/spa-price-list-aromas-med-spa-doral/","IPL Photofacial","Not published",""],["Live Medspa","https://livespaclinic.com/","IPL Treatment","Not published",""],["Pure Med Miami","https://puremed.us/en/home-en/","IPL","Not published",""],["Facial Mania Med Spa - Kendallgate Shopping Center","https://facialmaniamedspamiami.com/locations/kendall/","IPL Treatment","Not published",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","BBL + Moxi Laser","Not published",""],["Youthful Glow","https://youthful-glow.com/","IPL Photofacial","Not published (BOGO 50% off promo)",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","CO2 Helix Resurfacing / Laser Genesis / Clear+Brilliant / IPL","Not published",""],["R&R Skin and Aesthetics","https://rrskin.com/","IPL Treatment","Not published",""],["CoralMedAesthetic","https://www.quest-go.com/listing/CoralMedAesthetic","Deep Facials / Microdermabrasion / IPL","Not published",""],["Coco Medical Spa Mitjans Aesthetics Miami","https://cocomedicalspa.com/services/","Laser Hair Removal / IPL","Not published",""],["RTMedSpa","https://retromodernomedspa.com/","IPL Treatment","Not published",""],["Health & Beauty Medspa","https://healthbeautymedspa.com/en-services","IPL Treatment / Laser Resurfacing","Not published",""]],"HydraFacial":[["Brickell Cosmetic Center-Aesthetics & Dermatology","https://brickellcosmetic.com/services","HydraFacial","Not published",""],["No Filter Medical Spa","https://nofiltermedspa.com/","Facials / HydraFacial","Not published",""],["Deluxe Med Spa Beauty","https://deluxemedspabeauty.com/list/","Facials / HydraFacial","Not published",""],["Plenitude MedSpa","https://plenitudemedspa.com/coral-gables-fl/","HydraFacial","Not published",""],["Lavish Laser Med Spa Coconut Grove","https://lavishlasermedspa.com/","HydraFacial Keravive","Not published (membership tier: $150 enrollment)",""],["Dolce Medical Spa - Miami","https://medspafind.com/us/fl/miami/dolce-medical-spa-miami","Facials / HydraFacial","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","HydraFacial","Starting at $250 (published price list)",""],["Miami Skin Spa Midtown","https://www.miamiskinspa.com/location/","HydraFacial","Not published",""],["4Ever Young Med Spa & Wellness Center - Aventura","https://4everyoungantiaging.com/aventura/","HydraFacial","Not published",""],["Alicia Med Spa","https://aliciamedspa.com/services/","HydraFacial","Not published",""],["Luminer Wellness & Medspa","https://www.luminerwellness.com/","HydraFacial","$150-$350/session (generic industry range, not itemized)",""],["Le Mar Aesthetics - Kendall MedSpa","https://lemaraesthetics.com/services/","HydraFacial","Not published",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","HydraFacial","Not published (complimentary consultations)",""],["Lab Skin Med Spa","https://labskinmedspa.com/medspa/","Facials / HydraFacial","Not published",""],["Rejuvenation Medical Aesthetics & Spa","https://rejumedaesthetics.com/","HydraFacial","Not published",""],["Solea Medical Spa & Beauty Lounge","https://soleabeautylounge.com/specials/","HydraFacial / Intraceuticals Oxygen Facial","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","HydraFacial / JetPeel / PRX-T33 Peel","Not published",""],["Skin Plus Beauty","https://skinplusbeauty.com/","HydraFacial Synedo","Not published",""],["Miami Lakes Med Spa","https://miamilakesmedspa.com/pricing/","HydraFacial","Not published",""],["Epic Beauty & Wellness (DBA Epic Health)","https://www.wellnessliving.com/explore/locations/medical-aesthetics/us-fl-homestead/epicbeautywellnessdbaepichealth/","HydraFacial","Not published",""]],"Sculptra / Biostimulators":[["South Florida Face and Body","https://www.southfloridafaceandbody.com/miami-beach/aesthetic-services/","Biostimulators (Sculptra-type)","Not published",""],["Brickell Cosmetic Center-Aesthetics & Dermatology","https://brickellcosmetic.com/services","Sculptra","Not published",""],["No Filter Medical Spa","https://nofiltermedspa.com/","Sculptra","Not published",""],["Lavish Laser Med Spa Coconut Grove","https://lavishlasermedspa.com/","Sculptra","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Sculptra","Not published",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","Sculptra (Face and Butt Lift)","Not published",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","Sculptra","Not published",""],["Luminance Aesthetics","https://www.luminanceaestheticsmiami.com/pricing-miami-florida","Sculptra","$900 (published price list)",""],["Le Mar Aesthetics - Kendall MedSpa","https://lemaraesthetics.com/services/","Sculptra / Biostimulators","Not published",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","Fillers (Juvederm/Restylane/Sculptra)","Not published",""],["Youthful Glow","https://youthful-glow.com/","Sculptra","Not published (Buy 1 Vial Get 1 50% off promo)",""]],"PDO Thread Lift":[["Facial Mania Med Spa - Coral Gables","https://www.facialmaniamedspa.com/coral-gables-miami/skin-care/","PDO Threads","Not published",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Mint Thread Lift","Not published",""],["Monaco MedSpa","https://www.monacomedspa.com/menu-of-services-monaco-medspa-miami","PDO Thread Lift","Not published",""],["Facial Mania Med Spa Midtown","https://facialmaniamedspamiami.com/locations/midtown/","PDO Threads","Not published",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","PDO Threads","Not published",""],["Le Mar Aesthetics - Kendall MedSpa","https://lemaraesthetics.com/services/","PDO Threads","Not published",""],["Pler Clinics - North Miami","https://pler.com/botox-treatment/","PDO Thread Lifts","Not published",""],["Youthful Glow","https://youthful-glow.com/","PDO Threads","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","PDO Threads","Not published",""],["The Aesthetics & Wellness Lounge Pinecrest","https://pinecrest.theaestheticsloungeandspa.com/","PDO Thread Lifts","Not published",""],["Coco Medical Spa Mitjans Aesthetics Miami","https://cocomedicalspa.com/services/","Injectable Fillers / PDO Threads / Neuromodulators","Not published",""]],"Microdermabrasion / Dermaplaning":[["VIIV WELLNESS HAUS","https://viivwellnesshaus.com/","Dermaplaning","Not published",""],["Facial Mania Med Spa - Coral Gables","https://www.facialmaniamedspa.com/coral-gables-miami/skin-care/","Oxygenating Facial with Dermaplaning","$284",""],["Azala Skin Clinic","https://www.azalaskinclinic.com/resources/pricing/","Dermaplaning","$100 (published price list)",""],["FaceBeauty Med Spa","https://www.fbmedspa.com/our-services/","Microdermabrasion Facial","Not published",""],["Facial Mania Med Spa - Kendallgate Shopping Center","https://facialmaniamedspamiami.com/locations/kendall/","Oxygenating Facial with Dermaplaning","$284",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","Dermaplaning","Not published",""],["CoralMedAesthetic","https://www.quest-go.com/listing/CoralMedAesthetic","Deep Facials / Microdermabrasion / IPL","Not published",""]],"Kybella":[["South Florida Face and Body","https://www.southfloridafaceandbody.com/miami-beach/aesthetic-services/","Kybella","Not published",""],["No Filter Medical Spa","https://nofiltermedspa.com/","Kybella","Not published",""],["Infinity Medspa Miami","https://www.mindbodyonline.com/explore/locations/infinity-medspa-miami","Kybella","Not published",""],["Dolce Medical Spa - Miami","https://medspafind.com/us/fl/miami/dolce-medical-spa-miami","Kybella","Not published",""],["Loveland Med Spa","https://www.lovelandmedspa.com/book-services","Kybella","Not published",""],["Bella Vida Aesthetics & Wellness","https://bellavidaaesthetics.com/","Kybella","Not published",""],["DermaSpalogy","https://www.dermaspalogy.com/our-services/","Kybella","Not published",""],["Pler Clinics - North Miami","https://pler.com/botox-treatment/","Kybella","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","Kybella","Not published",""]],"Ultherapy":[["Facial Mania Med Spa - Coral Gables","https://www.facialmaniamedspa.com/coral-gables-miami/skin-care/","Ultherapy","Not published",""],["Arviv Medical Aesthetics Miami","https://arvivaesthetics.com/pricing-2/","Ultherapy","Not published",""],["Facial Mania Med Spa - Kendallgate Shopping Center","https://facialmaniamedspamiami.com/locations/kendall/","Ultherapy","Not published (membership tiers from $49/mo)",""],["NextGen Med Spa","https://nextgenmedicalspa.com/","Ultherapy","Not published",""],["Aventura Aesthetics Spa","https://aventuraesthetics.com/","Ultherapy","Not published",""],["Coco Medical Spa Mitjans Aesthetics Miami","https://cocomedicalspa.com/services/","Ultherapy","Not published",""]],"CoolSculpting / CoolTone":[["Infinity Medspa Miami","https://www.mindbodyonline.com/explore/locations/infinity-medspa-miami","CoolSculpting","Not published",""],["Dolce Medical Spa - Miami","https://medspafind.com/us/fl/miami/dolce-medical-spa-miami","CoolSculpting","Not published",""],["Rochelin Medical Spa and Wellness","https://drrochelin.com/contact/","CoolSculpting","Not published",""],["Manhattan Laser Spa","https://manhattanlaserspa.com/med-spa-sunny-isles/","CoolSculpting / EMSculpt / Endosphere / LPG","Not published",""],["CoralMedAesthetic","https://www.quest-go.com/listing/CoralMedAesthetic","VelaShape / CoolSculpting / Zerona (Body Shaping)","Not published",""]]};
 
   // Per-clinic breakdown modal: click a procedure name in "Most popular procedures" or
   // "Typical pricing by procedure" to see every matching listing, clinic by clinic, with a

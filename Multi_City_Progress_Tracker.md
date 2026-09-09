@@ -4,7 +4,7 @@ Replication of the Manhattan/NYC med spa market report project across 8 more US 
 Structural templates: `Manhattan_Med_Spa_Procedures.xlsx` (sheets: Dashboard, All Procedures, Clinics Overview,
 Notes, New Clinics (Maps sweep), New Clinics (Expanded Dir v3)) and `Manhattan_Med_Spa_Market_Report.html`.
 
-City order: Charlotte NC → Atlanta GA → Miami FL → West Palm Beach FL → Orlando FL → Dallas TX → Houston TX → Austin TX
+City order: Charlotte NC → Atlanta GA → Miami FL → West Palm Beach FL → Orlando FL → Dallas TX → Houston TX → Austin TX → Hudson & Bergen Co., NJ → Premium Upstate NY
 
 ## Status by city
 
@@ -18,6 +18,8 @@ City order: Charlotte NC → Atlanta GA → Miami FL → West Palm Beach FL → 
 | 6 | Dallas, TX | COMPLETE except Google Trends (deferred, same reason as WPB/Orlando): Maps sweep (107 raw / 104 logged candidates, 101 net confirmed), procedures/pricing pass, Dashboard, and `Dallas_Med_Spa_Market_Report.html` all done and saved. | See "Dallas" section below |
 | 7 | Houston, TX | COMPLETE except Google Trends (deferred, same reason as every prior city): Maps sweep (108 raw / 101 logged candidates, 95 net confirmed), procedures/pricing pass, Dashboard, and `Houston_Med_Spa_Market_Report.html` all done and saved. | See "Houston" section below |
 | 8 | Austin, TX | COMPLETE except Google Trends (deferred, same reason as every prior city): Maps sweep (107 raw / 103 logged candidates, 98 net confirmed), procedures/pricing pass, Dashboard, and `Austin_Med_Spa_Market_Report.html` all done and saved. **This was the final city — all 8 cities in the project are now complete except Google Trends.** | See "Austin" section below |
+| 9 | Hudson & Bergen Co., NJ | **COMPLETE**: added 2026-08-29 as a 10th metro at Elias's request ("cities in NJ that are very close, like 15-40 minutes, to New York"). Covers Jersey City, Hoboken, Weehawken, Fort Lee, Edgewater, Englewood/Englewood Cliffs, and Teaneck (32 confirmed clinics); Union City, West New York, and Secaucus were searched but returned no standalone med spa. Procedures/pricing pass, xlsx workbook, Google Trends (reused the New York DMA directly — see detail), `NJ_Metro_Med_Spa_Market_Report.html`, and hub integration all done and saved. | See "Hudson & Bergen Co., NJ" section below |
+| 10 | Premium Upstate NY | **COMPLETE**: added 2026-08-29 (same day) as an 11th metro at Elias's request ("premium locations in Upstate New York with MedSpa"). Clarified scope first: a mixed set across three regions — mid-Hudson Valley (Rhinebeck, Hudson, New Paltz, Millbrook), Westchester (Scarsdale, Rye, Bedford, Armonk, Chappaqua), and Saratoga/Finger Lakes (Saratoga Springs, Skaneateles) — 27 confirmed clinics across 11 of 13 towns searched; Woodstock and Lake George returned no standalone med spa. This metro genuinely spans 3 Nielsen DMAs (New York, Albany-Schenectady-Troy, Syracuse) — flagged explicitly since the Trends chart only reflects the New York DMA portion. Procedures/pricing pass, xlsx workbook, `Upstate_NY_Med_Spa_Market_Report.html`, and hub integration all done and saved. | See "Premium Upstate NY" section below |
 
 ## Atlanta, GA — detail
 
@@ -1298,3 +1300,134 @@ etc.), `node --check` passed on the combined inline script (all 6 `Chart(` calls
 `initIndustryTab`/`industryInitialized` guard present), and no duplicate IDs. Deployed to
 `/Users/am/Desktop/Med_Spa_Multi_City_Hub.html`. The original `/Users/am/Desktop/index.html` file
 was left untouched — only its content was copied into the hub.
+
+## Hudson & Bergen Co., NJ — detail (2026-08-29)
+
+Elias asked for "an additional similar report for cities in NJ that are very close (like 15-40
+minutes) to New York" plus a link to it in the hub's header location list. Clarified scope with
+Elias first: chose "Hudson + South Bergen" over the narrower Hudson-only option, and "full
+pipeline" depth to match the other 9 reports.
+
+**Town selection.** Jersey City, Hoboken, Weehawken, Union City, West New York, Secaucus (Hudson
+County) plus Fort Lee, Edgewater, Englewood/Englewood Cliffs, and Teaneck (South Bergen County) —
+10 municipalities, all within roughly 15-40 minutes of Manhattan by PATH, ferry, bus, or car.
+
+**Research method — a real deviation from the prior 8 cities, noted explicitly.** Every prior city
+used a live Google Maps sweep via browser automation (hitting the same 6-result citywide cap every
+time, worked around with neighborhood-scoped Maps searches). For this metro, WebSearch was used
+instead — one query per municipality (e.g. "med spa Jersey City NJ botox filler"), cross-checked
+against business directories (Yelp, PortraitCare, Vagaro, Wellness.com) and each clinic's own
+service pages. This is a lighter-touch method than the Maps-sweep-plus-per-clinic-page pattern used
+elsewhere in the project, and it's called out as a limitation in both the xlsx Notes tab and the
+HTML report's coverage tooltip — the true clinic count and pricing-transparency rate could well be
+higher than what's captured here.
+
+**Result: 32 confirmed clinics** across 7 of the 10 towns (Jersey City 6, Hoboken 6, Edgewater 6,
+Englewood/Englewood Cliffs/Teaneck 6, Fort Lee 5, Weehawken 3). **Union City, West New York, and
+Secaucus returned no standalone med spa** with a confirmed address of their own — residents there
+appear to be served by neighboring Hoboken/Jersey City/North Bergen clinics instead (Ethos
+Aesthetics + Wellness and Valley Aesthetic both explicitly market to Union City/West New York from
+adjacent towns), and the one Secaucus-adjacent lead (Better U Medical Spa) turned out to actually
+be headquartered in Englewood, with its supervising physician merely holding hospital privileges at
+Hudson Regional Hospital in Secaucus. Flagged this as worth a follow-up phone-book/permit-registry
+check rather than treated as a confirmed "unserved" finding.
+
+Procedures/pricing pass covered 13 categories (dropped Sculptra/Biostimulators and Kybella from the
+clinic-supply list since zero of the 32 clinics publish either on their service pages — a genuine
+finding, not an omission, and both are still shown in the Google Trends chart since search demand
+is independent of confirmed local supply). Real per-unit/per-session pricing was found for only 3
+of 27 Botox-offering clinics (fillir $14/unit, Evolve Med Spa $11/unit at both its Jersey City and
+Hoboken locations, The Hudson Med Spa's $150 session minimum) plus one filler price (Evolve's $500
+Lip Membership rate), one laser-hair-removal price (Hudson Med Spa's $350/session bundle), and one
+skin-tightening price (Marina Medispa's $500-$3,500 fractional laser resurfacing) — **16% pricing
+coverage overall, the lowest of any of the 10 metros in this project**, consistent with this dense,
+expensive, commuter corridor skewing toward consult-first storefronts.
+
+**Google Trends: reused the New York DMA directly**, rather than treating this as a fresh
+geo-lookup. Google Trends geo-targets at the Nielsen DMA level, and Hudson & Bergen counties, NJ
+fall within the same New York DMA (US-NY-501) as Manhattan — confirmed live via
+trends.google.com/trends/explore?geo=US-NY-501, where the Botox average (81) matched the
+Manhattan report's own figure exactly. Ran two additional live comparisons for categories the
+Manhattan report didn't originally cover (Semaglutide/GLP-1 = 34, IV Therapy = 9, Hormone
+Replacement Therapy = 4, Morpheus8 = 2) and folded the rest of Manhattan's existing 15-term trends
+array in unchanged.
+
+Built `NJ_Metro_Med_Spa_Procedures.xlsx` (same Clinics Overview / All Procedures / Dashboard / Notes
+structure as every other city, with live COUNTIFS/SUMPRODUCT formulas) and
+`NJ_Metro_Med_Spa_Market_Report.html` (same template as Austin/Houston — % of total, click-to-expand
+clinic breakdowns, no password gate, no "Pricing-request emails sent" card). Verified the xlsx's
+per-category clinic counts match the HTML's `procedures` array exactly (found and fixed 4 rows that
+were missing from the first xlsx draft — Beam MedSpa's filler entry, SincerelySkin's laser-hair-
+removal entry, Better U's microneedling entry, and Englewood Cosmetic's skin-tightening entry — all
+traced back to copy-paste gaps between the HTML's breakdownData and the xlsx's per-clinic procedure
+lists, not data errors).
+
+Integrated into the hub: added `"nj"` to `CITY_ORDER`/`NICK` in `build_hub.py` and a new entry to
+`CITIES` in `extract.py`; the hub's aggregate Overview sections (clinic supply, search interest,
+metro comparison) and its header location nav all picked up the new metro automatically once
+rebuilt, since those are generated by iterating `CITY_ORDER`. Updated the two spots that hard-coded
+"9 metros" / a 9-city name list (hero stat card label, hero subhead, "Clinic supply by category"
+section heading and description). Rebuilt and redeployed to
+`/Users/am/Desktop/Med_Spa_Multi_City_Hub.html` — verified the new nav link, JS validity
+(`node --check`-equivalent via `new Function()`), and div tag balance (366/366) after rebuild.
+
+Added `NJ_Metro_Med_Spa_Market_Report.html` and `NJ_Metro_Med_Spa_Procedures.xlsx` to the GitHub
+package folder, refreshed the hub copy there, updated `README.md`'s metro count/list, and re-zipped
+to `/Users/am/Desktop/Med_Spa_Multi_City_Project.zip`.
+
+## Premium Upstate NY — detail (2026-08-29, later same day)
+
+Elias asked to "Add also premium locations in Upstate NewYork with MedSpa" as one report, linked
+from the main page — arriving right after the NJ metro was completed. "Upstate New York" and
+"premium" are both broad/ambiguous, so scope was clarified with Elias first: which sub-region(s),
+and depth. Elias chose a mixed set spanning all three offered options rather than picking one,
+plus "full pipeline" depth to match every other metro.
+
+**Town selection (13 towns, 3 regions).** Mid-Hudson Valley: Rhinebeck, Hudson, Woodstock, New
+Paltz, Millbrook. Westchester's wealthiest suburbs: Scarsdale, Rye, Bedford, Armonk, Chappaqua.
+Saratoga / Finger Lakes: Saratoga Springs, Lake George, Skaneateles.
+
+**Research method** matched the NJ metro's approach (WebSearch per town, cross-checked against
+directories and clinics' own service pages) rather than the live-Maps-sweep method used in the
+first 8 cities — same explicit limitation noted in both the xlsx Notes tab and the HTML coverage
+tooltip.
+
+**Result: 27 confirmed clinics** across 11 of the 13 towns (Saratoga Springs 6, Scarsdale 4,
+Skaneateles 3, Rhinebeck/Chappaqua/Millbrook/Rye/New Paltz 2 each, plus single clinics in Hudson,
+Bedford, and Armonk, and one multi-location Hudson Valley chain logged once under its Kingston HQ).
+**Woodstock and Lake George returned no standalone med spa** — both small tourism/second-home
+towns, flagged for a follow-up phone-book check rather than treated as a confirmed "unserved"
+finding, same convention as NJ's unserved towns.
+
+**A genuinely new wrinkle vs. every other metro in this project: this one spans three separate
+Nielsen DMAs**, not one — New York (Westchester + the mid-Hudson Valley towns, 8 of 13 towns
+searched), Albany-Schenectady-Troy (Saratoga Springs, Hudson), and Syracuse (Skaneateles). Rather
+than run three separate live Trends pulls, reused the New York DMA figures already established for
+the Manhattan and NJ reports (same project, same trusted numbers, Botox=81 matching both exactly)
+since it covers the majority of towns here, and called out clearly — in the report's Search
+Interest section, in "Are we comparing the same thing," and in the xlsx Notes tab — that the
+Saratoga/Skaneateles portion of this metro's demand is not reflected and would need its own pull.
+
+Procedures/pricing pass covered 13 categories; found real (if often membership-gated or promo-only)
+pricing for only 2 of 22 Botox-offering clinics (The Formula MedSpa's $11/unit special, Youtherapy
+Medspa's $12/unit Platinum-member rate at both its Scarsdale and Chappaqua locations) and one clean
+filler price (Medical Aesthetics of the Hudson Valley's $500-$850/syringe) — **19% pricing
+coverage, the second-lowest of any metro in this project**, just above the NJ Gold Coast corridor's
+16% and well below every other metro (31-77%). Noted this as a real pattern (two affluent,
+consult-first corridors posting the lowest transparency scores back to back) rather than a
+methodology artifact.
+
+Built `Upstate_NY_Med_Spa_Procedures.xlsx` and `Upstate_NY_Med_Spa_Market_Report.html` using the
+same 4-sheet workbook structure and HTML template as every other metro. Verified the xlsx's
+per-category clinic counts match the HTML's `procedures` array exactly (found and fixed 4 rows
+missing from the first xlsx draft — Poppi Wellness's filler entry, Skaneateles MedSpa's laser
+entry, VIO Med Spa's body-contouring entry, and Primary Aesthetic Skin Care's microneedling entry —
+same class of copy-paste gap as the NJ workbook's first draft, not a data error).
+
+Integrated into the hub: added `"upstateny"` to `CITY_ORDER`/`NICK` in `build_hub.py` and a new
+entry to `CITIES` in `extract.py`; rebuilt and redeployed to
+`/Users/am/Desktop/Med_Spa_Multi_City_Hub.html` — verified the new 11th nav link, JS validity, and
+div tag balance (378/378) after rebuild. Updated the hard-coded "10 metros" references (hero stat
+card, hero subhead, "Clinic supply by category" heading/description) to "11 metros." Added both new
+files to the GitHub package folder, updated `README.md`'s metro count/list, and re-zipped to
+`/Users/am/Desktop/Med_Spa_Multi_City_Project.zip`.

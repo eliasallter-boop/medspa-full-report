@@ -4,308 +4,363 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Charlotte Med Spa Market Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500;12..96,75..100,700;12..96,75..100,800&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
-  :root {
-    --blue: #2563eb;
-    --blue-dark: #1d4ed8;
-    --blue-light: #eff6ff;
-    --ink: #111827;
-    --gray: #6b7280;
-    --gray-light: #9ca3af;
-    --border: #e5e7eb;
-    --bg: #f9fafb;
-    --green: #059669;
-    --amber: #d97706;
-    --red: #dc2626;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    color: var(--ink);
-    background: var(--bg);
-    line-height: 1.5;
-  }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 48px 24px 80px; }
+:root{
+  color-scheme: light;
+  --ground:       #E9EDF3;
+  --ground-2:     #DCE3EC;
+  --surface:      #FFFFFF;
+  --surface-2:    #F1F4F8;
+  --line:         #C6D0DD;
+  --line-soft:    #DEE5EE;
 
-  header.hero {
-    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #3b82f6 100%);
-    color: white;
-    padding: 26px 24px;
-    border-radius: 0 0 20px 20px;
-  }
-  header.hero .inner { max-width: 980px; margin: 0 auto; }
-  header.hero .eyebrow {
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    font-size: 11px;
-    font-weight: 700;
-    opacity: .85;
-    margin-bottom: 6px;
-  }
-  header.hero h1 { font-size: 24px; margin: 0 0 6px; font-weight: 800; letter-spacing: -0.02em; }
-  header.hero p.sub { font-size: 13px; opacity: .9; margin: 0; max-width: 640px; }
+  --ink:          #0B1220;
+  --ink-2:        #3D4A5C;
+  --ink-3:        #74839A;
 
-  .stat-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    margin-top: -26px;
-  }
-  .stat-card {
-    background: white;
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
-    border: 1px solid var(--border);
-  }
-  .stat-card .num { font-size: 30px; font-weight: 800; color: var(--blue); letter-spacing: -0.02em; }
-  .stat-card .label { font-size: 12.5px; color: var(--gray); margin-top: 4px; font-weight: 600; }
+  --above:        #2a78d6;
+  --above-soft:   #D7E5F8;
+  --below:        #eb6834;
+  --below-soft:   #FBE2D8;
+  --third:        #1baf7a;
+  --third-soft:   #D5F1E6;
+  --stone:        #97A3B4;
+  --amber:        #b8720f;
+  --amber-soft:   #F7EAD2;
 
-  .stat-card.has-tooltip { position: relative; cursor: help; }
-  .stat-card.has-tooltip .label { text-decoration: underline dotted var(--gray-light); text-underline-offset: 3px; }
-  .stat-card .tooltip {
-    position: absolute;
-    top: calc(100% + 10px);
-    left: 0;
-    width: 340px;
-    max-width: 80vw;
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px;
-    box-shadow: 0 14px 34px rgba(15,23,42,0.18);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-6px);
-    transition: opacity .15s ease, transform .15s ease;
-    z-index: 20;
-    text-align: left;
-    cursor: default;
+  --accent:       #1c5cab;
+  --neutral-mark: #B3BECE;
+
+  --glow-a:       rgba(42,120,214,.30);
+  --glow-b:       rgba(235,104,52,.22);
+  --glow-c:       rgba(27,175,122,.18);
+
+  --shadow-s:     0 1px 2px rgba(11,18,32,.06);
+  --shadow-m:     0 2px 4px rgba(11,18,32,.05), 0 14px 34px -22px rgba(11,18,32,.45);
+  --shadow-l:     0 4px 10px rgba(11,18,32,.07), 0 26px 60px -30px rgba(11,18,32,.55);
+
+  --ease: cubic-bezier(.22,.9,.28,1);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --ground:#070B13; --ground-2:#0C121C; --surface:#121A28; --surface-2:#182231;
+    --line:#29354A; --line-soft:#1D2839;
+    --ink:#EAF0F8; --ink-2:#AFBDD0; --ink-3:#7A8AA0;
+    --above:#3987e5; --above-soft:#16283F;
+    --below:#d95926; --below-soft:#33200F;
+    --third:#199e70; --third-soft:#0F2A21;
+    --stone:#6C7A8D; --amber:#e0a856; --amber-soft:#332711;
+    --accent:#7FB0F0; --neutral-mark:#38465C;
+    --glow-a:rgba(57,135,229,.34); --glow-b:rgba(217,89,38,.24); --glow-c:rgba(25,158,112,.20);
+    --shadow-s:0 1px 2px rgba(0,0,0,.5);
+    --shadow-m:0 2px 4px rgba(0,0,0,.45), 0 16px 36px -24px rgba(0,0,0,.95);
+    --shadow-l:0 4px 10px rgba(0,0,0,.5), 0 28px 64px -32px rgba(0,0,0,1);
   }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ground:#070B13; --ground-2:#0C121C; --surface:#121A28; --surface-2:#182231;
+  --line:#29354A; --line-soft:#1D2839;
+  --ink:#EAF0F8; --ink-2:#AFBDD0; --ink-3:#7A8AA0;
+  --above:#3987e5; --above-soft:#16283F;
+  --below:#d95926; --below-soft:#33200F;
+  --third:#199e70; --third-soft:#0F2A21;
+  --stone:#6C7A8D; --amber:#e0a856; --amber-soft:#332711;
+  --accent:#7FB0F0; --neutral-mark:#38465C;
+  --glow-a:rgba(57,135,229,.34); --glow-b:rgba(217,89,38,.24); --glow-c:rgba(25,158,112,.20);
+  --shadow-s:0 1px 2px rgba(0,0,0,.5);
+  --shadow-m:0 2px 4px rgba(0,0,0,.45), 0 16px 36px -24px rgba(0,0,0,.95);
+  --shadow-l:0 4px 10px rgba(0,0,0,.5), 0 28px 64px -32px rgba(0,0,0,1);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Public Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--ground);
+  line-height: 1.62;
+  font-size: 15.5px;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+h1,h2,h3{ font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; text-wrap:balance; font-weight:700; }
+.num, td.num, .n, .stat-card .num { font-variant-numeric: tabular-nums; }
+
+/* ---------- ambient field ---------- */
+.aurora{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.aurora i{ position:absolute; display:block; border-radius:50%; filter:blur(90px); opacity:.85; will-change:transform; }
+.aurora .a{ width:52vw;height:52vw;left:-10vw;top:-16vw;background:var(--glow-a);animation:drift-a 34s var(--ease) infinite alternate; }
+.aurora .b{ width:40vw;height:40vw;right:-8vw;top:6vw;background:var(--glow-b);animation:drift-b 41s var(--ease) infinite alternate; }
+.aurora .c{ width:44vw;height:44vw;left:22vw;top:34vw;background:var(--glow-c);animation:drift-c 47s var(--ease) infinite alternate; }
+@keyframes drift-a{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(9vw,7vw,0) scale(1.14)}}
+@keyframes drift-b{from{transform:translate3d(0,0,0) scale(1.05)}to{transform:translate3d(-11vw,10vw,0) scale(.9)}}
+@keyframes drift-c{from{transform:translate3d(0,0,0) scale(.95)}to{transform:translate3d(7vw,-9vw,0) scale(1.16)}}
+
+.wrap { position:relative; z-index:1; max-width: 1040px; margin: 0 auto; padding: 48px 24px 80px; }
+
+/* ---------- masthead ---------- */
+header.hero {
+  position:relative; z-index:1;
+  background: transparent;
+  color: var(--ink);
+  padding: 70px 24px 30px;
+  border-radius: 0;
+}
+header.hero .inner { max-width: 1040px; margin: 0 auto; display:flex; flex-direction:column; gap:16px; }
+.back-to-hub {
+  display: inline-flex; align-items: center; gap: 6px; align-self:flex-start;
+  font-family:"IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11.5px; font-weight: 600; color: var(--ink-3);
+  text-decoration: none; margin-bottom: 2px;
+  border: 1px solid var(--line); border-radius: 999px;
+  padding: 5px 12px 5px 10px; transition: background .22s var(--ease), color .22s var(--ease), border-color .22s var(--ease);
+  animation: rise .6s var(--ease) both;
+}
+.back-to-hub:hover { background: var(--surface-2); color: var(--ink); border-color: var(--stone); }
+header.hero .eyebrow {
+  font-family:"IBM Plex Mono", ui-monospace, monospace;
+  text-transform: uppercase; letter-spacing: .18em; font-size: 11px; font-weight: 500;
+  color: var(--ink-3); margin-bottom: 2px;
+  display:inline-flex; align-items:center; gap:9px;
+  animation: rise .7s var(--ease) .05s both;
+}
+header.hero .eyebrow::before{
+  content:""; width:22px; height:3px; border-radius:2px; flex:0 0 auto;
+  background: linear-gradient(90deg, var(--below), var(--stone) 50%, var(--above));
+}
+header.hero h1 {
+  font-size: clamp(1.9rem, 4.4vw, 3rem); margin: 0; font-weight: 800; letter-spacing: -0.03em;
+  line-height: 1.04; font-variation-settings:"wdth" 90;
+  animation: rise .78s var(--ease) .12s both;
+}
+header.hero p.sub {
+  font-size: clamp(.95rem,1.5vw,1.08rem); opacity: 1; color: var(--ink-2); margin: 0; max-width: 640px; line-height:1.55;
+  animation: rise .78s var(--ease) .2s both;
+}
+.hero-spectrum{
+  height:4px; border-radius:3px; max-width:1040px; width:100%;
+  background: linear-gradient(90deg, var(--below), #c9772f 22%, var(--stone) 48%, var(--above) 76%, var(--third));
+  transform-origin:left center; animation: wipe 1.1s var(--ease) .3s both;
+  margin-top:4px;
+}
+@keyframes wipe{ from{transform:scaleX(0)} to{transform:scaleX(1)} }
+@keyframes rise{ from{opacity:0; transform:translate3d(0,14px,0)} to{opacity:1; transform:none} }
+
+/* ---------- stat cards ---------- */
+.stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 26px; }
+.stat-card {
+  background: var(--surface); border-radius: 14px; padding: 20px 20px 18px;
+  box-shadow: var(--shadow-m); border: 1px solid var(--line-soft);
+  position:relative; overflow:visible;
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.stat-card::before{
+  content:""; position:absolute; left:0; right:0; top:0; height:4px;
+  border-radius:14px 14px 0 0; overflow:hidden;
+  background: var(--above); transform:scaleX(0); transform-origin:left;
+  animation: wipe .8s var(--ease) .45s both;
+}
+.stat-card:nth-child(2)::before{ background: var(--third); animation-delay:.55s; }
+.stat-card:nth-child(3)::before{ background: var(--below); animation-delay:.65s; }
+.stat-card:hover{ transform: translateY(-4px); box-shadow: var(--shadow-l); }
+.stat-card .num { font-family:"Bricolage Grotesque",sans-serif; font-size: 2rem; font-weight: 800; color: var(--above); letter-spacing: -0.03em; }
+.stat-card:nth-child(2) .num{ color: var(--third); }
+.stat-card:nth-child(3) .num{ color: var(--below); }
+.stat-card .label { font-size: 12.5px; color: var(--ink-2); margin-top: 4px; font-weight: 500; }
+
+.stat-card.has-tooltip { position: relative; cursor: help; z-index:50; }
+.stat-card.has-tooltip .label { text-decoration: underline dotted var(--stone); text-underline-offset: 3px; }
+.stat-card .tooltip {
+  position: absolute; top: calc(100% + 10px); left: 0; width: 340px; max-width: 80vw;
+  background: var(--surface); border: 1px solid var(--line-soft); border-radius: 12px; padding: 18px;
+  box-shadow: var(--shadow-l);
+  opacity: 0; visibility: hidden; transform: translateY(-6px);
+  transition: opacity .2s var(--ease), transform .2s var(--ease);
+  z-index: 20; text-align: left; cursor: default;
+}
+.stat-card.has-tooltip:hover .tooltip,
+.stat-card.has-tooltip.tooltip-open .tooltip { opacity: 1; visibility: visible; transform: translateY(0); }
+.tooltip-title { font-size: 12.5px; font-weight: 700; color: var(--ink); margin-bottom: 6px; font-family:"Bricolage Grotesque",sans-serif; }
+.tooltip p { font-size: 12px; color: var(--ink-2); margin: 0 0 12px; font-weight: 400; line-height: 1.5; }
+.tooltip .pill-row { margin-top: 0; gap: 6px; }
+.tooltip .pill { font-size: 11px; padding: 4px 9px; }
+
+/* ---------- sections ---------- */
+section { margin-top: 56px; padding-top:22px; border-top:1px solid var(--line); }
+section:first-of-type { border-top:0; padding-top:0; }
+h2 { font-size: clamp(1.2rem,2.4vw,1.55rem); font-weight: 700; letter-spacing: -0.02em; margin: 0 0 6px; color:var(--ink); }
+p.section-desc { color: var(--ink-3); font-size: 14px; margin: 0 0 24px; max-width: 680px; line-height:1.55; }
+
+.card {
+  background: var(--surface); border: 1px solid var(--line-soft); border-radius: 14px;
+  padding: 28px; box-shadow: var(--shadow-m);
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+
+/* ---------- funnel ---------- */
+.funnel { display: flex; gap: 14px; flex-wrap: wrap; }
+.funnel-step { flex: 1 1 150px; text-align: center; padding: 18px 12px; border-radius: 12px; background: var(--surface-2); }
+.funnel-step .n { font-size: 26px; font-weight: 800; color: var(--above); font-family:"Bricolage Grotesque",sans-serif; }
+.funnel-step .l { font-size: 12px; color: var(--ink-3); margin-top: 4px; font-weight: 500; font-family:"IBM Plex Mono",monospace; }
+.funnel-arrow { align-self: center; color: var(--stone); font-size: 20px; }
+
+/* ---------- pills ---------- */
+.pill-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+.pill { font-size: 12.5px; font-weight: 600; padding: 6px 12px; border-radius: 999px; font-family:"IBM Plex Mono",monospace; }
+.pill.green { background: var(--third-soft); color: var(--third); }
+.pill.amber { background: var(--amber-soft); color: var(--amber); }
+.pill.red   { background: var(--below-soft); color: var(--below); }
+.pill.gray  { background: var(--surface-2); color: var(--ink-3); }
+
+/* ---------- procedure / trend bars ---------- */
+.proc-row { display: grid; grid-template-columns: 220px 1fr 108px; align-items: center; gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--line-soft); animation: rowIn .5s var(--ease) backwards; }
+.proc-count { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; line-height: 1.15; text-align: right; font-weight: 700; color: var(--above); font-size: 14px; font-family:"IBM Plex Mono",monospace; }
+.proc-pct { font-size: 10.5px; font-weight: 500; color: var(--ink-3); }
+.proc-row:last-child { border-bottom: none; }
+.proc-name { font-size: 13.5px; font-weight: 700; color: var(--ink); }
+.proc-price { font-size: 11.5px; color: var(--ink-3); margin-top: 2px; font-weight: 500; }
+.proc-name-link { cursor: pointer; text-decoration: underline dotted var(--stone); text-underline-offset: 3px; }
+.proc-name-link:hover { color: var(--accent); }
+.table-note { font-size: 11px; color: var(--ink-3); margin-top: 4px; font-weight: 400; line-height: 1.45; max-width: 420px; }
+.bar-track { background: var(--surface-2); border-radius: 8px; height: 22px; overflow: hidden; }
+.bar-fill { background: linear-gradient(90deg, color-mix(in srgb, var(--above) 55%, var(--third)), var(--above)); height: 100%; border-radius: 8px 0 0 8px; width: 0%; transition: width 1.1s var(--ease); }
+.bar-fill.trend { background: linear-gradient(90deg, color-mix(in srgb, var(--third) 55%, var(--above)), var(--third)); }
+.proc-count.trend { color: var(--third); }
+
+@keyframes rowIn { from{opacity:0; transform:translateX(-8px);} to{opacity:1; transform:translateX(0);} }
+@keyframes cardIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+.stat-card { animation: cardIn .5s var(--ease) backwards; }
+.stat-card:nth-child(1) { animation-delay: .05s; }
+.stat-card:nth-child(2) { animation-delay: .15s; }
+.stat-card:nth-child(3) { animation-delay: .25s; }
+.stat-card.has-tooltip { z-index: 50; }
+
+/* ---------- table ---------- */
+table { width: 100%; min-width: 480px; border-collapse: collapse; font-size: 13.5px; background:var(--surface); }
+th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-3); padding: 10px 12px; border-bottom: 2px solid var(--line); background:var(--surface-2); font-family:"IBM Plex Mono",monospace; font-weight:500; }
+td { padding: 12px; border-bottom: 1px solid var(--line-soft); vertical-align: top; color:var(--ink-2); }
+tr:last-child td { border-bottom: none; }
+td.num { font-weight: 700; color:var(--ink); font-variant-numeric:tabular-nums; }
+tbody tr{ transition: background .2s var(--ease); }
+tbody tr:hover{ background: var(--surface-2); }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+@media (max-width: 720px) {
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .two-col { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .wrap { padding: 32px 16px 60px; }
+  header.hero { padding: 44px 16px 20px; }
+  header.hero h1 { font-size: 1.5rem; }
+  header.hero p.sub { font-size: 12.5px; }
+  section { margin-top: 40px; }
+  h2 { font-size: 18px; }
+  p.section-desc { font-size: 13px; }
+  .card { padding: 18px; }
+  .stat-card .num { font-size: 24px; }
+  .stat-card { padding: 16px; }
+  .stat-card .tooltip { width: calc(100vw - 32px); max-width: none; left: 50%; transform: translateX(-50%) translateY(-6px); }
   .stat-card.has-tooltip:hover .tooltip,
-  .stat-card.has-tooltip.tooltip-open .tooltip {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-  .tooltip-title { font-size: 12.5px; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
-  .tooltip p { font-size: 12px; color: var(--gray); margin: 0 0 12px; font-weight: 400; line-height: 1.5; }
-  .tooltip .pill-row { margin-top: 0; gap: 6px; }
-  .tooltip .pill { font-size: 11px; padding: 4px 9px; }
+  .stat-card.has-tooltip.tooltip-open .tooltip { transform: translateX(-50%) translateY(0); }
+  .proc-row, .overlay-row { grid-template-columns: 1fr; grid-template-areas: "name" "bar" "count"; row-gap: 6px; padding: 12px 0; }
+  .proc-row > div:first-child, .overlay-row > .proc-name { grid-area: name; }
+  .proc-row > .bar-track, .overlay-row > .overlay-track { grid-area: bar; }
+  .proc-row > .proc-count, .overlay-row > .overlay-pct { grid-area: count; text-align: left; }
+  .proc-count { align-items: flex-start; }
+  .funnel-step { flex: 1 1 45%; }
+  .pill { font-size: 11.5px; padding: 5px 10px; }
+  #breakdown-modal-overlay { padding: 0; align-items: stretch; }
+  .breakdown-modal { max-height: 100vh; height: 100vh; border-radius: 0; max-width: 100%; }
+  .breakdown-modal-header, .breakdown-modal-controls, .breakdown-modal-body { padding-left: 16px; padding-right: 16px; }
+  .breakdown-row { flex-direction: column; gap: 2px; }
+  .breakdown-price-col { text-align: left; }
+  .table-note { max-width: none; }
+}
 
-  section { margin-top: 56px; }
-  h2 {
-    font-size: 21px;
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    margin: 0 0 6px;
-  }
-  p.section-desc { color: var(--gray); font-size: 14px; margin: 0 0 24px; max-width: 680px; }
+ul.notes { margin: 0; padding-left: 18px; font-size: 13.5px; color: var(--ink-2); }
+ul.notes li { margin-bottom: 10px; }
 
-  .card {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px;
-    box-shadow: 0 1px 3px rgba(15,23,42,0.04);
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
+/* ---------- overlay comparison chart ---------- */
+.overlay-legend { display: flex; gap: 14px 22px; flex-wrap: wrap; margin-bottom: 20px; }
+.overlay-legend-item { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+.sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; }
+.sw-clinics { background: linear-gradient(90deg, color-mix(in srgb, var(--above) 40%, white), var(--above)); }
+.sw-trends { background: linear-gradient(90deg, color-mix(in srgb, var(--third) 40%, white), var(--third)); }
+.overlay-row { display: grid; grid-template-columns: 220px 1fr 96px; align-items: center; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--line-soft); animation: rowIn .5s var(--ease) backwards; }
+.overlay-row:last-child { border-bottom: none; }
+.overlay-track { position: relative; height: 26px; background: var(--surface-2); border-radius: 7px; overflow: visible; }
+.overlay-bar-clinics { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: linear-gradient(90deg, color-mix(in srgb, var(--above) 40%, white), var(--above)); border-radius: 7px; transition: width 1.1s var(--ease); }
+.overlay-bar-trends { position: absolute; left: 0; top: 50%; height: 10px; width: 0%; transform: translateY(-50%); background: linear-gradient(90deg, color-mix(in srgb, var(--third) 40%, white), var(--third)); border-radius: 6px; box-shadow: 0 0 0 2px var(--surface); transition: width 1.1s var(--ease) .1s; }
+.overlay-pct { text-align: right; font-size: 11.5px; line-height: 1.5; font-family:"IBM Plex Mono",monospace; }
+.overlay-pct .c { color: var(--above); font-weight: 700; }
+.overlay-pct .t { color: var(--third); font-weight: 700; }
 
-  /* Funnel / campaign */
-  .funnel { display: flex; gap: 14px; flex-wrap: wrap; }
-  .funnel-step {
-    flex: 1 1 150px;
-    text-align: center;
-    padding: 18px 12px;
-    border-radius: 12px;
-    background: var(--blue-light);
-  }
-  .funnel-step .n { font-size: 26px; font-weight: 800; color: var(--blue-dark); }
-  .funnel-step .l { font-size: 12px; color: var(--gray); margin-top: 4px; font-weight: 600; }
-  .funnel-arrow { align-self: center; color: var(--gray-light); font-size: 20px; }
+footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 12px; color: var(--ink-3); text-align: center; font-family:"IBM Plex Mono",monospace; position:relative; z-index:1; }
 
-  .pill-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
-  .pill {
-    font-size: 12.5px;
-    font-weight: 700;
-    padding: 6px 12px;
-    border-radius: 999px;
-  }
-  .pill.green { background: #ecfdf5; color: var(--green); }
-  .pill.amber { background: #fffbeb; color: var(--amber); }
-  .pill.red   { background: #fef2f2; color: var(--red); }
-  .pill.gray  { background: #f3f4f6; color: var(--gray); }
+/* ---------- per-clinic breakdown modal ---------- */
+#breakdown-modal-overlay {
+  position: fixed; inset: 0; z-index: 500; background: rgba(11,18,32,0.55);
+  display: none; align-items: flex-start; justify-content: center;
+  padding: 40px 16px; overflow-y: auto;
+}
+#breakdown-modal-overlay.open { display: flex; }
+.breakdown-modal {
+  background: var(--surface); border-radius: 16px; max-width: 720px; width: 100%;
+  box-shadow: var(--shadow-l); max-height: calc(100vh - 80px);
+  display: flex; flex-direction: column; border:1px solid var(--line-soft);
+}
+.breakdown-modal-header { padding: 20px 24px; border-bottom: 1px solid var(--line-soft); display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.breakdown-modal-title { font-size: 17px; font-weight: 700; color:var(--ink); font-family:"Bricolage Grotesque",sans-serif; }
+.breakdown-modal-sub { font-size: 12.5px; color: var(--ink-3); margin-top: 4px; }
+.breakdown-modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--ink-3); line-height: 1; padding: 2px 6px; border-radius: 6px; }
+.breakdown-modal-close:hover { color: var(--ink); background: var(--surface-2); }
+.breakdown-modal-controls { padding: 12px 24px; border-bottom: 1px solid var(--line-soft); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.breakdown-sort-label { font-size: 11px; color: var(--ink-3); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; margin-right: 2px; font-family:"IBM Plex Mono",monospace; }
+.sort-btn { font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; color: var(--ink-3); transition: border-color .2s var(--ease), color .2s var(--ease); }
+.sort-btn:hover { border-color: var(--above); color: var(--above); }
+.sort-btn.active { background: var(--above); border-color: var(--above); color: #fff; }
+.breakdown-modal-body { overflow-y: auto; padding: 6px 24px 20px; }
+.breakdown-row { padding: 11px 0; border-bottom: 1px solid var(--line-soft); display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; }
+.breakdown-row:last-child { border-bottom: none; }
+.breakdown-clinic a { color: var(--above); font-weight: 700; font-size: 13.5px; text-decoration: none; }
+.breakdown-clinic a:hover { text-decoration: underline; }
+.breakdown-clinic .no-link { color: var(--ink); font-weight: 700; font-size: 13.5px; }
+.breakdown-proc { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+.breakdown-price-col { text-align: right; flex-shrink: 0; }
+.breakdown-price { font-weight: 700; color: var(--ink); font-size: 13.5px; white-space: nowrap; }
+.breakdown-duration { font-size: 11px; color: var(--ink-3); margin-top: 2px; }
+.breakdown-empty { padding: 24px 0; text-align: center; color: var(--ink-3); font-size: 13px; }
 
-  /* Procedure bars */
-  .proc-row { display: grid; grid-template-columns: 220px 1fr 90px; align-items: center; gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--border); animation: rowIn .5s ease backwards; }
-  .proc-row:last-child { border-bottom: none; }
-  .proc-name { font-size: 13.5px; font-weight: 700; }
-  .proc-price { font-size: 11.5px; color: var(--gray); margin-top: 2px; font-weight: 500; }
-  .proc-name-link { cursor: pointer; text-decoration: underline dotted var(--gray-light); text-underline-offset: 3px; }
-  .proc-name-link:hover { color: var(--blue); }
-  .table-note { font-size: 11px; color: var(--gray); margin-top: 4px; font-weight: 400; line-height: 1.45; max-width: 420px; }
-  .bar-track { background: #eef2f7; border-radius: 8px; height: 22px; overflow: hidden; }
-  .bar-fill { background: linear-gradient(90deg, #60a5fa, var(--blue)); height: 100%; border-radius: 8px 0 0 8px; width: 0%; transition: width 1.1s cubic-bezier(.16,.8,.3,1); }
-  .bar-fill.trend { background: linear-gradient(90deg, #c4b5fd, #7c3aed); }
-  .proc-count { text-align: right; font-weight: 800; color: var(--blue-dark); font-size: 14px; }
-  .proc-count.trend { color: #6d28d9; }
+a:focus-visible, .sort-btn:focus-visible, .proc-name-link:focus-visible, .back-to-hub:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px;
+}
 
-  @keyframes rowIn {
-    from { opacity: 0; transform: translateX(-8px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  .stat-card .num { transition: none; }
-  @keyframes cardIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  /* animation-fill-mode: backwards (not forwards, and no standing opacity:0 rule) so the card
-     doesn't retain a fractional-opacity stacking context after the fade-in finishes — a standing
-     "opacity: 0" here would trap the tooltip's z-index inside this card, letting later sections
-     in the DOM paint over it. Once the animation ends the card just falls back to normal opacity:1. */
-  .stat-card { animation: cardIn .5s ease backwards; }
-  .stat-card:nth-child(1) { animation-delay: .05s; }
-  .stat-card:nth-child(2) { animation-delay: .15s; }
-  .stat-card:nth-child(3) { animation-delay: .25s; }
-  .stat-card.has-tooltip { z-index: 1; }
-
-  /* Table */
-  table { width: 100%; min-width: 480px; border-collapse: collapse; font-size: 13.5px; }
-  th { text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--gray); padding: 10px 12px; border-bottom: 2px solid var(--border); }
-  td { padding: 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
-  tr:last-child td { border-bottom: none; }
-  td.num { font-weight: 700; }
-
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-
-  /* Tablet */
-  @media (max-width: 720px) {
-    .stat-grid { grid-template-columns: repeat(2, 1fr); }
-    .two-col { grid-template-columns: 1fr; }
-  }
-
-  /* Phones */
-  @media (max-width: 600px) {
-    .wrap { padding: 32px 16px 60px; }
-    header.hero { padding: 20px 16px; }
-    header.hero h1 { font-size: 20px; }
-    header.hero p.sub { font-size: 12.5px; }
-    section { margin-top: 40px; }
-    h2 { font-size: 18px; }
-    p.section-desc { font-size: 13px; }
-    .card { padding: 18px; }
-
-    .stat-card .num { font-size: 24px; }
-    .stat-card { padding: 16px; }
-
-    /* Tooltip: full-bleed under its card instead of a fixed 340px box that can overhang the
-       screen edge on narrow phones. */
-    .stat-card .tooltip { width: calc(100vw - 32px); max-width: none; left: 50%; transform: translateX(-50%) translateY(-6px); }
-    .stat-card.has-tooltip:hover .tooltip,
-    .stat-card.has-tooltip.tooltip-open .tooltip { transform: translateX(-50%) translateY(0); }
-
-    /* Procedure / trends / overlay rows: stack name, bar, and count instead of squeezing a
-       fixed 220px label column onto a ~360px screen. */
-    .proc-row, .overlay-row {
-      grid-template-columns: 1fr;
-      grid-template-areas: "name" "bar" "count";
-      row-gap: 6px;
-      padding: 12px 0;
-    }
-    .proc-row > div:first-child, .overlay-row > .proc-name { grid-area: name; }
-    .proc-row > .bar-track, .overlay-row > .overlay-track { grid-area: bar; }
-    .proc-row > .proc-count, .overlay-row > .overlay-pct { grid-area: count; text-align: left; }
-
-    .funnel-step { flex: 1 1 45%; }
-
-    .pill { font-size: 11.5px; padding: 5px 10px; }
-
-    #breakdown-modal-overlay { padding: 0; align-items: stretch; }
-    .breakdown-modal { max-height: 100vh; height: 100vh; border-radius: 0; max-width: 100%; }
-    .breakdown-modal-header, .breakdown-modal-controls, .breakdown-modal-body { padding-left: 16px; padding-right: 16px; }
-    .breakdown-row { flex-direction: column; gap: 2px; }
-    .breakdown-price-col { text-align: left; }
-    .table-note { max-width: none; }
-  }
-
-  ul.notes { margin: 0; padding-left: 18px; font-size: 13.5px; color: #374151; }
-  ul.notes li { margin-bottom: 10px; }
-
-  /* Overlay comparison chart */
-  .overlay-legend { display: flex; gap: 14px 22px; flex-wrap: wrap; margin-bottom: 20px; }
-  .overlay-legend-item { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 700; color: #374151; }
-  .sw { display: inline-block; width: 14px; height: 14px; border-radius: 4px; }
-  .sw-clinics { background: linear-gradient(90deg, #bfdbfe, #60a5fa); }
-  .sw-trends { background: linear-gradient(90deg, #c4b5fd, #7c3aed); }
-  .overlay-row { display: grid; grid-template-columns: 220px 1fr 96px; align-items: center; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--border); animation: rowIn .5s ease backwards; }
-  .overlay-row:last-child { border-bottom: none; }
-  .overlay-track { position: relative; height: 26px; background: #eef2f7; border-radius: 7px; overflow: visible; }
-  .overlay-bar-clinics {
-    position: absolute; left: 0; top: 0; height: 100%; width: 0%;
-    background: linear-gradient(90deg, #bfdbfe, #60a5fa);
-    border-radius: 7px;
-    transition: width 1.1s cubic-bezier(.16,.8,.3,1);
-  }
-  .overlay-bar-trends {
-    position: absolute; left: 0; top: 50%; height: 10px; width: 0%;
-    transform: translateY(-50%);
-    background: linear-gradient(90deg, #c4b5fd, #7c3aed);
-    border-radius: 6px;
-    box-shadow: 0 0 0 2px #fff;
-    transition: width 1.1s cubic-bezier(.16,.8,.3,1) .1s;
-  }
-  .overlay-pct { text-align: right; font-size: 11.5px; line-height: 1.5; }
-  .overlay-pct .c { color: var(--blue-dark); font-weight: 800; }
-  .overlay-pct .t { color: #6d28d9; font-weight: 800; }
-
-  footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 12px; color: var(--gray-light); text-align: center; }
-
-  /* Per-clinic breakdown modal */
-  #breakdown-modal-overlay {
-    position: fixed; inset: 0; z-index: 500;
-    background: rgba(15,23,42,0.5);
-    display: none; align-items: flex-start; justify-content: center;
-    padding: 40px 16px; overflow-y: auto;
-  }
-  #breakdown-modal-overlay.open { display: flex; }
-  .breakdown-modal {
-    background: white; border-radius: 16px; max-width: 720px; width: 100%;
-    box-shadow: 0 20px 60px rgba(15,23,42,0.3);
-    max-height: calc(100vh - 80px);
-    display: flex; flex-direction: column;
-  }
-  .breakdown-modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-  .breakdown-modal-title { font-size: 17px; font-weight: 800; }
-  .breakdown-modal-sub { font-size: 12.5px; color: var(--gray); margin-top: 4px; }
-  .breakdown-modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--gray); line-height: 1; padding: 2px 6px; border-radius: 6px; }
-  .breakdown-modal-close:hover { color: var(--ink); background: var(--bg); }
-  .breakdown-modal-controls { padding: 12px 24px; border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .breakdown-sort-label { font-size: 11.5px; color: var(--gray); font-weight: 700; text-transform: uppercase; letter-spacing: .03em; margin-right: 2px; }
-  .sort-btn { font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border); background: white; cursor: pointer; color: var(--gray); }
-  .sort-btn:hover { border-color: var(--blue); color: var(--blue); }
-  .sort-btn.active { background: var(--blue); border-color: var(--blue); color: white; }
-  .breakdown-modal-body { overflow-y: auto; padding: 6px 24px 20px; }
-  .breakdown-row { padding: 11px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; }
-  .breakdown-row:last-child { border-bottom: none; }
-  .breakdown-clinic a { color: var(--blue-dark); font-weight: 700; font-size: 13.5px; text-decoration: none; }
-  .breakdown-clinic a:hover { text-decoration: underline; }
-  .breakdown-clinic .no-link { color: var(--ink); font-weight: 700; font-size: 13.5px; }
-  .breakdown-proc { font-size: 12px; color: var(--gray); margin-top: 2px; }
-  .breakdown-price-col { text-align: right; flex-shrink: 0; }
-  .breakdown-price { font-weight: 800; color: var(--ink); font-size: 13.5px; white-space: nowrap; }
-  .breakdown-duration { font-size: 11px; color: var(--gray-light); margin-top: 2px; }
-  .breakdown-empty { padding: 24px 0; text-align: center; color: var(--gray); font-size: 13px; }
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ animation:none !important; transition:none !important; }
+  .aurora i{ animation:none !important; }
+  .hero-spectrum, .stat-card::before{ transform:none !important; }
+  .proc-row, .overlay-row, .stat-card, .back-to-hub, header.hero .eyebrow, header.hero h1, header.hero p.sub{ opacity:1 !important; transform:none !important; }
+  .bar-fill, .overlay-bar-clinics, .overlay-bar-trends{ width: revert !important; }
+}
 </style>
 </head>
 <body>
+<div class="aurora"><i class="a"></i><i class="b"></i><i class="c"></i></div>
 
 <header class="hero">
   <div class="inner">
+    <a class="back-to-hub" href="Med_Spa_Multi_City_Hub.html">&larr; Back to National Hub</a>
     <div class="eyebrow">Market Research &middot; Updated Aug 18, 2026</div>
     <h1>Charlotte Med Spa Market Report</h1>
     <p class="sub">Pricing transparency across Charlotte-area med spas, built from live website research. Outreach campaign has not started yet.</p>
+    <div class="hero-spectrum"></div>
   </div>
 </header>
 
@@ -501,6 +556,7 @@
     { name: "Ultherapy", count: 1, price: "Not published (1 listing)" },
   ];
   const max = Math.max(...procedures.map(p => p.count));
+  const procTotal = procedures.reduce((s, p) => s + p.count, 0);
   const container = document.getElementById('procedures');
   const barsToAnimate = [];
   procedures.forEach((p, i) => {
@@ -514,7 +570,7 @@
         <div class="proc-price">${p.price}</div>
       </div>
       <div class="bar-track"><div class="bar-fill" data-pct="${pct}"></div></div>
-      <div class="proc-count">${p.count} clinics</div>
+      <div class="proc-count">${p.count} clinics<span class="proc-pct">${(p.count / procTotal * 100).toFixed(1)}% of total</span></div>
     `;
     container.appendChild(row);
     barsToAnimate.push(row.querySelector('.bar-fill'));
@@ -541,6 +597,7 @@
     { name: "PDO Thread Lift", term: '"PDO Thread Lift"', index: 4 },
   ];
   const trendsContainer = document.getElementById('trends');
+  const trendTotal = trends.reduce((s, t) => s + t.index, 0);
   trends.forEach((t, i) => {
     const row = document.createElement('div');
     row.className = 'proc-row';
@@ -551,7 +608,7 @@
         <div class="proc-price">Search term: ${t.term}</div>
       </div>
       <div class="bar-track"><div class="bar-fill trend" data-pct="${t.index}"></div></div>
-      <div class="proc-count trend">${t.index} / 100</div>
+      <div class="proc-count trend">${t.index} / 100<span class="proc-pct">${(t.index / trendTotal * 100).toFixed(1)}% of total</span></div>
     `;
     trendsContainer.appendChild(row);
     barsToAnimate.push(row.querySelector('.bar-fill'));
@@ -641,7 +698,7 @@
     tbody.appendChild(tr);
   });
 
-  const breakdownData = {"Botox / Neuromodulators":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","Botox","Not published",""],["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","Dysport","Not published",""],["Azura Medical Spa","https://azuramedicalspa.com","Botox & Fillers","Not published",""],["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","Botox (per unit)","$15/unit (Kendra/Sareena/Bri)",""],["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","Dysport (per unit)","$13/unit (Kendra/Sareena/Bri)",""],["The Modern Aesthetic (Ballantyne)","https://www.themodernaesthetic.co","Botox (per unit)","$15/unit (Kendra/Sareena/Bri)",""],["The Modern Aesthetic (Ballantyne)","https://www.themodernaesthetic.co","Dysport (per unit)","$13/unit (Kendra/Sareena/Bri)",""],["Allure Medical","https://alluremedical.com/locations/charlotte-nc","Botox/Xeomin (sale)","$8/unit (72-hr sale)",""],["Allure Medical","https://alluremedical.com/locations/charlotte-nc","Xeomin","Not published (standard rate)",""],["Miramae Medical Skin Care Studio","https://miramaestudio.com","Botox (per unit)","$13.50/unit",""],["Miramae Medical Skin Care Studio","https://miramaestudio.com","Dysport (per unit)","$4.85/unit",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","Botox & Dysport","From $9/unit",""],["FANOUS MEDSPA - Charlotte","https://www.fanousmedspa.com","Botox","Not published",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Neuromodulators (Botox/Dysport/Jeuveau/Xeomin)","Not published",""],["Eden MedSpa","https://www.myedenmedspa.com","Botox & Dermal Fillers","Not published",""],["Replenish Health Spa","https://replenishhealthspa.com","Botox Cosmetic","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Botox","$12.99/unit special (promo, Botox only)",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Daxxify","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Dysport","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Xeomin","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Anti-Wrinkle Injections (Botox/Dysport)","Not published",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Dysport (150 units)","Promo: $525 (Halloween special)",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Jeuveau (50 units)","Promo: $450 (Halloween special)",""],["Aesthetica Med Spa","https://aestheticamspa.com","Dysport (per Botox-equivalent unit)","$13/unit",""],["Aesthetica Med Spa","https://aestheticamspa.com","Botox (per unit)","$14/unit",""],["Aesthetica Med Spa","https://aestheticamspa.com","Jeuveau (per unit)","$13/unit",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Botox (per unit)","$15/unit",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Dysport (per unit)","$7/unit",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Botox Mini Shot (30u)","$425",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Botox Lip Flip","$110",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Stop Sweating (Underarm Botox)","$1,200/vial",""],["Med Boutique - Aesthetic Injectables","https://www.beautifycharlotte.com","Neurotoxin (Botox/Xeomin)","Not published (3rd-party cites ~$10/unit, unconfirmed)",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Botox (per unit)","$12/unit",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Xeomin (per unit)","$12/unit",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Dysport (per unit)","$4/unit",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Letybo (per unit)","$10/unit",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Botox / Dysport / Daxxify","Not published (consult required)",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Botox","$12.99/unit",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Daxxify","$10/unit (special)",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Botox","Not published on-site",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Neurotoxins (Botox)","Not published (range only via listing)",""],["Aesthetica Med Spa","https://aestheticamspa.com","Botox / Dysport / Xeomin (membership rate)","$12-13/unit w/ $100/yr membership; $11.50/unit w/ $249/yr membership",""],["Plumped","https://plumpedclt.com","Neuromodulators","Not published",""],["Plumped","https://plumpedclt.com","Introductory Neurotoxin Injector Training Class (not a patient treatment)","$2,000","4 hours"],["CLT Aesthetics","https://charlotte-aesthetic.com","Botox","$14/unit ($10/unit daily special per social media)",""],["CLT Aesthetics","https://charlotte-aesthetic.com","Daxxify","$10/unit",""],["CLT Aesthetics","https://charlotte-aesthetic.com","Dysport","$6.50/unit",""],["704 Aesthetics","https://www.704aesthetics.com","Botox (per unit)","$13/unit",""],["704 Aesthetics","https://www.704aesthetics.com","Dysport or Xeomin (per unit)","$12/unit",""],["704 Aesthetics","https://www.704aesthetics.com","Chin Filler & Chin Botox Combo","$875",""],["Beautox and Fillers of Charlotte","Instagram only","Botox / Jeuveau / Dysport (Facial Balancing)","Model-day promo: $100 off treatment",""],["Criswell & Criswell Plastic Surgery & MedSpa","https://www.criswellandcriswell.com","Platinum Membership (Neurotoxin discount)","$1 off/unit neurotoxin + other member pricing",""],["Charlotte Medical Aesthetics","https://charlottemedicalaesthetics.com","Botox","Not published (consult-based)",""],["GLO30 Charlotte Plaza Midwood","https://glo30.com/charlotte-plaza-midwood","Botox (per area)","$125 (TOX member) / $150 (SmartGLO member) / $199 (non-member)",""],["Drip IV Wellness & MedSpa","https://www.dripivspa.com/charlotte","Botox (per unit)","$12.50/unit",""],["Drip IV Wellness & MedSpa","https://www.dripivspa.com/charlotte","Dysport (per unit)","$4.20/unit",""],["Femme Medspa","https://www.femmemedspa.com","Botox / Dysport (per unit)","$12/unit",""],["Charlotte Spa & Esthetics","https://www.charlottesspa.com","Botox & Derma Fillers","Not published",""],["dermani MEDSPA Ballantyne","https://dermanimedspa.com/ballantyne-charlotte-nc","Botox (membership)","$9/unit over 20 units ($180 min for 20 units, $45/mo membership, 6-mo min)",""],["Bliss Aesthetics and Wellness","https://blissaestheticsandwellness.com","Botox (1st-time client special)","$8/unit",""],["Kalina Aesthetics and Wellness","https://www.kalinaaesthetics.com","Botox / Fillers / Peels","Not published on-site; 3rd-party estimate: Botox $200-900/session, filler $600-2,000/syringe (unconfirmed)",""],["Genevieve & Co.","https://medspaclt.com","Botox (per unit)","$11.50/unit",""],["VociMedSpa","https://vocimedspa.com","Botox / Xeomin (affordable injectables, chain-marketed)","Not published (see pricing menu PDF)",""]],"Dermal / Lip Fillers":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","Dermal Fillers","Not published",""],["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","SKINVIVE","Not published",""],["Azura Medical Spa","https://azuramedicalspa.com","Botox & Fillers","Not published",""],["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","Dermal Filler (per syringe)","$850/syringe",""],["The Modern Aesthetic (Ballantyne)","https://www.themodernaesthetic.co","Dermal Filler (per syringe)","$850/syringe",""],["Allure Medical","https://alluremedical.com/locations/charlotte-nc","Lip Filler (special)","$399",""],["Allure Medical","https://alluremedical.com/locations/charlotte-nc","Dermal Fillers (Juvederm, Revanesse Versa)","Not published (standard rate)",""],["Miramae Medical Skin Care Studio","https://miramaestudio.com","Lip / Cheek / Chin / Undereye Filler","$770+/syringe",""],["Miramae Medical Skin Care Studio","https://miramaestudio.com","Jawline Filler","$1,540+",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","Dermal Filler","From $499/syringe",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","SkinVive","From $297/syringe",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Dermal Fillers (Belotero/Juvederm/Restylane/Revanesse)","Not published",""],["Eden MedSpa","https://www.myedenmedspa.com","Botox & Dermal Fillers","Not published",""],["Eden MedSpa","https://www.myedenmedspa.com","Kybella / Lip Filler","Not published",""],["Replenish Health Spa","https://replenishhealthspa.com","Juvederm XC / Volbella / Voluma XC","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Bellafill","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Belotero","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Juvederm","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Radiesse","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Restylane","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Versa (filler)","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Dermal Fillers","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Lip Filler","Not published",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Dermal Filler","Not published",""],["Aesthetica Med Spa","https://aestheticamspa.com","Signature Four-Point Filler Lift (6 syringes)","$4,250 ($850 savings)",""],["Aesthetica Med Spa","https://aestheticamspa.com","GLP-1 Glow Up Package (Sculptra 4-series + 2 syringes Restylane Lyft)","$3,600",""],["Aesthetica Med Spa","https://aestheticamspa.com","Filler — Cheeks","Starting at $850",""],["Aesthetica Med Spa","https://aestheticamspa.com","Filler — Smile Lines / Marionette Lines","Starting at $850",""],["Aesthetica Med Spa","https://aestheticamspa.com","Filler — Lips","Starting at $750",""],["Aesthetica Med Spa","https://aestheticamspa.com","Filler — Chin","Starting at $850",""],["Aesthetica Med Spa","https://aestheticamspa.com","Filler — Jawline","Starting at $850",""],["Aesthetica Med Spa","https://aestheticamspa.com","Filler — Neck Rejuvenation","Starting at $850",""],["Aesthetica Med Spa","https://aestheticamspa.com","Filler — Hand Rejuvenation","Starting at $850",""],["Aesthetica Med Spa","https://aestheticamspa.com","Filler — Temples","Starting at $850",""],["Aesthetica Med Spa","https://aestheticamspa.com","Tox/Filler Follow-Up Appointment","$150",""],["Aesthetica Med Spa","https://aestheticamspa.com","Dissolve Unwanted Filler","Starting at $350",""],["Aesthetica Med Spa","https://aestheticamspa.com","Brazilian Butt Lift / Hip Dip Augmentation (Radiesse)","$6,500",""],["CLT Aesthetics","https://charlotte-aesthetic.com","Dermal Fillers - Lip & Facial Enhancement","Not individually published on site",""],["CLT Aesthetics","https://charlotte-aesthetic.com","SkinVive - Injectable Skin Hydration","Not individually published on site",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Bellafill (1.5cc syringe)","$1,000",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Juvederm - Ultra/Ultra Plus/Vollure/Voluma/Volux/Volbella (per syringe)","$850",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Alloclae Gluteal/Hip Dip Filler","$10,000+",""],["Med Boutique - Aesthetic Injectables","https://www.beautifycharlotte.com","Dermal Fillers & Biostimulators","Not published",""],["Med Boutique - Aesthetic Injectables","https://www.beautifycharlotte.com","Men's Aesthetics (Tox + Fillers)","Not published",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Lip Filler - Whole Syringe","$800/syringe",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Lip Filler - Half Syringe","$600/syringe",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","All Other Facial Filler","$850/syringe",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Filler Dissolving","$500/area",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Dermal Fillers (Juvederm, Restylane)","Not published",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Radiesse","Not published",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","SkinVive","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Filler","Not published on-site",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Dermal Fillers","Not published",""],["Aesthetica Med Spa","https://aestheticamspa.com","Lip Filler","Not published",""],["Plumped","https://plumpedclt.com","Dermal Fillers","Not published",""],["CLT Aesthetics","https://charlotte-aesthetic.com","Dermal Filler (full/half syringe)","$850 full / $450 half",""],["CLT Aesthetics","https://charlotte-aesthetic.com","Filler Dissolving","$250+",""],["704 Aesthetics","https://www.704aesthetics.com","Lip Filler","$750",""],["704 Aesthetics","https://www.704aesthetics.com","Lip Filler & Lip Flip Combo","$800",""],["704 Aesthetics","https://www.704aesthetics.com","Cheek/Chin/Jawline Filler (per syringe)","$800/syringe",""],["704 Aesthetics","https://www.704aesthetics.com","Chin Filler & Chin Botox Combo","$875",""],["704 Aesthetics","https://www.704aesthetics.com","Filler Dissolving","$300",""],["704 Aesthetics","https://www.704aesthetics.com","Hyperdilute Radiesse (per syringe)","$800/syringe",""],["Beautox and Fillers of Charlotte","Instagram only","Lip Filler / Russian Lips / Full Face Filler","Not published",""],["Carolina Facial Plastics","https://carolinafacialplasticsurgery.com","Lip Filler (per syringe)","$500-$1,500/syringe (blog-published range)",""],["Criswell & Criswell Plastic Surgery & MedSpa","https://www.criswellandcriswell.com","Dermal Filler (per syringe)","Starting at $700/syringe",""],["Charlotte Medical Aesthetics","https://charlottemedicalaesthetics.com","Dermal Fillers (Restylane, RHA, Radiesse)","Not published (depends on product/syringes)",""],["Drip IV Wellness & MedSpa","https://www.dripivspa.com/charlotte","Juvederm family (Ultra/Ultra Plus/Vollure/Volbella/Voluma/Vollux) per syringe","$775/syringe",""],["Drip IV Wellness & MedSpa","https://www.dripivspa.com/charlotte","Revanesse Versa / Versa Lips (per syringe)","$775/syringe",""],["Femme Medspa","https://www.femmemedspa.com","Dermal Filler (per syringe)","$750/syringe",""],["Femme Medspa","https://www.femmemedspa.com","Lip Filler (initial session)","$750",""],["Femme Medspa","https://www.femmemedspa.com","Sculptra & Radiesse","Priced per area (not published)",""],["Charlotte Spa & Esthetics","https://www.charlottesspa.com","Botox & Derma Fillers","Not published",""],["Kalina Aesthetics and Wellness","https://www.kalinaaesthetics.com","Botox / Fillers / Peels","Not published on-site; 3rd-party estimate: Botox $200-900/session, filler $600-2,000/syringe (unconfirmed)",""]],"Chemical Peels":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","CoolPeel/Fraxel 1540 Laser Resurfacing","Not published",""],["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","Chemical Peels","Not published",""],["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","VI Peel","$350 (1 session) / $900 (3 sessions)",""],["The Modern Aesthetic (Ballantyne)","https://www.themodernaesthetic.co","VI Peel","$350 (1 session) / $900 (3 sessions)",""],["Miramae Medical Skin Care Studio","https://miramaestudio.com","Chemical Peels (Custom PCA / MD / PRX)","$160-$320",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","Chemical Peel","From $127",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","VI Peel","From $297",""],["VIO Med Spa | Rea Farms","https://viomedspa.com/charlotte","Facials, peels, microneedling","Not published",""],["FANOUS MEDSPA - Charlotte","https://www.fanousmedspa.com","Advanced Facial (acne/pigmentation, peels, microneedling)","Not published",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Face: Peels/Dermaplaning/Exosomes/Hydrafacial/PRP/Vampire Facial","Not published",""],["Eden MedSpa","https://www.myedenmedspa.com","Facials & Chemical Peels","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Chemical Peels","Not published",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Chemical Peels","Not published",""],["Aesthetica Med Spa","https://aestheticamspa.com","VI Peel","$375",""],["Aesthetica Med Spa","https://aestheticamspa.com","VI Peel 3-Series","$925",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Chemical Peel (single)","$325",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Chemical Peel (3-pack)","$800",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Cosmelan MD Peel","$1,100",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","MicroLaser Peel (Face & Neck)","$2,250",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","VI Peel","$350",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Chemical Peels","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Chemical Peel","$50 off promo (3rd-party sourced)",""],["Plumped","https://plumpedclt.com","Peels (Cosmelan, VI, Dermaceutic, BioRePeel)","Not published",""],["Charlotte Medical Aesthetics","https://charlottemedicalaesthetics.com","CoolPeel Laser / Chemical Peels","Not published",""],["Charlotte Spa & Esthetics","https://www.charlottesspa.com","Chemical Peels / Dermaplaning","$12-$450 range (varies by service)",""],["Kalina Aesthetics and Wellness","https://www.kalinaaesthetics.com","Botox / Fillers / Peels","Not published on-site; 3rd-party estimate: Botox $200-900/session, filler $600-2,000/syringe (unconfirmed)",""],["Genevieve & Co.","https://medspaclt.com","CO2 Laser Hand Rejuvenation + PCA Peel","$250 ($100 off promo)",""]],"Microneedling / RF":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","Microneedling & RF Microneedling","Not published",""],["Jon 'Ric Medical Spa and Wellness Center","https://jonriccharlottemedicalspa.com","Microneedling","$350/session \u2014 confirmed via pricing-request email, 2026-08-25",""],["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","Virtue RF Microneedling","Not published (Book Now)",""],["Miramae Medical Skin Care Studio","https://miramaestudio.com","Microneedling Face & Neck","$420 ($1,150 pkg of 3)",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","RF Microneedling","From $722",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","Microneedling (SkinPen)","From $349",""],["VIO Med Spa | Rea Farms","https://viomedspa.com/charlotte","Facials, peels, microneedling","Not published",""],["FANOUS MEDSPA - Charlotte","https://www.fanousmedspa.com","Advanced Facial (acne/pigmentation, peels, microneedling)","Not published",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Laser: BBL/HALO/SkinPen/Sylfirm X RF/Tight & Bright","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Microneedling","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Skin Pen Microneedling","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Microneedling","Not published",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Medical SkinPen (Microneedling)","Not published",""],["Aesthetica Med Spa","https://aestheticamspa.com","Microneedling w/ Growth Factor (Face, single)","$395",""],["Aesthetica Med Spa","https://aestheticamspa.com","Microneedling w/ Growth Factor (Face, pkg of 3)","$985",""],["Aesthetica Med Spa","https://aestheticamspa.com","Microneedling Face + Neck","$575",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","SkinPen Microneedling (Face + Neck)","$500",""],["Med Boutique - Aesthetic Injectables","https://www.beautifycharlotte.com","Microneedling","Not published",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","RF Microneedling - Face (single)","$950",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","RF Microneedling - Face & Neck (single)","$1,200",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","RF Microneedling - Face, Neck & Chest (single)","$1,500",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Microneedling - Full Face & Neck (single)","$400",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Microneedling - Body (single)","$400",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Microneedling (+Exosomes/Growth Factors/PRP/PRF/HA)","Not published",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","RF Microneedling (Morpheus8)","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Microneedling","Not published on-site",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","SkinPen / SkinPen with PRP","$65-$185 ($650 w/ PRP pkg)",""],["Plumped","https://plumpedclt.com","Microneedling / Ultimate Glow","Not published",""],["Plumped","https://plumpedclt.com","Radio Frequency (Morpheus8, Quantum RF, FaceTite Turbo)","Not published",""],["Charlotte Medical Aesthetics","https://charlottemedicalaesthetics.com","Microneedling","Not published",""],["Genevieve & Co.","https://medspaclt.com","Genevieve's VIP Lift (3 tx + 3 CO2/microneedling)","$5,000 (reg. $7,000+)",""],["VociMedSpa","https://vocimedspa.com","Microneedling","$385/treatment ($1,065 pkg of 3)",""]],"Sculptra / Biostimulators":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","Sculptra (Biostimulators)","Not published",""],["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","Sculptra","Not published (Book Now)",""],["Miramae Medical Skin Care Studio","https://miramaestudio.com","Sculptra/vial","$870",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","Sculptra","From $499/vial",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Sculptra / Kybella","Not published",""],["Aesthetica Med Spa","https://aestheticamspa.com","GLP-1 Glow Up Package (Sculptra 4-series + 2 syringes Restylane Lyft)","$3,600",""],["Aesthetica Med Spa","https://aestheticamspa.com","Sculptra 2 Series","$1,600",""],["Aesthetica Med Spa","https://aestheticamspa.com","Sculptra 3 Series","$2,300 ($100 savings)",""],["Aesthetica Med Spa","https://aestheticamspa.com","Sculptra 4 Series","$3,000 ($200 savings)",""],["Aesthetica Med Spa","https://aestheticamspa.com","Sculptra 5 Series","$3,600 ($400 savings)",""],["Aesthetica Med Spa","https://aestheticamspa.com","Sculptra 6 Series","$4,000 ($800 savings)",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Sculptra","$800/vial",""],["Med Boutique - Aesthetic Injectables","https://www.beautifycharlotte.com","Dermal Fillers & Biostimulators","Not published",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Sculptra (2 vials)","$1,600",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Sculptra package (6 vials)","$3,500",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Sculptra","Not published",""],["Plumped","https://plumpedclt.com","Skin Boosters / Renuva / PDO Threads / Biostimulators","Not published",""],["704 Aesthetics","https://www.704aesthetics.com","Hyperdilute Radiesse (per syringe)","$800/syringe",""],["Drip IV Wellness & MedSpa","https://www.dripivspa.com/charlotte","Sculptra","$880 (1 vial) / $2,380 (3 vials)",""],["Femme Medspa","https://www.femmemedspa.com","Sculptra & Radiesse","Priced per area (not published)",""]],"Laser Hair Removal":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","Laser Hair & Tattoo Removal","Not published",""],["Prestige Med Spa and Wellness Center","https://prestigemedicalspacharlotte.com","Soprano ICE laser hair removal","Not published",""],["Allure Medical","https://alluremedical.com/locations/charlotte-nc","Laser Hair Removal","Not published",""],["FANOUS MEDSPA - Charlotte","https://www.fanousmedspa.com","Laser Hair Removal","Not published (varies by area)",""],["Elase Medical Spa - Charlotte - SouthPark","https://elase.com","Body Contouring / Injectables / Laser Hair Removal / Skin Resurfacing (catalog)","Not published",""],["Replenish Health Spa","https://replenishhealthspa.com","Laser Hair Therapy","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Laser Hair Removal","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Laser Hair Removal","Not published",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Laser Hair Removal - Lip/Chin","$200 single / $1,000 pkg",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Laser Hair Removal - Underarms","$300 single / $1,500 pkg",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Laser Hair Removal - Bikini","$350 single / $1,750 pkg",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Laser Hair Removal - Lower Legs","$400 single / $2,000 pkg",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Laser Hair Removal - Full Face","$425 single / $2,150 pkg",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Laser Hair Removal - Brazilian","$450 single / $2,250 pkg",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Laser Hair Removal - Full Back","$575 single / $2,900 pkg",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Laser Hair Removal - Full Legs","$800 single / $4,000 pkg",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Laser Hair Removal - Underarms","$150 single / $900 pkg of 7",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Laser Hair Removal - Brazilian","$250 single / $1,500 pkg of 7",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Laser Hair Removal - Full Legs","$450 single / $2,700 pkg of 7",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Laser Hair Removal - Full Body","$1,000 single / $6,000 pkg of 7",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Laser Hair Removal","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Laser Hair Removal (legs)","$199/session (3rd-party sourced)",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Laser Hair Removal","From $99",""],["dermani MEDSPA Ballantyne","https://dermanimedspa.com/ballantyne-charlotte-nc","Laser Hair Removal","$75-$400/area (memberships $50-$200/mo)",""]],"Kybella":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","CoolSculpting & Kybella","Not published",""],["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","Kybella","Not published (Book Now)",""],["Miramae Medical Skin Care Studio","https://miramaestudio.com","Kybella/vial","$650 ($450 generic)",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","Kybella","From $1,062",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Sculptra / Kybella","Not published",""],["Eden MedSpa","https://www.myedenmedspa.com","Kybella / Lip Filler","Not published",""],["Replenish Health Spa","https://replenishhealthspa.com","Kybella","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Kybella","Not published",""],["CLT Aesthetics","https://charlotte-aesthetic.com","Kybella - Double Chin Treatment","Not individually published on site",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Kybella","$1,500",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Kybella/PCDC (per area, e.g. double chin, bra fat, arms)","$500/treatment",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Kybella/PCDC - Full Stomach","$850/treatment",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Kybella/PCDC - Full Stomach & Back","$1,000/treatment",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Kybella","Not published",""],["Drip IV Wellness & MedSpa","https://www.dripivspa.com/charlotte","Kybella","$660 (1 vial) / $1,900 (3 vials, most need 2+)",""]],"HydraFacial":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","Facials & HydraFacial","Not published",""],["Jon 'Ric Medical Spa and Wellness Center","https://jonriccharlottemedicalspa.com","HydraFacial (per reviews)","$200 (in-house Diamond Glow Facial, positioned as their HydraFacial alternative) \u2014 confirmed via pricing-request email, 2026-08-25",""],["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","HydraFacial","$199 Signature / $275 Deluxe / $325 Platinum","30-90 min"],["The Modern Aesthetic (Ballantyne)","https://www.themodernaesthetic.co","HydraFacial","$199 Signature / $275 Deluxe / $325 Platinum","30-90 min"],["OVME","https://ovme.com/pages/south-end-charlotte-nc","Hydrafacial","From $149",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Face: Peels/Dermaplaning/Exosomes/Hydrafacial/PRP/Vampire Facial","Not published",""],["Tyme Day Spa","https://tymedayspa.com","HydraFacial","Not published",""],["Elase Medical Spa - Charlotte - SouthPark","https://elase.com","HydraFacial Signature / Deluxe","$250 / $295 (3rd-party sourced)",""],["Ageless Remedies SouthPark","https://agelessremedies.com","HydraFacial MD","Not published",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","HydraFacial","Not published",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Hydrafacial MD - Basic (single)","$250",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Hydrafacial MD - Basic (3-pack)","$650",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Hydrafacial MD - Luxe (single)","$350",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Hydrafacial MD - Luxe (3-pack)","$900",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Hydrafacial MD - Platinum (single)","$450",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Hydrafacial MD - Platinum (3-pack)","$1,150",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","HydraFacial (Signature/Deluxe/Platinum)","$199 / $249 / $325",""],["dermani MEDSPA Ballantyne","https://dermanimedspa.com/ballantyne-charlotte-nc","HydraFacial","$50 off first visit (base price not published)",""]],"IPL / Photofacial":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","IPL Photofacial & ThreeForMe","Not published",""],["Miramae Medical Skin Care Studio","https://miramaestudio.com","BBL/Laser Face & Neck","$385",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","BBL Photofacial","From $250",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Laser: BBL/HALO/SkinPen/Sylfirm X RF/Tight & Bright","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","IPL","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","3 For Me","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","IPL Hair Removal","Not published",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Laser / IPL","Not published",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","IPL Photofacial/BBL (Face & Neck)","$550 (varies $200-$650 by area)",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","BBL / IPL Photofacial","Not published",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Laser/IPL (other)","Not published",""],["Plumped","https://plumpedclt.com","Photo Facials (Lumecca, BBL)","Not published",""]],"Microdermabrasion / Dermaplaning":[["Miramae Medical Skin Care Studio","https://miramaestudio.com","Dermaplane","$90",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Face: Peels/Dermaplaning/Exosomes/Hydrafacial/PRP/Vampire Facial","Not published",""],["Eden MedSpa","https://www.myedenmedspa.com","Microdermabrasion","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Microdermabrasion","Not published",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Dermaplane (single)","$175",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Dermaplane (3-pack)","$450",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Dermaplaning (add-on)","$50",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Dermaplaning (stand-alone)","$75",""],["Charlotte Spa & Esthetics","https://www.charlottesspa.com","Chemical Peels / Dermaplaning","$12-$450 range (varies by service)",""]],"PRP Therapy":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","PRP/PDGF Therapy","Not published",""],["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","PRF","Not published (Book Now)",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","Under-Eye PRP","From $595",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","PRFM Gel","From $765",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Face: Peels/Dermaplaning/Exosomes/Hydrafacial/PRP/Vampire Facial","Not published",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Body: CoolSculpting Elite/PRP Hair/Vaginal Rejuvenation","Not published",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","PRP","Not published",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","PRP Full Scalp Injections (series of 3)","$975",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","PRP Hairline/Crown/Beard/Temples/Smile Lines/Accordion (series of 3)","$850",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","PRP Under Eyes (series of 3)","$1,200",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Microneedling (+Exosomes/Growth Factors/PRP/PRF/HA)","Not published",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","SkinPen / SkinPen with PRP","$65-$185 ($650 w/ PRP pkg)",""]],"Emsculpt / Body Contouring":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","Skin Tightening/Body Contouring (RF+US)","Not published",""],["Jon 'Ric Medical Spa and Wellness Center","https://jonriccharlottemedicalspa.com","Emsculpt Neo (4-pkg promo: $250 off)","Promo only, base price not published",""],["Azura Medical Spa","https://azuramedicalspa.com","Body Contouring","Not published",""],["Elase Medical Spa - Charlotte - SouthPark","https://elase.com","Body Contouring / Injectables / Laser Hair Removal / Skin Resurfacing (catalog)","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","EMSCULPT","Not published",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Non-Surgical Butt Lift (10 vials)","$6,500",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Non-Surgical Butt Lift (20 vials)","$9,500",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Non-Surgical Butt Lift (30 vials)","$13,500",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Non-Surgical Breast Lift (6 vials)","$3,500",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Non-Surgical Breast Lift (10-30 vials)","$6,500-$13,500",""]],"CoolSculpting / CoolTone":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","CoolSculpting & Kybella","Not published",""],["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","CoolTone Muscle Toning","Not published",""],["Jon 'Ric Medical Spa and Wellness Center","https://jonriccharlottemedicalspa.com","CoolSculpting","Not published",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Body: CoolSculpting Elite/PRP Hair/Vaginal Rejuvenation","Not published",""],["Replenish Health Spa","https://replenishhealthspa.com","CoolSculpting / CoolTone","Not published",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","CoolSculpting","Not published",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","CoolTone","Not published",""]],"PDO Thread Lift":[["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","PDO Nose Tip Lift","Not published (Book Now)",""],["Allure Medical","https://alluremedical.com/locations/charlotte-nc","Thread Lift","Not published",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","PDO Threads","From $1,020",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","PDO Threads","Not published",""],["Plumped","https://plumpedclt.com","Skin Boosters / Renuva / PDO Threads / Biostimulators","Not published",""]],"Ultherapy":[["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Ultherapy","Not published",""]]};
+  const breakdownData = {"Botox / Neuromodulators":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","Botox","Not published",""],["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","Dysport","Not published",""],["Azura Medical Spa","https://azuramedicalspa.com","Botox & Fillers","Not published",""],["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","Botox (per unit)","$15/unit (Kendra/Sareena/Bri)",""],["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","Dysport (per unit)","$13/unit (Kendra/Sareena/Bri)",""],["The Modern Aesthetic (Ballantyne)","https://www.themodernaesthetic.co","Botox (per unit)","$15/unit (Kendra/Sareena/Bri)",""],["The Modern Aesthetic (Ballantyne)","https://www.themodernaesthetic.co","Dysport (per unit)","$13/unit (Kendra/Sareena/Bri)",""],["Allure Medical","https://alluremedical.com/locations/charlotte-nc","Botox/Xeomin (sale)","$8/unit (72-hr sale)",""],["Allure Medical","https://alluremedical.com/locations/charlotte-nc","Xeomin","Not published (standard rate)",""],["Miramae Medical Skin Care Studio","https://miramaestudio.com","Botox (per unit)","$13.50/unit",""],["Miramae Medical Skin Care Studio","https://miramaestudio.com","Dysport (per unit)","$4.85/unit",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","Botox & Dysport","From $9/unit",""],["FANOUS MEDSPA - Charlotte","https://www.fanousmedspa.com","Botox","Not published",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Neuromodulators (Botox/Dysport/Jeuveau/Xeomin)","Not published",""],["Eden MedSpa","https://www.myedenmedspa.com","Botox & Dermal Fillers","Not published",""],["Replenish Health Spa","https://replenishhealthspa.com","Botox Cosmetic","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Botox","$12.99/unit special (promo, Botox only)",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Daxxify","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Dysport","Not published (current special: Botox $12.99/unit; $100 off lip filler)",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Xeomin","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Anti-Wrinkle Injections (Botox/Dysport)","Not published",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Dysport (150 units)","Promo: $525 (Halloween special)",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Jeuveau (50 units)","Promo: $450 (Halloween special)",""],["Aesthetica Med Spa","https://aestheticamspa.com","Dysport (per Botox-equivalent unit)","$13/unit",""],["Aesthetica Med Spa","https://aestheticamspa.com","Botox (per unit)","$14/unit",""],["Aesthetica Med Spa","https://aestheticamspa.com","Jeuveau (per unit)","$13/unit",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Botox (per unit)","$15/unit",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Dysport (per unit)","$7/unit",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Botox Mini Shot (30u)","$425",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Botox Lip Flip","$110",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Stop Sweating (Underarm Botox)","$1,200/vial",""],["Med Boutique - Aesthetic Injectables","https://www.beautifycharlotte.com","Neurotoxin (Botox/Xeomin)","$10/unit flat rate, all neurotoxins, no minimums (confirmed on clinic site)",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Botox (per unit)","$12/unit",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Xeomin (per unit)","$12/unit",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Dysport (per unit)","$4/unit",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Letybo (per unit)","$10/unit",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Botox / Dysport / Daxxify","Not published (consult required)",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Botox","$12.99/unit",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Daxxify","$10/unit (special)",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Botox","Not published on-site",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Neurotoxins (Botox)","Base Botox not published; promo pricing seen: Dysport 150u $525, Jeuveau 50u $450 (limited-time offer)",""],["Aesthetica Med Spa","https://aestheticamspa.com","Botox / Dysport / Xeomin (membership rate)","$12-13/unit w/ $100/yr membership; $11.50/unit w/ $249/yr membership",""],["Plumped","https://plumpedclt.com","Neuromodulators","Not published",""],["Plumped","https://plumpedclt.com","Introductory Neurotoxin Injector Training Class (not a patient treatment)","$2,000","4 hours"],["CLT Aesthetics","https://charlotte-aesthetic.com","Botox","$14/unit ($10/unit daily special per social media)",""],["CLT Aesthetics","https://charlotte-aesthetic.com","Daxxify","$10/unit",""],["CLT Aesthetics","https://charlotte-aesthetic.com","Dysport","$6.50/unit",""],["704 Aesthetics","https://www.704aesthetics.com","Botox (per unit)","$13/unit",""],["704 Aesthetics","https://www.704aesthetics.com","Dysport or Xeomin (per unit)","$12/unit",""],["704 Aesthetics","https://www.704aesthetics.com","Chin Filler & Chin Botox Combo","$875",""],["Beautox and Fillers of Charlotte","Instagram only","Botox / Jeuveau / Dysport (Facial Balancing)","Model-day promo: $100 off treatment",""],["Criswell & Criswell Plastic Surgery & MedSpa","https://www.criswellandcriswell.com","Platinum Membership (Neurotoxin discount)","$1 off/unit neurotoxin + other member pricing",""],["Charlotte Medical Aesthetics","https://charlottemedicalaesthetics.com","Botox","Not published (consult-based)",""],["GLO30 Charlotte Plaza Midwood","https://glo30.com/charlotte-plaza-midwood","Botox (per area)","$125 (TOX member) / $150 (SmartGLO member) / $199 (non-member)",""],["Drip IV Wellness & MedSpa","https://www.dripivspa.com/charlotte","Botox (per unit)","$12.50/unit",""],["Drip IV Wellness & MedSpa","https://www.dripivspa.com/charlotte","Dysport (per unit)","$4.20/unit",""],["Femme Medspa","https://www.femmemedspa.com","Botox / Dysport (per unit)","$12/unit",""],["Charlotte Spa & Esthetics","https://www.charlottesspa.com","Botox & Derma Fillers","Not published",""],["dermani MEDSPA Ballantyne","https://dermanimedspa.com/ballantyne-charlotte-nc","Botox (membership)","$9/unit over 20 units ($180 min for 20 units, $45/mo membership, 6-mo min)",""],["Bliss Aesthetics and Wellness","https://blissaestheticsandwellness.com","Botox (1st-time client special)","$8/unit",""],["Kalina Aesthetics and Wellness","https://www.kalinaaesthetics.com","Botox / Fillers / Peels","Not published on-site; 3rd-party estimate: Botox $200-900/session, filler $600-2,000/syringe (unconfirmed)",""],["Genevieve & Co.","https://medspaclt.com","Botox (per unit)","$11.50/unit",""],["VociMedSpa","https://vocimedspa.com","Botox / Xeomin (affordable injectables, chain-marketed)","$13/unit flat rate for Botox, Dysport, Jeuveau, and Xeomin (published service-pricing PDF)",""]],"Dermal / Lip Fillers":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","Dermal Fillers","Not published",""],["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","SKINVIVE","Not published",""],["Azura Medical Spa","https://azuramedicalspa.com","Botox & Fillers","Not published",""],["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","Dermal Filler (per syringe)","$850/syringe",""],["The Modern Aesthetic (Ballantyne)","https://www.themodernaesthetic.co","Dermal Filler (per syringe)","$850/syringe",""],["Allure Medical","https://alluremedical.com/locations/charlotte-nc","Lip Filler (special)","$399",""],["Allure Medical","https://alluremedical.com/locations/charlotte-nc","Dermal Fillers (Juvederm, Revanesse Versa)","Not published (standard rate)",""],["Miramae Medical Skin Care Studio","https://miramaestudio.com","Lip / Cheek / Chin / Undereye Filler","$770+/syringe",""],["Miramae Medical Skin Care Studio","https://miramaestudio.com","Jawline Filler","$1,540+",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","Dermal Filler","From $499/syringe",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","SkinVive","From $297/syringe",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Dermal Fillers (Belotero/Juvederm/Restylane/Revanesse)","Not published",""],["Eden MedSpa","https://www.myedenmedspa.com","Botox & Dermal Fillers","Not published",""],["Eden MedSpa","https://www.myedenmedspa.com","Kybella / Lip Filler","Not published",""],["Replenish Health Spa","https://replenishhealthspa.com","Juvederm XC / Volbella / Voluma XC","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Bellafill","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Belotero","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Juvederm","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Radiesse","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Restylane","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Versa (filler)","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Dermal Fillers","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Lip Filler","Not published",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Dermal Filler","Not published",""],["Aesthetica Med Spa","https://aestheticamspa.com","Signature Four-Point Filler Lift (6 syringes)","$4,250 ($850 savings)",""],["Aesthetica Med Spa","https://aestheticamspa.com","GLP-1 Glow Up Package (Sculptra 4-series + 2 syringes Restylane Lyft)","$3,600",""],["Aesthetica Med Spa","https://aestheticamspa.com","Filler — Cheeks","Starting at $850",""],["Aesthetica Med Spa","https://aestheticamspa.com","Filler — Smile Lines / Marionette Lines","Starting at $850",""],["Aesthetica Med Spa","https://aestheticamspa.com","Filler — Lips","Starting at $750",""],["Aesthetica Med Spa","https://aestheticamspa.com","Filler — Chin","Starting at $850",""],["Aesthetica Med Spa","https://aestheticamspa.com","Filler — Jawline","Starting at $850",""],["Aesthetica Med Spa","https://aestheticamspa.com","Filler — Neck Rejuvenation","Starting at $850",""],["Aesthetica Med Spa","https://aestheticamspa.com","Filler — Hand Rejuvenation","Starting at $850",""],["Aesthetica Med Spa","https://aestheticamspa.com","Filler — Temples","Starting at $850",""],["Aesthetica Med Spa","https://aestheticamspa.com","Tox/Filler Follow-Up Appointment","$150",""],["Aesthetica Med Spa","https://aestheticamspa.com","Dissolve Unwanted Filler","Starting at $350",""],["Aesthetica Med Spa","https://aestheticamspa.com","Brazilian Butt Lift / Hip Dip Augmentation (Radiesse)","$6,500",""],["CLT Aesthetics","https://charlotte-aesthetic.com","Dermal Fillers - Lip & Facial Enhancement","Not individually published on site",""],["CLT Aesthetics","https://charlotte-aesthetic.com","SkinVive - Injectable Skin Hydration","Not individually published on site",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Bellafill (1.5cc syringe)","$1,000",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Juvederm - Ultra/Ultra Plus/Vollure/Voluma/Volux/Volbella (per syringe)","$850",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Alloclae Gluteal/Hip Dip Filler","$10,000+",""],["Med Boutique - Aesthetic Injectables","https://www.beautifycharlotte.com","Dermal Fillers & Biostimulators","Not published",""],["Med Boutique - Aesthetic Injectables","https://www.beautifycharlotte.com","Men's Aesthetics (Tox + Fillers)","Not published",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Lip Filler - Whole Syringe","$800/syringe",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Lip Filler - Half Syringe","$600/syringe",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","All Other Facial Filler","$850/syringe",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Filler Dissolving","$500/area",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Dermal Fillers (Juvederm, Restylane)","Not published",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Radiesse","Not published",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","SkinVive","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Filler","Not published on-site",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Dermal Fillers","Not published",""],["Aesthetica Med Spa","https://aestheticamspa.com","Lip Filler","Starting at $750 (per public price list)",""],["Plumped","https://plumpedclt.com","Dermal Fillers","Not published",""],["CLT Aesthetics","https://charlotte-aesthetic.com","Dermal Filler (full/half syringe)","$850 full / $450 half",""],["CLT Aesthetics","https://charlotte-aesthetic.com","Filler Dissolving","$250+",""],["704 Aesthetics","https://www.704aesthetics.com","Lip Filler","$750",""],["704 Aesthetics","https://www.704aesthetics.com","Lip Filler & Lip Flip Combo","$800",""],["704 Aesthetics","https://www.704aesthetics.com","Cheek/Chin/Jawline Filler (per syringe)","$800/syringe",""],["704 Aesthetics","https://www.704aesthetics.com","Chin Filler & Chin Botox Combo","$875",""],["704 Aesthetics","https://www.704aesthetics.com","Filler Dissolving","$300",""],["704 Aesthetics","https://www.704aesthetics.com","Hyperdilute Radiesse (per syringe)","$800/syringe",""],["Beautox and Fillers of Charlotte","Instagram only","Lip Filler / Russian Lips / Full Face Filler","Not published",""],["Carolina Facial Plastics","https://carolinafacialplasticsurgery.com","Lip Filler (per syringe)","$500-$1,500/syringe (blog-published range)",""],["Criswell & Criswell Plastic Surgery & MedSpa","https://www.criswellandcriswell.com","Dermal Filler (per syringe)","Starting at $700/syringe",""],["Charlotte Medical Aesthetics","https://charlottemedicalaesthetics.com","Dermal Fillers (Restylane, RHA, Radiesse)","Not published (depends on product/syringes)",""],["Drip IV Wellness & MedSpa","https://www.dripivspa.com/charlotte","Juvederm family (Ultra/Ultra Plus/Vollure/Volbella/Voluma/Vollux) per syringe","$775/syringe",""],["Drip IV Wellness & MedSpa","https://www.dripivspa.com/charlotte","Revanesse Versa / Versa Lips (per syringe)","$775/syringe",""],["Femme Medspa","https://www.femmemedspa.com","Dermal Filler (per syringe)","$750/syringe",""],["Femme Medspa","https://www.femmemedspa.com","Lip Filler (initial session)","$750",""],["Femme Medspa","https://www.femmemedspa.com","Sculptra & Radiesse","Priced per area (not published)",""],["Charlotte Spa & Esthetics","https://www.charlottesspa.com","Botox & Derma Fillers","Not published",""],["Kalina Aesthetics and Wellness","https://www.kalinaaesthetics.com","Botox / Fillers / Peels","Not published on-site; 3rd-party estimate: Botox $200-900/session, filler $600-2,000/syringe (unconfirmed)",""]],"Chemical Peels":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","CoolPeel/Fraxel 1540 Laser Resurfacing","Not published",""],["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","Chemical Peels","Not published",""],["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","VI Peel","$350 (1 session) / $900 (3 sessions)",""],["The Modern Aesthetic (Ballantyne)","https://www.themodernaesthetic.co","VI Peel","$350 (1 session) / $900 (3 sessions)",""],["Miramae Medical Skin Care Studio","https://miramaestudio.com","Chemical Peels (Custom PCA / MD / PRX)","$160-$320",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","Chemical Peel","From $127",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","VI Peel","From $297",""],["VIO Med Spa | Rea Farms","https://viomedspa.com/charlotte","Facials, peels, microneedling","Not published",""],["FANOUS MEDSPA - Charlotte","https://www.fanousmedspa.com","Advanced Facial (acne/pigmentation, peels, microneedling)","Not published",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Face: Peels/Dermaplaning/Exosomes/Hydrafacial/PRP/Vampire Facial","Not published",""],["Eden MedSpa","https://www.myedenmedspa.com","Facials & Chemical Peels","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Chemical Peels","Not published",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Chemical Peels","Not published",""],["Aesthetica Med Spa","https://aestheticamspa.com","VI Peel","$375",""],["Aesthetica Med Spa","https://aestheticamspa.com","VI Peel 3-Series","$925",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Chemical Peel (single)","$325",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Chemical Peel (3-pack)","$800",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Cosmelan MD Peel","$1,100",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","MicroLaser Peel (Face & Neck)","$2,250",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","VI Peel","$350",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Chemical Peels","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Chemical Peel","$50 off promo (3rd-party sourced)",""],["Plumped","https://plumpedclt.com","Peels (Cosmelan, VI, Dermaceutic, BioRePeel)","Not published",""],["Charlotte Medical Aesthetics","https://charlottemedicalaesthetics.com","CoolPeel Laser / Chemical Peels","Not published",""],["Charlotte Spa & Esthetics","https://www.charlottesspa.com","Chemical Peels / Dermaplaning","$12-$450 range (varies by service)",""],["Kalina Aesthetics and Wellness","https://www.kalinaaesthetics.com","Botox / Fillers / Peels","Not published on-site; 3rd-party estimate: Botox $200-900/session, filler $600-2,000/syringe (unconfirmed)",""],["Genevieve & Co.","https://medspaclt.com","CO2 Laser Hand Rejuvenation + PCA Peel","$250 ($100 off promo)",""]],"Microneedling / RF":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","Microneedling & RF Microneedling","Not published",""],["Jon 'Ric Medical Spa and Wellness Center","https://jonriccharlottemedicalspa.com","Microneedling","$350/session \u2014 confirmed via pricing-request email, 2026-08-25",""],["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","Virtue RF Microneedling","Not published (Book Now)",""],["Miramae Medical Skin Care Studio","https://miramaestudio.com","Microneedling Face & Neck","$420 ($1,150 pkg of 3)",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","RF Microneedling","From $722",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","Microneedling (SkinPen)","From $349",""],["VIO Med Spa | Rea Farms","https://viomedspa.com/charlotte","Facials, peels, microneedling","Not published",""],["FANOUS MEDSPA - Charlotte","https://www.fanousmedspa.com","Advanced Facial (acne/pigmentation, peels, microneedling)","Not published",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Laser: BBL/HALO/SkinPen/Sylfirm X RF/Tight & Bright","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Microneedling","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Skin Pen Microneedling","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Microneedling","Not published",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Medical SkinPen (Microneedling)","Not published",""],["Aesthetica Med Spa","https://aestheticamspa.com","Microneedling w/ Growth Factor (Face, single)","$395",""],["Aesthetica Med Spa","https://aestheticamspa.com","Microneedling w/ Growth Factor (Face, pkg of 3)","$985",""],["Aesthetica Med Spa","https://aestheticamspa.com","Microneedling Face + Neck","$575",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","SkinPen Microneedling (Face + Neck)","$500",""],["Med Boutique - Aesthetic Injectables","https://www.beautifycharlotte.com","Microneedling","Not published",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","RF Microneedling - Face (single)","$950",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","RF Microneedling - Face & Neck (single)","$1,200",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","RF Microneedling - Face, Neck & Chest (single)","$1,500",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Microneedling - Full Face & Neck (single)","$400",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Microneedling - Body (single)","$400",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Microneedling (+Exosomes/Growth Factors/PRP/PRF/HA)","Not published",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","RF Microneedling (Morpheus8)","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Microneedling","Not published on-site",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","SkinPen / SkinPen with PRP","$65-$185 ($650 w/ PRP pkg)",""],["Plumped","https://plumpedclt.com","Microneedling / Ultimate Glow","Not published",""],["Plumped","https://plumpedclt.com","Radio Frequency (Morpheus8, Quantum RF, FaceTite Turbo)","Not published",""],["Charlotte Medical Aesthetics","https://charlottemedicalaesthetics.com","Microneedling","Not published",""],["Genevieve & Co.","https://medspaclt.com","Genevieve's VIP Lift (3 tx + 3 CO2/microneedling)","$5,000 (reg. $7,000+)",""],["VociMedSpa","https://vocimedspa.com","Microneedling","$385/treatment ($1,065 pkg of 3)",""]],"Sculptra / Biostimulators":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","Sculptra (Biostimulators)","Not published",""],["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","Sculptra","Not published (Book Now)",""],["Miramae Medical Skin Care Studio","https://miramaestudio.com","Sculptra/vial","$870",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","Sculptra","From $499/vial",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Sculptra / Kybella","Not published",""],["Aesthetica Med Spa","https://aestheticamspa.com","GLP-1 Glow Up Package (Sculptra 4-series + 2 syringes Restylane Lyft)","$3,600",""],["Aesthetica Med Spa","https://aestheticamspa.com","Sculptra 2 Series","$1,600",""],["Aesthetica Med Spa","https://aestheticamspa.com","Sculptra 3 Series","$2,300 ($100 savings)",""],["Aesthetica Med Spa","https://aestheticamspa.com","Sculptra 4 Series","$3,000 ($200 savings)",""],["Aesthetica Med Spa","https://aestheticamspa.com","Sculptra 5 Series","$3,600 ($400 savings)",""],["Aesthetica Med Spa","https://aestheticamspa.com","Sculptra 6 Series","$4,000 ($800 savings)",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Sculptra","$800/vial",""],["Med Boutique - Aesthetic Injectables","https://www.beautifycharlotte.com","Dermal Fillers & Biostimulators","Not published",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Sculptra (2 vials)","$1,600",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Sculptra package (6 vials)","$3,500",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Sculptra","Not published",""],["Plumped","https://plumpedclt.com","Skin Boosters / Renuva / PDO Threads / Biostimulators","Not published",""],["704 Aesthetics","https://www.704aesthetics.com","Hyperdilute Radiesse (per syringe)","$800/syringe",""],["Drip IV Wellness & MedSpa","https://www.dripivspa.com/charlotte","Sculptra","$880 (1 vial) / $2,380 (3 vials)",""],["Femme Medspa","https://www.femmemedspa.com","Sculptra & Radiesse","Priced per area (not published)",""]],"Laser Hair Removal":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","Laser Hair & Tattoo Removal","Not published",""],["Prestige Med Spa and Wellness Center","https://prestigemedicalspacharlotte.com","Soprano ICE laser hair removal","Not published",""],["Allure Medical","https://alluremedical.com/locations/charlotte-nc","Laser Hair Removal","Not published",""],["FANOUS MEDSPA - Charlotte","https://www.fanousmedspa.com","Laser Hair Removal","Not published (varies by area)",""],["Elase Medical Spa - Charlotte - SouthPark","https://elase.com","Body Contouring / Injectables / Laser Hair Removal / Skin Resurfacing (catalog)","Not published",""],["Replenish Health Spa","https://replenishhealthspa.com","Laser Hair Therapy","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Laser Hair Removal","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Laser Hair Removal","Not published",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Laser Hair Removal - Lip/Chin","$200 single / $1,000 pkg",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Laser Hair Removal - Underarms","$300 single / $1,500 pkg",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Laser Hair Removal - Bikini","$350 single / $1,750 pkg",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Laser Hair Removal - Lower Legs","$400 single / $2,000 pkg",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Laser Hair Removal - Full Face","$425 single / $2,150 pkg",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Laser Hair Removal - Brazilian","$450 single / $2,250 pkg",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Laser Hair Removal - Full Back","$575 single / $2,900 pkg",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Laser Hair Removal - Full Legs","$800 single / $4,000 pkg",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Laser Hair Removal - Underarms","$150 single / $900 pkg of 7",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Laser Hair Removal - Brazilian","$250 single / $1,500 pkg of 7",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Laser Hair Removal - Full Legs","$450 single / $2,700 pkg of 7",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Laser Hair Removal - Full Body","$1,000 single / $6,000 pkg of 7",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Laser Hair Removal","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","Laser Hair Removal (legs)","$199/session (3rd-party sourced)",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Laser Hair Removal","From $99",""],["dermani MEDSPA Ballantyne","https://dermanimedspa.com/ballantyne-charlotte-nc","Laser Hair Removal","$75-$400/area (memberships $50-$200/mo)",""]],"Kybella":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","CoolSculpting & Kybella","Not published",""],["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","Kybella","Not published (Book Now)",""],["Miramae Medical Skin Care Studio","https://miramaestudio.com","Kybella/vial","$650 ($450 generic)",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","Kybella","From $1,062",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Sculptra / Kybella","Not published",""],["Eden MedSpa","https://www.myedenmedspa.com","Kybella / Lip Filler","Not published",""],["Replenish Health Spa","https://replenishhealthspa.com","Kybella","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Kybella","Not published",""],["CLT Aesthetics","https://charlotte-aesthetic.com","Kybella - Double Chin Treatment","Not individually published on site",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Kybella","$1,500",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Kybella/PCDC (per area, e.g. double chin, bra fat, arms)","$500/treatment",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Kybella/PCDC - Full Stomach","$850/treatment",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Kybella/PCDC - Full Stomach & Back","$1,000/treatment",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Kybella","Not published",""],["Drip IV Wellness & MedSpa","https://www.dripivspa.com/charlotte","Kybella","$660 (1 vial) / $1,900 (3 vials, most need 2+)",""]],"HydraFacial":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","Facials & HydraFacial","Not published",""],["Jon 'Ric Medical Spa and Wellness Center","https://jonriccharlottemedicalspa.com","HydraFacial (per reviews)","$200 (in-house Diamond Glow Facial, positioned as their HydraFacial alternative) \u2014 confirmed via pricing-request email, 2026-08-25",""],["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","HydraFacial","$199 Signature / $275 Deluxe / $325 Platinum","30-90 min"],["The Modern Aesthetic (Ballantyne)","https://www.themodernaesthetic.co","HydraFacial","$199 Signature / $275 Deluxe / $325 Platinum","30-90 min"],["OVME","https://ovme.com/pages/south-end-charlotte-nc","Hydrafacial","From $149",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Face: Peels/Dermaplaning/Exosomes/Hydrafacial/PRP/Vampire Facial","Not published",""],["Tyme Day Spa","https://tymedayspa.com","HydraFacial","Not published",""],["Elase Medical Spa - Charlotte - SouthPark","https://elase.com","HydraFacial Signature / Deluxe","$250 / $295 (3rd-party sourced)",""],["Ageless Remedies SouthPark","https://agelessremedies.com","HydraFacial MD","Not published",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","HydraFacial","Not published",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Hydrafacial MD - Basic (single)","$250",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Hydrafacial MD - Basic (3-pack)","$650",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Hydrafacial MD - Luxe (single)","$350",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Hydrafacial MD - Luxe (3-pack)","$900",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Hydrafacial MD - Platinum (single)","$450",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Hydrafacial MD - Platinum (3-pack)","$1,150",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","HydraFacial (Signature/Deluxe/Platinum)","$199 / $249 / $325",""],["dermani MEDSPA Ballantyne","https://dermanimedspa.com/ballantyne-charlotte-nc","HydraFacial","$50 off first visit (base price not published)",""]],"IPL / Photofacial":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","IPL Photofacial & ThreeForMe","Not published",""],["Miramae Medical Skin Care Studio","https://miramaestudio.com","BBL/Laser Face & Neck","$385",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","BBL Photofacial","From $250",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Laser: BBL/HALO/SkinPen/Sylfirm X RF/Tight & Bright","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","IPL","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","3 For Me","Not published",""],["ZEM Aesthetics & Med Spa","https://zemmedspa.com","IPL Hair Removal","Not published",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Laser / IPL","Not published",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","IPL Photofacial/BBL (Face & Neck)","$550 (varies $200-$650 by area)",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","BBL / IPL Photofacial","Not published",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","Laser/IPL (other)","Not published",""],["Plumped","https://plumpedclt.com","Photo Facials (Lumecca, BBL)","Not published",""]],"Microdermabrasion / Dermaplaning":[["Miramae Medical Skin Care Studio","https://miramaestudio.com","Dermaplane","$90",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Face: Peels/Dermaplaning/Exosomes/Hydrafacial/PRP/Vampire Facial","Not published",""],["Eden MedSpa","https://www.myedenmedspa.com","Microdermabrasion","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","Microdermabrasion","Not published",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Dermaplane (single)","$175",""],["Capizzi, MD Cosmetic Surgery & Med Spa","https://capizzimd.com","Dermaplane (3-pack)","$450",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Dermaplaning (add-on)","$50",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Dermaplaning (stand-alone)","$75",""],["Charlotte Spa & Esthetics","https://www.charlottesspa.com","Chemical Peels / Dermaplaning","$12-$450 range (varies by service)",""]],"PRP Therapy":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","PRP/PDGF Therapy","Not published",""],["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","PRF","Not published (Book Now)",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","Under-Eye PRP","From $595",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","PRFM Gel","From $765",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Face: Peels/Dermaplaning/Exosomes/Hydrafacial/PRP/Vampire Facial","Not published",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Body: CoolSculpting Elite/PRP Hair/Vaginal Rejuvenation","Not published",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","PRP","Not published",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","PRP Full Scalp Injections (series of 3)","$975",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","PRP Hairline/Crown/Beard/Temples/Smile Lines/Accordion (series of 3)","$850",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","PRP Under Eyes (series of 3)","$1,200",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Microneedling (+Exosomes/Growth Factors/PRP/PRF/HA)","Not published",""],["M2 Medical Spa and Wellness","https://www.m2medicalspaandwellness.com","SkinPen / SkinPen with PRP","$65-$185 ($650 w/ PRP pkg)",""]],"Emsculpt / Body Contouring":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","Skin Tightening/Body Contouring (RF+US)","Not published",""],["Jon 'Ric Medical Spa and Wellness Center","https://jonriccharlottemedicalspa.com","Emsculpt Neo (4-pkg promo: $250 off)","Promo only, base price not published",""],["Azura Medical Spa","https://azuramedicalspa.com","Body Contouring","Not published",""],["Elase Medical Spa - Charlotte - SouthPark","https://elase.com","Body Contouring / Injectables / Laser Hair Removal / Skin Resurfacing (catalog)","Not published",""],["Ageless Remedies SouthPark","https://agelessremedies.com","EMSCULPT","Not published",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Non-Surgical Butt Lift (10 vials)","$6,500",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Non-Surgical Butt Lift (20 vials)","$9,500",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Non-Surgical Butt Lift (30 vials)","$13,500",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Non-Surgical Breast Lift (6 vials)","$3,500",""],["Lifted Aesthetics Charlotte","https://liftedaestheticsclt.com","Non-Surgical Breast Lift (10-30 vials)","$6,500-$13,500",""]],"CoolSculpting / CoolTone":[["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","CoolSculpting & Kybella","Not published",""],["Infinity MedSpa and Wellness","https://infinitymedspaandwellness.com","CoolTone Muscle Toning","Not published",""],["Jon 'Ric Medical Spa and Wellness Center","https://jonriccharlottemedicalspa.com","CoolSculpting","Not published (current promo: $250 off Emsculpt Neo package of 4+)",""],["Evolve Medical Associates","https://www.evolvemetoday.com","Body: CoolSculpting Elite/PRP Hair/Vaginal Rejuvenation","Not published",""],["Replenish Health Spa","https://replenishhealthspa.com","CoolSculpting / CoolTone","Not published",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","CoolSculpting","Not published",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","CoolTone","Not published",""]],"PDO Thread Lift":[["The Modern Aesthetic - Uptown","https://www.themodernaesthetic.co","PDO Nose Tip Lift","Not published (Book Now)",""],["Allure Medical","https://alluremedical.com/locations/charlotte-nc","Thread Lift","Not published",""],["OVME","https://ovme.com/pages/south-end-charlotte-nc","PDO Threads","From $1,020",""],["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","PDO Threads","Not published",""],["Plumped","https://plumpedclt.com","Skin Boosters / Renuva / PDO Threads / Biostimulators","Not published",""]],"Ultherapy":[["SkinSpirit Charlotte","https://www.skinspirit.com/locations/charlotte","Ultherapy","Not published",""]]};
 
   // Per-clinic breakdown modal: click a procedure name in "Most popular procedures" or
   // "Typical pricing by procedure" to see every matching listing, clinic by clinic, with a
